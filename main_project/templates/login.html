@@ -38,11 +38,13 @@
               dataType: "json",
               data: {
                   "post_type": "Send",
-                  "text": document.getElementById("chat-message-input").value
+                  "room": "10000001",
+                  "user": "20000001",
+                  "content": document.getElementById("chat-message-input").value
               },
               success: function (data) {
+                console.log(document.getElementById("chat-message-input").value)
                 if (data.result == "success"){
-                  //alert("Success!");
                   update_msg();
                 }
               }
@@ -57,13 +59,25 @@
               dataType: "json",
               data: {
                   "post_type": "Receive",
+                  "room": "10000001"
               },
               success: function (data) {
                 if (data.result == "success"){
-                  //alert("Success!");
-                  var html_code = ""
-                  for(var i = 0; i < data.msg.length; i++){
-                      html_code += data.msg[i];
+                //   var html_code = ""
+                //   for(var i = 0; i < data.msg.length; i++){
+                //       html_code += data.msg[i];
+                //   }
+                //   $("#chat-log").html(html_code);
+
+                  room_history = JSON.parse(data.room_history);
+                  html_code = ""
+                  for(var i = 0; i < room_history.length; i++){
+                    var time = new Date(room_history[i].fields.time)
+                    var time_modify = ""
+                    time_modify = time.getFullYear() + '-' + time.getMonth() + '-' + time.getDate() 
+                                    + '-' + time.getHours() + '-' + time.getMinutes() + '-' + time.getSeconds()
+
+                    html_code += room_history[i].fields.user + ' : ' + room_history[i].fields.content + "  " + time_modify + '\n'
                   }
                   $("#chat-log").html(html_code);
                 }
