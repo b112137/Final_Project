@@ -25,7 +25,7 @@ SECRET_KEY = 'str45hwfs=(vlg#kivuht_k5zk%+%x0%73ux@gd$=ncbu)gknf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['luffy.ee.ncku.edu.tw']
+ALLOWED_HOSTS = ['luffy.ee.ncku.edu.tw', '*']
 
 
 # Application definition
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'login',
+    'backend',
 ]
 
 MIDDLEWARE = [

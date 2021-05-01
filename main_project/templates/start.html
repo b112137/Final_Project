@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+        <meta charset="utf-8">
+        <script src="static/jquery.js"></script>
+    </head>
+    <body>
+        <div>
+            <a href="/login">
+                <button >登入</button>
+            </a>
+            
+        </div>
+        <div>
+            <a href="/register">
+                <button >註冊</button>
+            </a>
+        </div>
+
+        <!-- <textarea readonly id="chat-log" cols="100" rows="20"></textarea><br/>
+        <input id="chat-message-input" type="text" size="100"/><br/>
+        <input id="chat-message-submit" type="button" value="Send"/> -->
+    
+    </body>
+
+</html>
+
+<script>
+    $.ajaxSetup({
+        data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
+    })
+
+    // $(document).ready(function() {
+    //     update_msg();
+    //     setInterval(update_msg, 200);
+    // });
+
+    // $("#chat-message-submit").click( function() {
+    //     $.ajax({
+    //           url: '/chat_update',
+    //           method: 'POST',
+    //           type: 'POST',
+    //           dataType: "json",
+    //           data: {
+    //               "post_type": "Send",
+    //               "room": "10000001",
+    //               "user": "20000001",
+    //               "content": document.getElementById("chat-message-input").value
+    //           },
+    //           success: function (data) {
+    //             console.log(document.getElementById("chat-message-input").value)
+    //             if (data.result == "success"){
+    //               update_msg();
+    //             }
+    //           }
+    //     });
+    // });
+
+    // function update_msg(){
+    //     $.ajax({
+    //           url: '/chat_update',
+    //           method: 'POST',
+    //           type: 'POST',
+    //           dataType: "json",
+    //           data: {
+    //               "post_type": "Receive",
+    //               "room": "10000001"
+    //           },
+    //           success: function (data) {
+    //             if (data.result == "success"){
+    //             //   var html_code = ""
+    //             //   for(var i = 0; i < data.msg.length; i++){
+    //             //       html_code += data.msg[i];
+    //             //   }
+    //             //   $("#chat-log").html(html_code);
+
+    //               room_history = JSON.parse(data.room_history);
+    //               html_code = ""
+    //               for(var i = 0; i < room_history.length; i++){
+    //                 var time = new Date(room_history[i].fields.time)
+    //                 var time_modify = ""
+    //                 time_modify = time.getFullYear() + '-' + time.getMonth() + '-' + time.getDate() 
+    //                                 + '-' + time.getHours() + '-' + time.getMinutes() + '-' + time.getSeconds()
+
+    //                 html_code += room_history[i].fields.user + ' : ' + room_history[i].fields.content + "  " + time_modify + '\n'
+    //               }
+    //               $("#chat-log").html(html_code);
+    //             }
+    //           }
+    //     });
+    // };
+
+    
+
+</script>

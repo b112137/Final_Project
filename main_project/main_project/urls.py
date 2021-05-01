@@ -16,12 +16,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
-import login.views as login
+import backend.views as backend
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('', TemplateView.as_view(template_name="login.html")),
-    path('login', login.login_page),
-    path('chat_update', login.chat_update),
+    path('', TemplateView.as_view(template_name="start.html")),
+    path('start', backend.start_page),
+    path('login', backend.login_page),
+    path('register', backend.register_page),
+    path('main', backend.main_page, name="main"),
+    
+    path('register_submit', backend.register_submit),
+    path('login_check', backend.login_check),
+
+
+
+
+    # path('chat_update', backend.chat_update),
 ]
