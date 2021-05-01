@@ -21,13 +21,72 @@ class Profile(models.Model):
     balance = models.TextField()
     character_name = models.TextField()
     profile_photo = models.TextField()
-    mission_doing_chatroom_ID = models.TextField()
-    mission_done_chatroom_ID = models.TextField()
-    friend_ID = models.TextField()
-    owned_product_ID = models.TextField()
+    mission_doing_chatroom_ID = models.TextField() #List
+    mission_done_chatroom_ID = models.TextField() #List
+    friend_ID = models.TextField() #List
+    owned_product_ID = models.TextField() #List
+    time = models.DateTimeField(auto_now_add=True)
+
+    # def __str__(self):
+    #     return self.account
+
+    def __str__(self):
+        ID = self.account
+        name = self.name
+        concat = ID + " " + name
+        return concat
+
+
+class Mission_Chatroom(models.Model):
+    chatroom_ID = models.CharField(max_length=100)
+    sender_ID = models.CharField(max_length=100)
+    message = models.TextField()
     time = models.DateTimeField(auto_now_add=True)
 
 
+class Friend_Chatroom(models.Model):
+    sender_ID = models.CharField(max_length=100)
+    receiver_ID = models.CharField(max_length=100)
+    message = models.TextField()
+    time = models.DateTimeField(auto_now_add=True)
+
+
+class Mission_imformation(models.Model):
+    mission_ID = models.CharField(max_length=100)
+    mission_name = models.TextField()
+    launcher = models.TextField()
+    mission_type = models.CharField(max_length=100)
+    mission_intro = models.TextField()
+    mission_pic = models.TextField()
+    joined = models.TextField()
+    group_required = models.TextField()
+    group_most = models.TextField()
+    exp1 = models.TextField()
+    exp2 = models.TextField()
+    exp3 = models.TextField()
+    reward = models.TextField()
+    joined_ID = models.TextField() #List
+
+    def __str__(self):
+        ID = self.mission_ID
+        name = self.mission_name
+        concat = ID + " " + name
+        return concat
+
+class Mission_group(models.Model):
+    chatroom_ID = models.CharField(max_length=100)
+    mission_ID = models.CharField(max_length=100)
+    mission_name = models.TextField()
+    group_name = models.TextField()
+    leader_ID = models.CharField(max_length=100)
+    member_ID = models.TextField() #List
+
+class Shop(models.Model):
+    product_ID = models.CharField(max_length=100)
+    product_name = models.TextField()
+    product_detail = models.TextField()
+    product_price = models.TextField()
+    product_left = models.TextField()
 
 # class Profile(models.Model):
 

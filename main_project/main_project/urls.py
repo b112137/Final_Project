@@ -25,12 +25,13 @@ urlpatterns = [
     path('start', backend.start_page),
     path('login', backend.login_page),
     path('register', backend.register_page),
-    path('main', backend.main_page, name="main"),
+    path('main', backend.main_page),
+    path('mission', backend.mission_page),
     
     path('register_submit', backend.register_submit),
     path('login_check', backend.login_check),
-
-
+    path('get_all_mission', backend.get_all_mission),
+    path('get_all_mission_img', backend.get_all_mission_img),
 
 
     # path('chat_update', backend.chat_update),

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+        <meta charset="utf-8">
+        <script src="static/jquery.js"></script>
+    </head>
+    <body>
+        <!-- <div id="character_name"> {{ character_name }}</div>
+        <div id="name"> {{ name }} </div>
+        <div id="exp1"> {{ exp1 }} </div>
+        <div id="exp2"> {{ exp2 }} </div>
+        <div id="exp3"> {{ exp3 }} </div>
+        
+        <button id="mission_button">任務</button> -->
+        <div id="newpic">
+
+        </div>
+    </body>
+
+</html>
+
+<script>
+    $.ajaxSetup({
+        data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
+    })    
+
+    window.onload = function(){
+        $.ajax({
+              url: '/get_all_mission',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+              },
+              success: function (data) {
+                if (data.result == "success"){
+                    // console.log("success")
+                    // console.log(data)
+                }
+              }
+        });
+
+        $.ajax({
+              url: '/get_all_mission_img',
+              method: 'POST',
+              type: 'POST',
+              data: {
+              },
+              success: function (data) {
+                $('#newpic').append("<img src="+'"data:image/jpg;base64,'+data+'">')
+              }
+        });
+
+
+    }
+
+
+    $("#mission_button").click( function() {
+
+    })
+
+</script>

@@ -4,11 +4,13 @@ from datetime import datetime
 from django.views.generic import View
 import json
 from backend.models import Chat
-from backend.models import Profile
+from backend.models import Profile, Mission_imformation
 
 from rest_framework import serializers
 from django.core import serializers as core_serializers
 import ast 
+import cv2
+import base64
 
 # Create your views here.
 def start_page(request):
@@ -45,6 +47,12 @@ def main_page(request):
         'exp2': exp2,
         'exp3': exp3,
     })
+
+def mission_page(request):
+    return render(request, 'mission.html', {
+    })
+
+
 
 
 
@@ -89,16 +97,59 @@ def login_check(request):
             })
 
 
+def get_all_mission(request):
+    if request.method == 'POST':
+        mission_imformation = Mission_imformation.objects.all()
+        print(mission_imformation)
+        mission_all = core_serializers.serialize("json", mission_imformation)
+        mission_all = json.loads(mission_all)
+
+        mission_ID, mission_name, mission_pic, joined, mission_intro, mission_type, exp1, exp2, exp3, reward = [], [], [], [], [], [], [], [], [], []
+        for mission in mission_all:
+            mission_ID.append(mission['fields']['mission_ID'])
+            mission_name.append(mission['fields']['mission_name'])
+            mission_pic.append(mission['fields']['mission_pic'])
+            joined.append(mission['fields']['joined'])
+            mission_intro.append(mission['fields']['mission_intro'])
+            mission_type.append(mission['fields']['mission_type'])
+            exp1.append(mission['fields']['exp1'])
+            exp2.append(mission['fields']['exp2'])
+            exp3.append(mission['fields']['exp3'])
+            reward.append(mission['fields']['reward'])
+
+        print(mission_ID, mission_name, mission_pic, joined, mission_intro, mission_type, exp1, exp2, exp3, reward)
+
+
+        return JsonResponse({
+            'result' : "success",
+            "mission_ID":mission_ID, "mission_name":mission_name, "mission_pic":mission_pic,
+            "joined":joined, "mission_intro":mission_intro, "mission_type":mission_type,
+            "exp1":exp1, "exp2":exp2, "exp3":exp3, "reward":reward
+        })
+
+def get_all_mission_img(request):
+    if request.method == 'POST':
+        mission_imformation = Mission_imformation.objects.all()
+        mission_all = core_serializers.serialize("json", mission_imformation)
+        mission_all = json.loads(mission_all)
+        mission_pic = []
+        for mission in mission_all:
+            mission_pic.append(mission['fields']['mission_pic'])
+        print("/media/mission_img/"+mission_pic[0])
+        image = cv2.imread("media/mission_img/"+mission_pic[0])
+        
+        image = cv2.imencode('.jpg',image)[1]
+        back_2 = base64.b64encode(image)
+
+
+        # print(back_2)
+        return HttpResponse(back_2)
+
+
 def get_profile(user_ID):
     profile = Profile.objects.filter(account=user_ID)
     
     return profile
-
-
-
-
-
-
 
 
 

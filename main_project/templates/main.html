@@ -12,6 +12,7 @@
         <div id="exp2"> {{ exp2 }} </div>
         <div id="exp3"> {{ exp3 }} </div>
 
+        <button id="mission_button">任務</button>
     </body>
 
 </html>
@@ -21,6 +22,9 @@
         data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
     })    
 
-
+    $("#mission_button").click( function() {
+        account = window.location.href.split('?')[1].split('=')[1]
+        window.location.href = "/mission?account="+account
+    })
 
 </script>
