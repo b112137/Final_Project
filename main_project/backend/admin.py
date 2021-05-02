@@ -1,6 +1,8 @@
 from django.contrib import admin
-from backend.models import Profile, Mission_imformation
+from backend.models import Profile, Mission_imformation, Mission_Chatroom, Mission_group
 
 # Register your models here.
 admin.site.register(Profile)
 admin.site.register(Mission_imformation)
+admin.site.register(Mission_Chatroom)
+admin.site.register(Mission_group)
