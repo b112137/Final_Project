@@ -19,6 +19,10 @@
         </div>
 
         <button id="group_join">+++</button>
+        <br><br>
+        揪團名稱 <input id = "group_name" type="text" size="20" ><br/>
+        上限人數 <input id = "group_most" type="text" size="20" ><br/>
+        <button id="group_create">我要開團</button>
     </body>
 
 </html>
@@ -134,6 +138,38 @@
 
                         )
                     }
+                }
+                console.log("success")
+              }
+        });
+    })
+
+
+    $("#group_create").click( function() {
+        $('#newpic').html("")
+        $.ajax({
+              url: '/create_mission_group',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  "group_name": document.getElementById("group_name").value,
+                  "mission_ID": "10000001",
+                  "leader_ID": window.location.href.split('?')[1].split('=')[1],
+                  "group_most": document.getElementById("group_most").value,
+              },
+              success: function (data) {
+                if (data.result == "success"){
+                    // for(var i = 0; i < data.chatroom_ID.length; i++){
+                    //     $('#newpic').append(
+                    //         "聊天室ID: " + data.chatroom_ID[i]+ '<br>'+
+                    //         "聊天室名稱: " + data.group_name[i]+ '<br>'+
+                    //         "目前人數: " + data.group_now[i]+ '<br>'+
+                    //         "上限人數: " + data.group_most[i]+ '<br>'+
+                    //         "組長ID: " + data.leader_ID[i] + '<br><br>'
+
+                    //     )
+                    // }
                 }
                 console.log("success")
               }

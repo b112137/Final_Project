@@ -201,6 +201,51 @@ def join_mission_group(request):
             "group_most": group_most, "leader_ID": leader_ID
         })
 
+def create_mission_group(request):
+    if request.method == 'POST':
+        group_name = request.POST.get("group_name")
+        mission_ID = request.POST.get('mission_ID')
+        leader_ID = request.POST.get('leader_ID')
+        group_most = request.POST.get('group_most')
+
+        group_required = Mission_imformation.objects.filter(mission_ID=mission_ID)[0].group_required
+        if group_required > group_most:
+            return JsonResponse({
+                'result' : "least_than_group_required",
+            })
+
+        ### 新增 mission group 欄位
+        lastest_chatroom_ID = int(Mission_group.objects.order_by('pk').last().chatroom_ID) + 1
+        mission_name = Mission_imformation.objects.filter(mission_ID=mission_ID)[0].mission_name
+        status = "acceptable"
+        member_ID = [leader_ID]
+        
+        Mission_group.objects.create(chatroom_ID=lastest_chatroom_ID, mission_ID=mission_ID, mission_name=mission_name,
+            group_name=group_name, group_most=group_most, leader_ID=leader_ID, status=status, member_ID=member_ID
+        )
+
+        ### 修改 mission imformation
+        mission_search_all = Mission_imformation.objects.filter(mission_ID=mission_ID)
+        mission_search = mission_search_all[0]
+        joined = mission_search.joined
+        joined = int(joined) + 1
+        mission_search_all.update(joined = joined)
+
+        joined_ID = ast.literal_eval(mission_search.joined_ID)
+        joined_ID.append(leader_ID)
+        mission_search_all.update(joined_ID = joined_ID)
+
+        ### 修改 Profile
+        profile_search_all = Profile.objects.filter(account=leader_ID)
+        profile_search = profile_search_all[0]
+        mission_doing_chatroom_ID = ast.literal_eval(profile_search.mission_doing_chatroom_ID)
+        mission_doing_chatroom_ID.append(lastest_chatroom_ID)
+        profile_search_all.update(mission_doing_chatroom_ID = mission_doing_chatroom_ID)
+
+        return JsonResponse({
+            'result' : "success",
+        })
+
 
 
 def get_profile(account):
