@@ -32,6 +32,7 @@ urlpatterns = [
     path('login_check', backend.login_check),
     path('get_all_mission', backend.get_all_mission),
     path('get_all_mission_img', backend.get_all_mission_img),
+    path('get_mission_group', backend.get_mission_group),
 
 
     # path('chat_update', backend.chat_update),

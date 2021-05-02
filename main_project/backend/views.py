@@ -4,7 +4,7 @@ from datetime import datetime
 from django.views.generic import View
 import json
 from backend.models import Chat
-from backend.models import Profile, Mission_imformation
+from backend.models import Profile, Mission_imformation, Mission_group
 
 from rest_framework import serializers
 from django.core import serializers as core_serializers
@@ -100,11 +100,11 @@ def login_check(request):
 def get_all_mission(request):
     if request.method == 'POST':
         mission_imformation = Mission_imformation.objects.all()
-        print(mission_imformation)
+        # print(mission_imformation)
         mission_all = core_serializers.serialize("json", mission_imformation)
         mission_all = json.loads(mission_all)
 
-        mission_ID, mission_name, mission_pic, joined, mission_intro, mission_type, exp1, exp2, exp3, reward = [], [], [], [], [], [], [], [], [], []
+        mission_ID, mission_name, mission_pic, joined, mission_intro, mission_type, group_required, exp1, exp2, exp3, reward = [], [], [], [], [], [], [], [], [], [], []
         for mission in mission_all:
             mission_ID.append(mission['fields']['mission_ID'])
             mission_name.append(mission['fields']['mission_name'])
@@ -112,46 +112,81 @@ def get_all_mission(request):
             joined.append(mission['fields']['joined'])
             mission_intro.append(mission['fields']['mission_intro'])
             mission_type.append(mission['fields']['mission_type'])
+            group_required.append(mission['fields']['group_required'])
             exp1.append(mission['fields']['exp1'])
             exp2.append(mission['fields']['exp2'])
             exp3.append(mission['fields']['exp3'])
             reward.append(mission['fields']['reward'])
 
-        print(mission_ID, mission_name, mission_pic, joined, mission_intro, mission_type, exp1, exp2, exp3, reward)
+        # print(mission_ID, mission_name, mission_pic, joined, mission_intro, mission_type, group_required, exp1, exp2, exp3, reward)
 
 
         return JsonResponse({
             'result' : "success",
             "mission_ID":mission_ID, "mission_name":mission_name, "mission_pic":mission_pic,
-            "joined":joined, "mission_intro":mission_intro, "mission_type":mission_type,
+            "joined":joined, "mission_intro":mission_intro, "mission_type":mission_type, "group_required":group_required,
             "exp1":exp1, "exp2":exp2, "exp3":exp3, "reward":reward
         })
 
 def get_all_mission_img(request):
     if request.method == 'POST':
-        mission_imformation = Mission_imformation.objects.all()
-        mission_all = core_serializers.serialize("json", mission_imformation)
-        mission_all = json.loads(mission_all)
-        mission_pic = []
-        for mission in mission_all:
-            mission_pic.append(mission['fields']['mission_pic'])
-        print("/media/mission_img/"+mission_pic[0])
-        image = cv2.imread("media/mission_img/"+mission_pic[0])
-        
+        img_path = request.POST.get('img_path')
+        image = cv2.imread(img_path)
         image = cv2.imencode('.jpg',image)[1]
         back_2 = base64.b64encode(image)
 
-
-        # print(back_2)
         return HttpResponse(back_2)
 
+def get_mission_group(request):
+    if request.method == 'POST':
+        account = request.POST.get("user_ID")
+        mission_ID = request.POST.get('mission_ID')
 
-def get_profile(user_ID):
-    profile = Profile.objects.filter(account=user_ID)
+        chatroom_ID, group_name, group_now, group_most, leader_ID = mission_filter(account, mission_ID)
+
+        return JsonResponse({
+            'result' : "success",
+            "chatroom_ID": chatroom_ID, "group_name": group_name, "group_now": group_now,
+            "group_most": group_most, "leader_ID": leader_ID
+        })
+
+# def join_mission_group(request):
+#     if request.method == 'POST':
+#         account = request.POST.get("user_ID")
+#         mission_ID = request.POST.get('mission_ID')
+#         chatroom_ID = request.POST.get('chatroom_ID')
+
+
+
+
+def get_profile(account):
+    profile = Profile.objects.filter(account=account)
     
     return profile
 
+def mission_filter(account, mission_ID):
+    group_search = Mission_group.objects.filter(mission_ID=mission_ID)
 
+    mission_doing_chatroom_ID = Profile.objects.filter(account=account)[0].mission_doing_chatroom_ID
+    mission_doing_chatroom_ID = ast.literal_eval(mission_doing_chatroom_ID)
+
+    chatroom_ID, group_name, group_now, group_most, leader_ID = [], [], [], [], []
+    for group in group_search:
+        check = 0
+        for my_chatroom_ID in mission_doing_chatroom_ID: 
+            if group.chatroom_ID == my_chatroom_ID:
+                check = 1
+                break
+        if check == 0: #沒參加過
+            if group.status == "acceptable":
+                chatroom_ID.append(group.chatroom_ID)
+                group_name.append(group.group_name)
+                group_now.append(len( ast.literal_eval(group.member_ID) ))
+                group_most.append(group.group_most)
+                leader_ID.append(group.leader_ID)
+
+
+    return chatroom_ID, group_name, group_now, group_most, leader_ID
 
 # def modify_profile(request):
 # #     if request.method == 'POST':

@@ -60,7 +60,6 @@ class Mission_imformation(models.Model):
     mission_pic = models.TextField()
     joined = models.TextField()
     group_required = models.TextField()
-    group_most = models.TextField()
     exp1 = models.TextField()
     exp2 = models.TextField()
     exp3 = models.TextField()
@@ -78,7 +77,9 @@ class Mission_group(models.Model):
     mission_ID = models.CharField(max_length=100)
     mission_name = models.TextField()
     group_name = models.TextField()
+    group_most = models.TextField()
     leader_ID = models.CharField(max_length=100)
+    status = models.CharField(max_length=100)
     member_ID = models.TextField() #List
 
 class Shop(models.Model):
