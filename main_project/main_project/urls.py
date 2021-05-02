@@ -27,6 +27,7 @@ urlpatterns = [
     path('register', backend.register_page),
     path('main', backend.main_page),
     path('mission', backend.mission_page),
+    path('chatroom', backend.chatroom_page),
     
     path('register_submit', backend.register_submit),
     path('login_check', backend.login_check),
@@ -34,6 +35,7 @@ urlpatterns = [
     path('get_all_mission_img', backend.get_all_mission_img),
     path('get_mission_group', backend.get_mission_group),
     path('join_mission_group', backend.join_mission_group),
+    path('get_mission_chatroom', backend.get_mission_chatroom),
 
     path('create_mission_group', backend.create_mission_group),
     

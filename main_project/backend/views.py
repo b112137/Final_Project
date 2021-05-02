@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from datetime import datetime
+from datetime import datetime, timezone
 from django.views.generic import View
 import json
 from backend.models import Chat
-from backend.models import Profile, Mission_imformation, Mission_group
+from backend.models import Profile, Mission_imformation, Mission_group, Mission_Chatroom
 
 from rest_framework import serializers
 from django.core import serializers as core_serializers
@@ -52,8 +52,9 @@ def mission_page(request):
     return render(request, 'mission.html', {
     })
 
-
-
+def chatroom_page(request):
+    return render(request, 'chatroom.html', {
+    })
 
 
 def register_submit(request):
@@ -246,6 +247,56 @@ def create_mission_group(request):
             'result' : "success",
         })
 
+
+def get_mission_chatroom(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        profile_search_all = Profile.objects.filter(account=account)
+        profile_search = profile_search_all[0]
+        mission_doing_chatroom_ID = ast.literal_eval(profile_search.mission_doing_chatroom_ID)
+        mission_done_chatroom_ID = ast.literal_eval(profile_search.mission_done_chatroom_ID)
+
+        chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time = [], [], [], [], [], [], []
+        for chatroom_ID in mission_doing_chatroom_ID:
+            chatroom_ID_all.append(chatroom_ID)
+
+            group_search = Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0]
+            mission_ID.append(group_search.mission_ID)
+            mission_name.append(group_search.mission_name)
+            group_name.append(group_search.group_name)
+            status.append(group_search.status)
+
+            lastest_message = Mission_Chatroom.objects.filter(chatroom_ID=chatroom_ID).order_by('pk').last()
+
+            if lastest_message:
+                message.append(lastest_message.message)
+                time.append(lastest_message.time)
+                # print(lastest_message.time)
+            else:
+                message.append("")
+                time.append(datetime(1999, 3, 26, 0, 0, 0, 0, tzinfo=timezone.utc))
+
+        print(chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time)
+        time_copy = time.copy()
+
+        time, chatroom_ID_all = (list(t) for t in zip(*sorted(zip(time_copy, chatroom_ID_all), reverse=True  )))
+        time, mission_ID = (list(t) for t in zip(*sorted(zip(time_copy, mission_ID), reverse=True  )))
+        time, mission_name = (list(t) for t in zip(*sorted(zip(time_copy, mission_name), reverse=True  )))
+        time, group_name = (list(t) for t in zip(*sorted(zip(time_copy, group_name), reverse=True  )))
+        time, status = (list(t) for t in zip(*sorted(zip(time_copy, status), reverse=True  )))
+        time, message = (list(t) for t in zip(*sorted(zip(time_copy, message), reverse=True  )))
+
+
+        print(chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time)
+
+
+
+
+        return JsonResponse({
+            'result' : "success",
+            "chatroom_ID": chatroom_ID_all, "mission_ID": mission_ID, "mission_name": mission_name,
+            "group_name": group_name, "status": status, "message": message, "time": time
+        })
 
 
 def get_profile(account):

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+        <meta charset="utf-8">
+        <script src="static/jquery.js"></script>
+    </head>
+    <body>
+        <!-- <button id="mission_button">任務</button>
+        <button id="chat_button">聊天</button> -->
+
+        <div id="newpic">
+
+        </div>
+    </body>
+
+</html>
+
+<script>
+    $.ajaxSetup({
+        data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
+    })    
+
+    window.onload = function(){
+        $('#newpic').html("")
+        update_chat();
+    }
+
+    $("#mission_button").click( function() {
+    })
+
+    $("#chat_button").click( function() {
+    })
+
+    function update_chat(){
+        $.ajax({
+              url: '/get_mission_chatroom',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  "account": window.location.href.split('?')[1].split('=')[1],
+              },
+              success: function (data) {
+                if (data.result == "success"){
+                    console.log("success")
+                    for(var i = 0; i < data.chatroom_ID.length; i++){
+                        $('#newpic').append(
+                            "任務名稱: " + data.mission_name[i]+ '<br>'+
+                            "聊天室ID: " + data.chatroom_ID[i]+ '<br>'+
+                            "聊天室名稱: " + data.group_name[i]+ '<br>'+
+                            "任務狀態: " + data.status[i]+ '<br>'+
+                            "訊息預覽: " + data.message[i]+ '<br>'+
+                            "最後時間: " + data.time[i]+ '<br>'+
+                            '<button id="' + data.chatroom_ID[i]+ '">進入聊天室</button><br><br>'
+                        )
+                    }
+
+
+                }
+              }
+        });
+    }
+    
+
+</script>

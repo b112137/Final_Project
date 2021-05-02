@@ -13,6 +13,7 @@
         <div id="exp3"> {{ exp3 }} </div>
 
         <button id="mission_button">任務</button>
+        <button id="chat_button">聊天</button>
     </body>
 
 </html>
@@ -25,6 +26,11 @@
     $("#mission_button").click( function() {
         account = window.location.href.split('?')[1].split('=')[1]
         window.location.href = "/mission?account="+account
+    })
+
+    $("#chat_button").click( function() {
+        account = window.location.href.split('?')[1].split('=')[1]
+        window.location.href = "/chatroom?account="+account
     })
 
 </script>
