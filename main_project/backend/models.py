@@ -14,6 +14,7 @@ class Profile(models.Model):
     password = models.CharField(max_length=100)
     sex = models.CharField(max_length=100)
     birth = models.CharField(max_length=100)
+    email = models.TextField()
     intro = models.TextField(blank=True)
     exp1 = models.TextField()
     exp2 = models.TextField()

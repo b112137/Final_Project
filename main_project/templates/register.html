@@ -44,11 +44,13 @@
                   "birth": document.getElementById("birth").value,
               },
               success: function (data) {
-                // console.log(document.getElementById("chat-message-input").value)
-                // if (data.result == "success"){
-                //   update_msg();
-                // }
-                console.log("success")
+                if (data.result == "success"){
+                    console.log("success")
+                }
+                if (data.result == "account_exist"){
+                    console.log("account_exist")
+                }
+                
               }
         });
     });

@@ -63,14 +63,21 @@ def register_submit(request):
         password = request.POST.get('password')
         sex = request.POST.get('sex')
         birth = request.POST.get('birth')
-        Profile.objects.create(name=name, account=account, password=password, sex=sex, birth=birth,\
-                                exp1=0, exp2=0, exp3=0, balance=0, character_name="test.jpg", profile_photo="none.jpg",\
-                                mission_doing_chatroom_ID=[], mission_done_chatroom_ID=[], friend_ID=[], owned_product_ID=[]
-        )
+        
+        print(len(Profile.objects.filter(account=account)))
+        if len(Profile.objects.filter(account=account)) == 0:
+            Profile.objects.create(name=name, account=account, password=password, sex=sex, birth=birth,\
+                                    exp1=0, exp2=0, exp3=0, balance=0, character_name="test.jpg", profile_photo="none.jpg",\
+                                    mission_doing_chatroom_ID=[], mission_done_chatroom_ID=[], friend_ID=[], owned_product_ID=[]
+            )
+            return JsonResponse({
+                'result' : "success",
+            })
+        else:
+            return JsonResponse({
+                'result' : "account_exist",
+            })
 
-        return JsonResponse({
-            'result' : "success",
-        })
 
 def login_check(request):
     if request.method == 'POST':
