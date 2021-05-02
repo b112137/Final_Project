@@ -17,6 +17,8 @@
         <div id="newpic">
 
         </div>
+
+        <button id="group_join">+++</button>
     </body>
 
 </html>
@@ -88,6 +90,37 @@
               data: {
                   "user_ID": window.location.href.split('?')[1].split('=')[1],
                   "mission_ID": "10000001",
+              },
+              success: function (data) {
+                if (data.result == "success"){
+                    for(var i = 0; i < data.chatroom_ID.length; i++){
+                        $('#newpic').append(
+                            "聊天室ID: " + data.chatroom_ID[i]+ '<br>'+
+                            "聊天室名稱: " + data.group_name[i]+ '<br>'+
+                            "目前人數: " + data.group_now[i]+ '<br>'+
+                            "上限人數: " + data.group_most[i]+ '<br>'+
+                            "組長ID: " + data.leader_ID[i] + '<br><br>'
+
+                        )
+                    }
+                }
+                console.log("success")
+              }
+        });
+    })
+
+
+    $("#group_join").click( function() {
+        $('#newpic').html("")
+        $.ajax({
+              url: '/join_mission_group',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  "user_ID": window.location.href.split('?')[1].split('=')[1],
+                  "mission_ID": "10000001",
+                  "chatroom_ID": "20000003",
               },
               success: function (data) {
                 if (data.result == "success"){

@@ -150,19 +150,56 @@ def get_mission_group(request):
             "group_most": group_most, "leader_ID": leader_ID
         })
 
-# def join_mission_group(request):
-#     if request.method == 'POST':
-#         account = request.POST.get("user_ID")
-#         mission_ID = request.POST.get('mission_ID')
-#         chatroom_ID = request.POST.get('chatroom_ID')
+def join_mission_group(request):
+    if request.method == 'POST':
+        account = request.POST.get("user_ID")
+        mission_ID = request.POST.get('mission_ID')
+        chatroom_ID = request.POST.get('chatroom_ID')
 
+        ### 修改 mission group
+        group_search_all = Mission_group.objects.filter(chatroom_ID=chatroom_ID)
+        group_search = group_search_all[0]
+        if group_search.status == "acceptable":
+            member_ID = ast.literal_eval(group_search.member_ID)
+            member_ID.append(account)
+            group_search_all.update(member_ID = member_ID)
+
+            if len(member_ID) >= int(group_search.group_most):
+                group_search_all.update(status = "full")
+        
+        ### 修改 mission imformation
+        mission_search_all = Mission_imformation.objects.filter(mission_ID=mission_ID)
+        mission_search = mission_search_all[0]
+        joined = mission_search.joined
+        joined = int(joined) + 1
+        mission_search_all.update(joined = joined)
+
+        joined_ID = ast.literal_eval(mission_search.joined_ID)
+        joined_ID.append(account)
+        mission_search_all.update(joined_ID = joined_ID)
+
+        ### 修改 Profile
+        profile_search_all = Profile.objects.filter(account=account)
+        profile_search = profile_search_all[0]
+        mission_doing_chatroom_ID = ast.literal_eval(profile_search.mission_doing_chatroom_ID)
+        mission_doing_chatroom_ID.append(chatroom_ID)
+        profile_search_all.update(mission_doing_chatroom_ID = mission_doing_chatroom_ID)
+        
+        ### 取得刷新頁面資料
+        chatroom_ID, group_name, group_now, group_most, leader_ID = mission_filter(account, mission_ID)
+
+        return JsonResponse({
+            'result' : "success",
+            "chatroom_ID": chatroom_ID, "group_name": group_name, "group_now": group_now,
+            "group_most": group_most, "leader_ID": leader_ID
+        })
 
 
 
 def get_profile(account):
     profile = Profile.objects.filter(account=account)
-    
     return profile
+
 
 def mission_filter(account, mission_ID):
     group_search = Mission_group.objects.filter(mission_ID=mission_ID)
@@ -185,8 +222,12 @@ def mission_filter(account, mission_ID):
                 group_most.append(group.group_most)
                 leader_ID.append(group.leader_ID)
 
-
     return chatroom_ID, group_name, group_now, group_most, leader_ID
+
+
+
+
+
 
 # def modify_profile(request):
 # #     if request.method == 'POST':
