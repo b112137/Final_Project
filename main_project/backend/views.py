@@ -276,7 +276,7 @@ def get_mission_chatroom(request):
                 message.append("")
                 time.append(datetime(1999, 3, 26, 0, 0, 0, 0, tzinfo=timezone.utc))
 
-        print(chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time)
+        # print(chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time)
         time_copy = time.copy()
 
         time, chatroom_ID_all = (list(t) for t in zip(*sorted(zip(time_copy, chatroom_ID_all), reverse=True  )))
@@ -287,7 +287,7 @@ def get_mission_chatroom(request):
         time, message = (list(t) for t in zip(*sorted(zip(time_copy, message), reverse=True  )))
 
 
-        print(chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time)
+        # print(chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time)
 
 
 
@@ -297,6 +297,37 @@ def get_mission_chatroom(request):
             "chatroom_ID": chatroom_ID_all, "mission_ID": mission_ID, "mission_name": mission_name,
             "group_name": group_name, "status": status, "message": message, "time": time
         })
+
+def mission_chat_update(request):
+    if request.method == 'POST':
+        post_type = request.POST.get('post_type')
+        if post_type == "Send":
+            room = request.POST.get('room')
+            user = request.POST.get('user')
+            content = request.POST.get('content')
+            print(content)
+            with open('msg.txt', 'a', encoding="utf-8") as msg_file:
+                msg_file.write( content+'\n' )
+                msg_file.close()
+
+            Chat.objects.create(room=room, user=user,  content=content)
+            return JsonResponse({
+                'result' : "success"
+            })
+
+        elif post_type == "Receive":
+            
+            chatroom_ID = request.POST.get('chatroom_ID')   
+            print(chatroom_ID)
+            history = core_serializers.serialize("json", Mission_Chatroom.objects.filter(chatroom_ID=chatroom_ID).order_by("time"))
+            print(history)
+
+            return JsonResponse({
+                'result' : "success",
+                'history' : history,
+                # 'room_history' : room_history,
+            })
+
 
 
 def get_profile(account):

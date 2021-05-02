@@ -11,6 +11,13 @@
         <div id="newpic">
 
         </div>
+        <div id="chatroom" style="display: none">
+            <textarea readonly id="chat-log" cols="100" rows="20"></textarea><br/>
+            <input id="chat-message-input" type="text" size="100"/><br/>
+            <input id="chat-message-submit" type="button" value="Send"/>
+        </div>
+        
+        <button id="mission_button">mission_button</button>
     </body>
 
 </html>
@@ -21,11 +28,16 @@
     })    
 
     window.onload = function(){
-        $('#newpic').html("")
+        // $('#newpic').html("")
         update_chat();
     }
+    
+    var timeoutID = window.setInterval( update_chat , 1000);
+    
 
     $("#mission_button").click( function() {
+        abc = JSON.parse('[{"model": "backend.mission_chatroom", "pk": 2, "fields": {"chatroom_ID": "20000001", "sender_ID": "bladebaby0326", "message": "QQ", "time": "2021-05-02T13:44:47.296Z"}}, {"model": "backend.mission_chatroom", "pk": 3, "fields": {"chatroom_ID": "20000001", "sender_ID": "bladebaby0326", "message": "123", "time": "2021-05-02T15:59:33.178Z"}}]');
+        console.log(abc);
     })
 
     $("#chat_button").click( function() {
@@ -43,6 +55,7 @@
               success: function (data) {
                 if (data.result == "success"){
                     console.log("success")
+                    $('#newpic').html("")
                     for(var i = 0; i < data.chatroom_ID.length; i++){
                         $('#newpic').append(
                             "任務名稱: " + data.mission_name[i]+ '<br>'+
@@ -53,13 +66,50 @@
                             "最後時間: " + data.time[i]+ '<br>'+
                             '<button id="' + data.chatroom_ID[i]+ '">進入聊天室</button><br><br>'
                         )
+
+                        $('#'+data.chatroom_ID[i]).click( function() {
+                            console.log(this.id);
+                            window.clearInterval(timeoutID);
+                            $("#newpic").hide();
+                            $("#chatroom").show();
+                            update_mission_msg(this.id);
+                            var timeout_update_mission_msg = window.setInterval( ( ()=>update_mission_msg(this.id) ) , 200);
+                        })
                     }
-
-
                 }
               }
         });
     }
     
+
+    function update_mission_msg(chatroom_ID){
+        $.ajax({
+              url: '/mission_chat_update',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  "post_type": "Receive",
+                  "chatroom_ID": chatroom_ID
+              },
+              success: function (data) {
+                if (data.result == "success"){
+                  chatroom_history = JSON.parse(data.history);
+                //   console.log(data.history);
+                  console.log(chatroom_history)
+                  html_code = ""
+                  for(var i = 0; i < chatroom_history.length; i++){
+                    var time = new Date(chatroom_history[i].fields.time)
+                    var time_modify = ""
+                    time_modify = time.getFullYear() + '-' + time.getMonth() + '-' + time.getDate() 
+                                    + '-' + time.getHours() + '-' + time.getMinutes() + '-' + time.getSeconds()
+
+                    html_code += chatroom_history[i].fields.sender_ID + ' : ' + chatroom_history[i].fields.message + "  " + time_modify + '\n'
+                  }
+                  $("#chat-log").html(html_code);
+                }
+              }
+        });
+    };
 
 </script>
