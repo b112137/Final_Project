@@ -262,6 +262,57 @@ def create_mission_group(request):
             'result' : "success",
         })
 
+def submit_mission_group_check(request):
+    if request.method == 'POST':
+        chatroom_ID = request.POST.get("chatroom_ID")
+
+        mission_group = Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0]
+        member_ID = ast.literal_eval(mission_group.member_ID)
+        status = mission_group.status
+        group_name = mission_group.group_name
+        mission_imformation = Mission_imformation.objects.filter(mission_ID=mission_group.mission_ID)[0]
+        group_required = mission_imformation.group_required
+        mission_name = mission_imformation.mission_name
+
+        member_name = []
+        for member in member_ID:
+            member_name.append(Profile.objects.filter(account=member)[0].name)
+
+        print(mission_name, member_ID, status, group_required, member_name)
+        if status == "acceptable" or status == "full":
+            if len(member_ID) >= int(group_required):
+                return JsonResponse({
+                    'result' : "success",
+                    'mission_name' : mission_name,
+                    'group_name' : group_name,
+                    'member_ID' : member_ID,
+                    'member_name' : member_name,
+                })
+            else:
+                return JsonResponse({
+                    'result' : "not_enough",
+                })
+        else:
+            return JsonResponse({
+                'result' : "error",
+            })
+
+def submit_mission_group(request):
+    if request.method == 'POST':
+        image = request.FILES.get('image')
+        name = request.POST.get('name')
+        print(name)
+        print(image.name)
+
+        with open('media/mission_submit_upload/' + name +'.jpg', 'wb') as f:
+            for line in image:
+                f.write(line)
+
+        return JsonResponse({
+            'result' : "success",
+        })
+
+
 
 def get_mission_chatroom_list(request):
     if request.method == 'POST':

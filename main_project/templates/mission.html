@@ -15,6 +15,10 @@
         <button id="group_check">揪團報名</button>
         <button id="my_mission">我的任務</button>
         <br><br>
+        <button id="submit" style="display: none;">提交</button>
+        <div id="submit_check"></div>
+
+
         <div id="newpic">
 
         </div>
@@ -26,6 +30,13 @@
             上限人數 <input id = "group_most" type="text" size="20" ><br/>
             <button id="group_create">我要開團</button>
         </div>
+<!-- 
+        <form >
+            <label>
+                <input id="image-input" type="file" name="image">
+            </label>
+        </form> -->
+    
     </body>
 
 </html>
@@ -122,7 +133,7 @@
               data: {
                   "user_ID": window.location.href.split('?')[1].split('=')[1],
                   "mission_ID": "10000001",
-                  "chatroom_ID": "20000004",
+                  "chatroom_ID": "20000006",
               },
               success: function (data) {
                 if (data.result == "success"){
@@ -158,6 +169,8 @@
               },
               success: function (data) {
                 if (data.result == "success"){
+                    
+
                     // for(var i = 0; i < data.chatroom_ID.length; i++){
                     //     $('#newpic').append(
                     //         "聊天室ID: " + data.chatroom_ID[i]+ '<br>'+
@@ -174,12 +187,118 @@
         });
     })
 
+
     $('#my_mission').click( function() {
         $('#newpic').hide();
         $('#group_join').hide();
         $('#group_op').hide();
-        
+        $('#submit').show();
 
     })
 
+    $('#submit').click( function() {
+        $.ajax({
+              url: '/submit_mission_group_check',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  "chatroom_ID": "20000006",
+              },
+              success: function (data) {
+                if (data.result == "success"){
+                    html_code = ""
+                    html_code += "任務名稱: " + data.mission_name+ '<br>' + "群組名稱: " + data.group_name+ '<br>'
+                    for(var i = 0; i < data.member_ID.length; i++){
+                        html_code += "成員" + i.toString() + ": " + data.member_ID[i] + " " + data.member_name[i] + '<br>'
+                    }
+                    // html_code += '<button id="upload">上傳照片</button><br><br>' 
+
+                    html_code += '<form>\
+                                    {% csrf_token %}\
+                                    <label>\
+                                        <input id="image-input" type="file" name="image">\
+                                    </label>\
+                                  </form>\
+                                  <img id="image-img" src="/static/images/test.png" width="224" height="225"><br><br>'
+
+                    html_code += '<button id="submit_no">取消</button><br>' + '<button id="submit_yes">確認</button><br>'
+
+                    $('#submit_check').html(
+                        html_code
+                    )
+
+                    // for(var i = 0; i < data.chatroom_ID.length; i++){
+                    //     $('#newpic').append(
+                    //         "聊天室ID: " + data.chatroom_ID[i]+ '<br>'+
+                    //         "聊天室名稱: " + data.group_name[i]+ '<br>'+
+                    //         "目前人數: " + data.group_now[i]+ '<br>'+
+                    //         "上限人數: " + data.group_most[i]+ '<br>'+
+                    //         "組長ID: " + data.leader_ID[i] + '<br><br>'
+
+                    //     )
+                    // }
+                }
+                else if(data.result=="not_enough"){
+                    alert("人數不足以提交任務")
+                }
+                else if(data.result=="error"){
+                    alert("error")
+                }
+              }
+        });
+    })
+
+    var image_change = 0;
+    $(document).on('change','#image-input',function () {
+            // upload();
+            image_change = 1;
+            console.log("change")
+            var choose_file = $(this)[0].files[0];
+            var reader = new FileReader();
+            reader.readAsDataURL(choose_file);
+            reader.onload = function () {
+                console.log(reader.result)
+            $("#image-img").attr("src", reader.result)
+        };
+
+    });
+
+    $(document).on('click','#submit_no',function () {
+        image_change = 0;
+
+    });
+
+    $(document).on('click','#submit_yes',function () {
+        if(image_change==1){
+            var formdata = new FormData();
+            console.log($("#image-input")[0].files[0])
+            formdata.append("image", $("#image-input")[0].files[0]);
+            formdata.append("name","20000006");
+            formdata.append("csrfmiddlewaretoken",$("[name='csrfmiddlewaretoken']").val());
+            $.ajax({
+                processData:false,
+                contentType:false,
+                url:'/submit_mission_group',
+                type:'POST',
+                data:formdata,
+                dataType:"json",
+                success: function (data) {
+
+                    
+                }
+            })    
+        }
+        
+        
+    });
+
+    
+    // $('#submit_no').click( function() {
+        
+    // })
+
+    // $('#submit_yes').click( function() {
+        
+    // })
 </script>

@@ -137,9 +137,6 @@
     })
 
 
-
-    
-
     function update_chat_list(){
         $.ajax({
               url: '/get_mission_chatroom_list',
@@ -215,6 +212,7 @@
         });
     };
 
+
     function send_mission_msg(chatroom_ID){
         $.ajax({
               url: '/mission_chatroom_update',
@@ -235,6 +233,7 @@
         });
     };
 
+    
     $("#chat-message-submit").click( function() {
         send_mission_msg(chatroom_ID);
         document.getElementById("chat-message-input").value = "";
