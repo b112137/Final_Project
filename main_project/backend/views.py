@@ -248,7 +248,7 @@ def create_mission_group(request):
         })
 
 
-def get_mission_chatroom(request):
+def get_mission_chatroom_list(request):
     if request.method == 'POST':
         account = request.POST.get("account")
         profile_search_all = Profile.objects.filter(account=account)
@@ -286,11 +286,7 @@ def get_mission_chatroom(request):
         time, status = (list(t) for t in zip(*sorted(zip(time_copy, status), reverse=True  )))
         time, message = (list(t) for t in zip(*sorted(zip(time_copy, message), reverse=True  )))
 
-
         # print(chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time)
-
-
-
 
         return JsonResponse({
             'result' : "success",
@@ -298,37 +294,48 @@ def get_mission_chatroom(request):
             "group_name": group_name, "status": status, "message": message, "time": time
         })
 
-def mission_chat_update(request):
+def mission_chatroom_update(request):
     if request.method == 'POST':
         post_type = request.POST.get('post_type')
         if post_type == "Send":
-            room = request.POST.get('room')
-            user = request.POST.get('user')
-            content = request.POST.get('content')
-            print(content)
-            with open('msg.txt', 'a', encoding="utf-8") as msg_file:
-                msg_file.write( content+'\n' )
-                msg_file.close()
+            chatroom_ID = request.POST.get('chatroom_ID')
+            sender_ID = request.POST.get('sender_ID')
+            message = request.POST.get('message')
 
-            Chat.objects.create(room=room, user=user,  content=content)
+
+            Mission_Chatroom.objects.create(chatroom_ID=chatroom_ID, sender_ID=sender_ID,  message=message)
             return JsonResponse({
                 'result' : "success"
             })
 
-        elif post_type == "Receive":
-            
+        elif post_type == "Receive":            
             chatroom_ID = request.POST.get('chatroom_ID')   
-            print(chatroom_ID)
             history = core_serializers.serialize("json", Mission_Chatroom.objects.filter(chatroom_ID=chatroom_ID).order_by("time"))
-            print(history)
+
+            group_name = Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0].group_name
 
             return JsonResponse({
                 'result' : "success",
                 'history' : history,
-                # 'room_history' : room_history,
+                'group_name': group_name,
             })
 
+def get_mission_chatroom_member(request):
+    if request.method == 'POST':
+        chatroom_ID = request.POST.get('chatroom_ID')
+        member_ID = ast.literal_eval(Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0].member_ID)
+        leader_ID = Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0].leader_ID
 
+        member_name = []
+        for member in member_ID:
+            member_name.append(Profile.objects.filter(account=member)[0].name)
+
+        return JsonResponse({
+            'result' : "success",
+            'member_ID' : member_ID,
+            'leader_ID' : leader_ID,
+            'member_name' : member_name
+        })
 
 def get_profile(account):
     profile = Profile.objects.filter(account=account)

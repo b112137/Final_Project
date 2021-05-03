@@ -7,6 +7,12 @@
     <body>
         <!-- <button id="mission_button">任務</button>
         <button id="chat_button">聊天</button> -->
+        
+        <div id="group_name"></div>
+        <div id="member">
+            <button id="group_member">查看成員</button>
+        </div>
+        <div id="member_list"></div>
 
         <div id="newpic">
 
@@ -17,7 +23,6 @@
             <input id="chat-message-submit" type="button" value="Send"/>
         </div>
         
-        <button id="mission_button">mission_button</button>
     </body>
 
 </html>
@@ -27,30 +32,84 @@
         data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
     })    
 
+    var timeout_update_chat_list;
+    var chatroom_ID;
+    var timeout_update_mission_msg;
     window.onload = function(){
         // $('#newpic').html("")
-        update_chat();
+        parameter = window.location.href.split('?')[1].split('&')
+        if(parameter.length == 1){
+            update_chat_list();
+            timeout_update_chat_list = window.setInterval( update_chat_list , 1000)
+        }
+        else if(parameter.length == 2){
+            console.log("abc")
+            chatroom_ID = parameter[1].split('=')[1];
+            $("#newpic").hide();
+            $("#chatroom").show();
+            update_mission_msg( chatroom_ID, "first" );
+            timeout_update_mission_msg = window.setInterval( ( ()=>update_mission_msg(chatroom_ID) ) , 200);
+        }
     }
     
-    var timeoutID = window.setInterval( update_chat , 1000);
     
 
-    $("#mission_button").click( function() {
-        abc = JSON.parse('[{"model": "backend.mission_chatroom", "pk": 2, "fields": {"chatroom_ID": "20000001", "sender_ID": "bladebaby0326", "message": "QQ", "time": "2021-05-02T13:44:47.296Z"}}, {"model": "backend.mission_chatroom", "pk": 3, "fields": {"chatroom_ID": "20000001", "sender_ID": "bladebaby0326", "message": "123", "time": "2021-05-02T15:59:33.178Z"}}]');
-        console.log(abc);
-    })
-
-    $("#chat_button").click( function() {
-    })
-
-    function update_chat(){
+    $("#group_member").click( function() {
+        window.clearInterval(timeout_update_mission_msg);
+        $("#chatroom").hide();
+        $("#group_member").hide();
+        $("#member").append('<button id="last_page">上一頁</button>')
+        
         $.ajax({
-              url: '/get_mission_chatroom',
+              url: '/get_mission_chatroom_member',
               method: 'POST',
               type: 'POST',
               dataType: "json",
               data: {
-                  "account": window.location.href.split('?')[1].split('=')[1],
+                  "chatroom_ID": chatroom_ID,
+              },
+              success: function (data) {
+                if (data.result == "success"){
+                    console.log("success")
+                    console.log(data.member_ID)
+                    if( window.location.href.split('?')[1].split('&')[0].split('=')[1] == data.leader_ID ){
+                        $("#member").append('<button id="edit">編輯成員</button>')
+                    }
+
+                    for(var i = 0; i < data.member_ID.length; i++){
+                        if (data.member_ID[i] == data.leader_ID){
+                            $("#member_list").append(
+                                "ID: " + data.member_ID[i]+ ' 組長<br>'+
+                                "name: " + data.member_name[i]+ '<br><br>'
+                            )
+                        }
+                        else{
+                             $("#member_list").append(
+                                "ID: " + data.member_ID[i]+ '<br>'+
+                                "name: " + data.member_name[i]+ '<br><br>'
+                            )
+                        }
+                    }
+
+                }
+              }
+        });
+
+    })
+
+
+
+    $("#chat_button").click( function() {
+    })
+
+    function update_chat_list(){
+        $.ajax({
+              url: '/get_mission_chatroom_list',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  "account": window.location.href.split('?')[1].split('&')[0].split('=')[1],
               },
               success: function (data) {
                 if (data.result == "success"){
@@ -69,11 +128,14 @@
 
                         $('#'+data.chatroom_ID[i]).click( function() {
                             console.log(this.id);
-                            window.clearInterval(timeoutID);
-                            $("#newpic").hide();
-                            $("#chatroom").show();
-                            update_mission_msg(this.id);
-                            var timeout_update_mission_msg = window.setInterval( ( ()=>update_mission_msg(this.id) ) , 200);
+                            window.clearInterval(timeout_update_chat_list);
+                            // $("#newpic").hide();
+                            // $("#chatroom").show();
+                            
+                            window.location.href = window.location.href + "&chatroom_ID=" + this.id
+
+                            // update_mission_msg(this.id);
+                            // var timeout_update_mission_msg = window.setInterval( ( ()=>update_mission_msg(this.id) ) , 200);
                         })
                     }
                 }
@@ -82,21 +144,24 @@
     }
     
 
-    function update_mission_msg(chatroom_ID){
+    function update_mission_msg(chatroom_ID, first=""){
         $.ajax({
-              url: '/mission_chat_update',
+              url: '/mission_chatroom_update',
               method: 'POST',
               type: 'POST',
               dataType: "json",
               data: {
                   "post_type": "Receive",
-                  "chatroom_ID": chatroom_ID
+                  "chatroom_ID": chatroom_ID,
               },
               success: function (data) {
                 if (data.result == "success"){
                   chatroom_history = JSON.parse(data.history);
-                //   console.log(data.history);
-                  console.log(chatroom_history)
+
+                  if (first=="first"){
+                    $('#group_name').html(data.group_name);
+                  }
+
                   html_code = ""
                   for(var i = 0; i < chatroom_history.length; i++){
                     var time = new Date(chatroom_history[i].fields.time)
@@ -111,5 +176,33 @@
               }
         });
     };
+
+    function send_mission_msg(chatroom_ID){
+        $.ajax({
+              url: '/mission_chatroom_update',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  "post_type": "Send",
+                  "chatroom_ID": chatroom_ID,
+                  "sender_ID": window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                  "message": document.getElementById("chat-message-input").value
+              },
+              success: function (data) {
+                if (data.result == "success"){
+                    console.log("success")
+                }
+              }
+        });
+    };
+
+    $("#chat-message-submit").click( function() {
+        send_mission_msg(chatroom_ID);
+        document.getElementById("chat-message-input").value = "";
+    });
+
+    
+
 
 </script>
