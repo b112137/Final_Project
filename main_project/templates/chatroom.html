@@ -9,15 +9,18 @@
         <button id="chat_button">聊天</button> -->
         
         <div id="group_name"></div>
-        <div id="member">
-            <button id="group_member">查看成員</button>
-        </div>
-        <div id="member_list"></div>
 
         <div id="newpic">
 
         </div>
+
+        <div id="member" style="display:none">
+            <button id="group_member">查看成員</button>
+        </div>
+        <div id="member_list"></div>
+
         <div id="chatroom" style="display: none">
+            
             <textarea readonly id="chat-log" cols="100" rows="20"></textarea><br/>
             <input id="chat-message-input" type="text" size="100"/><br/>
             <input id="chat-message-submit" type="button" value="Send"/>
@@ -35,6 +38,7 @@
     var timeout_update_chat_list;
     var chatroom_ID;
     var timeout_update_mission_msg;
+    var member_ID="";
     window.onload = function(){
         // $('#newpic').html("")
         parameter = window.location.href.split('?')[1].split('&')
@@ -47,6 +51,7 @@
             chatroom_ID = parameter[1].split('=')[1];
             $("#newpic").hide();
             $("#chatroom").show();
+            $("#member").show();
             update_mission_msg( chatroom_ID, "first" );
             timeout_update_mission_msg = window.setInterval( ( ()=>update_mission_msg(chatroom_ID) ) , 200);
         }
@@ -74,20 +79,54 @@
                     console.log(data.member_ID)
                     if( window.location.href.split('?')[1].split('&')[0].split('=')[1] == data.leader_ID ){
                         $("#member").append('<button id="edit">編輯成員</button>')
+                        $("#edit").click( function() {
+                            for(var i = 0; i < member_ID.length; i++){
+                                $('#'+member_ID[i]).show();
+                            }
+                        })
                     }
-
+                    
+                    member_ID = data.member_ID;
                     for(var i = 0; i < data.member_ID.length; i++){
                         if (data.member_ID[i] == data.leader_ID){
                             $("#member_list").append(
+                                '<div id="' + data.member_ID[i] + '_div">'+
                                 "ID: " + data.member_ID[i]+ ' 組長<br>'+
-                                "name: " + data.member_name[i]+ '<br><br>'
+                                "name: " + data.member_name[i]+ '<br><br>'+
+                                // '<button style="display:none" id="' + data.member_ID[i] + '">踢出群組</button><br><br>'
+                                '</div>'
                             )
                         }
                         else{
                              $("#member_list").append(
+                                '<div id="' + data.member_ID[i] + '_div">'+
                                 "ID: " + data.member_ID[i]+ '<br>'+
-                                "name: " + data.member_name[i]+ '<br><br>'
+                                "name: " + data.member_name[i]+ '<br>'+
+                                '<button style="display:none" id="' + data.member_ID[i] + '">踢出群組</button><br><br>'+
+                                '</div>'
                             )
+                            $('#'+data.member_ID[i]).click(function() {
+                                var this_id = this.id
+                                $.ajax({
+                                    url: '/kick_mission_chatroom_member',
+                                    method: 'POST',
+                                    type: 'POST',
+                                    dataType: "json",
+                                    data: {
+                                        "kicked_ID": this.id,
+                                        "user_ID": window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                                        "chatroom_ID": chatroom_ID,
+                                    },
+                                    success: function (data) {
+                                        if (data.result == "success"){
+                                            $("#"+this_id+"_div").hide()
+                                            console.log("success")
+                                        }
+                                    }
+                                });
+
+
+                            })
                         }
                     }
 
@@ -99,8 +138,7 @@
 
 
 
-    $("#chat_button").click( function() {
-    })
+    
 
     function update_chat_list(){
         $.ajax({

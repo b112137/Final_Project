@@ -164,10 +164,11 @@ def join_mission_group(request):
         mission_ID = request.POST.get('mission_ID')
         chatroom_ID = request.POST.get('chatroom_ID')
 
-        ### 修改 mission group
+        
         group_search_all = Mission_group.objects.filter(chatroom_ID=chatroom_ID)
         group_search = group_search_all[0]
         if group_search.status == "acceptable":
+            ### 修改 mission group
             member_ID = ast.literal_eval(group_search.member_ID)
             member_ID.append(account)
             group_search_all.update(member_ID = member_ID)
@@ -175,24 +176,28 @@ def join_mission_group(request):
             if len(member_ID) >= int(group_search.group_most):
                 group_search_all.update(status = "full")
         
-        ### 修改 mission imformation
-        mission_search_all = Mission_imformation.objects.filter(mission_ID=mission_ID)
-        mission_search = mission_search_all[0]
-        joined = mission_search.joined
-        joined = int(joined) + 1
-        mission_search_all.update(joined = joined)
+            ### 修改 mission imformation
+            mission_search_all = Mission_imformation.objects.filter(mission_ID=mission_ID)
+            mission_search = mission_search_all[0]
+            joined = mission_search.joined
+            joined = int(joined) + 1
+            mission_search_all.update(joined = joined)
 
-        joined_ID = ast.literal_eval(mission_search.joined_ID)
-        joined_ID.append(account)
-        mission_search_all.update(joined_ID = joined_ID)
+            joined_ID = ast.literal_eval(mission_search.joined_ID)
+            joined_ID.append(account)
+            mission_search_all.update(joined_ID = joined_ID)
 
-        ### 修改 Profile
-        profile_search_all = Profile.objects.filter(account=account)
-        profile_search = profile_search_all[0]
-        mission_doing_chatroom_ID = ast.literal_eval(profile_search.mission_doing_chatroom_ID)
-        mission_doing_chatroom_ID.append(chatroom_ID)
-        profile_search_all.update(mission_doing_chatroom_ID = mission_doing_chatroom_ID)
-        
+            ### 修改 Profile
+            profile_search_all = Profile.objects.filter(account=account)
+            profile_search = profile_search_all[0]
+            mission_doing_chatroom_ID = ast.literal_eval(profile_search.mission_doing_chatroom_ID)
+            mission_doing_chatroom_ID.append(chatroom_ID)
+            profile_search_all.update(mission_doing_chatroom_ID = mission_doing_chatroom_ID)
+            
+            result = "success"
+        elif group_search.status == "full":
+            result = "group_full"
+
         ### 取得刷新頁面資料
         chatroom_ID, group_name, group_now, group_most, leader_ID = mission_filter(account, mission_ID)
 
@@ -216,7 +221,7 @@ def create_mission_group(request):
             })
 
         ### 新增 mission group 欄位
-        lastest_chatroom_ID = int(Mission_group.objects.order_by('pk').last().chatroom_ID) + 1
+        lastest_chatroom_ID = str(int(Mission_group.objects.order_by('pk').last().chatroom_ID) + 1)
         mission_name = Mission_imformation.objects.filter(mission_ID=mission_ID)[0].mission_name
         status = "acceptable"
         member_ID = [leader_ID]
@@ -337,6 +342,83 @@ def get_mission_chatroom_member(request):
             'member_name' : member_name
         })
 
+def kick_mission_chatroom_member(request):
+    if request.method == 'POST':
+        kicked_ID = request.POST.get("kicked_ID")
+        user_ID = request.POST.get('user_ID')
+        chatroom_ID = request.POST.get('chatroom_ID')
+
+        ### 確認是否為該group leader
+        if user_ID == Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0].leader_ID:
+
+            group_search_all = Mission_group.objects.filter(chatroom_ID=chatroom_ID)
+            group_search = group_search_all[0]
+
+            member_ID = ast.literal_eval(group_search.member_ID)
+            check_member = 0
+            for member in member_ID:
+                if kicked_ID == member:
+                    check_member = 1
+                    break 
+
+            if check_member:
+                ### 修改 mission group
+                member_ID.remove(kicked_ID)
+                group_search_all.update(member_ID = member_ID)
+
+                if group_search.status == "full":
+                    group_search_all.update(status = "acceptable")
+            
+                ### 修改 mission imformation
+                mission_ID = group_search.mission_ID
+                mission_search_all = Mission_imformation.objects.filter(mission_ID=mission_ID)
+                mission_search = mission_search_all[0]
+                joined = mission_search.joined
+                joined = int(joined) - 1
+                mission_search_all.update(joined = joined)
+
+                joined_ID = ast.literal_eval(mission_search.joined_ID)
+                joined_ID_reverse = joined_ID.copy()
+                joined_ID_reverse.reverse()
+                
+                check_joined_ID = 0
+                for ID in joined_ID_reverse:
+                    if kicked_ID == ID:
+                        check_joined_ID = 1
+                        break 
+
+                if check_joined_ID:
+                    joined_ID_reverse.remove(kicked_ID)
+                    joined_ID = joined_ID_reverse
+                    joined_ID.reverse()
+                    mission_search_all.update(joined_ID = joined_ID)
+
+                ### 修改 Profile
+                profile_search_all = Profile.objects.filter(account=kicked_ID)
+                profile_search = profile_search_all[0]
+                mission_doing_chatroom_ID = ast.literal_eval(profile_search.mission_doing_chatroom_ID)
+
+                check_mission_doing = 0
+                for ID in mission_doing_chatroom_ID:
+                    if chatroom_ID == ID:
+                        check_mission_doing = 1
+                        break 
+
+                if check_mission_doing:
+                    mission_doing_chatroom_ID.remove(chatroom_ID)
+                    profile_search_all.update(mission_doing_chatroom_ID = mission_doing_chatroom_ID)
+                print(member_ID, joined, joined_ID, mission_doing_chatroom_ID)
+            
+            return JsonResponse({
+                'result' : "success",
+            })
+
+        else:
+            return JsonResponse({
+                'result' : "not_leader"
+            })
+
+
 def get_profile(account):
     profile = Profile.objects.filter(account=account)
     return profile
@@ -364,6 +446,7 @@ def mission_filter(account, mission_ID):
                 leader_ID.append(group.leader_ID)
 
     return chatroom_ID, group_name, group_now, group_most, leader_ID
+
 
 
 
