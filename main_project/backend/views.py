@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from django.views.generic import View
 import json
 from backend.models import Chat
-from backend.models import Profile, Mission_imformation, Mission_group, Mission_Chatroom
+from backend.models import Profile, Mission_imformation, Mission_group, Mission_Chatroom, Mission_submission
 
 from rest_framework import serializers
 from django.core import serializers as core_serializers
@@ -300,13 +300,50 @@ def submit_mission_group_check(request):
 def submit_mission_group(request):
     if request.method == 'POST':
         image = request.FILES.get('image')
-        name = request.POST.get('name')
-        print(name)
-        print(image.name)
+        chatroom_ID = request.POST.get('chatroom_ID')
 
-        with open('media/mission_submit_upload/' + name +'.jpg', 'wb') as f:
+        with open('media/mission_submit_upload/' + chatroom_ID +'.jpg', 'wb') as f:
             for line in image:
                 f.write(line)
+
+        ### 修改 Mission group
+        group_search_all = Mission_group.objects.filter(chatroom_ID=chatroom_ID)
+        group_search_all.update(status="checking")
+
+        ### 修改 Profile
+        member_ID = ast.literal_eval(group_search_all[0].member_ID)
+
+        for member in member_ID:
+            profile_search_all = Profile.objects.filter(account=member)
+            profile_search = profile_search_all[0]
+            mission_doing_chatroom_ID = ast.literal_eval(profile_search.mission_doing_chatroom_ID)
+            mission_done_chatroom_ID = ast.literal_eval(profile_search.mission_done_chatroom_ID)
+
+            check_mission_doing = 0
+            for ID in mission_doing_chatroom_ID:
+                if chatroom_ID == ID:
+                    check_mission_doing = 1
+                    break 
+
+            if check_mission_doing:
+                mission_doing_chatroom_ID.remove(chatroom_ID)
+                profile_search_all.update(mission_doing_chatroom_ID = mission_doing_chatroom_ID)
+                mission_done_chatroom_ID.append(chatroom_ID)
+                profile_search_all.update(mission_done_chatroom_ID = mission_done_chatroom_ID)
+
+        ### create Mission submission
+        mission_ID = group_search_all[0].mission_ID
+        mission_name = group_search_all[0].mission_name
+        group_name = group_search_all[0].group_name
+        submission_pic = 'media/mission_submit_upload/' + chatroom_ID +'.jpg'
+        check_status = "checking"
+        check_preson = "none"
+        Mission_submission.objects.create(mission_ID=mission_ID, mission_name=mission_name, chatroom_ID=chatroom_ID, group_name=group_name,
+                                member_ID=member_ID, submission_pic=submission_pic, check_status=check_status, check_preson=check_preson
+        )
+
+        ### 取得刷新頁面資料
+        ### ToDo ###
 
         return JsonResponse({
             'result' : "success",

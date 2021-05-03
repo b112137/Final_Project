@@ -274,7 +274,7 @@
             var formdata = new FormData();
             console.log($("#image-input")[0].files[0])
             formdata.append("image", $("#image-input")[0].files[0]);
-            formdata.append("name","20000006");
+            formdata.append("chatroom_ID","20000006");
             formdata.append("csrfmiddlewaretoken",$("[name='csrfmiddlewaretoken']").val());
             $.ajax({
                 processData:false,

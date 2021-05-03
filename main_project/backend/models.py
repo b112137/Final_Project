@@ -83,6 +83,17 @@ class Mission_group(models.Model):
     status = models.CharField(max_length=100)
     member_ID = models.TextField() #List
 
+class Mission_submission(models.Model):
+    mission_ID = models.CharField(max_length=100)
+    mission_name = models.TextField()
+    chatroom_ID = models.CharField(max_length=100)
+    group_name = models.TextField()
+    member_ID = models.TextField() #List
+    submission_pic = models.TextField()
+    check_status = models.CharField(max_length=100)
+    check_preson = models.TextField()
+    time = models.DateTimeField(auto_now_add=True)
+
 class Shop(models.Model):
     product_ID = models.CharField(max_length=100)
     product_name = models.TextField()
