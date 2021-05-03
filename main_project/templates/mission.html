@@ -13,16 +13,19 @@
         
         <button id="mission_button">任務</button> -->
         <button id="group_check">揪團報名</button>
+        <button id="my_mission">我的任務</button>
         <br><br>
         <div id="newpic">
 
         </div>
 
         <button id="group_join">+++</button>
-        <br><br>
-        揪團名稱 <input id = "group_name" type="text" size="20" ><br/>
-        上限人數 <input id = "group_most" type="text" size="20" ><br/>
-        <button id="group_create">我要開團</button>
+        <div id = "group_op">
+            <br><br>
+            揪團名稱 <input id = "group_name" type="text" size="20" ><br/>
+            上限人數 <input id = "group_most" type="text" size="20" ><br/>
+            <button id="group_create">我要開團</button>
+        </div>
     </body>
 
 </html>
@@ -169,6 +172,14 @@
                 console.log("success")
               }
         });
+    })
+
+    $('#my_mission').click( function() {
+        $('#newpic').hide();
+        $('#group_join').hide();
+        $('#group_op').hide();
+        
+
     })
 
 </script>
