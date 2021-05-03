@@ -164,39 +164,49 @@ def join_mission_group(request):
         mission_ID = request.POST.get('mission_ID')
         chatroom_ID = request.POST.get('chatroom_ID')
 
-        
         group_search_all = Mission_group.objects.filter(chatroom_ID=chatroom_ID)
         group_search = group_search_all[0]
-        if group_search.status == "acceptable":
-            ### 修改 mission group
-            member_ID = ast.literal_eval(group_search.member_ID)
-            member_ID.append(account)
-            group_search_all.update(member_ID = member_ID)
 
-            if len(member_ID) >= int(group_search.group_most):
-                group_search_all.update(status = "full")
+        profile_search_all = Profile.objects.filter(account=account)
+        profile_search = profile_search_all[0]
+        mission_doing_chatroom_ID = ast.literal_eval(profile_search.mission_doing_chatroom_ID)
         
-            ### 修改 mission imformation
-            mission_search_all = Mission_imformation.objects.filter(mission_ID=mission_ID)
-            mission_search = mission_search_all[0]
-            joined = mission_search.joined
-            joined = int(joined) + 1
-            mission_search_all.update(joined = joined)
+        mission_group_check = 1
+        for ID in mission_doing_chatroom_ID:
+            if mission_ID == ID:
+                mission_group_check = 0
+                break
 
-            joined_ID = ast.literal_eval(mission_search.joined_ID)
-            joined_ID.append(account)
-            mission_search_all.update(joined_ID = joined_ID)
+        if mission_group_check:
+            if group_search.status == "acceptable":
+                ### 修改 mission group
+                member_ID = ast.literal_eval(group_search.member_ID)
+                member_ID.append(account)
+                group_search_all.update(member_ID = member_ID)
 
-            ### 修改 Profile
-            profile_search_all = Profile.objects.filter(account=account)
-            profile_search = profile_search_all[0]
-            mission_doing_chatroom_ID = ast.literal_eval(profile_search.mission_doing_chatroom_ID)
-            mission_doing_chatroom_ID.append(chatroom_ID)
-            profile_search_all.update(mission_doing_chatroom_ID = mission_doing_chatroom_ID)
+                if len(member_ID) >= int(group_search.group_most):
+                    group_search_all.update(status = "full")
             
-            result = "success"
-        elif group_search.status == "full":
-            result = "group_full"
+                ### 修改 mission imformation
+                mission_search_all = Mission_imformation.objects.filter(mission_ID=mission_ID)
+                mission_search = mission_search_all[0]
+                joined = mission_search.joined
+                joined = int(joined) + 1
+                mission_search_all.update(joined = joined)
+
+                joined_ID = ast.literal_eval(mission_search.joined_ID)
+                joined_ID.append(account)
+                mission_search_all.update(joined_ID = joined_ID)
+
+                ### 修改 Profile
+                mission_doing_chatroom_ID.append(chatroom_ID)
+                profile_search_all.update(mission_doing_chatroom_ID = mission_doing_chatroom_ID)
+                
+                result = "success"
+            elif group_search.status == "full":
+                result = "group_full"
+        else:
+            result = "group_repeat"
 
         ### 取得刷新頁面資料
         chatroom_ID, group_name, group_now, group_most, leader_ID = mission_filter(account, mission_ID)
@@ -262,6 +272,7 @@ def get_mission_chatroom_list(request):
         mission_done_chatroom_ID = ast.literal_eval(profile_search.mission_done_chatroom_ID)
 
         chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time = [], [], [], [], [], [], []
+        count = 0
         for chatroom_ID in mission_doing_chatroom_ID:
             chatroom_ID_all.append(chatroom_ID)
 
@@ -279,9 +290,10 @@ def get_mission_chatroom_list(request):
                 # print(lastest_message.time)
             else:
                 message.append("")
-                time.append(datetime(1999, 3, 26, 0, 0, 0, 0, tzinfo=timezone.utc))
+                time.append(datetime(1999, 3, 26, 0, 0, 0, count, tzinfo=timezone.utc))
+                count += 1
 
-        # print(chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time)
+        print(chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time)
         time_copy = time.copy()
 
         time, chatroom_ID_all = (list(t) for t in zip(*sorted(zip(time_copy, chatroom_ID_all), reverse=True  )))
@@ -291,7 +303,7 @@ def get_mission_chatroom_list(request):
         time, status = (list(t) for t in zip(*sorted(zip(time_copy, status), reverse=True  )))
         time, message = (list(t) for t in zip(*sorted(zip(time_copy, message), reverse=True  )))
 
-        # print(chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time)
+        print(chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time)
 
         return JsonResponse({
             'result' : "success",
