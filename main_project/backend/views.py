@@ -628,6 +628,60 @@ def submission_to_finish(request):
             'result' : "success"
         })
 
+# 
+def get_my_mission(request):
+    if request.method == 'POST':
+        account = request.POST.get("user_ID")
+        print("a",account)
+        profile = Profile.objects.filter(account=account)[0]
+        mission_doing_chatroom_ID = ast.literal_eval(profile.mission_doing_chatroom_ID)
+        mission_done_chatroom_ID = ast.literal_eval(profile.mission_done_chatroom_ID)
+        
+        mission_ID,mission_name,group_name,leader_ID,status,member_ID,mission_pic,member_name_list = [], [], [], [], [], [], [], []
+
+        for doing_chatroom_ID in mission_doing_chatroom_ID:
+            mission_ID.append(Mission_group.objects.filter(chatroom_ID=doing_chatroom_ID)[0].mission_ID)
+            mission_name.append(Mission_group.objects.filter(chatroom_ID=doing_chatroom_ID)[0].mission_name)
+            group_name.append(Mission_group.objects.filter(chatroom_ID=doing_chatroom_ID)[0].group_name)
+            leader_ID.append(Mission_group.objects.filter(chatroom_ID=doing_chatroom_ID)[0].leader_ID)
+            status.append(Mission_group.objects.filter(chatroom_ID=doing_chatroom_ID)[0].status)
+            # 
+            member_ID.append(ast.literal_eval(Mission_group.objects.filter(chatroom_ID=doing_chatroom_ID)[0].member_ID))
+            # 
+            mission_pic.append(Mission_imformation.objects.filter(mission_ID=Mission_group.objects.filter(chatroom_ID=doing_chatroom_ID)[0].mission_ID)[0].mission_pic)
+            member_name = []
+            for member in ast.literal_eval(Mission_group.objects.filter(chatroom_ID=doing_chatroom_ID)[0].member_ID):
+                member_name.append(Profile.objects.filter(account=member)[0].name)
+            member_name_list.append(member_name)
+        
+        for done_chatroom_ID in mission_done_chatroom_ID:
+            mission_ID.append(Mission_group.objects.filter(chatroom_ID=done_chatroom_ID)[0].mission_ID)
+            mission_name.append(Mission_group.objects.filter(chatroom_ID=done_chatroom_ID)[0].mission_name)
+            group_name.append(Mission_group.objects.filter(chatroom_ID=done_chatroom_ID)[0].group_name)
+            leader_ID.append(Mission_group.objects.filter(chatroom_ID=done_chatroom_ID)[0].leader_ID)
+            status.append(Mission_group.objects.filter(chatroom_ID=done_chatroom_ID)[0].status)
+            # 
+            member_ID.append(ast.literal_eval(Mission_group.objects.filter(chatroom_ID=done_chatroom_ID)[0].member_ID))
+            # 
+            mission_pic.append(Mission_imformation.objects.filter(mission_ID=Mission_group.objects.filter(chatroom_ID=done_chatroom_ID)[0].mission_ID)[0].mission_pic)
+            member_name = []
+            for member in ast.literal_eval(Mission_group.objects.filter(chatroom_ID=done_chatroom_ID)[0].member_ID):
+                member_name.append(Profile.objects.filter(account=member)[0].name)
+            member_name_list.append(member_name)
+
+        return JsonResponse({
+            'result' : "success",
+            'mission_ID': mission_ID,
+            'mission_name': mission_name,
+            'group_name': group_name,
+            'leader_ID' : leader_ID,
+            'status': status,
+            'member_ID' : member_ID,
+            'mission_pic': mission_pic,
+            'member_name' : member_name_list,
+            'mission_doing_chatroom_ID': mission_doing_chatroom_ID,
+            'mission_done_chatroom_ID': mission_done_chatroom_ID
+        })
 
 
 # def modify_profile(request):
