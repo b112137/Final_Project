@@ -670,7 +670,7 @@ def get_my_mission(request):
             for member in ast.literal_eval(Mission_group.objects.filter(chatroom_ID=done_chatroom_ID)[0].member_ID):
                 member_name.append(Profile.objects.filter(account=member)[0].name)
             member_name_list.append(member_name)
-
+            print(status)
         return JsonResponse({
             'result' : "success",
             'mission_ID': mission_ID,

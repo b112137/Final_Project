@@ -181,7 +181,7 @@
                 </div> -->
 
             </div>
-            <div id="my-mission" class="tab-pane fade">
+            <div id="my-mission" style="position: relative" class="tab-pane fade">
                 <div class="jf-continer" id = 'page1'>
                     <img src="static/Rectangle 60.png" id = "joined" class = "joined_clicked">
                     <img src ="static/Rectangle 61.png"id = "finished" class  = "finished_noclick">
@@ -213,8 +213,63 @@
     })
 
     $('#tab-my-mission').click( function() {
-
+        my_mission("join");
     })
+    
+    function my_mission(type) {
+        $('#page1').html("");
+        if(type=="join"){
+            $('#page1').append(
+                "<div>\
+                    <img src='static/Rectangle 60.png' id = 'joined' class = 'joined_clicked'>\
+                    <img src ='static/Rectangle 61.png' id = 'finished' class  = 'finished_noclick'>\
+                    <div class='joined_text' id = 'joined_t'>已加入</div>\
+                    <div class='finished_text' id ='finished_t'>已完成</div>\
+                </div>"
+            )
+        }
+        $.ajax({
+              url: '/get_my_mission',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                "user_ID": window.location.href.split('?')[1].split('&')[0].split('=')[1],
+              },
+              success: function (data) {
+                if (data.result == "success"){
+                    var pic_list = data.mission_pic
+                    console.log(pic_list)
+                    for(var i = 0; i < pic_list.length; i++){
+                        $.ajax({
+                        url: '/get_all_mission_img',
+                        method: 'POST',
+                        type: 'POST',
+                        async: false, //改成同步執行(等待上一個回傳)
+                        data: {
+                            "img_path": pic_list[i],
+                        },
+                        success: function (img) {
+                            console.log(data.status[i])
+                            if(type=="join" && (data.status[i]=="acceptable" || data.status[i]=="full")){
+                                console.log(i)
+                                $('#page1').append(
+                                    "<div style='position: absolute'>\
+                                        <img src='static/Rectangle 31.png' class = 'joined_mission'>\
+                                        <img src='static/Rectangle 34.png' class = 'joined_name'>\
+                                        <img src= 'static/Rectangle 62.png' class = 'submit_btn'>\
+                                        <div class='submit_text' id = 'submit'>提交</div>\
+                                    </div>"
+                                )
+                            }
+                            
+                        }
+                        });
+                    }
+                }
+              }
+        });
+    }
 
     function all_mission() {
         $('#mission_container').html("");
@@ -309,39 +364,7 @@
         });
     }
 
-    function all_mission() {
-        $('#mission_container').html("");
-        console.log($('#mission_container'))
-        $.ajax({
-              url: '/get_my_mission',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-              },
-              success: function (data) {
-                if (data.result == "success"){
-                    var pic_list = data.mission_pic
-                    for(var i = 0; i < pic_list.length; i++){
-                        $.ajax({
-                        url: '/get_all_mission_img',
-                        method: 'POST',
-                        type: 'POST',
-                        async: false, //改成同步執行(等待上一個回傳)
-                        data: {
-                            "img_path": pic_list[i],
-                        },
-                        success: function (img) {
-                            console.log("success")
-                            $('#mission_container').append(                             
-                             )
-                        }
-                        });
-                    }
-                }
-              }
-        });
-    }
+    
 
 
     function mission_signup(mission_ID){
