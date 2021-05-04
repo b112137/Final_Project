@@ -50,7 +50,9 @@ urlpatterns = [
 
     path('create_mission_group', backend.create_mission_group),
     
-    
+    # 
+    path('get_my_mission' , backend.get_my_mission),
+    # 
     # path('chat_update', backend.chat_update),
 
 
