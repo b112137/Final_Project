@@ -182,8 +182,14 @@
 
             </div>
             <div id="my-mission" class="tab-pane fade">
-                <h3>Menu 1</h3>
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <div class="jf-continer" id = 'page1'>
+                    <img src="static/Rectangle 60.png" id = "joined" class = "joined_clicked">
+                    <img src ="static/Rectangle 61.png"id = "finished" class  = "finished_noclick">
+                
+                    <div class="joined_text" id = "joined_t">已加入</div>
+                    <div class="finished_text" id ="finished_t">已完成</div>
+                    
+                </div>
             </div>
         </div>
         
@@ -199,6 +205,20 @@
     })    
 
     window.onload = function(){
+        all_mission();
+    }
+
+    $('#tab-explore').click( function() {
+        all_mission();
+    })
+
+    $('#tab-my-mission').click( function() {
+
+    })
+
+    function all_mission() {
+        $('#mission_container').html("");
+        console.log($('#mission_container'))
         $.ajax({
               url: '/get_all_mission',
               method: 'POST',
@@ -280,6 +300,40 @@
                                         </div>\
                                     </div>\
                                 </div>'
+                             )
+                        }
+                        });
+                    }
+                }
+              }
+        });
+    }
+
+    function all_mission() {
+        $('#mission_container').html("");
+        console.log($('#mission_container'))
+        $.ajax({
+              url: '/get_my_mission',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+              },
+              success: function (data) {
+                if (data.result == "success"){
+                    var pic_list = data.mission_pic
+                    for(var i = 0; i < pic_list.length; i++){
+                        $.ajax({
+                        url: '/get_all_mission_img',
+                        method: 'POST',
+                        type: 'POST',
+                        async: false, //改成同步執行(等待上一個回傳)
+                        data: {
+                            "img_path": pic_list[i],
+                        },
+                        success: function (img) {
+                            console.log("success")
+                            $('#mission_container').append(                             
                              )
                         }
                         });

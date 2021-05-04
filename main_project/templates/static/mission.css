@@ -384,3 +384,236 @@ li > a {
     bottom: 0vw;
     background-size: cover;
 }
+
+.jf-continer{
+    position: relative;
+    text-align: center;
+}
+.joined_clicked{
+    position: absolute;
+    width: 22vw;
+    height: 9.3vw;
+    left: 23vw;
+    top: 4vw;
+    border-width: 0px;
+    z-index: 5;
+    text-align: center
+}
+
+.joined_text{
+    position: absolute;
+    left: 26vw;
+    top: 5vw;
+    font-size: 5.5vw;
+    z-index: 100;
+}
+
+.finished_noclick{
+    position: absolute;
+    width: 22vw;
+    height: 9.3vw;
+    right: 23vw;
+    top: 4vw;
+    border-width: 0px;
+
+    z-index: 5;
+    text-align: center
+}
+.finished_text{
+    position: absolute;
+    right: 26vw;
+    top: 5vw;
+    font-size: 5.5vw;
+    z-index: 100;
+}
+
+.joined_mission{
+    position: absolute;
+    width: 80vw;
+    height: 30vw;
+    left: 10vw;
+    top: 20vw;
+    border-width: 0px;
+    z-index: 20;
+    text-align: center
+}
+
+.joined_name{
+    position: absolute;
+    width: 20vw;
+    height: 20vw;
+    left: 14vw;
+    top: 25vw;
+    border-width: 0px;
+    z-index: 30;
+    text-align: center
+}
+
+.submit_btn{
+    position: absolute;
+    width: 20vw;
+    height: 10vw;
+    right: 14vw;
+    top: 30vw;
+    border-width: 0px;
+    z-index: 30;
+    text-align: center
+}
+
+.submit_text{
+    position: absolute;
+    right: 18vw;
+    top: 31vw;
+    font-size: 5.5vw;
+    z-index: 100;
+    color: white;
+    font-weight: bold;
+}
+
+.already_finish_text{
+    position: absolute;
+    right: 15.5vw;
+    top: 31vw;
+    font-size: 5.5vw;
+    z-index: 100;
+    color: white;
+    font-weight: bold;
+}
+
+.quarter_circle {
+    position: fixed;
+    width: 17.6vw;
+    height: 17.6vw;
+    bottom: 0vw;
+    background-size: cover;
+}
+
+.mission-info-tab {
+    position: absolute;
+    width: 72vw !important;
+    top: 15vw;
+    left: 7.2vw;
+}
+
+#page {
+    position: absolute;
+    height: 100vh;
+    width: 55vh;
+    margin: auto;
+    background-color: #FFFFD8 !important;
+    top: 0px;
+    visibility: hidden;
+    z-index: 200;
+}
+
+
+.back_board{
+    position: absolute;
+    width: 80vw;
+    height: auto;
+    left: 10vw;
+    top: 6vw;
+    border-width: 0px;
+    z-index: 20;
+    text-align: center
+}
+.submit2{
+    position: absolute;
+    width: 25vw;
+    height: auto;
+    right: 40vw;
+    bottom: 70vw;
+    border-width: 0px;
+    z-index: 30;
+    text-align: center
+}
+.submit_check{
+    position: absolute;
+    font-size: 6.5vw;
+    right: 45.5vw;
+    bottom: 71.3vw;
+    border-width: 0px;
+    z-index: 40;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+
+.cancel_btn{
+    position: absolute;
+    width: 25vw;
+    height: auto;
+    left: 20vw;
+    bottom: 70vw;
+    border-width: 0px;
+    z-index: 30;
+    text-align: center
+}
+
+.cancel_check{
+    position: absolute;
+    font-size: 6.5vw;
+    left: 25.5vw;
+    bottom: 71.3vw;
+    border-width: 0px;
+    z-index: 40;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+
+.picture_frame{
+    position: absolute;
+    width: 70vw;
+    height: auto;
+    left: 15vw;
+    top: 70vw;
+    border-width: 0px;
+    z-index: 30;
+    text-align: center
+}
+
+.upload{
+    position: absolute;
+    width: 12vw;
+    height: auto;
+    left: 44.5vw;
+    top: 90vw;
+    border-width: 0px;
+    z-index: 30;
+    text-align: center
+}
+
+.participate_title{
+    position: absolute;
+    font-size: 6.5vw;
+    left: 30vw;
+    top: 10vw;
+    border-width: 0px;
+    z-index: 40;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+}
+
+.participant1{
+    position: absolute;
+    width: 22vw;
+    height: auto;
+    left: 39vw;
+    top: 28vw;
+    border-width: 0px;
+    z-index: 30;
+    text-align: center
+}
+
+.mission_c{
+    position: absolute;
+    font-size: 6vw;
+    left: 30vw;
+    top: 40vw;
+    border-width: 0px;
+    z-index: 40;
+    text-align: center;
+    color: black;
+}
