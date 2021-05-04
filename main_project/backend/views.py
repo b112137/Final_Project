@@ -56,6 +56,9 @@ def chatroom_page(request):
     return render(request, 'chatroom.html', {
     })
 
+def profile_page(request):
+    return render(request,'profile.html',{
+    })
 
 def register_submit(request):
     if request.method == 'POST':
@@ -632,7 +635,6 @@ def submission_to_finish(request):
 def get_my_mission(request):
     if request.method == 'POST':
         account = request.POST.get("user_ID")
-        print("a",account)
         profile = Profile.objects.filter(account=account)[0]
         mission_doing_chatroom_ID = ast.literal_eval(profile.mission_doing_chatroom_ID)
         mission_done_chatroom_ID = ast.literal_eval(profile.mission_done_chatroom_ID)
@@ -681,6 +683,27 @@ def get_my_mission(request):
             'member_name' : member_name_list,
             'mission_doing_chatroom_ID': mission_doing_chatroom_ID,
             'mission_done_chatroom_ID': mission_done_chatroom_ID
+        })
+
+def get_profile_page(request):
+    if request.method == 'POST':
+        account = request.POST.get("user_ID")
+        profile = Profile.objects.filter(account=account)[0]
+        return JsonResponse({
+            'result' : "success",
+            'name': profile.name,
+            'sex': profile.sex,
+            'birth': profile.birth,
+            'intro': profile.intro,
+            'exp1': profile.exp1,
+            'exp2': profile.exp2,
+            'exp3': profile.exp3,
+            'balance': profile.balance,
+            'character_name': profile.character_name,
+            'profile_photo': profile.profile_photo,
+            'mission_doing_chatroom_ID': ast.literal_eval(profile.mission_doing_chatroom_ID),
+            'mission_done_chatroom_ID': ast.literal_eval(profile.mission_done_chatroom_ID),
+            'friend_ID': ast.literal_eval(profile.friend_ID),
         })
 
 
