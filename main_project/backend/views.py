@@ -358,10 +358,11 @@ def get_mission_chatroom_list(request):
         profile_search = profile_search_all[0]
         mission_doing_chatroom_ID = ast.literal_eval(profile_search.mission_doing_chatroom_ID)
         mission_done_chatroom_ID = ast.literal_eval(profile_search.mission_done_chatroom_ID)
+        mission_do_chatroom_ID = mission_doing_chatroom_ID + mission_done_chatroom_ID
 
         chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time = [], [], [], [], [], [], []
         count = 0
-        for chatroom_ID in mission_doing_chatroom_ID:
+        for chatroom_ID in mission_do_chatroom_ID:
             chatroom_ID_all.append(chatroom_ID)
 
             group_search = Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0]
@@ -430,6 +431,7 @@ def get_mission_chatroom_member(request):
         chatroom_ID = request.POST.get('chatroom_ID')
         member_ID = ast.literal_eval(Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0].member_ID)
         leader_ID = Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0].leader_ID
+        status = Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0].status
 
         member_name = []
         for member in member_ID:
@@ -439,7 +441,8 @@ def get_mission_chatroom_member(request):
             'result' : "success",
             'member_ID' : member_ID,
             'leader_ID' : leader_ID,
-            'member_name' : member_name
+            'member_name' : member_name,
+            'status' : status,
         })
 
 def kick_mission_chatroom_member(request):
@@ -550,6 +553,80 @@ def mission_filter(account, mission_ID):
 
 
 
+def manager_page(request):
+    mission_submission = Mission_submission.objects.filter(check_status="checking")
+    mission_submission = core_serializers.serialize("json", mission_submission)
+    mission_submission = json.loads(mission_submission)
+
+    # mission_ID, mission_name, chatroom_ID, group_name, member_ID, submission_pic, check_status, check_preson, time = [], [], [], [], [], [], [], [], []
+    # for mission in mission_submission:
+    #     mission_ID.append(mission.mission_ID)
+    #     mission_name.append(mission.mission_name)
+    #     chatroom_ID.append(mission.chatroom_ID)
+    #     group_name.append(mission.group_name)
+    #     member_ID.append(ast.literal_eval(mission.member_ID))
+    #     submission_pic.append(mission.submission_pic)
+    #     check_status.append(mission.check_status)
+    #     check_preson.append(mission.check_preson)
+    #     time.append(mission.time)
+    # print(mission_ID, mission_name, chatroom_ID, group_name, member_ID, submission_pic, check_status, check_preson, time)
+    # print(len(mission_ID))
+
+    return render(request, 'manager.html', {
+        # "mission_ID": mission_ID, "mission_name": mission_name, "chatroom_ID": chatroom_ID,
+        # "group_name": group_name, "member_ID": member_ID, "submission_pic": submission_pic,
+        # "check_status": check_status, "check_preson": check_preson, "time": time, "range": range(len(mission_ID)),
+        "mission_submission" : mission_submission
+    })
+
+def submission_to_finish(request):
+    if request.method == 'POST':
+        chatroom_ID = request.POST.get('chatroom_ID')
+        check_person = request.POST.get('check_person')
+
+        ### 修改 mission submission
+        mission_submission = Mission_submission.objects.filter(chatroom_ID=chatroom_ID)
+        mission_submission.update(check_status="finished")
+        mission_submission.update(check_preson=check_person)
+
+        ### 修改 mission group status
+        Mission_group.objects.filter(chatroom_ID=chatroom_ID).update(status="finished")
+
+        ### 取得完成任務經驗獎勵資訊
+        mission_ID = Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0].mission_ID
+        mission_imformation = Mission_imformation.objects.filter(mission_ID = mission_ID)[0]
+
+        exp1 = int(mission_imformation.exp1)
+        exp2 = int(mission_imformation.exp2)
+        exp3 = int(mission_imformation.exp3)
+        reward = int(mission_imformation.reward)
+        
+        ### 修改 profile
+        member_ID = ast.literal_eval(Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0].member_ID)
+        for member in member_ID:
+            profile_all = Profile.objects.filter(account=member)
+            profile = profile_all[0]
+            my_exp1 = int(profile.exp1) + exp1
+            my_exp2 = int(profile.exp2) + exp2
+            my_exp3 = int(profile.exp3) + exp3
+            my_balance = int(profile.balance) + reward
+
+            profile_all.update(exp1 = my_exp1, exp2 = my_exp2, exp3 = my_exp3, balance = my_balance)
+        
+        ### 群發完成審核訊息
+        sender_ID = "developers"
+        message = '任務:"'+ mission_imformation.mission_name + '"已審核完成，獲得:知識+' +\
+                     str(exp1) + ',社交+' + str(exp2) + ',體力+' + str(exp3) + ',獎勵金+' + str(reward) + '，請至個人資訊查看!'
+
+        Mission_Chatroom.objects.create(chatroom_ID=chatroom_ID, sender_ID=sender_ID,  message=message)
+
+        # return render(request, 'manager.html', {
+        #     'result' : "success"
+        # })
+
+        return JsonResponse({
+            'result' : "success"
+        })
 
 
 

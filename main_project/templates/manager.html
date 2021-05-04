@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+        <meta charset="utf-8">
+        <script src="static/jquery.js"></script>
+    </head>
+    <body>
+        <!-- <div id="character_name"> {{ character_name }}</div>
+        <div id="name"> {{ name }} </div>
+        <div id="exp1"> {{ exp1 }} </div>
+        <div id="exp2"> {{ exp2 }} </div>
+        <div id="exp3"> {{ exp3 }} </div> -->
+            
+        <!-- {% for i in range %}
+            <div> {{mission_ID}} </div>
+        {% endfor %} -->
+        
+        {% for submission in mission_submission %}
+            <div> 
+                任務ID: {{submission.fields.mission_ID}}<br>
+                任務名稱: {{submission.fields.mission_name}}<br>
+                聊天室ID: {{submission.fields.chatroom_ID}}<br>
+                群組名稱: {{submission.fields.group_name}}<br>
+                成員名稱: {{submission.fields.member_ID}}<br>
+                提交圖片: {{submission.fields.submission_pic}}<br>
+                任務狀態: {{submission.fields.check_status}}<br>
+                審核人員: {{submission.fields.check_preson}}<br>
+                提交時間: {{submission.fields.time}}<br>
+
+                審核人員: <input id = "{{ submission.fields.chatroom_ID }}_check_person" type="text" size="10" >
+                <button id="{{ submission.fields.chatroom_ID }}" onclick="ok(this.id)">確認審核</button>
+
+            </div><br><br>
+            <div>  </div>
+        {% endfor %}
+
+    </body>
+
+</html>
+
+<script>
+    $.ajaxSetup({
+        data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
+    })    
+
+    function ok(id){
+        check_person = document.getElementById(id+"_check_person").value
+
+        $.ajax({
+              url: '/submission_to_finish',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  "chatroom_ID": id,
+                  "check_person": "developers",
+              },
+              success: function (data) {
+                if (data.result == "success"){
+                
+                    window.location.href = window.location.href
+                }
+                console.log("success")
+              }
+        });
+    }
+
+</script>
