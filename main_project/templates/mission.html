@@ -3,42 +3,194 @@
     <head> 
         <meta charset="utf-8">
         <script src="static/jquery.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>        
+        <link href="static/mission.css" rel="stylesheet">
     </head>
     <body>
-        <!-- <div id="character_name"> {{ character_name }}</div>
-        <div id="name"> {{ name }} </div>
-        <div id="exp1"> {{ exp1 }} </div>
-        <div id="exp2"> {{ exp2 }} </div>
-        <div id="exp3"> {{ exp3 }} </div>
+        <div class="header">
+            <div class="back_arrow"></div>
+            <div class="title_text">任 務</div>
+        </div>
+
+        <ul class="nav nav-tabs nav-justified top-tab" style="position: fixed; top: 22vw;">
+            <li class="active">
+                <img id="tab-explore" data-toggle="tab" href="#explore-mission" src="static/src/icon_tab_explore.png">
+            </li>
+            <li>
+                <img id="tab-my-mission" data-toggle="tab" href="#my-mission" src="static/src/icon_tab_my_mission.png">
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="explore-mission" class="tab-pane fade in active">
+                <div class="search-bar">
+                    <form class="search">
+                        <!-- <img src="src/search.png" class="mission-search-icon"> -->
+                        <input type="search" placeholder=" 搜尋" class="search-input">
+                        <button type="reset" class="btn_cancel">取消</button>
+                    </form>    
+                </div> 
+
+                <div class="select-type">
+                    <div class="type-select-bar">
+                        <div class="type-select-btn">
+                            <div href='#type-btn-group' data-toggle="collapse" data-parent="#type-select-bar">
+                                <div class="select-btn">類別</div>
+                            </div>
+                        </div>
+                        <div id="type-btn-group" class="collapse">
+                            <div class="btn-group">
+                                <button id="useless-btn" disabled></button>
+                                <button id="entertainment">• 娛樂 </button>
+                                <button id="learning">• 學習</button>
+                                <button id="handcraft">• 手作</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="mission_container">
+
+
+                </div>
+
+                <!-- <div class="mission-card">
+                    <div class="card-header">
+                        <div href='#collapse1' data-toggle="collapse" data-parent="#explore-mission">
+                            <div class="card-img"></div>
+                            <div class="mission-title">任務名稱</div>
+                            <div class="mission-joined">已有15人參加</div>
+                            <div class="mission-exp">
+                                <div class="exp-val">
+                                    <p>+5</p><p>+5</p><p>+5</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="collapse1" class="collapse">
+                        <div class="card-body">
+                            <ul class="nav nav-tabs nav-justified mission-info-tab">
+                                <li id="left-tab" class="active">
+                                    <a data-toggle="tab" href="#mission-intro1">任務介紹</a>
+                                </li>
+                                <li id="right-tab">
+                                    <a data-toggle="tab" href="#mission-signup1">揪團報名</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content card-tab-content">
+                                <div id="mission-intro1" class="tab-pane fade in active">
+                                    <div class="mission-intro-content">
+                                        我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣
+                                        我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣
+                                        我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣
+                                        我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣
+                                        我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣
+                                    </div>
+                                </div>
+                                <div id="mission-signup1" class="tab-pane fade">
+                                    <button class="btn-create-group">我要開團</button>
+                                    <div class="group-item-box">
+                                        <div class="group-item">
+                                            <div class="group-name">團名團名</div>
+                                            <div class="group-need">缺5人</div>
+                                            <button></button>
+                                        </div>
+                                        <div class="group-item">
+                                            <div class="group-name">團名團名</div>
+                                            <div class="group-need">缺5人</div>
+                                            <button></button>
+                                        </div>
+                                        <div class="group-item">
+                                            <div class="group-name">團名團名</div>
+                                            <div class="group-need">缺5人</div>
+                                            <button></button>
+                                        </div>
+                                        <div class="group-item">
+                                            <div class="group-name">團名團名</div>
+                                            <div class="group-need">缺5人</div>
+                                            <button></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mission-card">
+                    <div class="card-header">
+                        <div href='#collapse2' data-toggle="collapse" data-parent="#explore-mission">
+                            <div class="card-img"></div>
+                            <div class="mission-title">任務名稱</div>
+                            <div class="mission-joined">已有15人參加</div>
+                            <div class="mission-exp">
+                                <div class="exp-val">
+                                    <p>+5</p><p>+5</p><p>+5</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="collapse2" class="collapse">
+                        <div class="card-body">
+                            <ul class="nav nav-tabs nav-justified mission-info-tab">
+                                <li id="left-tab" class="active">
+                                    <a data-toggle="tab" href="#mission-intro2">任務介紹</a>
+                                </li>
+                                <li id="right-tab">
+                                    <a data-toggle="tab" href="#mission-signup2">揪團報名</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content card-tab-content">
+                                <div id="mission-intro2" class="tab-pane fade in active">
+                                    <div class="mission-intro-content">
+                                        我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣
+                                        我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣
+                                        我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣
+                                        我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣
+                                        我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣
+                                    </div>
+                                </div>
+                                <div id="mission-signup2" class="tab-pane fade">
+                                    <button class="btn-create-group">我要開團</button>
+                                    <div class="group-item-box">
+                                        <div class="group-item">
+                                            <div class="group-name">團名團名</div>
+                                            <div class="group-need">缺5人</div>
+                                            <button></button>
+                                        </div>
+                                        <div class="group-item">
+                                            <div class="group-name">團名團名</div>
+                                            <div class="group-need">缺5人</div>
+                                            <button></button>
+                                        </div>
+                                        <div class="group-item">
+                                            <div class="group-name">團名團名</div>
+                                            <div class="group-need">缺5人</div>
+                                            <button></button>
+                                        </div>
+                                        <div class="group-item">
+                                            <div class="group-name">團名團名</div>
+                                            <div class="group-need">缺5人</div>
+                                            <button></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+            </div>
+            <div id="my-mission" class="tab-pane fade">
+                <h3>Menu 1</h3>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+        </div>
         
-        <button id="mission_button">任務</button> -->
-        <button id="group_check">揪團報名</button>
-        <button id="my_mission">我的任務</button>
-        <br><br>
-        <button id="submit" style="display: none;">提交</button>
-        <div id="submit_check"></div>
-
-
-        <div id="newpic">
-
-        </div>
-
-        <button id="group_join">+++</button>
-        <div id = "group_op">
-            <br><br>
-            揪團名稱 <input id = "group_name" type="text" size="20" ><br/>
-            上限人數 <input id = "group_most" type="text" size="20" ><br/>
-            <button id="group_create">我要開團</button>
-        </div>
-<!-- 
-        <form >
-            <label>
-                <input id="image-input" type="file" name="image">
-            </label>
-        </form> -->
-    
+        <div class="quarter_circle" style="left: 0vw; background-image: url('static/src/home.png');"></div>
+        <div class="quarter_circle" style="right: 0vw; background-image: url('static/src/chat.png');"></div>
+        <!-- <script src="mission.js"></script> -->
     </body>
-
 </html>
 
 <script>
@@ -56,10 +208,7 @@
               },
               success: function (data) {
                 if (data.result == "success"){
-                    // console.log("success")
-                    // console.log(data)
                     var pic_list = data.mission_pic
-
                     for(var i = 0; i < pic_list.length; i++){
                         $.ajax({
                         url: '/get_all_mission_img',
@@ -70,18 +219,66 @@
                             "img_path": pic_list[i],
                         },
                         success: function (img) {
-                            // console.log()
-                            $('#newpic').append("<img src=" + '"data:image/jpg;base64,'+img+'"> <br>' +
-                             data.mission_name[i] + '<br>'+
-                             "參加人數: " + data.joined[i]+ '<br>'+
-                             "最少人數: " + data.group_required[i]+ '<br>'+
-                             "知識: " + data.exp1[i]+ '<br>'+
-                             "社交: " + data.exp2[i]+ '<br>'+
-                             "體力: " + data.exp3[i]+ '<br>'+
-                             "$$: " + data.reward[i]+ '<br>'
-                             
-                             
-                             
+                            console.log("success")
+                            $('#mission_container').append(                             
+                                '<div class="mission-card">\
+                                    <div class="card-header">\
+                                        <div href="#collapse'+ i.toString() +'" data-toggle="collapse" data-parent="#explore-mission">\
+                                            <div class="card-img"></div>\
+                                            <div class="mission-title">'+ data.mission_name[i] +'</div>\
+                                            <div class="mission-joined">已有'+ data.joined[i]  +'人參加</div>\
+                                            <div class="mission-exp">\
+                                                <div class="exp-val">\
+                                                    <p>'+ data.exp1[i] +'</p><p>' + data.exp2[i] + '</p><p>' + data.exp3[i] +'</p>\
+                                                </div>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                    <div id="collapse' + i.toString() + '"class="collapse">\
+                                        <div class="card-body">\
+                                            <ul class="nav nav-tabs nav-justified mission-info-tab">\
+                                                <li id="left-tab" class="active">\
+                                                    <a data-toggle="tab" href="#mission-intro'+ i.toString() +'">任務介紹</a>\
+                                                </li>\
+                                                <li id="right-tab">\
+                                                    <a data-toggle="tab" onclick="mission_signup(' + data.mission_ID[i] + ')" href="#mission-signup_'+ data.mission_ID[i] +'">揪團報名</a>\
+                                                </li>\
+                                            </ul>\
+                                            <div class="tab-content card-tab-content">\
+                                                <div id="mission-intro'+ i.toString() +'" class="tab-pane fade in active">\
+                                                    <div class="mission-intro-content">\
+                                                        ' +data.mission_intro[i]+ '\
+                                                    </div>\
+                                                </div>\
+                                                <div id="mission-signup_'+ data.mission_ID[i] +'" class="tab-pane fade">\
+                                                    <button class="btn-create-group">我要開團</button>\
+                                                    <div id="mission_group_box_'+ data.mission_ID[i] +'" class="group-item-box">'+
+                                                        // <div class="group-item">\
+                                                        //     <div class="group-name">團名團名</div>\
+                                                        //     <div class="group-need">缺5人</div>\
+                                                        //     <button></button>\
+                                                        // </div>\
+                                                        // <div class="group-item">\
+                                                        //     <div class="group-name">團名團名</div>\
+                                                        //     <div class="group-need">缺5人</div>\
+                                                        //     <button></button>\
+                                                        // </div>\
+                                                        // <div class="group-item">\
+                                                        //     <div class="group-name">團名團名</div>\
+                                                        //     <div class="group-need">缺5人</div>\
+                                                        //     <button></button>\
+                                                        // </div>\
+                                                        // <div class="group-item">\
+                                                        //     <div class="group-name">團名團名</div>\
+                                                        //     <div class="group-need">缺5人</div>\
+                                                        //     <button></button>\
+                                                        // </div>\
+                                                    '</div>\
+                                                </div>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                </div>'
                              )
                         }
                         });
@@ -92,9 +289,9 @@
     }
 
 
-    $("#group_check").click( function() {
-        $('#newpic').html("")
-
+    function mission_signup(mission_ID){
+        console.log(mission_ID)
+        $('#mission_group_box_'+mission_ID).html("")
         $.ajax({
               url: '/get_mission_group',
               method: 'POST',
@@ -102,203 +299,71 @@
               dataType: "json",
               data: {
                   "user_ID": window.location.href.split('?')[1].split('=')[1],
-                  "mission_ID": "10000001",
+                  "mission_ID": mission_ID,
               },
               success: function (data) {
                 if (data.result == "success"){
                     for(var i = 0; i < data.chatroom_ID.length; i++){
-                        $('#newpic').append(
-                            "聊天室ID: " + data.chatroom_ID[i]+ '<br>'+
-                            "聊天室名稱: " + data.group_name[i]+ '<br>'+
-                            "目前人數: " + data.group_now[i]+ '<br>'+
-                            "上限人數: " + data.group_most[i]+ '<br>'+
-                            "組長ID: " + data.leader_ID[i] + '<br><br>'
-
+                        $('#mission_group_box_'+mission_ID).append(
+                            '<div class="group-item">\
+                                <div class="group-name">' + data.group_name[i] + '</div>\
+                                <div class="group-need">' + (parseInt(data.group_most[i], 10) - parseInt(data.group_now[i], 10)).toString()  + '</div>\
+                                <button></button>\
+                            </div>'
                         )
                     }
                 }
                 console.log("success")
               }
         });
-    })
+    }
 
 
-    $("#group_join").click( function() {
-        $('#newpic').html("")
-        $.ajax({
-              url: '/join_mission_group',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-                  "user_ID": window.location.href.split('?')[1].split('=')[1],
-                  "mission_ID": "10000001",
-                  "chatroom_ID": "20000006",
-              },
-              success: function (data) {
-                if (data.result == "success"){
-                    for(var i = 0; i < data.chatroom_ID.length; i++){
-                        $('#newpic').append(
-                            "聊天室ID: " + data.chatroom_ID[i]+ '<br>'+
-                            "聊天室名稱: " + data.group_name[i]+ '<br>'+
-                            "目前人數: " + data.group_now[i]+ '<br>'+
-                            "上限人數: " + data.group_most[i]+ '<br>'+
-                            "組長ID: " + data.leader_ID[i] + '<br><br>'
-
-                        )
-                    }
-                }
-                console.log("success")
-              }
-        });
-    })
-
-
-    $("#group_create").click( function() {
-        $('#newpic').html("")
+    function create_group(mission_ID){
+        console.log(mission_ID)
         $.ajax({
               url: '/create_mission_group',
               method: 'POST',
               type: 'POST',
               dataType: "json",
               data: {
-                  "group_name": document.getElementById("group_name").value,
-                  "mission_ID": "10000001",
-                  "leader_ID": window.location.href.split('?')[1].split('=')[1],
-                  "group_most": document.getElementById("group_most").value,
+                //"group_name": document.getElementById("group_name").value,
+                "mission_ID": mission_ID,
+                "leader_ID": window.location.href.split('?')[1].split('=')[1],
+                //"group_most": document.getElementById("group_most").value,
               },
               success: function (data) {
                 if (data.result == "success"){
-                    
-
-                    // for(var i = 0; i < data.chatroom_ID.length; i++){
-                    //     $('#newpic').append(
-                    //         "聊天室ID: " + data.chatroom_ID[i]+ '<br>'+
-                    //         "聊天室名稱: " + data.group_name[i]+ '<br>'+
-                    //         "目前人數: " + data.group_now[i]+ '<br>'+
-                    //         "上限人數: " + data.group_most[i]+ '<br>'+
-                    //         "組長ID: " + data.leader_ID[i] + '<br><br>'
-
-                    //     )
-                    // }
+                    // 前往對應創出來的 chatroom 
+                    // TODO
                 }
                 console.log("success")
               }
         });
-    })
+    }
 
 
-    $('#my_mission').click( function() {
-        $('#newpic').hide();
-        $('#group_join').hide();
-        $('#group_op').hide();
-        $('#submit').show();
-
-    })
-
-    $('#submit').click( function() {
+    function join_group(mission_ID, chatroom_ID){
+        console.log(mission_ID, chatroom_ID)
         $.ajax({
-              url: '/submit_mission_group_check',
+              url: '/join_mission_group',
               method: 'POST',
               type: 'POST',
               dataType: "json",
               data: {
-                  "chatroom_ID": "20000006",
+                "user_ID": window.location.href.split('?')[1].split('=')[1],
+                "mission_ID": mission_ID,
+                "chatroom_ID": chatroom_ID,
               },
               success: function (data) {
                 if (data.result == "success"){
-                    html_code = ""
-                    html_code += "任務名稱: " + data.mission_name+ '<br>' + "群組名稱: " + data.group_name+ '<br>'
-                    for(var i = 0; i < data.member_ID.length; i++){
-                        html_code += "成員" + i.toString() + ": " + data.member_ID[i] + " " + data.member_name[i] + '<br>'
-                    }
-                    // html_code += '<button id="upload">上傳照片</button><br><br>' 
-
-                    html_code += '<form>\
-                                    {% csrf_token %}\
-                                    <label>\
-                                        <input id="image-input" type="file" name="image">\
-                                    </label>\
-                                  </form>\
-                                  <img id="image-img" src="/static/images/test.png" width="224" height="225"><br><br>'
-
-                    html_code += '<button id="submit_no">取消</button><br>' + '<button id="submit_yes">確認</button><br>'
-
-                    $('#submit_check').html(
-                        html_code
-                    )
-
-                    // for(var i = 0; i < data.chatroom_ID.length; i++){
-                    //     $('#newpic').append(
-                    //         "聊天室ID: " + data.chatroom_ID[i]+ '<br>'+
-                    //         "聊天室名稱: " + data.group_name[i]+ '<br>'+
-                    //         "目前人數: " + data.group_now[i]+ '<br>'+
-                    //         "上限人數: " + data.group_most[i]+ '<br>'+
-                    //         "組長ID: " + data.leader_ID[i] + '<br><br>'
-
-                    //     )
-                    // }
+                    // 前往對應創出來的 chatroom 
+                    // TODO
                 }
-                else if(data.result=="not_enough"){
-                    alert("人數不足以提交任務")
-                }
-                else if(data.result=="error"){
-                    alert("error")
-                }
+                console.log("success")
               }
         });
-    })
+    }
 
-    var image_change = 0;
-    $(document).on('change','#image-input',function () {
-            // upload();
-            image_change = 1;
-            console.log("change")
-            var choose_file = $(this)[0].files[0];
-            var reader = new FileReader();
-            reader.readAsDataURL(choose_file);
-            reader.onload = function () {
-                console.log(reader.result)
-            $("#image-img").attr("src", reader.result)
-        };
 
-    });
-
-    $(document).on('click','#submit_no',function () {
-        image_change = 0;
-
-    });
-
-    $(document).on('click','#submit_yes',function () {
-        if(image_change==1){
-            var formdata = new FormData();
-            console.log($("#image-input")[0].files[0])
-            formdata.append("image", $("#image-input")[0].files[0]);
-            formdata.append("chatroom_ID","20000006");
-            formdata.append("csrfmiddlewaretoken",$("[name='csrfmiddlewaretoken']").val());
-            $.ajax({
-                processData:false,
-                contentType:false,
-                url:'/submit_mission_group',
-                type:'POST',
-                data:formdata,
-                dataType:"json",
-                success: function (data) {
-
-                    
-                }
-            })    
-        }
-        
-        
-    });
-
-    
-    // $('#submit_no').click( function() {
-        
-    // })
-
-    // $('#submit_yes').click( function() {
-        
-    // })
 </script>
