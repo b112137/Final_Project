@@ -25,6 +25,7 @@ class Profile(models.Model):
     mission_doing_chatroom_ID = models.TextField() #List
     mission_done_chatroom_ID = models.TextField() #List
     friend_ID = models.TextField() #List
+    friend_chatroom_ID = models.TextField() #List
     owned_product_ID = models.TextField() #List
     time = models.DateTimeField(auto_now_add=True)
 
@@ -46,9 +47,10 @@ class Mission_Chatroom(models.Model):
 
 
 class Friend_Chatroom(models.Model):
+    chatroom_ID = models.CharField(max_length=100)
     sender_ID = models.CharField(max_length=100)
     receiver_ID = models.CharField(max_length=100)
-    message = models.TextField()
+    message = models.TextField(blank=True)
     time = models.DateTimeField(auto_now_add=True)
 
 

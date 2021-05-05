@@ -3,32 +3,55 @@
     <head> 
         <meta charset="utf-8">
         <script src="static/jquery.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link href="static/Chatroom.css" rel="stylesheet">
+        
     </head>
     <body>
-        <!-- <button id="mission_button">任務</button>
-        <button id="chat_button">聊天</button> -->
-        
-        <div id="group_name"></div>
-
-        <div id="newpic">
-
+        <div class="header">
+            <div class="back_arrow"></div>
+            <img class="icon-chatroom" src="static/src/icon_chatroom.png">
+            <input type="text" placeholder="搜尋" class="search-bar">
+            <button class="btn-cancel">取消</button>
         </div>
-
-        <div id="member" style="display:none">
-            <button id="group_member">查看成員</button>
+        <div id="chatroom_list_div" class="chatroom-list">
+            <!-- <div class="chatroom-item">
+                <div class="chatroom-photo"></div>
+                <div class="chatroom-name">這裡最多能放十個字喔</div>
+                <div class="last-msg">我是訊息預覽喔喔喔字數很多也沒關係會省略的啦讚讚</div>
+            </div>
+            <div class="chatroom-item">
+                <div class="chatroom-photo"></div>
+                <div class="chatroom-name">超過十個字就會變這樣喔嗚嗚嗚嗚</div>
+                <div class="last-msg">訊息預覽會變這樣喔QQQQQQQ</div>
+            </div>
+            <div class="chatroom-item">
+                <div class="chatroom-photo"></div>
+                <div class="chatroom-name"></div>
+                <div class="last-msg"></div>
+            </div>
+            <div class="chatroom-item">
+                <div class="chatroom-photo"></div>
+                <div class="chatroom-name"></div>
+                <div class="last-msg"></div>
+            </div>
+            <div class="chatroom-item">
+                <div class="chatroom-photo"></div>
+                <div class="chatroom-name"></div>
+                <div class="last-msg"></div>
+            </div>
+            <div class="chatroom-item">
+                <div class="chatroom-photo"></div>
+                <div class="chatroom-name"></div>
+                <div class="last-msg"></div>
+            </div> -->
         </div>
-        <div id="member_list"></div>
-
-        <div id="chatroom" style="display: none">
-            
-            <textarea readonly id="chat-log" cols="100" rows="20"></textarea><br/>
-            <input id="chat-message-input" type="text" size="100"/><br/>
-            <input id="chat-message-submit" type="button" value="Send"/>
-        </div>
-        
+        <div class="quarter_circle" style="left: 0vw; background-image: url('static/src/home.png');"></div>
     </body>
-
 </html>
+
 
 <script>
     $.ajaxSetup({
@@ -47,11 +70,11 @@
             timeout_update_chat_list = window.setInterval( update_chat_list , 1000)
         }
         else if(parameter.length == 2){
-            console.log("abc")
             chatroom_ID = parameter[1].split('=')[1];
             $("#newpic").hide();
             $("#chatroom").show();
             $("#member").show();
+
             update_mission_msg( chatroom_ID, "first" );
             timeout_update_mission_msg = window.setInterval( ( ()=>update_mission_msg(chatroom_ID) ) , 200);
         }
@@ -59,82 +82,82 @@
     
     
 
-    $("#group_member").click( function() {
-        window.clearInterval(timeout_update_mission_msg);
-        $("#chatroom").hide();
-        $("#group_member").hide();
-        $("#member").append('<button id="last_page">上一頁</button>')
+    // $("#group_member").click( function() {
+    //     window.clearInterval(timeout_update_mission_msg);
+    //     $("#chatroom").hide();
+    //     $("#group_member").hide();
+    //     $("#member").append('<button id="last_page">上一頁</button>')
         
-        $.ajax({
-              url: '/get_mission_chatroom_member',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-                  "chatroom_ID": chatroom_ID,
-              },
-              success: function (data) {
-                if (data.result == "success"){
-                    console.log("success")
-                    console.log(data.member_ID)
-                    if( window.location.href.split('?')[1].split('&')[0].split('=')[1] == data.leader_ID && (data.status == "acceptable" || data.status == "full") ){
-                        $("#member").append('<button id="edit">編輯成員</button>')
-                        $("#edit").click( function() {
-                            for(var i = 0; i < member_ID.length; i++){
-                                $('#'+member_ID[i]).show();
-                            }
-                        })
-                    }
+    //     $.ajax({
+    //           url: '/get_mission_chatroom_member',
+    //           method: 'POST',
+    //           type: 'POST',
+    //           dataType: "json",
+    //           data: {
+    //               "chatroom_ID": chatroom_ID,
+    //           },
+    //           success: function (data) {
+    //             if (data.result == "success"){
+    //                 console.log("success")
+    //                 console.log(data.member_ID)
+    //                 if( window.location.href.split('?')[1].split('&')[0].split('=')[1] == data.leader_ID && (data.status == "acceptable" || data.status == "full") ){
+    //                     $("#member").append('<button id="edit">編輯成員</button>')
+    //                     $("#edit").click( function() {
+    //                         for(var i = 0; i < member_ID.length; i++){
+    //                             $('#'+member_ID[i]).show();
+    //                         }
+    //                     })
+    //                 }
                     
-                    member_ID = data.member_ID;
-                    for(var i = 0; i < data.member_ID.length; i++){
-                        if (data.member_ID[i] == data.leader_ID){
-                            $("#member_list").append(
-                                '<div id="' + data.member_ID[i] + '_div">'+
-                                "ID: " + data.member_ID[i]+ ' 組長<br>'+
-                                "name: " + data.member_name[i]+ '<br><br>'+
-                                // '<button style="display:none" id="' + data.member_ID[i] + '">踢出群組</button><br><br>'
-                                '</div>'
-                            )
-                        }
-                        else{
-                             $("#member_list").append(
-                                '<div id="' + data.member_ID[i] + '_div">'+
-                                "ID: " + data.member_ID[i]+ '<br>'+
-                                "name: " + data.member_name[i]+ '<br>'+
-                                '<button style="display:none" id="' + data.member_ID[i] + '">踢出群組</button><br><br>'+
-                                '</div>'
-                            )
-                            $('#'+data.member_ID[i]).click(function() {
-                                var this_id = this.id
-                                $.ajax({
-                                    url: '/kick_mission_chatroom_member',
-                                    method: 'POST',
-                                    type: 'POST',
-                                    dataType: "json",
-                                    data: {
-                                        "kicked_ID": this.id,
-                                        "user_ID": window.location.href.split('?')[1].split('&')[0].split('=')[1],
-                                        "chatroom_ID": chatroom_ID,
-                                    },
-                                    success: function (data) {
-                                        if (data.result == "success"){
-                                            $("#"+this_id+"_div").hide()
-                                            console.log("success")
-                                        }
-                                    }
-                                });
+    //                 member_ID = data.member_ID;
+    //                 for(var i = 0; i < data.member_ID.length; i++){
+    //                     if (data.member_ID[i] == data.leader_ID){
+    //                         $("#member_list").append(
+    //                             '<div id="' + data.member_ID[i] + '_div">'+
+    //                             "ID: " + data.member_ID[i]+ ' 組長<br>'+
+    //                             "name: " + data.member_name[i]+ '<br><br>'+
+    //                             // '<button style="display:none" id="' + data.member_ID[i] + '">踢出群組</button><br><br>'
+    //                             '</div>'
+    //                         )
+    //                     }
+    //                     else{
+    //                          $("#member_list").append(
+    //                             '<div id="' + data.member_ID[i] + '_div">'+
+    //                             "ID: " + data.member_ID[i]+ '<br>'+
+    //                             "name: " + data.member_name[i]+ '<br>'+
+    //                             '<button style="display:none" id="' + data.member_ID[i] + '">踢出群組</button><br><br>'+
+    //                             '</div>'
+    //                         )
+    //                         $('#'+data.member_ID[i]).click(function() {
+    //                             var this_id = this.id
+    //                             $.ajax({
+    //                                 url: '/kick_mission_chatroom_member',
+    //                                 method: 'POST',
+    //                                 type: 'POST',
+    //                                 dataType: "json",
+    //                                 data: {
+    //                                     "kicked_ID": this.id,
+    //                                     "user_ID": window.location.href.split('?')[1].split('&')[0].split('=')[1],
+    //                                     "chatroom_ID": chatroom_ID,
+    //                                 },
+    //                                 success: function (data) {
+    //                                     if (data.result == "success"){
+    //                                         $("#"+this_id+"_div").hide()
+    //                                         console.log("success")
+    //                                     }
+    //                                 }
+    //                             });
 
 
-                            })
-                        }
-                    }
+    //                         })
+    //                     }
+    //                 }
 
-                }
-              }
-        });
+    //             }
+    //           }
+    //     });
 
-    })
+    // })
 
 
     function update_chat_list(){
@@ -149,17 +172,18 @@
               success: function (data) {
                 if (data.result == "success"){
                     console.log("success")
-                    $('#newpic').html("")
+                    $('#chatroom_list_div').html("")
                     for(var i = 0; i < data.chatroom_ID.length; i++){
-                        $('#newpic').append(
-                            "任務名稱: " + data.mission_name[i]+ '<br>'+
-                            "聊天室ID: " + data.chatroom_ID[i]+ '<br>'+
-                            "聊天室名稱: " + data.group_name[i]+ '<br>'+
-                            "任務狀態: " + data.status[i]+ '<br>'+
-                            "訊息預覽: " + data.message[i]+ '<br>'+
-                            "最後時間: " + data.time[i]+ '<br>'+
-                            '<button id="' + data.chatroom_ID[i]+ '">進入聊天室</button><br><br>'
+                        $('#chatroom_list_div').append(
+                            '<div class="chatroom-item" type="button" onclick="console.log(123)">\
+                                <div id="list_photo_' + i.toString() + '" class="chatroom-photo"></div>\
+                                <div id="list_msg_' + i.toString() + '" class="chatroom-name">' + data.group_name[i] + '</div>\
+                                <div class="last-msg">' + data.message[i] + '</div>\
+                            </div>'
                         )
+                        if(data.status[i]!="friend"){
+                            document.getElementById("list_msg_"+ i.toString() ).innerHTML += '(' + data.group_number[i] + ')'
+                        }
 
                         $('#'+data.chatroom_ID[i]).click( function() {
                             console.log(this.id);
@@ -172,72 +196,150 @@
                             // update_mission_msg(this.id);
                             // var timeout_update_mission_msg = window.setInterval( ( ()=>update_mission_msg(this.id) ) , 200);
                         })
+
+                        $.ajax({
+                        url: '/get_img',
+                        method: 'POST',
+                        type: 'POST',
+                        async: false, //改成同步執行(等待上一個回傳)
+                        data: {
+                            "img_path": data.chat_img[i],
+                        },
+                        success: function (img) {
+                            $('#list_photo_'+ i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                            
+                        }
+                        });
                     }
+
+
                 }
               }
         });
     }
     
 
-    function update_mission_msg(chatroom_ID, first=""){
-        $.ajax({
-              url: '/mission_chatroom_update',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-                  "post_type": "Receive",
-                  "chatroom_ID": chatroom_ID,
-              },
-              success: function (data) {
-                if (data.result == "success"){
-                  chatroom_history = JSON.parse(data.history);
+    // function update_mission_msg(chatroom_ID, first=""){
+    //     console.log(chatroom_ID[0])
+    //     if(chatroom_ID[0]=="2"){
+    //         $.ajax({
+    //             url: '/mission_chatroom_update',
+    //             method: 'POST',
+    //             type: 'POST',
+    //             dataType: "json",
+    //             data: {
+    //                 "post_type": "Receive",
+    //                 "chatroom_ID": chatroom_ID,
+    //             },
+    //             success: function (data) {
+    //                 if (data.result == "success"){
+    //                 chatroom_history = JSON.parse(data.history);
 
-                  if (first=="first"){
-                    $('#group_name').html(data.group_name);
-                  }
+    //                 if (first=="first"){
+    //                     $('#group_name').html(data.group_name);
+    //                 }
 
-                  html_code = ""
-                  for(var i = 0; i < chatroom_history.length; i++){
-                    var time = new Date(chatroom_history[i].fields.time)
-                    var time_modify = ""
-                    time_modify = time.getFullYear() + '-' + time.getMonth() + '-' + time.getDate() 
-                                    + '-' + time.getHours() + '-' + time.getMinutes() + '-' + time.getSeconds()
+    //                 html_code = ""
+    //                 for(var i = 0; i < chatroom_history.length; i++){
+    //                     var time = new Date(chatroom_history[i].fields.time)
+    //                     var time_modify = ""
+    //                     time_modify = time.getFullYear() + '-' + time.getMonth() + '-' + time.getDate() 
+    //                                     + '-' + time.getHours() + '-' + time.getMinutes() + '-' + time.getSeconds()
 
-                    html_code += chatroom_history[i].fields.sender_ID + ' : ' + chatroom_history[i].fields.message + "  " + time_modify + '\n'
-                  }
-                  $("#chat-log").html(html_code);
-                }
-              }
-        });
-    };
+    //                     html_code += chatroom_history[i].fields.sender_ID + ' : ' + chatroom_history[i].fields.message + "  " + time_modify + '\n'
+    //                 }
+    //                 $("#chat-log").html(html_code);
+    //                 }
+    //             }
+    //         });
+    //     }
+    //     else if(chatroom_ID[0]=="3"){
+    //         $.ajax({
+    //             url: '/friend_chatroom_update',
+    //             method: 'POST',
+    //             type: 'POST',
+    //             dataType: "json",
+    //             data: {
+    //                 "post_type": "Receive",
+    //                 "chatroom_ID": chatroom_ID,
+    //                 "account": window.location.href.split('?')[1].split('&')[0].split('=')[1],
+    //             },
+    //             success: function (data) {
+    //                 if (data.result == "success"){
+    //                 chatroom_history = JSON.parse(data.history);
+
+    //                 if (first=="first"){
+    //                     $('#group_name').html(data.group_name);
+    //                 }
+
+    //                 html_code = ""
+    //                 for(var i = 0; i < chatroom_history.length; i++){
+    //                     if(chatroom_history[i].fields.message!=""){
+    //                         var time = new Date(chatroom_history[i].fields.time)
+    //                         var time_modify = ""
+    //                         time_modify = time.getFullYear() + '-' + time.getMonth() + '-' + time.getDate() 
+    //                                         + '-' + time.getHours() + '-' + time.getMinutes() + '-' + time.getSeconds()
+
+    //                         html_code += chatroom_history[i].fields.sender_ID + ' : ' + chatroom_history[i].fields.message + "  " + time_modify + '\n'
+    //                     }
+    //                 }
+    //                 $("#chat-log").html(html_code);
+    //                 }
+    //             }
+    //         });
+    //     }
+
+        
+    // };
 
 
-    function send_mission_msg(chatroom_ID){
-        $.ajax({
-              url: '/mission_chatroom_update',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-                  "post_type": "Send",
-                  "chatroom_ID": chatroom_ID,
-                  "sender_ID": window.location.href.split('?')[1].split('&')[0].split('=')[1],
-                  "message": document.getElementById("chat-message-input").value
-              },
-              success: function (data) {
-                if (data.result == "success"){
-                    console.log("success")
-                }
-              }
-        });
-    };
+    // function send_mission_msg(chatroom_ID){
+    //     if(chatroom_ID[0]=="2"){
+    //         $.ajax({
+    //             url: '/mission_chatroom_update',
+    //             method: 'POST',
+    //             type: 'POST',
+    //             dataType: "json",
+    //             data: {
+    //                 "post_type": "Send",
+    //                 "chatroom_ID": chatroom_ID,
+    //                 "sender_ID": window.location.href.split('?')[1].split('&')[0].split('=')[1],
+    //                 "message": document.getElementById("chat-message-input").value
+    //             },
+    //             success: function (data) {
+    //                 if (data.result == "success"){
+    //                     console.log("success")
+    //                 }
+    //             }
+    //         });
+    //     }
+    //     else if(chatroom_ID[0]=="3"){
+    //         $.ajax({
+    //             url: '/friend_chatroom_update',
+    //             method: 'POST',
+    //             type: 'POST',
+    //             dataType: "json",
+    //             data: {
+    //                 "post_type": "Send",
+    //                 "chatroom_ID": chatroom_ID,
+    //                 "sender_ID": window.location.href.split('?')[1].split('&')[0].split('=')[1],
+    //                 "message": document.getElementById("chat-message-input").value
+    //             },
+    //             success: function (data) {
+    //                 if (data.result == "success"){
+    //                     console.log("success")
+    //                 }
+    //             }
+    //         });
+    //     }
+        
+    // };
 
     
-    $("#chat-message-submit").click( function() {
-        send_mission_msg(chatroom_ID);
-        document.getElementById("chat-message-input").value = "";
-    });
+    // $("#chat-message-submit").click( function() {
+    //     send_mission_msg(chatroom_ID);
+    //     document.getElementById("chat-message-input").value = "";
+    // });
 
     
 

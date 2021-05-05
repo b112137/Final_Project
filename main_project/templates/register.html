@@ -1,77 +1,118 @@
 <!DOCTYPE html>
 <html>
-    <head> 
+    <head>
         <meta charset="utf-8">
+        <link href="./static/register.css" rel="stylesheet">
         <script src="static/jquery.js"></script>
     </head>
     <body>
-        姓名 <input id = "name" type="text" size="20" ><br/>
-        帳號 <input id = "account" type="text" size="20" ><br/>
-        密碼 <input id = "password" type="text" size="20" ><br/>
-        性別 <input id = "sex" type="text" size="20" ><br/>
-        生日 <input id = "birth" type="text" size="20" ><br/>
+        <div id="all">
+            <div id="register_page">
+                <div class="navbar">
+                    <p id="register_text">註 冊</p>
+                    <img src="./static/src/prev.png" class="prev" id="register_prev">
+                </div>
+                <p class="profile_text" id="name_text">姓 名</p>
+                <input type="text" id="name" name="name" class="input">
+                <p class="profile_text" id="birth_text">生 日</p>
+                <select id=year name=year>
+                </select>
+                <p id="slash1">/</p>
+                <select id=month name=month class="birth">
+                </select>
+                <p id="slash2">/</p>
+                <select id=date name=date class="birth">
+                </select>
+                <p class="profile_text" id="sex_text">性 別</p>
+                <img src="./static/src/girl.PNG" id="girl" class="sex">
+                <img src="./static/src/boy.png" id="boy" class="sex">
+                <p class="profile_text" id="mail_text">信 箱</p>
+                <input type="text" id="mail" name="mail" class="input">
+                <p class="profile_text" id="account_register_text">帳 號</p>
+                <input type="text" id="account_register" name="account_register" class="input">
+                <p class="profile_text" id="password_register_text">密 碼</p>
+                <input type="password" id="password_register" name="password_register" class="input">
+                <input type="submit" value="取 消" id="register_cancel" class="submit">
+                <input type="submit" value="確 認" id="register_check" class="submit">
 
-
-
-        <div>
-            <button id="register_button">提交註冊</button>
-        </div>
-
-        <div>
-            <button id="GET_button">GET</button>
-        </div>
-    </body>
-
-</html>
-
-<script>
-    $.ajaxSetup({
-        data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
-    })    
-
-
-    $("#register_button").click( function() {
-        $.ajax({
-              url: '/register_submit',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-                  "name": document.getElementById("name").value,
-                  "account": document.getElementById("account").value,
-                  "password": document.getElementById("password").value,
-                  "sex": document.getElementById("sex").value,
-                  "birth": document.getElementById("birth").value,
-              },
-              success: function (data) {
-                if (data.result == "success"){
-                    console.log("success")
-                }
-                if (data.result == "account_exist"){
-                    console.log("account_exist")
-                }
                 
-              }
-        });
-    });
+            </div>
+        </div>
+ 
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script>
+            var birth="";
+            var year=1921;
+            var month=1;
+            var date=1;
+            for(year=1921; year<=2010; year++)
+            {
+                $("#year").append("<option value=\""+year+"\">" +year+ "</option>");
+            }
+            for(month=1; month<=12; month++)
+            {
+                $("#month").append("<option value=\""+month+"\">" +month+ "</option>");
+            }
+            for(date=1; date<=33; date++)
+            {
+                $("#date").append("<option value = \""+date+"\">" +date+ "</option>");
+            }
+            var sex="女";
 
+            $('#girl').click((event) => {
+                $('#boy').css("visibility", "visible");
+                $('#girl').css("visibility", "hidden");
+                sex="男";
+                console.log(sex);
+            })
+            $('#boy').click((event) => {
+                $('#girl').css("visibility", "visible");
+                $('#boy').css("visibility", "hidden");
+                sex="女";
+                console.log(sex);
+            })
 
-    $("#GET_button").click( function() {
-        $.ajax({
-              url: '/get_profile',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-                  "account": document.getElementById("account").value,
-              },
-              success: function (data) {
-                // console.log(document.getElementById("chat-message-input").value)
-                // if (data.result == "success"){
-                //   update_msg();
-                // }
-                console.log("success")
-              }
-        });
-    });
-</script>
+            $('#register_cancel').click((event) => {
+                $("#name").val("");
+                $("#year").val("");
+                $("#month").val("");
+                $("#date").val("");
+                $("#mail").val("");
+                $("#account_register").val("");
+                $("#password_register").val("");
+            })
+
+            $('#register_check').click((event) => {
+                birth=$("#year").val();
+                birth+="/"+$("#month").val();
+                birth+="/"+$("#date").val();
+                console.log( birth);
+            })
+
+/*            $("#register_check").click( function() {
+                $.ajax({
+                    url: '/register_submit',
+                    method: 'POST',
+                    type: 'POST',
+                    dataType: "json",
+                    data: {
+                        "name": document.getElementById("name").value,
+                        "account": document.getElementById("register_account").value,
+                        "password": document.getElementById("register_password").value,
+                        "sex": sex,
+                        "birth": document.getElementById("birth").value,
+                    },
+                    success: function (data) {
+                        if (data.result == "success"){
+                            console.log("success")
+                        }
+                        if (data.result == "account_exist"){
+                            console.log("account_exist")
+                        }
+                        
+                    }
+                });
+            });*/
+        </script>
+    </body>
+</html>

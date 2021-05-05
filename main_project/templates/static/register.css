@@ -1,0 +1,189 @@
+@font-face {
+    font-family: jf_open;
+    src: url(src/font/jf-openhuninn-1.1.ttf);
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+#all {
+    position: relative;
+    height: 116.8vh;
+    width: 54vh;
+    margin: auto;
+    background:#F59E56;
+}
+
+.navbar{
+    position: absolute;
+    width: 54vh;
+    height: 14vh;
+    left: 0px;
+    top: 0px;
+}
+.prev{
+    position: absolute;
+    width: 7vh;
+    height: 7vh;
+    left: 3vh;
+    top: 4.5vh;
+}
+#register_text{
+    position: absolute;
+    left: 19vh;
+    top: -6vh;
+    font-family: jf_open;
+    font-size: 8vh;
+    color:white;
+}
+.profile_text{
+    font-family: jf_open;
+    font-size: 3.5vh;
+    width: 9vh;
+    height: 4vh;
+}
+.input{
+    position: absolute;
+    width: 35vh;
+    height: 6vh;
+    background-size: 36vh 9vh;
+    font-size:4.3vh;
+    background:#F5F1F0;
+    box-shadow: inset 0.43vh 0.43vh 1.3vh rgba(0, 0, 0, 0.2);
+    border-radius: 1.3vh;
+    border: 0; 
+    outline: none; 
+}
+.submit{
+    position: absolute;
+    width: 14vh;
+    height: 5vh;
+    font-size:3.5vh;
+    background: #E26F50;
+    color:white;
+    font-family:jf_open;
+    border-radius: 1.5vh;
+    border: 0; 
+}
+
+#name_text{
+    position: absolute;
+    left: 2.8vh;
+    top: 20vh;
+}
+#name{
+    left: 14.6vh;
+    top: 22.3vh;
+}
+#birth_text{
+    position: absolute;
+    left: 2.8vh;
+    top: 31vh
+}
+#year{
+    position: absolute;
+    width: 11vh;
+    height: 5.3vh;
+    font-size:3.5vh;
+    background:#F5F1F0;
+    box-shadow: inset 0.43vh 0.43vh 1.3vh rgba(0, 0, 0, 0.2);
+    border-radius: 1.3vh;
+    border: 0; 
+    outline: none; 
+    left: 14.6vh;
+    top: 34vh;
+}
+select#year option { 
+ 
+    font-size: 1vh; 
+ 
+}
+#slash1{
+    position: absolute;
+    font-size:4.3vh;
+    left: 27.3vh;
+    top: 30.5vh;
+}
+.birth{
+    position: absolute;
+    width: 8.5vh;
+    height: 5.3vh;
+    background-size: 36vh 9vh;
+    font-size:4vh;
+    background:#F5F1F0;
+    box-shadow: inset 0.43vh 0.43vh 1.3vh rgba(0, 0, 0, 0.2);
+    border-radius: 1.3vh;
+    border: 0; 
+    outline: none; 
+}
+select.birth option { 
+ 
+    font-size: 1vh; 
+ 
+}
+#month{
+    left: 30vh;
+    top: 34vh;
+}
+#slash2{
+    position: absolute;
+    font-size:4.3vh;
+    left: 39.3vh;
+    top: 30.5vh;
+}
+#date{
+    left: 42vh;
+    top: 34vh;
+}
+#sex_text{
+    position: absolute;
+    left: 2.8vh;
+    top: 42vh;
+}
+.sex{
+    position: absolute;
+    width: 21vh;
+    height: 6vh;
+    left: 16vh;
+    top: 45vh;
+    background-color:#F59E56;
+}
+#boy{
+    visibility: hidden;
+}
+#mail_text{
+    position: absolute;
+    left: 2.8vh;
+    top: 53vh;
+}
+#mail{
+    left: 14.6vh;
+    top: 56vh;
+    font-size:2.7vh;
+}
+#account_register_text{
+    position: absolute;
+    left: 2.8vh;
+    top: 64vh;
+}
+#account_register{
+    left: 14.6vh;
+    top: 67vh;
+}
+#password_register_text{
+    position: absolute;
+    left: 2.8vh;
+    top: 76vh;
+}
+#password_register{
+    left: 14.6vh;
+    top: 79vh;
+}
+#register_cancel{
+    left: 13vh;
+    top: 95vh;
+}
+#register_check{
+    left: 30vh;
+    top: 95vh;
+}

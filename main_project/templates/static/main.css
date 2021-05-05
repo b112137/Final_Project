@@ -1,0 +1,144 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#all {
+    position: relative;
+    height: 116.8vh;
+    width: 54vh;
+    margin: auto;
+}
+#container {
+    position: relative;
+    height: 68vh;
+    width: 54vh;
+    margin: auto;
+    background: #F59E56;
+}
+#setting {
+    position: relative;
+    top: 4vh;
+    left: 45vh;
+    width: 6vh;
+    height: 4vh;
+    z-index: 1;
+}
+#shop{
+    position: absolute;
+    width: 14vh;
+    height: 10vh;
+    left: 10vh;
+    top: 71vh;
+}
+#shop_text{
+    position: absolute;
+    width: 10vh;
+    height: 4.3vh;
+    left: 12vh;
+    top: 81.5vh;
+}
+#mission{
+    position: absolute;
+    width: 14vh;
+    height: 10vh;
+    left: 30vh;
+    top: 71vh;
+}
+#mission_text{
+    position: absolute;
+    width: 9vh;
+    height: 4vh;
+    left: 32.6vh;
+    top: 81.5vh;
+}
+#profile{
+    position: absolute;
+    width: 14vh;
+    height: 10vh;
+    left: 10vh;
+    top: 90vh;
+}
+#profile_text{
+    position: absolute;
+    width: 8vh;
+    height: 4vh;
+    left: 13.2vh;
+    top: 100.5vh;
+}
+#friends{
+    position: absolute;
+    width: 14vh;
+    height: 10vh;
+    left: 30vh;
+    top: 90vh;
+}
+#friends_text{
+    position: absolute;
+    width: 8vh;
+    height: 4vh;
+    left: 33.2vh;
+    top: 100.5vh;
+}
+#chat{
+    position: absolute;
+    width: 12vh;
+    height: 12vh;
+    right: 0vh;
+    bottom: 0vh;
+} 
+#navbar{
+    position: absolute;
+    width: 18.5vh;
+    height: 116.8vh;
+    right: 0vh;
+    top: 0px;
+    background: #F7F5F5;
+    visibility: hidden;
+}
+#setting2 {
+    position: absolute;
+    top: 5vh;
+    left: 10vh;
+    width: 5vh;
+    height: 3vh;
+}
+#set{
+    position: absolute;
+    width: 10.5vh;
+    height: 3.7vh;
+    top: 20vh; 
+    left: 3vh;
+}
+
+#guided{
+    position: absolute;
+    width: 10.5vh;
+    height: 3.7vh;
+    top: 33vh; 
+    left: 3vh;
+}
+
+#aboutus{
+    position: absolute;
+    width: 14vh;
+    height: 6vh;
+    top: 45vh; 
+    left: 3vh;
+}
+/*
+#logout{
+    position: absolute;
+    width: 5vh;
+    height: 5vh;
+    top: 96.5vh; 
+    left: 3vh;
+}
+#logout_text{
+    position: absolute;
+    width: 5vh;
+    height: 3vh;
+    top: 98vh; 
+    left: 10vh;
+}
+*/

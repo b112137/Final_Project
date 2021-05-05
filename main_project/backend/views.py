@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from django.views.generic import View
 import json
 from backend.models import Chat
-from backend.models import Profile, Mission_imformation, Mission_group, Mission_Chatroom, Mission_submission
+from backend.models import Profile, Mission_imformation, Mission_group, Mission_Chatroom, Mission_submission, Friend_Chatroom
 
 from rest_framework import serializers
 from django.core import serializers as core_serializers
@@ -139,7 +139,7 @@ def get_all_mission(request):
             "exp1":exp1, "exp2":exp2, "exp3":exp3, "reward":reward
         })
 
-def get_all_mission_img(request):
+def get_img(request):
     if request.method == 'POST':
         img_path = request.POST.get('img_path')
         image = cv2.imread(img_path)
@@ -364,7 +364,7 @@ def get_mission_chatroom_list(request):
         mission_done_chatroom_ID = ast.literal_eval(profile_search.mission_done_chatroom_ID)
         mission_do_chatroom_ID = mission_doing_chatroom_ID + mission_done_chatroom_ID
 
-        chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time = [], [], [], [], [], [], []
+        chatroom_ID_all, mission_ID, mission_name, chat_img, group_name, group_number, status, message, time = [], [], [], [], [], [], [], [], []
         count = 0
         for chatroom_ID in mission_do_chatroom_ID:
             chatroom_ID_all.append(chatroom_ID)
@@ -372,7 +372,9 @@ def get_mission_chatroom_list(request):
             group_search = Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0]
             mission_ID.append(group_search.mission_ID)
             mission_name.append(group_search.mission_name)
+            chat_img.append( Mission_imformation.objects.filter(mission_ID=group_search.mission_ID)[0].mission_pic )
             group_name.append(group_search.group_name)
+            group_number.append( len(ast.literal_eval(group_search.member_ID)) )
             status.append(group_search.status)
 
             lastest_message = Mission_Chatroom.objects.filter(chatroom_ID=chatroom_ID).order_by('pk').last()
@@ -386,22 +388,58 @@ def get_mission_chatroom_list(request):
                 time.append(datetime(1999, 3, 26, 0, 0, 0, count, tzinfo=timezone.utc))
                 count += 1
 
-        print(chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time)
+        # print(chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time)
+
+        friend_chatroom_ID = ast.literal_eval(profile_search.friend_chatroom_ID)
+        # print(friend_chatroom_ID)
+        for chatroom_ID in friend_chatroom_ID:
+            chatroom_ID_all.append(chatroom_ID)
+
+            mission_ID.append('none')
+            mission_name.append('none')
+            
+
+            sender_ID = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID)[0].sender_ID
+            reciever_ID = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID)[0].receiver_ID
+            if sender_ID == account:
+                group_name_ID = reciever_ID
+            elif reciever_ID == account:
+                group_name_ID = sender_ID
+
+            chat_img.append( Profile.objects.filter(account=group_name_ID)[0].profile_photo )
+
+            group_name.append(Profile.objects.filter(account=group_name_ID)[0].name)
+            group_number.append("none")
+            status.append("friend")
+
+            lastest_message = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID).order_by('pk').last()
+
+            if lastest_message:
+                message.append(lastest_message.message)
+                time.append(lastest_message.time)
+                # print(lastest_message.time)
+            else:
+                message.append("")
+                time.append(datetime(1999, 3, 26, 0, 0, 0, count, tzinfo=timezone.utc))
+                count += 1
+
         time_copy = time.copy()
 
         time, chatroom_ID_all = (list(t) for t in zip(*sorted(zip(time_copy, chatroom_ID_all), reverse=True  )))
         time, mission_ID = (list(t) for t in zip(*sorted(zip(time_copy, mission_ID), reverse=True  )))
         time, mission_name = (list(t) for t in zip(*sorted(zip(time_copy, mission_name), reverse=True  )))
+        time, chat_img = (list(t) for t in zip(*sorted(zip(time_copy, chat_img), reverse=True  )))
         time, group_name = (list(t) for t in zip(*sorted(zip(time_copy, group_name), reverse=True  )))
+        time, group_number = (list(t) for t in zip(*sorted(zip(time_copy, group_number), reverse=True  )))
         time, status = (list(t) for t in zip(*sorted(zip(time_copy, status), reverse=True  )))
         time, message = (list(t) for t in zip(*sorted(zip(time_copy, message), reverse=True  )))
 
-        print(chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time)
-
+        # print(chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time)
+        print(chat_img)
         return JsonResponse({
             'result' : "success",
-            "chatroom_ID": chatroom_ID_all, "mission_ID": mission_ID, "mission_name": mission_name,
-            "group_name": group_name, "status": status, "message": message, "time": time
+            "chatroom_ID": chatroom_ID_all, "mission_ID": mission_ID, "mission_name": mission_name, "chat_img": chat_img,
+            "group_name": group_name, "group_number": group_number, "status": status, "message": message, "time": time
         })
 
 def mission_chatroom_update(request):
@@ -429,6 +467,47 @@ def mission_chatroom_update(request):
                 'history' : history,
                 'group_name': group_name,
             })
+
+def friend_chatroom_update(request):
+    if request.method == 'POST':
+        post_type = request.POST.get('post_type')
+        if post_type == "Send":
+            chatroom_ID = request.POST.get('chatroom_ID')
+            account = request.POST.get('sender_ID')
+            message = request.POST.get('message')
+
+            sender_ID = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID)[0].sender_ID
+            reciever_ID = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID)[0].receiver_ID
+            if sender_ID == account:
+                group_name_ID = reciever_ID
+            elif reciever_ID == account:
+                group_name_ID = sender_ID
+
+            Friend_Chatroom.objects.create(chatroom_ID=chatroom_ID, sender_ID=sender_ID, receiver_ID=reciever_ID,  message=message)
+            return JsonResponse({
+                'result' : "success"
+            })
+
+        elif post_type == "Receive":            
+            chatroom_ID = request.POST.get('chatroom_ID')   
+            account = request.POST.get('account')
+            history = core_serializers.serialize("json", Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID).order_by("time"))
+
+            sender_ID = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID)[0].sender_ID
+            reciever_ID = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID)[0].receiver_ID
+            if sender_ID == account:
+                group_name_ID = reciever_ID
+            elif reciever_ID == account:
+                group_name_ID = sender_ID
+
+            group_name = Profile.objects.filter(account=group_name_ID)[0].name
+
+            return JsonResponse({
+                'result' : "success",
+                'history' : history,
+                'group_name': group_name,
+            })
+
 
 def get_mission_chatroom_member(request):
     if request.method == 'POST':

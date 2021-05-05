@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+        <meta charset="utf-8">
+        <script src="static/jquery.js"></script>
+    </head>
+    <body>
+        <div id="character_name"> {{ character_name }}</div>
+        <!-- <div id="level"></div> -->
+        <div id="name"> {{ name }} </div>
+        <div id="exp1"> {{ exp1 }} </div>
+        <div id="exp2"> {{ exp2 }} </div>
+        <div id="exp3"> {{ exp3 }} </div>
+
+        <button id="mission_button">任務</button>
+        <button id="chat_button">聊天</button>
+    </body>
+
+</html>
+
+<script>
+    $.ajaxSetup({
+        data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
+    })    
+
+    $("#mission_button").click( function() {
+        account = window.location.href.split('?')[1].split('=')[1]
+        window.location.href = "/mission?account="+account
+    })
+
+    $("#chat_button").click( function() {
+        account = window.location.href.split('?')[1].split('=')[1]
+        window.location.href = "/chatroom?account="+account
+    })
+
+</script>

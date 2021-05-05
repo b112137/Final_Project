@@ -1,0 +1,55 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+#all {
+    position: relative;
+    height: 116.8vh;
+    width: 54vh;
+    margin: auto;
+}
+#container {
+    position: relative;
+    height: 116.8vh;
+    width: 54vh;
+    margin: auto;
+    background-color: F 59E 56;
+}
+#hello{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 6vh;
+    line-height: 6vh;
+    position: absolute;
+    left: 19vh;
+    top: 12vh;
+    }
+#login_image{
+    position: absolute;
+    width: 25vh;
+    height: 25vh;
+    left: 14vh;
+    top: 33vh;
+}
+#login_text{
+    position: absolute;
+    width: 10vh;
+    height: 5vh;
+    left: 21.7vh;
+    top: 43.3vh;
+}
+#register_image{
+    position: absolute;
+    width: 25vh;
+    height: 25vh;
+    left: 14vh;
+    top: 65.8vh;
+}
+#register_text{
+    position: absolute;
+    width: 10vh;
+    height: 5vh;
+    left: 21.7vh;
+    top: 75.4vh;
+}

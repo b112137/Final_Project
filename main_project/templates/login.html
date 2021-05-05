@@ -1,43 +1,57 @@
 <!DOCTYPE html>
 <html>
-    <head> 
+    <head>
         <meta charset="utf-8">
+        <link href="./static/login.css" rel="stylesheet">
         <script src="static/jquery.js"></script>
     </head>
     <body>
-        帳號 <input id = "account" type="text" size="20" ><br/>
-        密碼 <input id = "password" type="text" size="20" ><br/>
-        <div>
-            <button id = "login_button">登入</button>
+        <div id="all">
+            <div id="login_page">
+                <div class="navbar">
+                    <img src="./static/src/prev.png" class="prev" id="login_prev">
+                </div> 
+                <p id="login_text">登 錄</p>
+                <input type="text" id="account" name="account" class="input" placeholder=" 你的帳號">              
+                <input type="password" id="password" name="password" class="input" placeholder=" 你的密碼" >
+                <input type="submit" value="確認" id="check" class="submit">
+                             
+            </div>
+
         </div>
+ 
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script >
 
-    
+            $('#cancel').click((event) => {
+                $("#account").val("");
+                $("#password").val("");
+            })
+
+
+            $.ajaxSetup({
+            data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
+            })  
+
+            $("#check").click( function() {
+            $.ajax({
+                    url: '/login_check',
+                    method: 'POST',
+                    type: 'POST',
+                    dataType: "json",
+                    data: {
+                        "account": document.getElementById("account").value,
+                        "password": document.getElementById("password").value,
+                    },
+                    success: function (data) {
+                    if (data.result == "success"){
+                        account = document.getElementById("account").value
+                        window.location.href = "/main?account="+account
+                    }
+                    console.log("success")
+                    }
+                });
+            });
+        </script> 
     </body>
-
 </html>
-
-<script>
-    $.ajaxSetup({
-        data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
-    })    
-
-    $("#login_button").click( function() {
-        $.ajax({
-              url: '/login_check',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-                  "account": document.getElementById("account").value,
-                  "password": document.getElementById("password").value,
-              },
-              success: function (data) {
-                if (data.result == "success"){
-                    account = document.getElementById("account").value
-                    window.location.href = "/main?account="+account
-                }
-                console.log("success")
-              }
-        });
-    });
-</script>

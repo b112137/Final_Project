@@ -277,7 +277,7 @@
                     console.log(pic_list)
                     for(var i = 0; i < pic_list.length; i++){
                         $.ajax({
-                        url: '/get_all_mission_img',
+                        url: '/get_img',
                         method: 'POST',
                         type: 'POST',
                         async: false, //改成同步執行(等待上一個回傳)
@@ -344,7 +344,7 @@
                     var pic_list = data.mission_pic
                     for(var i = 0; i < pic_list.length; i++){
                         $.ajax({
-                        url: '/get_all_mission_img',
+                        url: '/get_img',
                         method: 'POST',
                         type: 'POST',
                         async: false, //改成同步執行(等待上一個回傳)
@@ -357,7 +357,7 @@
                                 '<div class="mission-card">\
                                     <div class="card-header">\
                                         <div href="#collapse'+ i.toString() +'" data-toggle="collapse" data-parent="#explore-mission">\
-                                            <div class="card-img" style="background-size: cover; background-image: url(data:image/jpg;base64,' + img + ')">\
+                                            <div class="card-img" style="background-size: cover; background-image: url(data:image/jpg;base64,' + img + ') ">\
                                             </div>\
                                             <div class="mission-title">'+ data.mission_name[i] +'</div>\
                                             <div class="mission-joined">已有'+ data.joined[i]  +'人參加</div>\
@@ -444,7 +444,7 @@
                         $('#mission_group_box_'+mission_ID).append(
                             '<div class="group-item">\
                                 <div class="group-name">' + data.group_name[i] + '</div>\
-                                <div class="group-need">' + (parseInt(data.group_most[i], 10) - parseInt(data.group_now[i], 10)).toString()  + '</div>\
+                                <div class="group-need">缺' + (parseInt(data.group_most[i], 10) - parseInt(data.group_now[i], 10)).toString()  + '人</div>\
                                 <button class="btn-join" data-toggle="modal" data-target="#join-group-modal_' + data.chatroom_ID[i] + '"></button>\
                             </div>'
                         )
