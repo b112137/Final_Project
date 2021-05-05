@@ -263,6 +263,7 @@ def create_mission_group(request):
 
         return JsonResponse({
             'result' : "success",
+            'chatroom_ID' : lastest_chatroom_ID,
         })
 
 def submit_mission_group_check(request):

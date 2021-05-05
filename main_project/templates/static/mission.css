@@ -9,6 +9,18 @@ body {
     background-color: white;
 }
 
+input {
+    padding: 3vw;
+}
+
+::-moz-placeholder {
+    color: #B5B2B2;
+}
+
+::-webkit-input-placeholder {
+    color: #B5B2B2;
+}
+
 .header {
     position: fixed;
     width: 100vw;
@@ -46,19 +58,6 @@ body {
     background-color: #F59E56;
     top: -1vw;
 }
-
-/* li.active > #tab-explore {
-
-} */
-
-/* li.active > a {
-    background-color: #F59E56 !important;
-}
-
-li > a {
-    font-size: 6vw;
-    background-color: #F59E56 !important;
-} */
 
 #tab-explore, #tab-my-mission {
     width: 50vw;
@@ -126,12 +125,15 @@ li > a {
     border-radius: 2.7vw;
     border-width: 0px;
     background-color: #E26F50;
-    opacity: 0.8;
     font-family: jf_open;
     font-size: 5.5vw;
     color: white;
     z-index: 5;
     text-align: center;
+}
+
+[aria-expanded="true"] .select-btn {
+    opacity: 0.8;
 }
 
 .btn-group {
@@ -154,6 +156,7 @@ li > a {
     text-align: center;
     border-radius: 2.7vw;
     border-width: 0px;
+    font-family: jf_open;
     font-size: 5vw;
 }
 
@@ -167,10 +170,12 @@ li > a {
 
 .btn-group > button:active {
     background-color: rgba(226, 112, 80, 0.692);
+    color: white;
 }
 
 .btn-group > button:hover {
     background-color: rgba(226, 112, 80, 0.692);
+    color: white;
 }
 
 .tab-content {
@@ -205,6 +210,7 @@ li > a {
     width: 76.3vw;
     height: 52vw;
     background-color: #F8F5F5;
+    background-size: cover;
     border-radius: 4vw;
     top: 4vw;
     left: 4.9vw;
@@ -218,6 +224,7 @@ li > a {
     left: 7vw;
     border-radius: 3.7vw;
     background-color: #F5E0CD;
+    z-index: 4;
 }
 
 .card-tab-content {
@@ -232,13 +239,15 @@ li > a {
     overflow-y: scroll;
 }
 
-/* .card-footer {
+[aria-expanded="true"] .card-footer {
+    position: absolute;
     width: 86.1vw;
-    height: 10vw;
-    border-bottom-left-radius: 3.7vw;
-    border-bottom-right-radius: 3.7vw;
-    top: 50vw;
-} */
+    height: 8vw;
+    bottom: 0px;
+    background-color: #F5E0CD;
+    z-index: 3;
+    visibility: visible;
+}
 
 .mission-title {
     position: absolute;
@@ -250,6 +259,7 @@ li > a {
     font-weight: bold;
     font-family: jf_open;
     color: #4D4D4D;
+    z-index: 5;
 }
 
 .mission-joined {
@@ -259,6 +269,7 @@ li > a {
     left: 7vw;
     bottom: 2vw;
     font-size: 3vw;
+    z-index: 5;
 }
 
 .mission-exp {
@@ -269,6 +280,7 @@ li > a {
     bottom: 0px;
     background-image: url('src/exp.png');
     background-size: cover;
+    z-index: 5;
 }
 
 .mission-exp > .exp-val {
@@ -362,7 +374,7 @@ li > a {
     margin-left: 2vw;
 }
 
-.group-item > button {
+.btn-join {
     width: 9vw;
     height: 9vw;
     border-radius: 50%;
@@ -384,6 +396,92 @@ li > a {
     bottom: 0vw;
     background-size: cover;
 }
+
+.modal-dialog {
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  margin-left: 16vw;
+  margin-top: 40vh;
+}
+
+.modal-content {
+    position: relative;
+    font-family: jf_open;
+    font-size: 4vw;
+    background-color: #E9BBA4;
+    border-radius: 5vw;
+    border-width: 0px;
+    width: 68vw;
+    height: 68vw;;
+}
+
+.modal-input-group-name {
+    position: absolute;
+    width: 58vw;
+    height: 10vw;
+    top: 10vw;
+    left: 5vw;
+    border-radius: 2.5vw;
+    border-width: 0px;
+    background-color: #F5F1F0;
+    font-size: 5vw;
+}
+
+.modal-input-group-people {
+    position: absolute;
+    width: 58vw;
+    height: 10vw;
+    top: 25vw;
+    left: 5vw;
+    border-radius: 2.5vw;
+    border-width: 0px;
+    background-color: #F5F1F0;
+    font-size: 5vw;
+}
+
+.modal-body-text {
+    position: absolute;
+    top: 38vw;
+    width: 68vw;
+    right: 0px;
+}
+
+.modal-body-text-confirm {
+    position: absolute;
+    top: 5vw;
+    width: 68vw;
+    right: 0px;
+    font-size: 5vw;
+}
+
+.modal-content > button {
+    position: absolute;
+    bottom: 5vw;
+    width: 22vw;
+    height: 9vw;
+    background-color: #E26F50;
+    border-width: 0px;
+    border-radius: 2vw;
+    color: white;
+    font-size: 5.5vw;
+}
+
+
+
+.modal-content >button:active {
+    opacity: 0.8;
+}
+
+.modal-btn-cancel {
+    left: 10vw;
+}
+
+.modal-btn-confirm {
+    right: 10vw;
+}
+
+
 
 .jf-continer{
     position: relative;
@@ -616,4 +714,12 @@ li > a {
     z-index: 40;
     text-align: center;
     color: black;
+}
+
+
+.test_block{
+    position: relative;
+    margin-bottom: 3vw;
+    width: 100vw;
+    height: 30vw;
 }

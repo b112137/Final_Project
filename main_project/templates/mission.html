@@ -181,7 +181,7 @@
                 </div> -->
 
             </div>
-            <div id="my-mission" style="position: relative" class="tab-pane fade">
+            <div id="my-mission" class="tab-pane fade">
                 <div class="jf-continer" id = 'page1'>
                     <img src="static/Rectangle 60.png" id = "joined" class = "joined_clicked">
                     <img src ="static/Rectangle 61.png"id = "finished" class  = "finished_noclick">
@@ -189,10 +189,26 @@
                     <div class="joined_text" id = "joined_t">已加入</div>
                     <div class="finished_text" id ="finished_t">已完成</div>
                     
+                    <!-- <div style='position: absolute'>\
+                        <img src='static/Rectangle 31.png' class = 'joined_mission'>
+                        <img src='static/Rectangle 34.png' class = 'joined_name'>
+                        <img src= 'static/Rectangle 62.png' class = 'submit_btn'>
+                        <div class='submit_text' id = 'submit'>提交</div>
+                    </div>
+
+                    <div style='position: absolute'>\
+                        <img src='static/Rectangle 31.png' class = 'joined_mission'>
+                        <img src='static/Rectangle 34.png' class = 'joined_name'>
+                        <img src= 'static/Rectangle 62.png' class = 'submit_btn'>
+                        <div class='submit_text' id = 'submit'>提交</div>
+                    </div> -->
                 </div>
             </div>
         </div>
-        
+        <div id="create_group_modal"></div>
+        <div id="test_modal"></div>
+        <div id="join_group_modal"></div>
+
         <div class="quarter_circle" style="left: 0vw; background-image: url('static/src/home.png');"></div>
         <div class="quarter_circle" style="right: 0vw; background-image: url('static/src/chat.png');"></div>
         <!-- <script src="mission.js"></script> -->
@@ -216,6 +232,15 @@
         my_mission("join");
     })
     
+    $(document).on('click', "#finished_t",function(){
+        my_mission("finished");
+    })
+
+    $(document).on('click',"#joined_t" ,function(){
+        my_mission("join");
+    })
+
+
     function my_mission(type) {
         $('#page1').html("");
         if(type=="join"){
@@ -223,6 +248,16 @@
                 "<div>\
                     <img src='static/Rectangle 60.png' id = 'joined' class = 'joined_clicked'>\
                     <img src ='static/Rectangle 61.png' id = 'finished' class  = 'finished_noclick'>\
+                    <div class='joined_text' id = 'joined_t'>已加入</div>\
+                    <div class='finished_text' id ='finished_t'>已完成</div>\
+                </div>"
+            )
+        }
+        else if(type=="finished"){
+            $('#page1').append(
+                "<div>\
+                    <img src='static/Rectangle 61.png' id = 'joined' class = 'joined_clicked'>\
+                    <img src ='static/Rectangle 60.png' id = 'finished' class  = 'finished_noclick'>\
                     <div class='joined_text' id = 'joined_t'>已加入</div>\
                     <div class='finished_text' id ='finished_t'>已完成</div>\
                 </div>"
@@ -252,15 +287,38 @@
                         success: function (img) {
                             console.log(data.status[i])
                             if(type=="join" && (data.status[i]=="acceptable" || data.status[i]=="full")){
-                                console.log(i)
                                 $('#page1').append(
-                                    "<div style='position: absolute'>\
+                                    "<div class='test_block'>\
                                         <img src='static/Rectangle 31.png' class = 'joined_mission'>\
                                         <img src='static/Rectangle 34.png' class = 'joined_name'>\
                                         <img src= 'static/Rectangle 62.png' class = 'submit_btn'>\
                                         <div class='submit_text' id = 'submit'>提交</div>\
                                     </div>"
                                 )
+                            }
+                            else if(type=="finished"){
+                                console.log("in")
+                                if(data.status[i]=="checking"){
+                                    $('#page1').append(
+                                        "<div class='test_block'>\
+                                            <img src='static/Rectangle 31.png' class = 'joined_mission'>\
+                                            <img src='static/Rectangle 34.png' class = 'joined_name'>\
+                                            <img src= 'static/Rectangle 62.png' class = 'submit_btn'>\
+                                            <div class='submit_text' id = 'submit'>審核中</div>\
+                                        </div>"
+                                    )
+                                }
+                                else if(data.status[i]=="finished"){
+                                    $('#page1').append(
+                                        "<div class='test_block'>\
+                                            <img src='static/Rectangle 31.png' class = 'joined_mission'>\
+                                            <img src='static/Rectangle 34.png' class = 'joined_name'>\
+                                            <img src= 'static/Rectangle 62.png' class = 'submit_btn'>\
+                                            <div class='submit_text' id = 'submit'>已完成</div>\
+                                        </div>"
+                                    )
+                                }
+                                
                             }
                             
                         }
@@ -317,7 +375,7 @@
                                                     <a data-toggle="tab" href="#mission-intro'+ i.toString() +'">任務介紹</a>\
                                                 </li>\
                                                 <li id="right-tab">\
-                                                    <a data-toggle="tab" onclick="mission_signup(' + data.mission_ID[i] + ')" href="#mission-signup_'+ data.mission_ID[i] +'">揪團報名</a>\
+                                                    <a data-toggle="tab" onclick="mission_signup(' + data.mission_ID[i] + "," + data.group_required[i] + ')" href="#mission-signup_'+ data.mission_ID[i] +'">揪團報名</a>\
                                                 </li>\
                                             </ul>\
                                             <div class="tab-content card-tab-content">\
@@ -327,7 +385,7 @@
                                                     </div>\
                                                 </div>\
                                                 <div id="mission-signup_'+ data.mission_ID[i] +'" class="tab-pane fade">\
-                                                    <button class="btn-create-group">我要開團</button>\
+                                                    <button class="btn-create-group" type="button" data-toggle="modal" data-target="#create-group-modal">我要開團</button>\
                                                     <div id="mission_group_box_'+ data.mission_ID[i] +'" class="group-item-box">'+
                                                         // <div class="group-item">\
                                                         //     <div class="group-name">團名團名</div>\
@@ -367,7 +425,7 @@
     
 
 
-    function mission_signup(mission_ID){
+    function mission_signup(mission_ID,group_required){
         console.log(mission_ID)
         $('#mission_group_box_'+mission_ID).html("")
         $.ajax({
@@ -381,15 +439,54 @@
               },
               success: function (data) {
                 if (data.result == "success"){
+                    html_code = ""
                     for(var i = 0; i < data.chatroom_ID.length; i++){
                         $('#mission_group_box_'+mission_ID).append(
                             '<div class="group-item">\
                                 <div class="group-name">' + data.group_name[i] + '</div>\
                                 <div class="group-need">' + (parseInt(data.group_most[i], 10) - parseInt(data.group_now[i], 10)).toString()  + '</div>\
-                                <button></button>\
+                                <button class="btn-join" data-toggle="modal" data-target="#join-group-modal_' + data.chatroom_ID[i] + '"></button>\
                             </div>'
                         )
+
+                        html_code += 
+                            '<div class="modal fade" id="join-group-modal_' + data.chatroom_ID[i] + '" tabindex="-1" aria-hidden="true" data-backdrop="static">\
+                                <div class="modal-dialog">\
+                                    <div class="modal-content" style="height: 48vw;">\
+                                        <div class="modal-body">\
+                                            <div class="modal-body-text-confirm">\
+                                                確定加入<br>' +
+                                                data.group_name[i]+
+                                                '<br>並報名此活動？\
+                                            </div>\
+                                        </div>\
+                                        <button type="button" class="modal-btn-cancel" data-dismiss="modal">取消</button>\
+                                        <button type="button" id="modal-btn-confirm-id_' + data.chatroom_ID[i] + '" class="modal-btn-confirm" onclick="join_group('+ mission_ID + ',' + data.chatroom_ID[i] +')">確認</button>\
+                                    </div>\
+                                </div>\
+                            </div>'
                     }
+                    $("#join_group_modal").html(html_code);
+
+                    $('#create_group_modal').html(
+                        '<div class="modal fade" id="create-group-modal" tabindex="-1" aria-hidden="true" data-backdrop="static">\
+                            <div class="modal-dialog">\
+                                <div class="modal-content">\
+                                    <div class="modal-body">\
+                                        <input id="group_name" type="text" placeholder="輸入團名(最多10字)" class="modal-input-group-name"><br>\
+                                        <input id="group_most" type="number" placeholder="輸入人數(最少'+ group_required + '人)" class="modal-input-group-people"><br>\
+                                        <div class="modal-body-text">\
+                                            按下確認自動報名<br>\
+                                            且建立聊天群組\
+                                        </div>\
+                                    </div>\
+                                    <button type="button" class="modal-btn-cancel" data-dismiss="modal">取消</button>\
+                                    <button type="button" id="modal-btn-confirm-id" class="modal-btn-confirm" onclick="create_group('+ mission_ID + ',' + group_required +')">確認</button>\
+                                </div>\
+                            </div>\
+                        </div>'
+                    )
+
                 }
                 console.log("success")
               }
@@ -397,27 +494,61 @@
     }
 
 
-    function create_group(mission_ID){
+    function create_group(mission_ID, group_required){
         console.log(mission_ID)
-        $.ajax({
-              url: '/create_mission_group',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-                //"group_name": document.getElementById("group_name").value,
-                "mission_ID": mission_ID,
-                "leader_ID": window.location.href.split('?')[1].split('=')[1],
-                //"group_most": document.getElementById("group_most").value,
-              },
-              success: function (data) {
-                if (data.result == "success"){
-                    // 前往對應創出來的 chatroom 
-                    // TODO
+
+        group_name = document.getElementById("group_name").value
+        group_most = document.getElementById("group_most").value
+        console.log(group_name.length)
+
+        if( group_name=="" || group_most==""){
+            alert("團名或人數不得為空");
+        }
+        else{
+            if (group_name.length > 10){
+                alert("團名不得超過10字");
+            }
+            else {
+                if ( Number.isInteger( parseInt(group_most, 10) ) ){
+                    if (group_most < group_required){
+                        alert("人數不得低於"+ group_required +"人");
+                    }
+                    else {
+                        $('#modal-btn-confirm-id').attr('data-dismiss', "modal");
+
+                        $.ajax({
+                          url: '/create_mission_group',
+                          method: 'POST',
+                          type: 'POST',
+                          dataType: "json",
+                          data: {
+                            "group_name": group_name,
+                            "mission_ID": mission_ID,
+                            "leader_ID": window.location.href.split('?')[1].split('=')[1],
+                            "group_most": group_most,
+                          },
+                          success: function (data) {
+                            if (data.result == "success"){
+                                // 前往對應創出來的 chatroom 
+                                window.location.href = "/chatroom?account=" + window.location.href.split('?')[1].split('=')[1] + "&chatroom_ID=" + data.chatroom_ID
+                            }
+                            console.log("success")
+                          }
+                        });
+                    }
                 }
-                console.log("success")
-              }
-        });
+                else {
+                    alert("人數必須為整數");
+                }
+
+                
+            }
+        }
+
+        
+        
+
+        
     }
 
 
@@ -435,10 +566,19 @@
               },
               success: function (data) {
                 if (data.result == "success"){
+                    $('#modal-btn-confirm-id_' + chatroom_ID).attr('data-dismiss', "modal");
                     // 前往對應創出來的 chatroom 
-                    // TODO
+                    window.location.href = "/chatroom?account=" + window.location.href.split('?')[1].split('=')[1] + "&chatroom_ID=" + chatroom_ID
                 }
-                console.log("success")
+                else if (data.result == "group_full"){
+                    $('#modal-btn-confirm-id_' + chatroom_ID).attr('data-dismiss', "modal");
+                    alert("此團已額滿")
+                }
+                else if (data.result == "group_repeat"){
+                    $('#modal-btn-confirm-id_' + chatroom_ID).attr('data-dismiss', "modal");
+                    alert("您已在此團中")
+                }
+                
               }
         });
     }
