@@ -8,144 +8,144 @@ body {
 }
 #all {
     position: relative;
-    height: 116.8vh;
-    width: 54vh;
+    height: 216vw;
+    width: 100vw;
     margin: auto;
     background:#F59E56;
 }
 
 .navbar{
     position: absolute;
-    width: 54vh;
-    height: 14vh;
-    left: 0px;
-    top: 0px;
+    width: 100vw;
+    height: 25.9vw;
+    left: 0vw;
+    top: 0vw;
 }
 .prev{
     position: absolute;
-    width: 7vh;
-    height: 7vh;
-    left: 3vh;
-    top: 4.5vh;
+    width: 12.95vw;
+    height: 12.95vw;
+    left: 5.55vw;
+    top: 8.325vw;
 }
 #register_text{
     position: absolute;
-    left: 19vh;
-    top: -6vh;
+    left: 35.15vw;
+    top: -11.1vw;
     font-family: jf_open;
-    font-size: 8vh;
+    font-size: 14.8vw;
     color:white;
 }
 .profile_text{
     font-family: jf_open;
-    font-size: 3.5vh;
-    width: 9vh;
-    height: 4vh;
+    font-size: 6.475vw;
+    width: 16.65vw;
+    height: 7.4vw;
 }
 .input{
     position: absolute;
-    width: 35vh;
-    height: 6vh;
-    background-size: 36vh 9vh;
-    font-size:4.3vh;
+    width: 64.75vw;
+    height: 11.1vw;
+    background-size: 66.6vw 16.65vw;
+    font-size :7.955vw;
     background:#F5F1F0;
-    box-shadow: inset 0.43vh 0.43vh 1.3vh rgba(0, 0, 0, 0.2);
-    border-radius: 1.3vh;
+    box-shadow: inset 0.7955vw 0.7955vw 1.105vw rgba(0, 0, 0, 0.2);
+    border-radius: 2.405vw;
     border: 0; 
     outline: none; 
 }
 .submit{
     position: absolute;
-    width: 14vh;
-    height: 5vh;
-    font-size:3.5vh;
+    width: 25.9vw;
+    height: 9.25vw;
+    font-size: 6.475vw;
     background: #E26F50;
     color:white;
     font-family:jf_open;
-    border-radius: 1.5vh;
+    border-radius: 2.775vw;
     border: 0; 
 }
 
 #name_text{
     position: absolute;
-    left: 2.8vh;
-    top: 20vh;
+    left: 5.18vw;
+    top: 37vw;
 }
 #name{
-    left: 14.6vh;
-    top: 22.3vh;
+    left: 27vw;
+    top: 41.225vw;
 }
 #birth_text{
     position: absolute;
-    left: 2.8vh;
-    top: 31vh
+    left: 5.18vw;
+    top: 57.35vw;
 }
 #year{
     position: absolute;
-    width: 11vh;
-    height: 5.3vh;
-    font-size:3.5vh;
+    width: 20.35vw;
+    height: 9.8vw;
+    font-size: 6.475vw;
     background:#F5F1F0;
-    box-shadow: inset 0.43vh 0.43vh 1.3vh rgba(0, 0, 0, 0.2);
-    border-radius: 1.3vh;
+    box-shadow: inset 0.7955vw 0.7955vw 1.105vw rgba(0, 0, 0, 0.2);
+    border-radius: 2.405vw;
     border: 0; 
     outline: none; 
-    left: 14.6vh;
-    top: 34vh;
+    left: 27vw;
+    top: 62.9vw;
 }
 select#year option { 
  
-    font-size: 1vh; 
+    font-size: 1.85vw; 
  
 }
 #slash1{
     position: absolute;
-    font-size:4.3vh;
-    left: 27.3vh;
-    top: 30.5vh;
+    font-size :7.955vw;
+    left: 50.505vw;
+    top: 56.425vw;
 }
 .birth{
     position: absolute;
-    width: 8.5vh;
-    height: 5.3vh;
-    background-size: 36vh 9vh;
-    font-size:4vh;
+    width: 15.725vw;
+    height: 9.8vw;
+    background-size: 66.6vw 16.65vw;
+    font-size: 7.4vw;
     background:#F5F1F0;
-    box-shadow: inset 0.43vh 0.43vh 1.3vh rgba(0, 0, 0, 0.2);
-    border-radius: 1.3vh;
+    box-shadow: inset 0.7955vw 0.7955vw 1.105vw rgba(0, 0, 0, 0.2);
+    border-radius: 2.405vw;
     border: 0; 
     outline: none; 
 }
 select.birth option { 
  
-    font-size: 1vh; 
+    font-size: 1.85vw; 
  
 }
 #month{
-    left: 30vh;
-    top: 34vh;
+    left: 55.5vw;
+    top: 62.9vw;
 }
 #slash2{
     position: absolute;
-    font-size:4.3vh;
-    left: 39.3vh;
-    top: 30.5vh;
+    font-size:7.955vw;
+    left: 72.7vw;
+    top: 56.425vw;
 }
 #date{
-    left: 42vh;
-    top: 34vh;
+    left: 77.7vw;
+    top: 62.9vw;
 }
 #sex_text{
     position: absolute;
-    left: 2.8vh;
-    top: 42vh;
+    left: 5.18vw;
+    top: 77.7vw;
 }
 .sex{
     position: absolute;
-    width: 21vh;
-    height: 6vh;
-    left: 16vh;
-    top: 45vh;
+    width: 38.85vw;
+    height: 11.1vw;
+    left: 29.6vw;
+    top: 83.25vw;
     background-color:#F59E56;
 }
 #boy{
@@ -153,37 +153,37 @@ select.birth option {
 }
 #mail_text{
     position: absolute;
-    left: 2.8vh;
-    top: 53vh;
+    left: 5.18vw;
+    top: 98vw;
 }
 #mail{
-    left: 14.6vh;
-    top: 56vh;
-    font-size:2.7vh;
+    left: 27vw;
+    top: 103.6vw;
+    font-size: 4.995vw;
 }
 #account_register_text{
     position: absolute;
-    left: 2.8vh;
-    top: 64vh;
+    left: 5.18vw;
+    top: 118.4vw;
 }
 #account_register{
-    left: 14.6vh;
-    top: 67vh;
+    left: 27vw;
+    top: 123.95vw;
 }
 #password_register_text{
     position: absolute;
-    left: 2.8vh;
-    top: 76vh;
+    left: 5.18vw;
+    top: 140.6vw;
 }
 #password_register{
-    left: 14.6vh;
-    top: 79vh;
+    left: 27vw;
+    top: 146.15vw;
 }
 #register_cancel{
-    left: 13vh;
-    top: 95vh;
+    left: 24vw;
+    top: 175.75vw;
 }
 #register_check{
-    left: 30vh;
-    top: 95vh;
+    left: 55.5vw;
+    top: 175.75vw;
 }

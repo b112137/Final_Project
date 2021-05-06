@@ -10,7 +10,10 @@
     </head>
     <body>
         <div class="header">
-            <div class="back_arrow"></div>
+            <a id="back_arrow_link">
+                <div class="back_arrow"></div>
+            </a>
+            
             <div class="title_text">任 務</div>
         </div>
 
@@ -208,9 +211,13 @@
         <div id="create_group_modal"></div>
         <div id="test_modal"></div>
         <div id="join_group_modal"></div>
-
-        <div class="quarter_circle" style="left: 0vw; background-image: url('static/src/home.png');"></div>
-        <div class="quarter_circle" style="right: 0vw; background-image: url('static/src/chat.png');"></div>
+        <a id="home_link">
+            <div class="quarter_circle" style="left: 0vw; background-image: url('static/src/home.png');"></div>
+        </a>
+        <a id="chat_link">
+            <div class="quarter_circle" style="right: 0vw; background-image: url('static/src/chat.png');"></div>
+        </a>
+        
         <!-- <script src="mission.js"></script> -->
     </body>
 </html>
@@ -222,6 +229,10 @@
 
     window.onload = function(){
         all_mission();
+        document.getElementById('back_arrow_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
+        document.getElementById('home_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
+        document.getElementById('chat_link').href = "/chatroom?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
+
     }
 
     $('#tab-explore').click( function() {
@@ -413,10 +424,17 @@
                                         </div>\
                                     </div>\
                                 </div>'
-                             )
+                            )
                         }
                         });
                     }
+
+                    $('#mission_container').append(                             
+                        '<div class="mission-card">\
+                            <div class="card-header" style="background-color: white; height: 15vw;">\
+                            </div>\
+                        </div>'
+                    )
                 }
               }
         });

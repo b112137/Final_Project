@@ -11,7 +11,9 @@
     </head>
     <body>
         <div class="header">
-            <div class="back_arrow"></div>
+            <a id="back_arrow_link">
+                <div class="back_arrow"></div>
+            </a>
             <img class="icon-chatroom" src="static/src/icon_chatroom.png">
             <input type="text" placeholder="搜尋" class="search-bar">
             <button class="btn-cancel">取消</button>
@@ -48,7 +50,9 @@
                 <div class="last-msg"></div>
             </div> -->
         </div>
-        <div class="quarter_circle" style="left: 0vw; background-image: url('static/src/home.png');"></div>
+        <a id="home_link">
+            <div class="quarter_circle" style="left: 0vw; background-image: url('static/src/home.png');"></div>
+        </a>
     </body>
 </html>
 
@@ -65,6 +69,9 @@
     var last_chatroom_list = ""
     window.onload = function(){
         // $('#newpic').html("")
+        document.getElementById('back_arrow_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
+        document.getElementById('home_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
+        
         parameter = window.location.href.split('?')[1].split('&')
         if(parameter.length == 1){
             update_chat_list();
@@ -216,6 +223,10 @@
                             }
                         });
                     }
+                    $('#chatroom_list_div').append(
+                        '<div class="chatroom-item" style="background-color: #F59E56; height: 15vw;">\
+                        </div>'
+                    )
                 }
                 else if (data.result=="same"){
                     console.log("same")

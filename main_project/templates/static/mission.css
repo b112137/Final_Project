@@ -40,6 +40,7 @@ input {
     background-image: url('src/back_arrow.png');
     background-size: cover;
     background-repeat: no-repeat;
+    z-index: 30;
 }
 
 .title_text {
