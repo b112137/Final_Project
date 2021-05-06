@@ -358,6 +358,8 @@ def submit_mission_group(request):
 def get_mission_chatroom_list(request):
     if request.method == 'POST':
         account = request.POST.get("account")
+        last_chatroom_list = request.POST.get("last_chatroom_list")
+        last_chatroom_list = ast.literal_eval( '[' + last_chatroom_list + ']') 
         profile_search_all = Profile.objects.filter(account=account)
         profile_search = profile_search_all[0]
         mission_doing_chatroom_ID = ast.literal_eval(profile_search.mission_doing_chatroom_ID)
@@ -435,12 +437,18 @@ def get_mission_chatroom_list(request):
         time, message = (list(t) for t in zip(*sorted(zip(time_copy, message), reverse=True  )))
 
         # print(chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time)
-        print(chat_img)
-        return JsonResponse({
-            'result' : "success",
-            "chatroom_ID": chatroom_ID_all, "mission_ID": mission_ID, "mission_name": mission_name, "chat_img": chat_img,
-            "group_name": group_name, "group_number": group_number, "status": status, "message": message, "time": time
-        })
+        last_chatroom_list = [str(x) for x in last_chatroom_list]
+
+        if last_chatroom_list == chatroom_ID_all:
+            return JsonResponse({
+                'result' : "same",
+            })
+        else:
+            return JsonResponse({
+                'result' : "success",
+                "chatroom_ID": chatroom_ID_all, "mission_ID": mission_ID, "mission_name": mission_name, "chat_img": chat_img,
+                "group_name": group_name, "group_number": group_number, "status": status, "message": message, "time": time
+            })
 
 def mission_chatroom_update(request):
     if request.method == 'POST':

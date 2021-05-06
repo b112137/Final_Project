@@ -61,7 +61,8 @@
     var timeout_update_chat_list;
     var chatroom_ID;
     var timeout_update_mission_msg;
-    var member_ID="";
+    var member_ID = "";
+    var last_chatroom_list = ""
     window.onload = function(){
         // $('#newpic').html("")
         parameter = window.location.href.split('?')[1].split('&')
@@ -159,8 +160,9 @@
 
     // })
 
-
+        
     function update_chat_list(){
+        console.log(last_chatroom_list.toString())
         $.ajax({
               url: '/get_mission_chatroom_list',
               method: 'POST',
@@ -168,10 +170,13 @@
               dataType: "json",
               data: {
                   "account": window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                  "last_chatroom_list" : last_chatroom_list.toString(),
               },
               success: function (data) {
                 if (data.result == "success"){
                     console.log("success")
+                    last_chatroom_list = data.chatroom_ID
+                    
                     $('#chatroom_list_div').html("")
                     for(var i = 0; i < data.chatroom_ID.length; i++){
                         $('#chatroom_list_div').append(
@@ -198,22 +203,26 @@
                         })
 
                         $.ajax({
-                        url: '/get_img',
-                        method: 'POST',
-                        type: 'POST',
-                        async: false, //改成同步執行(等待上一個回傳)
-                        data: {
-                            "img_path": data.chat_img[i],
-                        },
-                        success: function (img) {
-                            $('#list_photo_'+ i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
-                            
-                        }
+                            url: '/get_img',
+                            method: 'POST',
+                            type: 'POST',
+                            async: false, //改成同步執行(等待上一個回傳)
+                            data: {
+                                "img_path": data.chat_img[i],
+                            },
+                            success: function (img) {
+                                $('#list_photo_'+ i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                                
+                            }
                         });
                     }
-
-
                 }
+                else if (data.result=="same"){
+                    console.log("same")
+                }
+
+
+
               }
         });
     }
