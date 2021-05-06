@@ -71,7 +71,7 @@
         // $('#newpic').html("")
         document.getElementById('back_arrow_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
         document.getElementById('home_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
-        
+
         parameter = window.location.href.split('?')[1].split('&')
         if(parameter.length == 1){
             update_chat_list();
@@ -224,7 +224,7 @@
                         });
                     }
                     $('#chatroom_list_div').append(
-                        '<div class="chatroom-item" style="background-color: #F59E56; height: 15vw;">\
+                        '<div class="chatroom-item" style="background-color: #F59E56; height: 25vw;">\
                         </div>'
                     )
                 }
