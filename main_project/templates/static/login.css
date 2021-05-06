@@ -45,7 +45,7 @@ body {
 }
 .input{
     position: absolute;
-    width: 64.75vw;
+    width: 61.75vw;
     height: 11.1vw;
     background-size: 66.6vw 16.65vw;
     font-size:6vw;
@@ -55,7 +55,7 @@ body {
     border: 0; 
     outline: none;
     font-family: jf_open;
-    /* padding: 1vw;  */
+    padding-left: 3vw; 
 }
 input::placeholder {
     color:#B5B2B2;

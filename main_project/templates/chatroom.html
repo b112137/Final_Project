@@ -10,49 +10,123 @@
         
     </head>
     <body>
-        <div class="header">
-            <a id="back_arrow_link">
-                <div class="back_arrow"></div>
-            </a>
-            <img class="icon-chatroom" src="static/src/icon_chatroom.png">
-            <input type="text" placeholder="搜尋" class="search-bar">
-            <button class="btn-cancel">取消</button>
+        <!-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active"> -->
+                <div class="chatroom-list-page" id="chatroom_list_page" style="display: none">
+                    <div class="chatroom-list-header">
+                        <a  id="back_arrow_link">
+                            <div class="back_arrow"></div>
+                        </a>
+                        
+                        <img class="icon-chatroom" src="static/src/icon_chatroom.png" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls1" data-bs-slide="prev">
+                        <input type="text" placeholder="搜尋" class="search-bar">
+                        <button class="btn-cancel">取消</button>
+                    </div>
+                    <div class="chatroom-list" id="chatroom_list_div">
+                        <!-- <div class="chatroom-item" id="roomID">
+                            <div class="chatroom-photo"></div>
+                            <div class="chatroom-name">這裡最多能放十個字喔</div>
+                            <div class="last-msg">我是訊息預覽喔喔喔字數很多也沒關係會省略的啦讚讚</div>
+                        </div>
+                        <div class="chatroom-item">
+                            <div class="chatroom-photo"></div>
+                            <div class="chatroom-name">超過十個字就會變這樣喔嗚嗚嗚嗚</div>
+                            <div class="last-msg">訊息預覽會變這樣喔QQQQQQQ</div>
+                        </div>
+                        <div class="chatroom-item">
+                            <div class="chatroom-photo"></div>
+                            <div class="chatroom-name"></div>
+                            <div class="last-msg"></div>
+                        </div>
+                        <div class="chatroom-item">
+                            <div class="chatroom-photo"></div>
+                            <div class="chatroom-name"></div>
+                            <div class="last-msg"></div>
+                        </div>
+                        <div class="chatroom-item">
+                            <div class="chatroom-photo"></div>
+                            <div class="chatroom-name"></div>
+                            <div class="last-msg"></div>
+                        </div>
+                        <div class="chatroom-item">
+                            <div class="chatroom-photo"></div>
+                            <div class="chatroom-name"></div>
+                            <div class="last-msg"></div>
+                        </div> -->
+                    </div>
+					<a id="home_link">
+						<div class="quarter_circle" style="left: 0vw; background-image: url('static/src/home.png');"></div>
+					</a>
+                </div>
+                    
+                <!-- </div> -->
+                <div class="chatroom-record-page" id="chatroom_record_page" style="display: none">
+                    <div class="chatroom-record-header">
+                        <!-- <div class="back_arrow"></div>
+                        <div class="chatroom-title">群組名要可以放十個字</div>
+                        <img class="check-member" src="static/src/check_member.png"> -->
+                    </div>
+                    <div class="chatroom-record-content" id="chatroom-record-content-ID">
+                        <!-- <div class="msg from-others">
+                            <div class="msg-photo"></div>
+                            <div style="display: block">
+                                <div class="msg-name">喊出我的名字！</div>
+                                <div class="msg-content from-others">
+                                    哭嗚嗚嗚嗚嗚嗚嗚嗚嗚嗚嗚嗚<br>
+                                    換行<br>
+                                    再換行<br>
+                                    很長但不換行喔喔喔喔喔喔喔喔喔喔喔yaaaaaaaaaaaaaaaaaaaaaafffffffffffffffffffffff
+                                </div>                                
+                            </div>
+                        </div>
+                        <div class="msg from-me">
+                            <div class="msg-content from-me">
+                                救命喔嗚嗚嗚嗚嗚嗚嗚
+                            </div>
+                        </div>
+                        <div class="msg from-others">
+                            <div class="msg-photo"></div>
+                            <div style="display: block">
+                                <div class="msg-name">喊出我的名字！</div>
+                                <div class="msg-content from-others">
+                                    哭嗚嗚嗚嗚嗚嗚嗚嗚嗚嗚嗚嗚<br>
+                                    換行<br>
+                                    再換行<br>
+                                    很長但不換行喔喔喔喔喔喔喔喔喔喔喔yaaaaaaaaaaaaaaaaaaaaaafffffffffffffffffffffff
+                                </div>                                
+                            </div>
+                        </div>
+                        <div class="msg from-me">
+                            <div class="msg-content from-me">
+                                救命喔嗚嗚嗚嗚嗚嗚嗚
+                            </div>
+                        </div>
+                        <div class="msg from-others">
+                            <div class="msg-photo"></div>
+                            <div style="display: block">
+                                <div class="msg-name">喊出我的名字！</div>
+                                <div class="msg-content from-others">
+                                    救命喔嗚嗚嗚嗚嗚嗚嗚
+                                </div>                                
+                            </div>
+                        </div>
+                        <div class="msg from-me">
+                            <div class="msg-content from-me">
+                                哭嗚嗚嗚嗚嗚嗚嗚嗚嗚嗚嗚嗚<br>
+                                換行<br>
+                                再換行<br>
+                                很長但不換行喔喔喔喔喔喔喔喔喔喔喔yaaaaaaaaaaaaaaaaaaaaaafffffffffffffffffffffff
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="chatroom-record-footer">
+                        <textarea id="chat-message-input" class="input-msg" placeholder="發送訊息"></textarea>
+                        <img id="chat-message-submit" class="btn-send" src="static/src/icon_send.png" type="button">
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="chatroom_list_div" class="chatroom-list">
-            <!-- <div class="chatroom-item">
-                <div class="chatroom-photo"></div>
-                <div class="chatroom-name">這裡最多能放十個字喔</div>
-                <div class="last-msg">我是訊息預覽喔喔喔字數很多也沒關係會省略的啦讚讚</div>
-            </div>
-            <div class="chatroom-item">
-                <div class="chatroom-photo"></div>
-                <div class="chatroom-name">超過十個字就會變這樣喔嗚嗚嗚嗚</div>
-                <div class="last-msg">訊息預覽會變這樣喔QQQQQQQ</div>
-            </div>
-            <div class="chatroom-item">
-                <div class="chatroom-photo"></div>
-                <div class="chatroom-name"></div>
-                <div class="last-msg"></div>
-            </div>
-            <div class="chatroom-item">
-                <div class="chatroom-photo"></div>
-                <div class="chatroom-name"></div>
-                <div class="last-msg"></div>
-            </div>
-            <div class="chatroom-item">
-                <div class="chatroom-photo"></div>
-                <div class="chatroom-name"></div>
-                <div class="last-msg"></div>
-            </div>
-            <div class="chatroom-item">
-                <div class="chatroom-photo"></div>
-                <div class="chatroom-name"></div>
-                <div class="last-msg"></div>
-            </div> -->
-        </div>
-        <a id="home_link">
-            <div class="quarter_circle" style="left: 0vw; background-image: url('static/src/home.png');"></div>
-        </a>
     </body>
 </html>
 
@@ -67,6 +141,7 @@
     var timeout_update_mission_msg;
     var member_ID = "";
     var last_chatroom_list = ""
+    var last_sender_name_len = ""
     window.onload = function(){
         // $('#newpic').html("")
         document.getElementById('back_arrow_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
@@ -74,17 +149,22 @@
 
         parameter = window.location.href.split('?')[1].split('&')
         if(parameter.length == 1){
+            $('#chatroom_list_page').show();
             update_chat_list();
             timeout_update_chat_list = window.setInterval( update_chat_list , 1000)
         }
         else if(parameter.length == 2){
             chatroom_ID = parameter[1].split('=')[1];
-            $("#newpic").hide();
-            $("#chatroom").show();
-            $("#member").show();
+            // $("#newpic").hide();
+            // $("#chatroom").show();
+            // $("#member").show();
+            $('#chatroom_record_page').show();
+
+            // var chat_record = document.getElementById('chatroom-record-content-ID');
+            // chat_record.scrollTop = chat_record.scrollHeight;
 
             update_mission_msg( chatroom_ID, "first" );
-            timeout_update_mission_msg = window.setInterval( ( ()=>update_mission_msg(chatroom_ID) ) , 200);
+            timeout_update_mission_msg = window.setInterval( ( ()=>update_mission_msg(chatroom_ID) ) , 500);
         }
     }
     
@@ -169,7 +249,6 @@
 
         
     function update_chat_list(){
-        console.log(last_chatroom_list.toString())
         $.ajax({
               url: '/get_mission_chatroom_list',
               method: 'POST',
@@ -181,13 +260,12 @@
               },
               success: function (data) {
                 if (data.result == "success"){
-                    console.log("success")
                     last_chatroom_list = data.chatroom_ID
                     
                     $('#chatroom_list_div').html("")
                     for(var i = 0; i < data.chatroom_ID.length; i++){
                         $('#chatroom_list_div').append(
-                            '<div class="chatroom-item" type="button" onclick="console.log(123)">\
+                            '<div class="chatroom-item" type="button" onclick="goto_chatroom(' + data.chatroom_ID[i] + ')">\
                                 <div id="list_photo_' + i.toString() + '" class="chatroom-photo"></div>\
                                 <div id="list_msg_' + i.toString() + '" class="chatroom-name">' + data.group_name[i] + '</div>\
                                 <div class="last-msg">' + data.message[i] + '</div>\
@@ -197,17 +275,17 @@
                             document.getElementById("list_msg_"+ i.toString() ).innerHTML += '(' + data.group_number[i] + ')'
                         }
 
-                        $('#'+data.chatroom_ID[i]).click( function() {
-                            console.log(this.id);
-                            window.clearInterval(timeout_update_chat_list);
-                            // $("#newpic").hide();
-                            // $("#chatroom").show();
+                        // $('#'+data.chatroom_ID[i]).click( function() {
+                        //     console.log(this.id);
+                        //     window.clearInterval(timeout_update_chat_list);
+                        //     // $("#newpic").hide();
+                        //     // $("#chatroom").show();
                             
-                            window.location.href = window.location.href + "&chatroom_ID=" + this.id
+                        //     window.location.href = window.location.href + "&chatroom_ID=" + this.id
 
-                            // update_mission_msg(this.id);
-                            // var timeout_update_mission_msg = window.setInterval( ( ()=>update_mission_msg(this.id) ) , 200);
-                        })
+                        //     // update_mission_msg(this.id);
+                        //     // var timeout_update_mission_msg = window.setInterval( ( ()=>update_mission_msg(this.id) ) , 200);
+                        // })
 
                         $.ajax({
                             url: '/get_img',
@@ -229,137 +307,256 @@
                     )
                 }
                 else if (data.result=="same"){
-                    console.log("same")
+                    // console.log("same")
                 }
-
-
-
               }
         });
     }
-    
 
-    // function update_mission_msg(chatroom_ID, first=""){
-    //     console.log(chatroom_ID[0])
-    //     if(chatroom_ID[0]=="2"){
-    //         $.ajax({
-    //             url: '/mission_chatroom_update',
-    //             method: 'POST',
-    //             type: 'POST',
-    //             dataType: "json",
-    //             data: {
-    //                 "post_type": "Receive",
-    //                 "chatroom_ID": chatroom_ID,
-    //             },
-    //             success: function (data) {
-    //                 if (data.result == "success"){
-    //                 chatroom_history = JSON.parse(data.history);
-
-    //                 if (first=="first"){
-    //                     $('#group_name').html(data.group_name);
-    //                 }
-
-    //                 html_code = ""
-    //                 for(var i = 0; i < chatroom_history.length; i++){
-    //                     var time = new Date(chatroom_history[i].fields.time)
-    //                     var time_modify = ""
-    //                     time_modify = time.getFullYear() + '-' + time.getMonth() + '-' + time.getDate() 
-    //                                     + '-' + time.getHours() + '-' + time.getMinutes() + '-' + time.getSeconds()
-
-    //                     html_code += chatroom_history[i].fields.sender_ID + ' : ' + chatroom_history[i].fields.message + "  " + time_modify + '\n'
-    //                 }
-    //                 $("#chat-log").html(html_code);
-    //                 }
-    //             }
-    //         });
-    //     }
-    //     else if(chatroom_ID[0]=="3"){
-    //         $.ajax({
-    //             url: '/friend_chatroom_update',
-    //             method: 'POST',
-    //             type: 'POST',
-    //             dataType: "json",
-    //             data: {
-    //                 "post_type": "Receive",
-    //                 "chatroom_ID": chatroom_ID,
-    //                 "account": window.location.href.split('?')[1].split('&')[0].split('=')[1],
-    //             },
-    //             success: function (data) {
-    //                 if (data.result == "success"){
-    //                 chatroom_history = JSON.parse(data.history);
-
-    //                 if (first=="first"){
-    //                     $('#group_name').html(data.group_name);
-    //                 }
-
-    //                 html_code = ""
-    //                 for(var i = 0; i < chatroom_history.length; i++){
-    //                     if(chatroom_history[i].fields.message!=""){
-    //                         var time = new Date(chatroom_history[i].fields.time)
-    //                         var time_modify = ""
-    //                         time_modify = time.getFullYear() + '-' + time.getMonth() + '-' + time.getDate() 
-    //                                         + '-' + time.getHours() + '-' + time.getMinutes() + '-' + time.getSeconds()
-
-    //                         html_code += chatroom_history[i].fields.sender_ID + ' : ' + chatroom_history[i].fields.message + "  " + time_modify + '\n'
-    //                     }
-    //                 }
-    //                 $("#chat-log").html(html_code);
-    //                 }
-    //             }
-    //         });
-    //     }
-
-        
-    // };
-
-
-    // function send_mission_msg(chatroom_ID){
-    //     if(chatroom_ID[0]=="2"){
-    //         $.ajax({
-    //             url: '/mission_chatroom_update',
-    //             method: 'POST',
-    //             type: 'POST',
-    //             dataType: "json",
-    //             data: {
-    //                 "post_type": "Send",
-    //                 "chatroom_ID": chatroom_ID,
-    //                 "sender_ID": window.location.href.split('?')[1].split('&')[0].split('=')[1],
-    //                 "message": document.getElementById("chat-message-input").value
-    //             },
-    //             success: function (data) {
-    //                 if (data.result == "success"){
-    //                     console.log("success")
-    //                 }
-    //             }
-    //         });
-    //     }
-    //     else if(chatroom_ID[0]=="3"){
-    //         $.ajax({
-    //             url: '/friend_chatroom_update',
-    //             method: 'POST',
-    //             type: 'POST',
-    //             dataType: "json",
-    //             data: {
-    //                 "post_type": "Send",
-    //                 "chatroom_ID": chatroom_ID,
-    //                 "sender_ID": window.location.href.split('?')[1].split('&')[0].split('=')[1],
-    //                 "message": document.getElementById("chat-message-input").value
-    //             },
-    //             success: function (data) {
-    //                 if (data.result == "success"){
-    //                     console.log("success")
-    //                 }
-    //             }
-    //         });
-    //     }
-        
-    // };
+    function goto_chatroom(chatroom_ID){
+        window.clearInterval(timeout_update_chat_list);                            
+        window.location.href = window.location.href + "&chatroom_ID=" + chatroom_ID
+    };
 
     
-    // $("#chat-message-submit").click( function() {
-    //     send_mission_msg(chatroom_ID);
-    //     document.getElementById("chat-message-input").value = "";
-    // });
+
+    function update_mission_msg(chatroom_ID, first=""){
+        account = window.location.href.split('?')[1].split('&')[0].split('=')[1];
+        if(chatroom_ID[0]=="2"){
+            $.ajax({
+                url: '/mission_chatroom_update',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                async: false, //改成同步執行(等待上一個回傳)
+                data: {
+                    "post_type": "Receive",
+                    "chatroom_ID": chatroom_ID,
+                    "last_sender_name_len": last_sender_name_len,
+                },
+                success: function (data) {
+                    if (data.result == "success"){
+                        last_sender_name_len = data.sender_name.length
+                        chatroom_history = JSON.parse(data.history);
+
+                        if (first=="first"){
+                            $('.chatroom-record-header').html(
+                                '<a href="/chatroom?account=' + account + '">\
+                                    <div class="back_arrow"></div>\
+                                </a>\
+                                <div class="chatroom-title">' + data.group_name +'(' + data.group_number + ')</div>\
+                                <img class="check-member" src="static/src/check_member.png">'
+                            );
+                        }
+
+                        // html_code = ""
+                        $('#chatroom-record-content-ID').html("")
+                        for(var i = 0; i < chatroom_history.length; i++){
+                            // var time = new Date(chatroom_history[i].fields.time)
+                            // var time_modify = ""
+                            // time_modify = time.getFullYear() + '-' + time.getMonth() + '-' + time.getDate() 
+                            //                 + '-' + time.getHours() + '-' + time.getMinutes() + '-' + time.getSeconds()
+
+                            // html_code += chatroom_history[i].fields.sender_ID + ' : ' + chatroom_history[i].fields.message + "  " + time_modify + '\n'
+                        
+                            if (chatroom_history[i].fields.sender_ID==account){
+                                // html_code += 
+                                $("#chatroom-record-content-ID").append(
+                                    '<div class="msg from-me">\
+                                        <div class="msg-content from-me">'
+                                            + chatroom_history[i].fields.message +
+                                        '</div>\
+                                    </div>'
+                                )
+                            }
+                            else {
+                                // html_code +=
+                                $("#chatroom-record-content-ID").append(
+                                    '<div class="msg from-others">\
+                                        <div class="msg-photo" id="msg_photo_' + i.toString() + '"></div>\
+                                        <div style="display: block">\
+                                            <div class="msg-name">' + data.sender_name[i] + '</div>\
+                                            <div class="msg-content from-others">'
+                                                + chatroom_history[i].fields.message +
+                                            '</div>\
+                                        </div>\
+                                    </div>'
+                                )
+
+                                $.ajax({
+                                    url: '/get_img',
+                                    method: 'POST',
+                                    type: 'POST',
+                                    async: false, //改成同步執行(等待上一個回傳)
+                                    data: {
+                                        "img_path": data.sender_photo[i],
+                                    },
+                                    success: function (img) {
+                                        $('#msg_photo_'+ i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                                        
+                                    }
+                                });
+                            }
+                        }
+                        var chat_record = document.getElementById('chatroom-record-content-ID');
+                        chat_record.scrollTop = chat_record.scrollHeight;
+                    // $("#chatroom-record-content-ID").html(html_code);
+                    }
+                    else if(data.result=="same"){
+                        // console.log("same")
+                    }
+                }
+            });
+        }
+        else if(chatroom_ID[0]=="3"){
+            $.ajax({
+                url: '/friend_chatroom_update',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                async: false, //改成同步執行(等待上一個回傳)
+                data: {
+                    "post_type": "Receive",
+                    "chatroom_ID": chatroom_ID,
+                    "account": window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                    "last_sender_name_len": last_sender_name_len,
+                },
+                success: function (data) {
+                    if (data.result == "success"){
+                        console.log(last_sender_name_len)
+                        
+                        chatroom_history = JSON.parse(data.history);
+
+                        if (first=="first"){
+                            $('.chatroom-record-header').html(
+                                '<a href="/chatroom?account=' + account + '">\
+                                    <div class="back_arrow"></div>\
+                                </a>\
+                                <div class="chatroom-title">' + data.group_name + '</div>\
+                                <img class="check-member" src="static/src/check_member.png">'
+                            );
+                        }
+
+                        // html_code = ""
+                        $('#chatroom-record-content-ID').html("")
+                        for(var i = 0; i < chatroom_history.length; i++){
+                            // if(chatroom_history[i].fields.message!=""){
+                            //     var time = new Date(chatroom_history[i].fields.time)
+                            //     var time_modify = ""
+                            //     time_modify = time.getFullYear() + '-' + time.getMonth() + '-' + time.getDate() 
+                            //                     + '-' + time.getHours() + '-' + time.getMinutes() + '-' + time.getSeconds()
+
+                            //     html_code += chatroom_history[i].fields.sender_ID + ' : ' + chatroom_history[i].fields.message + "  " + time_modify + '\n'
+                            // }
+                            if(chatroom_history[i].fields.message!=""){
+                                if (chatroom_history[i].fields.sender_ID==account){
+                                    // html_code += 
+                                    $("#chatroom-record-content-ID").append(
+                                        '<div class="msg from-me">\
+                                            <div class="msg-content from-me">'
+                                                + chatroom_history[i].fields.message +
+                                            '</div>\
+                                        </div>'
+                                    )
+                                }
+                                else {
+                                    // html_code +=
+                                    $("#chatroom-record-content-ID").append(
+                                        '<div class="msg from-others">\
+                                            <div class="msg-photo" id="msg_photo_' + i.toString() + '"></div>\
+                                            <div style="display: block">\
+                                                <div class="msg-name">' + data.sender_name[i] + '</div>\
+                                                <div class="msg-content from-others">'
+                                                    + chatroom_history[i].fields.message +
+                                                '</div>\
+                                            </div>\
+                                        </div>'
+                                    )
+
+                                    $.ajax({
+                                        url: '/get_img',
+                                        method: 'POST',
+                                        type: 'POST',
+                                        async: false, //改成同步執行(等待上一個回傳)
+                                        data: {
+                                            "img_path": data.sender_photo[i],
+                                        },
+                                        success: function (img) {
+                                            $('#msg_photo_'+ i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                                            
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                        var chat_record = document.getElementById('chatroom-record-content-ID');
+                        chat_record.scrollTop = chat_record.scrollHeight;
+                        last_sender_name_len = data.sender_name.length
+                    // $("#chat-log").html(html_code);
+                    }
+                    else if(data.result=="same"){
+                        // console.log("same")
+                    }
+                }
+            });
+        }
+    };
+
+
+    function send_mission_msg(chatroom_ID){
+        console.log(document.getElementById("chat-message-input").value)
+        if(chatroom_ID[0]=="2"){
+            $.ajax({
+                url: '/mission_chatroom_update',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                async: false, //改成同步執行(等待上一個回傳)
+                data: {
+                    "post_type": "Send",
+                    "chatroom_ID": chatroom_ID,
+                    "sender_ID": window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                    "message": document.getElementById("chat-message-input").value
+                },
+                success: function (data) {
+                    if (data.result == "success"){
+                        // console.log("success")
+                    }
+                }
+            });
+        }
+        else if(chatroom_ID[0]=="3"){
+            $.ajax({
+                url: '/friend_chatroom_update',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                async: false, //改成同步執行(等待上一個回傳)
+                data: {
+                    "post_type": "Send",
+                    "chatroom_ID": chatroom_ID,
+                    "sender_ID": window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                    "message": document.getElementById("chat-message-input").value
+                },
+                success: function (data) {
+                    if (data.result == "success"){
+                        // console.log("success")
+                    }
+                }
+            });
+        }
+        
+    };
+
+    
+    $("#chat-message-submit").click( function() {
+        var input = document.getElementById('chat-message-input');
+        input.value = input.value.replace("\r\n","\n");
+        input.value = input.value.replace("\n","<br>");
+        send_mission_msg(chatroom_ID);
+        update_mission_msg( chatroom_ID );
+        document.getElementById("chat-message-input").value = "";
+    });
 
     
 

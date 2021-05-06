@@ -465,16 +465,35 @@ def mission_chatroom_update(request):
             })
 
         elif post_type == "Receive":            
-            chatroom_ID = request.POST.get('chatroom_ID')   
+            chatroom_ID = request.POST.get('chatroom_ID')
+            last_sender_name_len = request.POST.get('last_sender_name_len')
             history = core_serializers.serialize("json", Mission_Chatroom.objects.filter(chatroom_ID=chatroom_ID).order_by("time"))
 
             group_name = Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0].group_name
+            group_number = len(ast.literal_eval(Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0].member_ID))
 
-            return JsonResponse({
-                'result' : "success",
-                'history' : history,
-                'group_name': group_name,
-            })
+            sender_photo, sender_name=[], []
+            for mission_chatroom in Mission_Chatroom.objects.filter(chatroom_ID=chatroom_ID).order_by("time"):
+                if mission_chatroom.sender_ID != "developers":
+                    sender_photo.append(Profile.objects.filter(account=mission_chatroom.sender_ID)[0].profile_photo)
+                    sender_name.append(Profile.objects.filter(account=mission_chatroom.sender_ID)[0].name)
+                else:
+                    sender_photo.append("media/profile_img/developers.jpg")
+                    sender_name.append("官方訊息")
+            
+            if last_sender_name_len == str(len(sender_name)):
+                return JsonResponse({
+                    'result' : "same",
+                })
+            else:
+                return JsonResponse({
+                    'result' : "success",
+                    'history' : history,
+                    'group_name': group_name,
+                    'group_number': group_number,
+                    'sender_photo': sender_photo,
+                    'sender_name': sender_name,
+                })
 
 def friend_chatroom_update(request):
     if request.method == 'POST':
@@ -491,13 +510,14 @@ def friend_chatroom_update(request):
             elif reciever_ID == account:
                 group_name_ID = sender_ID
 
-            Friend_Chatroom.objects.create(chatroom_ID=chatroom_ID, sender_ID=sender_ID, receiver_ID=reciever_ID,  message=message)
+            Friend_Chatroom.objects.create(chatroom_ID=chatroom_ID, sender_ID=account, receiver_ID=group_name_ID,  message=message)
             return JsonResponse({
                 'result' : "success"
             })
 
         elif post_type == "Receive":            
-            chatroom_ID = request.POST.get('chatroom_ID')   
+            chatroom_ID = request.POST.get('chatroom_ID')
+            last_sender_name_len = request.POST.get('last_sender_name_len')
             account = request.POST.get('account')
             history = core_serializers.serialize("json", Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID).order_by("time"))
 
@@ -510,11 +530,26 @@ def friend_chatroom_update(request):
 
             group_name = Profile.objects.filter(account=group_name_ID)[0].name
 
-            return JsonResponse({
-                'result' : "success",
-                'history' : history,
-                'group_name': group_name,
-            })
+            sender_photo, sender_name=[], []
+            for friend_chatroom in Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID).order_by("time"):
+                # if friend_chatroom.sender_ID != "developers":
+                sender_photo.append(Profile.objects.filter(account=friend_chatroom.sender_ID)[0].profile_photo)
+                # else:
+                    # sender_photo.append("media/profile_img/developers.jpg")
+                sender_name.append( Profile.objects.filter(account=friend_chatroom.sender_ID)[0].name )
+
+            if last_sender_name_len == str(len(sender_name)):
+                return JsonResponse({
+                    'result' : "same",
+                })
+            else:
+                return JsonResponse({
+                    'result' : "success",
+                    'history' : history,
+                    'group_name': group_name,
+                    'sender_photo': sender_photo,
+                    'sender_name': sender_name,
+                })
 
 
 def get_mission_chatroom_member(request):
