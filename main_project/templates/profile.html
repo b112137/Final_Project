@@ -1,67 +1,118 @@
 <!DOCTYPE html>
 <html>
-    <head> 
+    <head>
         <meta charset="utf-8">
+        <link href="./static/profile.css" rel="stylesheet">
         <script src="static/jquery.js"></script>
     </head>
     <body>
-        <div id="profile">
-            
+        <div id="all">
+            <div class="navbar">
+                <a id="back_arrow_link">
+                    <img src="./static/src/back_arrow.png" class="prev">
+                </a>
+                <div class="title_text">個人資訊</div>
+            </div> 
+            <div id="photo"></div>
+            <p id="name" class="profile">{{ name }}</p>
+            <p id="user_id"  class="profile">{{ account }}</p>
+            <p id="age" class="profile">{{birth}}</p>
+            <p id="level" >等級 {{level}}</p>
+            <p id="knowledge" class="exp">知識</p>
+            <p id="social" class="exp">社會參與</p>
+            <p id="physical" class="exp">體能</p>
+            <div id="bar">
+                <progress id="exp_1" value={{exp1}} max="100" > 70% </progress>
+                <progress id="exp_2" value={{exp2}} max="100" > 60% </progress>
+                <progress id="exp_3" value={{exp3}} max="100" > 65% </progress>
+            </div>
+            <div id="role">
+                <img src="./static/src/知識.png" id="role_image">
+            </div>
+            <p id="intro">自我介紹</p>
+            <img src="./static/src/pen.PNG" id="pen">
+            <button type="button" id="save" >儲存</button>
+            <div id="edit"></div>
+            <p id="edit_text">{{intro}}</p>
+            <textarea id="intro_text"></textarea>
+            <p id="story">故事牆</p>
+            <div id="photo1"></div>
+            <div id="photo2"></div>
+            <div id="photo3"></div>
+            <div id="photo4"></div>
         </div>
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     </body>
 </html>
 
 <script>
     $.ajaxSetup({
         data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
-    })    
+    }) 
 
     window.onload = function(){
-       $.ajax({
+        document.getElementById('back_arrow_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
+
+        $.ajax({
               url: '/get_profile_page',
               method: 'POST',
               type: 'POST',
               dataType: "json",
               data: {
-                  "user_ID": window.location.href.split('?')[1].split('=')[1]
+                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
               },
               success: function (data) {
-                  if(data.result == 'success'){
-                      console.log("load success")
-                      $('#profile').append(
-                          "名字: " +　data.name + '<br>' +
-                          "性別: " +　data.sex + '<br>' +
-                          "生日: " +　data.birth + '<br>' +
-                          "exp1: " +　data.exp1 + '<br>' +
-                          "exp2: " +　data.exp2 + '<br>' +
-                          "exp3: " +　data.exp3 + '<br>' +
-                          "錢包: " +　data.balance + '<br>' +
-                          "腳色名稱: " +　data.character_name + '<br>' +
-                          "大頭照: " +　data.profile_photo + '<br>' +
-                          "自我介紹: " +　data.intro + '<br>' +
-                          "正在進行任務:　" + '<br>'
-                      )
-                      for(var i = 0;i < data.mission_doing_chatroom_ID.length;i++){
-                          $('#profile').append(
-                            " : " + data.mission_doing_chatroom_ID[i] + '<br>'
-                      )}
-                      $('#profile').append(
-                            "已完成任務 : "  + '<br>'
-                      )
-                      for(var j = 0;j< data.mission_done_chatroom_ID.length;j++){
-                          $('#profile').append(
-                            " : " + data.mission_done_chatroom_ID[j] + '<br>'
-                      )}
-                      $('#profile').append(
-                            "好友人數 : " + '<br>'
-                      )
-                      for(var k = 0;k < data.friend_ID.length;k++){
-                          $('#profile').append(
-                            " : " + data.friend_ID[i] + '<br>'
-                      )
-                      }    
-                  }
+                if (data.result == "success"){
+                        $.ajax({
+                        url: '/get_img',
+                        method: 'POST',
+                        type: 'POST',
+                        async: false, //改成同步執行(等待上一個回傳)
+                        data: {
+                            "img_path": data.profile_photo,
+                        },
+                        success: function (img) {
+                            console.log("success")
+                            $('#photo').attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                        }
+                        });
+                    
+
+                    // var pic_list = data.mission_pic
+                    // for(var i = 0; i < pic_list.length; i++){
+                    //     $.ajax({
+                    //     url: '/get_img',
+                    //     method: 'POST',
+                    //     type: 'POST',
+                    //     async: false, //改成同步執行(等待上一個回傳)
+                    //     data: {
+                    //         "img_path": pic_list[i],
+                    //     },
+                    //     success: function (img) {
+                    //         console.log("success")
+                    //     }
+                    //     });
+                    // }
+                }
               }
-    })
+        });
     }
+
+    $("#pen").click(function(){
+        $('#save').css("visibility", "visible");
+        $('#pen').css("visibility", "hidden");
+        $("#intro_text").val($('#edit_text').text().substring(0,48)  );
+        $('#intro_text').css("visibility", "visible");
+        $('#edit_text').css("visibility", "hidden");
+
+    });
+    $("#save").click(function(){
+        $("#pen").css("visibility", "visible");
+        $("#save").css("visibility", "hidden");
+
+        $("#edit_text").text($("#intro_text").val().substring(0,48));
+        $('#edit_text').css("visibility", "visible");
+        $('#intro_text').css("visibility", "hidden");
+    });
+    
 </script>

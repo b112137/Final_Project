@@ -10,26 +10,29 @@
     <body>
         <div id="all">
             <div id="container">
-                <img src="static/src/setting.png" id="setting" >
+                <img src="./static/src/setting.png" id="setting" >
             </div>      
-            <img src="static/src/shop.png" id="shop">
-            <img src="static/src/shop_text.png" id="shop_text">
+            <img src="./static/src/shop.png" id="shop">
+            <img src="./static/src/shop_text.png" id="shop_text">
             <a id="mission_link">
-                <img src="static/src/mission.png" id="mission">
+                <img src="./static/src/mission.png" id="mission">
+                <img src="./static/src/mission_text.png" id="mission_text">
             </a>
-            <img src="static/src/mission_text.png" id="mission_text">
-            <img src="static/src/profile.png" id="profile">
-            <img src="static/src/profile_text.png" id="profile_text">
-            <img src="static/src/friends.png" id="friends">
-            <img src="static/src/friends_text.png" id="friends_text">
+            <a id="profile_link">
+                <img src="./static/src/profile.png" id="profile">
+                <img src="./static/src/profile_text.png" id="profile_text">
+            </a>
+            
+            <img src="./static/src/friends.png" id="friends">
+            <img src="./static/src/friends_text.png" id="friends_text">
             <a id="chatroom_link">
-                <img src="static/src/chat.png" id="chat">
+                <img src="./static/src/chat.png" id="chat">
             </a>
             <div id="navbar">
                 <!--img src="./src/setting2.png" id="setting2" class="setting1"-->
-                <img src="static/src/set.png" id="set">
-                <img src="static/src/guided.png" id="guided">
-                <img src="static/src/aboutus.png" id="aboutus">
+                <img src="./static/src/set.png" id="set">
+                <img src="./static/src/guided.png" id="guided">
+                <img src="./static/src/aboutus.png" id="aboutus">
                 <!--img src="./src/Ellipse 5.png" id="logout">
                 <img src="./src/logout_text.png" id="logout_text"-->
             </div>
@@ -43,5 +46,46 @@
 <script>
     $('#chatroom_link').attr('href', "chatroom?account="+window.location.href.split('?')[1].split('=')[1]);
     $('#mission_link').attr('href', "mission?account="+window.location.href.split('?')[1].split('=')[1]);
+    $('#profile_link').attr('href', "profile?account="+window.location.href.split('?')[1].split('=')[1]);
 
+
+    var count=0;
+    var temp=0;
+    $(document).ready(function(){
+
+        $("#setting").click(function(){
+        if(temp==0)
+        {
+            $('#navbar').css("visibility", "visible");
+            $(this).attr('src', './static/src/setting2.png');
+            temp=1;
+        }
+        else{
+            var $marginLefty =    $("#navbar"); // your selector here
+
+
+            $marginLefty.animate({
+                width:'toggle',
+                marginLeft: parseInt($marginLefty.css('marginLeft'),10) == 0 ?
+                $marginLefty.outerWidth() :
+                0
+            });
+            if(count==0)
+            {
+                window.setTimeout(( () => $(this).attr('src', './static/src/setting.png') ), 270);
+
+                // $(this).attr('src', './static/src/setting.png');
+                count=1;
+            }
+            else
+            {
+                window.setTimeout(( () => $(this).attr('src', './static/src/setting2.png') ), 100);
+                // $(this).attr('src', './static/src/setting2.png')
+                count=0;
+            }
+        }
+        });
+    
+
+    });
 </script>

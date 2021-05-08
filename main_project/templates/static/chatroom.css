@@ -14,6 +14,7 @@ body {
     width: 100vw;
     height: 100vh;
     background-color: #F59E56;
+    padding-top: 50vw;
 }
 
 .chatroom-list-header {
@@ -79,7 +80,7 @@ body {
     position: fixed;
     overflow-y: scroll;
     width: 100vw;
-    height: 75vh;
+    height: 100vh;
     top: 50vw;
 }
 
@@ -199,9 +200,11 @@ body {
     position: fixed;
     overflow-y: scroll;
     width: 100vw;
-    height: 80vh;
+    height: 100vh;
     bottom: 18vw;
-    z-index: 10;
+    z-index: 0;
+    padding-top: 22vw;
+
 }
 
 .msg {
@@ -210,6 +213,7 @@ body {
     display: flex;
     padding: 3vw;
     padding-top: 0vw;
+    position: relative; /*add*/
 }
 
 .msg.from-me {
@@ -240,16 +244,35 @@ body {
 
 .msg-content {
     display: block;
-    max-width: 70vw;
+    max-width: 62vw; /*add*/
     word-wrap: break-word;
     font-family: HP_Hans;
     font-size: 5vw;
     text-align: left;
-    margin: 3vw;
+    margin: 2.5vw; /*add*/
     margin-top: 1vw;
     padding: 2vw;
     color: black;
     border-radius: 3vw;
+
+}
+
+/*add*/
+.msg-content-time {
+    display: block;
+    max-width: 70vw;
+    word-wrap: break-word;
+    font-family: HP_Hans;
+    font-size: 3.5vw;
+    text-align: left;
+    margin: 0vw;
+    margin-bottom: 0vw;
+    padding: 0vw;
+    /* color: black; */
+    border-radius: 3vw;
+    position: absolute;/*add*/
+    bottom: 5.5vw;/*add*/
+    /* right: 8vw; */
 }
 
 .msg-content.from-me {
@@ -265,6 +288,7 @@ body {
     bottom: 0px;
     width: 100vw;
     height: 20vw;
+    background-color: white;
 }
 
 .input-msg {
@@ -309,3 +333,110 @@ body {
 .btn-send:active {
     opacity: 0.8;
 }
+
+/* Chatroom Member Page */
+.chatroom-member-page {
+    display: none;
+}
+
+.chatroom-member-list {
+    position: fixed;
+    padding-top: 22vw;
+    overflow-y: scroll;
+    width: 100vw;
+    height: 100vh;
+    background-color: #F59E56;
+}
+
+.chatroom-member-item {
+    display: flex;
+    padding-left: 10vw;
+    padding-right: 10vw;
+    padding-top: 5vw;
+    padding-bottom: 5vw;
+    width: 100vw;
+    height: auto;
+    justify-content: flex-start;
+    align-items: center;
+    font-family: HP_Hans;
+    font-size: 7vw;
+}
+
+.delete-member {
+    /* display: inline-block; */
+    display: none;
+    width: 10vw;
+    height: auto;
+}
+
+.chatroom-member-photo {
+    display: inline-block;
+    width: 15vw;
+    height: 15vw;
+    border: none;
+    border-radius: 50%;
+    background-color: #B5B2B2;
+    margin-left: 2vw;
+}
+
+.chatroom-member-name {
+    display: inline-block;
+    width: 55vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 15vw;
+    padding: 2vw;
+}
+
+/* Delete Member Modal */
+.modal-dialog {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    margin-left: 16vw;
+    margin-top: 40vh;
+  }
+  
+  .modal-content {
+      position: relative;
+      font-family: HP_Hans;
+      font-size: 4vw;
+      background-color: #E9BBA4;
+      border-radius: 5vw;
+      border-width: 0px;
+      width: 68vw;
+      height: 68vw;;
+  }
+  
+  .modal-body-text-confirm {
+      position: absolute;
+      top: 5vw;
+      width: 68vw;
+      right: 0px;
+      font-size: 5vw;
+  }
+  
+  .modal-content > button {
+      position: absolute;
+      bottom: 5vw;
+      width: 22vw;
+      height: 9vw;
+      background-color: #E26F50;
+      border-width: 0px;
+      border-radius: 2vw;
+      color: white;
+      font-size: 5.5vw;
+  }
+  
+  .modal-content >button:active {
+      opacity: 0.8;
+  }
+  
+  .modal-btn-cancel {
+      left: 10vw;
+  }
+  
+  .modal-btn-confirm {
+      right: 10vw;
+  }

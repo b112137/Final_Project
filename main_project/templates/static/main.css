@@ -5,126 +5,126 @@ body {
 
 #all {
     position: relative;
-    height: 116.8vh;
-    width: 54vh;
+    height: 216vw;
+    width: 100vw;
     margin: auto;
 }
 #container {
     position: relative;
-    height: 68vh;
-    width: 54vh;
+    height: 125.8vw;
+    width: 100vw;
     margin: auto;
     background: #F59E56;
 }
 #setting {
     position: relative;
-    top: 4vh;
-    left: 45vh;
-    width: 6vh;
-    height: 4vh;
+    top: 7.4vw;
+    left: 83.25vw;
+    width: 11.1vw;
+    height: 7.4vw;
     z-index: 1;
 }
 #shop{
     position: absolute;
-    width: 14vh;
-    height: 10vh;
-    left: 10vh;
-    top: 71vh;
+    width: 25.9vw;
+    height: 18.5vw;
+    left: 18.5vw;
+    top: 131.35vw;
 }
 #shop_text{
     position: absolute;
-    width: 10vh;
-    height: 4.3vh;
-    left: 12vh;
-    top: 81.5vh;
+    width: 18.5vw;
+    height: 7.95vw;
+    left: 22.2vw;
+    top: 150.77vw;
 }
 #mission{
     position: absolute;
-    width: 14vh;
-    height: 10vh;
-    left: 30vh;
-    top: 71vh;
+    width: 25.9vw;
+    height: 18.5vw;
+    left: 55.5vw;
+    top: 131.35vw;
 }
 #mission_text{
     position: absolute;
-    width: 9vh;
-    height: 4vh;
-    left: 32.6vh;
-    top: 81.5vh;
+    width: 16.65vw;
+    height: 7.4vw;
+    left: 60.31vw;
+    top: 150.77vw;
 }
 #profile{
     position: absolute;
-    width: 14vh;
-    height: 10vh;
-    left: 10vh;
-    top: 90vh;
+    width: 25.9vw;
+    height: 18.5vw;
+    left: 18.5vw;
+    top: 166.5vw;
 }
 #profile_text{
     position: absolute;
-    width: 8vh;
-    height: 4vh;
-    left: 13.2vh;
-    top: 100.5vh;
+    width: 14.8vw;
+    height: 7.4vw;
+    left: 24.45vw;
+    top: 185vw;
 }
 #friends{
     position: absolute;
-    width: 14vh;
-    height: 10vh;
-    left: 30vh;
-    top: 90vh;
+    width: 25.9vw;
+    height: 18.5vw;
+    left: 55.5vw;
+    top: 166.5vw;
 }
 #friends_text{
     position: absolute;
-    width: 8vh;
-    height: 4vh;
-    left: 33.2vh;
-    top: 100.5vh;
+    width: 14.85vw;
+    height: 7.4vw;
+    left: 60.31vw;
+    top: 185vw;
 }
 #chat{
     position: absolute;
-    width: 12vh;
-    height: 12vh;
-    right: 0vh;
-    bottom: 0vh;
+    width: 22.2vw;
+    height: 22.2vw;
+    right: 0vw;
+    bottom: 0vw;
 } 
 #navbar{
     position: absolute;
-    width: 18.5vh;
-    height: 116.8vh;
-    right: 0vh;
-    top: 0px;
+    width: 34.23vw;
+    height: 216vw;
+    right: 0vw;
+    top: 0vw;
     background: #F7F5F5;
     visibility: hidden;
 }
 #setting2 {
     position: absolute;
-    top: 5vh;
-    left: 10vh;
-    width: 5vh;
-    height: 3vh;
+    top: 9.25vw;
+    left: 18.5vw;
+    width: 9.25vw;
+    height: 55.5vw;
 }
 #set{
     position: absolute;
-    width: 10.5vh;
-    height: 3.7vh;
-    top: 20vh; 
-    left: 3vh;
+    width: 19vw;
+    height: 6.85vw;
+    top: 37vw; 
+    left: 5.55vw;
 }
 
 #guided{
     position: absolute;
-    width: 10.5vh;
-    height: 3.7vh;
-    top: 33vh; 
-    left: 3vh;
+    width: 19vw;
+    height: 6.85vw;
+    top: 61vw; 
+    left: 5.55vw;
 }
 
 #aboutus{
     position: absolute;
-    width: 14vh;
-    height: 6vh;
-    top: 45vh; 
-    left: 3vh;
+    width: 25.8vw;
+    height: 11.1vw;
+    top: 83.25vw; 
+    left: 5.55vw;
 }
 /*
 #logout{

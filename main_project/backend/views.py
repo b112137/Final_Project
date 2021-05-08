@@ -11,6 +11,7 @@ from django.core import serializers as core_serializers
 import ast 
 import cv2
 import base64
+import random
 
 # Create your views here.
 def start_page(request):
@@ -57,7 +58,51 @@ def chatroom_page(request):
     })
 
 def profile_page(request):
+    account = request.GET.get("account")
+    profile = Profile.objects.filter(account=account)[0]
+    # return JsonResponse({
+        
+    # })
+    exp = int(profile.exp1) + int(profile.exp2) + int(profile.exp3)
+    level = 1
+    exp_temp = exp
+    for i in range(1, 200):
+        exp_temp -= i*10
+        if exp_temp >= 0:
+            level += 1
+        else:
+            exp_temp += i*10
+            break
+
+    Max = max(int(profile.exp1), int(profile.exp2), int(profile.exp3))
+    print(Max)
+    Max_lenth = 0
+    for i in range(1, 200):
+        Max_lenth += i*10
+        if Max_lenth >= int(Max):
+            break
+    print(Max_lenth)
+    exp1 = (int(profile.exp1)/Max_lenth) * 100
+    exp2 = (int(profile.exp2)/Max_lenth) * 100
+    exp3 = (int(profile.exp3)/Max_lenth) * 100
+
     return render(request,'profile.html',{
+        'result' : "success",
+        'name': profile.name,
+        'account': profile.account,
+        'sex': profile.sex,
+        'birth': profile.birth,
+        'intro': profile.intro,
+        'level': level,
+        'exp1': exp1,
+        'exp2': exp2,
+        'exp3': exp3,
+        # 'balance': profile.balance,
+        'character_name': profile.character_name,
+        'profile_photo': profile.profile_photo,
+        # 'mission_doing_chatroom_ID': ast.literal_eval(profile.mission_doing_chatroom_ID),
+        # 'mission_done_chatroom_ID': ast.literal_eval(profile.mission_done_chatroom_ID),
+        # 'friend_ID': ast.literal_eval(profile.friend_ID),
     })
 
 def register_submit(request):
@@ -810,23 +855,83 @@ def get_my_mission(request):
 
 def get_profile_page(request):
     if request.method == 'POST':
-        account = request.POST.get("user_ID")
+        account = request.POST.get("account")
         profile = Profile.objects.filter(account=account)[0]
+
+        exp = [int(profile.exp1), int(profile.exp2), int(profile.exp3)]
+        max_index = -1
+        max_num = -1
+        for i in range(len(exp)):
+            if exp[i] > max_num:
+                max_index = i
+                max_num = exp[i]
+
+        exp = int(profile.exp1) + int(profile.exp2) + int(profile.exp3)
+        level = 1
+        exp_temp = exp
+        for i in range(1, 200):
+            exp_temp -= i*10
+            if exp_temp >= 0:
+                level += 1
+            else:
+                exp_temp += i*10
+                break
+
+        if max_index==0:
+            char = "知識"
+        elif max_index==1:
+            char = "社會"
+        elif max_index==2:
+            char = "肌肉"
+
+        if level <= 2:
+            character_name = char + "0.png"
+        elif level <= 4:
+            character_name = char + "1.png"
+        elif level <= 6:
+            character_name = char + "2.png"
+        elif level <= 8:
+            character_name = char + "3.png"
+        elif level <= 10:
+            character_name = char + "4.png"
+        elif level > 10:
+            character_name = char + "5.png"
+        print(character_name)
+
+        mission_done_chatroom_ID = ast.literal_eval(profile.mission_done_chatroom_ID)
+        # mission_done_chatroom_ID = [1,2,3,4,5,6]
+        if len(mission_done_chatroom_ID) >= 4:
+            random_index = random.sample(range(0, len(mission_done_chatroom_ID)), 4)
+            # [random.randint(0,len(mission_done_chatroom_ID)-1) for _ in range(4)]
+        else:
+            random_index = random.sample(range(0, len(mission_done_chatroom_ID)), len(mission_done_chatroom_ID))
+            # [random.randint(0,len(mission_done_chatroom_ID)-1) for _ in range(len(mission_done_chatroom_ID))]
+
+        story_pic = []
+        for index in random_index:
+            story_pic.append('mission_submit_upload/' + mission_done_chatroom_ID[index] + '.jpg')
+        
+        while len(story_pic) < 4:
+            story_pic.append('mission_submit_upload/none.jpg')
+
+        print(story_pic)
+
         return JsonResponse({
             'result' : "success",
-            'name': profile.name,
-            'sex': profile.sex,
-            'birth': profile.birth,
-            'intro': profile.intro,
-            'exp1': profile.exp1,
-            'exp2': profile.exp2,
-            'exp3': profile.exp3,
-            'balance': profile.balance,
-            'character_name': profile.character_name,
+            # 'name': profile.name,
+            # 'sex': profile.sex,
+            # 'birth': profile.birth,
+            # 'intro': profile.intro,
+            # 'exp1': profile.exp1,
+            # 'exp2': profile.exp2,
+            # 'exp3': profile.exp3,
+            # 'balance': profile.balance,
+            'character_name': character_name,
             'profile_photo': profile.profile_photo,
-            'mission_doing_chatroom_ID': ast.literal_eval(profile.mission_doing_chatroom_ID),
-            'mission_done_chatroom_ID': ast.literal_eval(profile.mission_done_chatroom_ID),
-            'friend_ID': ast.literal_eval(profile.friend_ID),
+            'story_pic': story_pic,
+            # 'mission_doing_chatroom_ID': ast.literal_eval(profile.mission_doing_chatroom_ID),
+            # 'mission_done_chatroom_ID': ast.literal_eval(profile.mission_done_chatroom_ID),
+            # 'friend_ID': ast.literal_eval(profile.friend_ID),
         })
 
 
