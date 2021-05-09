@@ -200,7 +200,7 @@ body {
     position: fixed;
     overflow-y: scroll;
     width: 100vw;
-    height: 100vh;
+    height: 90vh;
     bottom: 18vw;
     z-index: 0;
     padding-top: 22vw;
@@ -237,14 +237,14 @@ body {
 .msg-name {
     font-family: HP_Hans;
     font-size: 4vw;
-    padding-left: 2vw;
+    padding-left: 0.5vw;
     padding-right: 2vw;
     margin-left: 3vw;
 }
 
 .msg-content {
     display: block;
-    max-width: 62vw; /*add*/
+    max-width: 60vw; /*add*/
     word-wrap: break-word;
     font-family: HP_Hans;
     font-size: 5vw;
