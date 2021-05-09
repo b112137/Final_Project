@@ -11,6 +11,20 @@
         <div id="all">
             <div id="container">
                 <img src="./static/src/setting.png" id="setting" >
+                <img src="./static/src/circle.png" id="circle">
+                <img src="./static/src/LOGO.png" id="logo">
+                <!-- <img src="./static/src/肌肉.png" id="character"> -->
+                <div id="character_vertical"></div>
+                <div id="character_horizontal"></div>
+                <img src="./static/src/exp_back.png" id="exp_back">
+                <img src="./static/src/exp_circle.png" id="exp_circle">
+                <p id="level">{{level}}</p>
+                <p id="char_name">{{name}}</p>
+                <div id="bar">
+                    <div id="knowledge" style="width: {{exp1}}%"></div>
+                    <div id="social" style="width: {{exp2}}%"></div>
+                    <div id="physical" style="width: {{exp3}}%"></div>
+                </div>
             </div>      
             <img src="./static/src/shop.png" id="shop">
             <img src="./static/src/shop_text.png" id="shop_text">
@@ -44,10 +58,39 @@
 </html>
 
 <script>
-    $('#chatroom_link').attr('href', "chatroom?account="+window.location.href.split('?')[1].split('=')[1]);
-    $('#mission_link').attr('href', "mission?account="+window.location.href.split('?')[1].split('=')[1]);
-    $('#profile_link').attr('href', "profile?account="+window.location.href.split('?')[1].split('=')[1]);
+    
 
+    $.ajaxSetup({
+        data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
+    })    
+
+    window.onload = function(){
+        $('#chatroom_link').attr('href', "chatroom?account="+window.location.href.split('?')[1].split('=')[1]);
+        $('#mission_link').attr('href', "mission?account="+window.location.href.split('?')[1].split('=')[1]);
+        $('#profile_link').attr('href', "profile?account="+window.location.href.split('?')[1].split('=')[1]);
+        
+        $.ajax({
+              url: '/get_main_page',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+              },
+              success: function (data) {
+                if (data.result == "success"){
+                    if(data.type=="知識"){
+                        $('#character_vertical').attr('style', 'background-image: url(static/src/' + data.character_name + ')' )
+                    }
+                    else{
+                        $('#character_horizontal').attr('style', 'background-image: url(static/src/' + data.character_name + ')' )
+                    }
+                        
+
+                }
+            }
+        });
+    }
 
     var count=0;
     var temp=0;

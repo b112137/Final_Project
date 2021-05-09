@@ -27,7 +27,7 @@
                 <progress id="exp_3" value={{exp3}} max="100" > 65% </progress>
             </div>
             <div id="role">
-                <img src="./static/src/知識.png" id="role_image">
+                <!-- <img src="./static/src/肌肉5.png" id="role_image"> -->
             </div>
             <p id="intro">自我介紹</p>
             <img src="./static/src/pen.PNG" id="pen">
@@ -36,10 +36,18 @@
             <p id="edit_text">{{intro}}</p>
             <textarea id="intro_text"></textarea>
             <p id="story">故事牆</p>
-            <div id="photo1"></div>
-            <div id="photo2"></div>
-            <div id="photo3"></div>
-            <div id="photo4"></div>
+            <div id="photo1">
+                <div id="photo1_text" class="photo_text"></div>
+            </div>
+            <div id="photo2">
+                <div id="photo2_text" class="photo_text"></div>
+            </div>
+            <div id="photo3">
+                <div id="photo3_text" class="photo_text"></div>
+            </div>
+            <div id="photo4">
+                <div id="photo4_text" class="photo_text"></div>
+            </div>
         </div>
         <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     </body>
@@ -52,7 +60,7 @@
 
     window.onload = function(){
         document.getElementById('back_arrow_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
-
+        
         $.ajax({
               url: '/get_profile_page',
               method: 'POST',
@@ -77,24 +85,34 @@
                         }
                         });
                     
+                        $('#role').attr('style', 'background-image: url(static/src/' + data.character_name + ')' )
 
-                    // var pic_list = data.mission_pic
-                    // for(var i = 0; i < pic_list.length; i++){
-                    //     $.ajax({
-                    //     url: '/get_img',
-                    //     method: 'POST',
-                    //     type: 'POST',
-                    //     async: false, //改成同步執行(等待上一個回傳)
-                    //     data: {
-                    //         "img_path": pic_list[i],
-                    //     },
-                    //     success: function (img) {
-                    //         console.log("success")
-                    //     }
-                    //     });
-                    // }
+                        var pic_list = data.story_pic
+                        console.log(pic_list)
+                        for(var i = 0; i < pic_list.length; i++){
+                            if(pic_list[i] == "media/mission_submit_upload/none.jpg"){
+                                console.log(i)
+                                $('#photo'+(i+1).toString()).attr('style', 'background:#C4C4C4; ')
+                                $('#photo'+(i+1).toString()+'_text').html('完成更多任務吧!')
+                            }
+                            else{
+                                $.ajax({
+                                    url: '/get_img',
+                                    method: 'POST',
+                                    type: 'POST',
+                                    async: false, //改成同步執行(等待上一個回傳)
+                                    data: {
+                                        "img_path": pic_list[i],
+                                    },
+                                    success: function (img) {
+                                        $('#photo'+(i+1).toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                                    }
+                                });
+                            }
+                            
+                        }
                 }
-              }
+            }
         });
     }
 
@@ -113,6 +131,22 @@
         $("#edit_text").text($("#intro_text").val().substring(0,48));
         $('#edit_text').css("visibility", "visible");
         $('#intro_text').css("visibility", "hidden");
+
+        $.ajax({
+              url: '/save_profile_intro',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                  'intro': $("#intro_text").val().substring(0,48),
+              },
+              success: function (data) {
+                if (data.result == "success"){
+
+                }
+            }
+        });
     });
     
 </script>

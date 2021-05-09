@@ -34,16 +34,34 @@ def register_page(request):
 
 def main_page(request):
     account = request.GET.get("account")
-    profile = get_profile(account)
-    character_name = profile[0].character_name
-    name = profile[0].name
-    exp1 = profile[0].exp1
-    exp2 = profile[0].exp2
-    exp3 = profile[0].exp3
+    profile = get_profile(account)[0]
+
+    exp = int(profile.exp1) + int(profile.exp2) + int(profile.exp3)
+    level = 1
+    exp_temp = exp
+    for i in range(1, 200):
+        exp_temp -= i*10
+        if exp_temp >= 0:
+            level += 1
+        else:
+            exp_temp += i*10
+            break
+
+    exp1 = (int(profile.exp1)/exp)*100
+    exp2 = (int(profile.exp2)/exp)*100
+    exp3 = 100 - exp1 - exp2
+
+    print(exp1, exp2, exp3)
+
+    # name = profile[0].name
+    # exp1 = profile[0].exp1
+    # exp2 = profile[0].exp2
+    # exp3 = profile[0].exp3
 
     return render(request, 'main.html', {
-        'character_name': character_name,
-        'name': name,
+        # 'character_name': character_name,
+        'name': profile.name,
+        'level': level,
         'exp1': exp1,
         'exp2': exp2,
         'exp3': exp3,
@@ -692,38 +710,6 @@ def kick_mission_chatroom_member(request):
                 'result' : "not_leader"
             })
 
-
-def get_profile(account):
-    profile = Profile.objects.filter(account=account)
-    return profile
-
-
-def mission_filter(account, mission_ID):
-    group_search = Mission_group.objects.filter(mission_ID=mission_ID)
-
-    mission_doing_chatroom_ID = Profile.objects.filter(account=account)[0].mission_doing_chatroom_ID
-    mission_doing_chatroom_ID = ast.literal_eval(mission_doing_chatroom_ID)
-
-    chatroom_ID, group_name, group_now, group_most, leader_ID = [], [], [], [], []
-    for group in group_search:
-        check = 0
-        for my_chatroom_ID in mission_doing_chatroom_ID: 
-            if group.chatroom_ID == my_chatroom_ID:
-                check = 1
-                break
-        if check == 0: #沒參加過
-            if group.status == "acceptable":
-                chatroom_ID.append(group.chatroom_ID)
-                group_name.append(group.group_name)
-                group_now.append(len( ast.literal_eval(group.member_ID) ))
-                group_most.append(group.group_most)
-                leader_ID.append(group.leader_ID)
-
-    return chatroom_ID, group_name, group_now, group_most, leader_ID
-
-
-
-
 def manager_page(request):
     mission_submission = Mission_submission.objects.filter(check_status="checking")
     mission_submission = core_serializers.serialize("json", mission_submission)
@@ -909,10 +895,10 @@ def get_profile_page(request):
 
         story_pic = []
         for index in random_index:
-            story_pic.append('mission_submit_upload/' + mission_done_chatroom_ID[index] + '.jpg')
+            story_pic.append('media/mission_submit_upload/' + mission_done_chatroom_ID[index] + '.jpg')
         
         while len(story_pic) < 4:
-            story_pic.append('mission_submit_upload/none.jpg')
+            story_pic.append('media/mission_submit_upload/none.jpg')
 
         print(story_pic)
 
@@ -933,6 +919,99 @@ def get_profile_page(request):
             # 'mission_done_chatroom_ID': ast.literal_eval(profile.mission_done_chatroom_ID),
             # 'friend_ID': ast.literal_eval(profile.friend_ID),
         })
+
+def save_profile_intro(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        intro = request.POST.get("intro")
+        profile = Profile.objects.filter(account=account)
+        print(intro)
+        
+        profile.update(intro=intro)
+
+        return JsonResponse({
+            'result' : "success"
+        })
+
+def get_main_page(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        profile = Profile.objects.filter(account=account)[0]
+
+        exp = [int(profile.exp1), int(profile.exp2), int(profile.exp3)]
+        max_index = -1
+        max_num = -1
+        for i in range(len(exp)):
+            if exp[i] > max_num:
+                max_index = i
+                max_num = exp[i]
+
+        exp = int(profile.exp1) + int(profile.exp2) + int(profile.exp3)
+        level = 1
+        exp_temp = exp
+        for i in range(1, 200):
+            exp_temp -= i*10
+            if exp_temp >= 0:
+                level += 1
+            else:
+                exp_temp += i*10
+                break
+
+        if max_index==0:
+            char = "知識"
+        elif max_index==1:
+            char = "社會"
+        elif max_index==2:
+            char = "肌肉"
+
+        if level <= 2:
+            character_name = char + "0.png"
+        elif level <= 4:
+            character_name = char + "1.png"
+        elif level <= 6:
+            character_name = char + "2.png"
+        elif level <= 8:
+            character_name = char + "3.png"
+        elif level <= 10:
+            character_name = char + "4.png"
+        elif level > 10:
+            character_name = char + "5.png"
+
+        return JsonResponse({
+            'result' : "success",
+            'character_name': character_name,
+            'type': char,
+        })
+
+
+def get_profile(account):
+    profile = Profile.objects.filter(account=account)
+    return profile
+
+
+def mission_filter(account, mission_ID):
+    group_search = Mission_group.objects.filter(mission_ID=mission_ID)
+
+    mission_doing_chatroom_ID = Profile.objects.filter(account=account)[0].mission_doing_chatroom_ID
+    mission_doing_chatroom_ID = ast.literal_eval(mission_doing_chatroom_ID)
+
+    chatroom_ID, group_name, group_now, group_most, leader_ID = [], [], [], [], []
+    for group in group_search:
+        check = 0
+        for my_chatroom_ID in mission_doing_chatroom_ID: 
+            if group.chatroom_ID == my_chatroom_ID:
+                check = 1
+                break
+        if check == 0: #沒參加過
+            if group.status == "acceptable":
+                chatroom_ID.append(group.chatroom_ID)
+                group_name.append(group.group_name)
+                group_now.append(len( ast.literal_eval(group.member_ID) ))
+                group_most.append(group.group_most)
+                leader_ID.append(group.leader_ID)
+
+    return chatroom_ID, group_name, group_now, group_most, leader_ID
+
 
 
 # def modify_profile(request):

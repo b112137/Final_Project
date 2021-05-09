@@ -45,6 +45,7 @@ body {
     height: 12.95vw;
     left: 5.55vw;
     top: 7vw;
+    z-index: 20;
 }
 #photo{
     position: absolute;
@@ -171,6 +172,21 @@ progress{
     left: 70vw;
     top: 70vw;
 }
+
+#role{
+    /* background-image: url("src/肌肉5.png"); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-size: 24.74vw auto;
+    position: absolute;
+    width: 24.74vw;
+    height: 31vw;
+    left: 70vw;
+    top: 72vw;
+}
+
+
 #intro{
     position: absolute;
     top:96vw;
@@ -250,7 +266,7 @@ progress{
     font-family: hp;
 }
 #photo1{
-    background-image: url("src/pic1.PNG");
+    /* background-image: url("src/pic1.PNG"); */
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -259,10 +275,14 @@ progress{
     left: 7vw;
     width: 41.5vw;
     height: 35vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
     /* border:0.5vw gray solid; */
 }
 #photo2{
-    background-image: url("src/pic2.PNG");
+    /* background-image: url("src/pic2.PNG"); */
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -271,10 +291,15 @@ progress{
     left: 7vw;
     width: 41.5vw;
     height: 30vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
     /* border:0.5vw gray solid; */
 }
 #photo3{
-    background-image: url("src/pic3.PNG");
+    /* background-image: url("src/pic3.PNG"); */
+    
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -283,10 +308,15 @@ progress{
     left: 52vw;
     width: 41vw;
     height: 27.5vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
     /* border:0.5vw gray solid; */
 }
 #photo4{
-    background-image: url("src/pic4.PNG");
+    /* background-image: url("src/pic4.PNG"); */
+    /* background:#ddd7d2; */
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -295,6 +325,21 @@ progress{
     left: 52vw;
     width: 41vw;
     height: 37.5vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
     /* border:0.5vw gray solid; */
 }
 
+.photo_text{
+    position: absolute;
+    text-align:center;
+    /* left: 9vw; */
+    /* top: 109vw; */
+    /* width: 41vw; */
+    /* height: 37.5vw; */
+    font-size: 5vw;
+    font-family: hp;
+    color: black;
+}

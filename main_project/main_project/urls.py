@@ -37,6 +37,7 @@ urlpatterns = [
     path('get_img', backend.get_img),
     path('get_mission_group', backend.get_mission_group),
     path('join_mission_group', backend.join_mission_group),
+    path('create_mission_group', backend.create_mission_group),
     path('get_mission_chatroom_list', backend.get_mission_chatroom_list),
     path('mission_chatroom_update', backend.mission_chatroom_update),
     path('get_mission_chatroom_member', backend.get_mission_chatroom_member),
@@ -44,17 +45,16 @@ urlpatterns = [
     path('submit_mission_group_check', backend.submit_mission_group_check),
     path('submit_mission_group', backend.submit_mission_group),
     path('friend_chatroom_update', backend.friend_chatroom_update),
-
+    path('save_profile_intro', backend.save_profile_intro),
 
     
     path('submission_to_finish', backend.submission_to_finish),
-
-
-    path('create_mission_group', backend.create_mission_group),
+    
     
     # 
     path('get_my_mission' , backend.get_my_mission),
     path('get_profile_page' , backend.get_profile_page),
+    path('get_main_page' , backend.get_main_page),
     # 
     # path('chat_update', backend.chat_update),
 
