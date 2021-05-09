@@ -96,7 +96,7 @@ body {
 }
 #char_name{
     position: absolute;
-    top: 85vw;
+    top: 87vw;
     width: 50vw;
     left: 25vw;
     text-align: center;
@@ -104,7 +104,7 @@ body {
     font-weight: normal;
     font-family: jf;
     font-weight:bold;
-    font-size: 11vw;
+    font-size: 10vw;
     color:#DB6C4E;
 }
 #bar {
