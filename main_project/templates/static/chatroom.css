@@ -257,24 +257,6 @@ body {
 
 }
 
-/*add*/
-.msg-content-time {
-    display: block;
-    max-width: 70vw;
-    word-wrap: break-word;
-    font-family: HP_Hans;
-    font-size: 3.5vw;
-    text-align: left;
-    margin: 0vw;
-    margin-bottom: 0vw;
-    padding: 0vw;
-    /* color: black; */
-    border-radius: 3vw;
-    position: absolute;/*add*/
-    bottom: 5.5vw;/*add*/
-    /* right: 8vw; */
-}
-
 .msg-content.from-me {
     background-color: #F59E56;
 }
@@ -290,6 +272,30 @@ body {
     height: 20vw;
     background-color: white;
 }
+
+.msg-content-time-flex {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+}
+
+.msg-content-time {
+    display: block;
+    font-size: 3.5vw;
+    font-family: HP_Hans;
+    width: 20vw;
+    margin-bottom: 2.5vw;
+}
+
+.msg-content-time.from-me {
+    text-align: right;
+}
+
+.msg-content-time.from-others {
+    text-align: left;
+}
+
+
 
 .input-msg {
     position: fixed;
@@ -396,47 +402,52 @@ body {
     vertical-align: middle;
     margin-left: 16vw;
     margin-top: 40vh;
-  }
-  
-  .modal-content {
-      position: relative;
-      font-family: HP_Hans;
-      font-size: 4vw;
-      background-color: #E9BBA4;
-      border-radius: 5vw;
-      border-width: 0px;
-      width: 68vw;
-      height: 68vw;;
-  }
-  
-  .modal-body-text-confirm {
-      position: absolute;
-      top: 5vw;
-      width: 68vw;
-      right: 0px;
-      font-size: 5vw;
-  }
-  
-  .modal-content > button {
-      position: absolute;
-      bottom: 5vw;
-      width: 22vw;
-      height: 9vw;
-      background-color: #E26F50;
-      border-width: 0px;
-      border-radius: 2vw;
-      color: white;
-      font-size: 5.5vw;
-  }
-  
-  .modal-content >button:active {
-      opacity: 0.8;
-  }
-  
-  .modal-btn-cancel {
-      left: 10vw;
-  }
-  
-  .modal-btn-confirm {
-      right: 10vw;
-  }
+}
+
+.modal-content {
+    position: relative;
+    font-family: HP_Hans;
+    font-size: 4vw;
+    background-color: #E9BBA4;
+    border-radius: 5vw;
+    border-width: 0px;
+    width: 68vw;
+    height: 68vw;;
+}
+
+.modal-body-text-confirm {
+    position: absolute;
+    top: 5vw;
+    width: 68vw;
+    right: 0px;
+    font-size: 5vw;
+}
+
+.modal-content > button {
+    position: absolute;
+    bottom: 5vw;
+    width: 22vw;
+    height: 9vw;
+    background-color: #E26F50;
+    border-width: 0px;
+    border-radius: 2vw;
+    color: white;
+    font-size: 5.5vw;
+}
+
+.modal-content >button:active {
+    opacity: 0.8;
+}
+
+.modal-btn-cancel {
+    left: 10vw;
+}
+
+.modal-btn-confirm {
+    right: 10vw;
+}
+
+
+
+
+

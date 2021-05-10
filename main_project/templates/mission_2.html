@@ -250,15 +250,17 @@
     })
 
     var image_change = 0;
+    
+
     $(document).on('change','#image-input',function () {
-            // upload();
-            image_change = 1;
-            console.log("change")
-            var choose_file = $(this)[0].files[0];
-            var reader = new FileReader();
-            reader.readAsDataURL(choose_file);
-            reader.onload = function () {
-                console.log(reader.result)
+        // upload();
+        image_change = 1;
+        console.log("change")
+        var choose_file = $(this)[0].files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(choose_file);
+        reader.onload = function () {
+            console.log(reader.result)
             $("#image-img").attr("src", reader.result)
         };
 

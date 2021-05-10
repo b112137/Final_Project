@@ -345,7 +345,6 @@ def submit_mission_group_check(request):
         for member in member_ID:
             member_name.append(Profile.objects.filter(account=member)[0].name)
 
-        print(mission_name, member_ID, status, group_required, member_name)
         if status == "acceptable" or status == "full":
             if len(member_ID) >= int(group_required):
                 return JsonResponse({
@@ -368,7 +367,6 @@ def submit_mission_group(request):
     if request.method == 'POST':
         image = request.FILES.get('image')
         chatroom_ID = request.POST.get('chatroom_ID')
-
         with open('media/mission_submit_upload/' + chatroom_ID +'.jpg', 'wb') as f:
             for line in image:
                 f.write(line)
@@ -409,8 +407,8 @@ def submit_mission_group(request):
                                 member_ID=member_ID, submission_pic=submission_pic, check_status=check_status, check_preson=check_preson
         )
 
-        ### 取得刷新頁面資料
-        ### ToDo ###
+        ## 取得刷新頁面資料
+        ## ToDo ###
 
         return JsonResponse({
             'result' : "success",
