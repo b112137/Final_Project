@@ -186,11 +186,11 @@
             </div>
             <div id="my-mission" class="tab-pane fade">
                 <div class="jf-continer" id = 'page1'>
-                    <img src="static/Rectangle 60.png" id = "joined" class = "joined_clicked">
+                    <!-- <img src="static/Rectangle 60.png" id = "joined" class = "joined_clicked">
                     <img src ="static/Rectangle 61.png"id = "finished" class  = "finished_noclick">
                 
                     <div class="joined_text" id = "joined_t">已加入</div>
-                    <div class="finished_text" id ="finished_t">已完成</div>
+                    <div class="finished_text" id ="finished_t">已完成</div> -->
                     
                     <!-- <div style='position: absolute'>\
                         <img src='static/Rectangle 31.png' class = 'joined_mission'>
@@ -259,25 +259,25 @@
         $('#page1').html("");
         if(type=="join"){
             $('#page1').append(
-                "<div>\
-                    <img src='static/new_element/asset 319.png' id = 'joined' class = 'joined_clicked'>\
-                    <img src ='static/new_element/asset 320.png' id = 'finished' class  = 'finished_noclick'>\
+                "<div class='top_block'>\
                     <div class='joined_text' id = 'joined_t'>已加入</div>\
                     <div class='finished_text' id ='finished_t'>已完成</div>\
                     <img src = 'static/new_element/asset 321.png' class = 'design_line'>\
                 </div>"
             )
+
         }
         else if(type=="finished"){
             $('#page1').append(
-                "<div>\
-                    <img src='static/new_element/asset 320.png' id = 'joined' class = 'joined_clicked'>\
-                    <img src ='static/new_element/asset 319.png' id = 'finished' class  = 'finished_noclick'>\
-                    <div class='joined_text' id = 'joined_t' style = 'color:#E26F50'>已加入</div>\
-                    <div class='finished_text' id ='finished_t'style ='color:white'>已完成</div>\
+                "<div class='top_block'>\
+                    <div class='joined_text' id = 'joined_t' >已加入</div>\
+                    <div class='finished_text' id ='finished_t' >已完成</div>\
                     <img src = 'static/new_element/asset 321.png' class = 'design_line'>\
                 </div>"
             )
+            $('#joined_t').attr('style', "background-image: url(static/new_element/asset320.png); color:#E26F50;")
+            $('#finished_t').attr('style', "background-image: url(static/new_element/asset319.png); color:white;")
+
         }
         $.ajax({
               url: '/get_my_mission',
@@ -365,7 +365,7 @@
                         });
                     }
                     $('#page1').append(
-                        '<div class="test_block" style="hieght: 10vh">\
+                        '<div class="test_block" style="height: 15vw">\
                         </div>'
                     )
                 }

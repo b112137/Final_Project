@@ -63,6 +63,7 @@ input {
 
 .top-tab > li.active > #tab-explore {
     background-image: url('src/icon_tab_explore_enabled.png');
+    margin-bottom: -3.5vw;
 }
 
 .top-tab > li.active > #tab-my-mission {
@@ -71,18 +72,23 @@ input {
 
 #tab-explore {
     background-image: url('src/icon_tab_explore_disabled.png');
+    background-size: cover;
+    width: 50vw;
+    height: 18vw;
+    margin-bottom: -2vw;
 }
 
 #tab-my-mission {
     background-image: url('src/icon_tab_my_mission_disabled.png');   
-}
-
-#tab-explore, #tab-my-mission {
     background-size: cover;
     width: 50vw;
     height: 15vw;
     margin-bottom: -1vw;
 }
+
+
+
+
 .btn_cancel {
     width: 10vw;
     height: 6vw;
@@ -508,7 +514,7 @@ input {
     position: relative;
     text-align: center;
 }
-.joined_clicked{
+/* .joined_clicked{
     position: absolute;
     width: 22vw;
     height: 9.3vw;
@@ -517,15 +523,28 @@ input {
     border-width: 0px;
     z-index: 5;
     text-align: center
-}
+} */
 
 .joined_text{
+    background-image: url(new_element/asset319.png);
+    background-repeat: no-repeat;
+    background-size: 22vw auto;
+
+    width: 22vw;
+    height: 10vw;
+    left: 23vw;
+    top: 4vw;
+    border-width: 0px;
+    z-index: 5;
+    text-align: center;
+    
     position: absolute;
-    left: 26vw;
-    top: 5vw;
+    /* left: 26vw; */
+    /* top: 5vw; */
     font-size: 5.5vw;
     z-index: 100;
     font-weight: bold;
+    padding: 1.3vw;
     color: white;
 }
 
@@ -536,7 +555,7 @@ input {
     top: 8.5vw;
     z-index: 0;
 }
-
+/* 
 .finished_noclick{
     position: absolute;
     width: 22vw;
@@ -547,16 +566,37 @@ input {
 
     z-index: 5;
     text-align: center
-}
+} */
+
 .finished_text{
+    background-image: url(new_element/asset320.png);
+    background-repeat: no-repeat;
+    background-size: 22vw auto;
+
+    width: 22vw;
+    height: 10vw;
+    right: 23vw;
+    top: 4vw;
+    text-align: center;
+
     position: absolute;
-    right: 26vw;
-    top: 5vw;
+    /* right: 26vw;
+    top: 5vw; */
     font-size: 5.5vw;
     z-index: 100;
     font-weight: bold;
+    padding: 1.3vw;
     color: #E26F50;
 }
+
+.top_block{
+    position: relative;
+    margin-top: 3vw;
+    margin-bottom: 3vw;
+    width: 100vw;
+    height: 17vw;
+}
+
 
 .test_block{
     position: relative;
@@ -574,7 +614,7 @@ input {
     width: 97vw;
     height: 30vw;
     left: 0vw;
-    top: 20vw;
+    /* top: 20vw; */
     border-width: 0px;
     z-index: 20;
     text-align: center;
@@ -590,7 +630,7 @@ input {
     width: 24vw;
     height: 20vw;
     left: 10vw;
-    top: 25vw;
+    top: 5vw;
     border-width: 0px;
     z-index: 30;
     text-align: center;
@@ -602,7 +642,7 @@ input {
     width: 20vw;
     height: 10vw;
     right: 14vw;
-    top: 30vw;
+    top: 10vw;
     border-width: 0px;
     z-index: 30;
     text-align: center
@@ -611,7 +651,7 @@ input {
 .submit_text{
     position: absolute;
     right: 18vw;
-    top: 31vw;
+    top: 11vw;
     font-size: 5.5vw;
     z-index: 100;
     color: white;
@@ -623,7 +663,7 @@ input {
     width: 36vw;
     height: auto;
     left: 36vw;
-    top: 28vw;
+    top: 8vw;
     font-size: 5.5vw;
     z-index: 100;
     color: black;
@@ -638,7 +678,7 @@ input {
     width: 36vw;
     height: auto;
     left: 36vw;
-    top: 35vw;
+    top: 15vw;
     font-size: 5vw;
     z-index: 100;
     color: black;
@@ -826,7 +866,7 @@ input {
     border-radius: 2vw;
     border-width: 0px;
     left: 73vw;
-    top: 29vw;
+    top: 9vw;
     z-index: 70;
 }
 
@@ -845,7 +885,7 @@ input {
     border-radius: 2vw;
     border-width: 0px;
     left: 73vw;
-    top: 29vw;
+    top: 9vw;
     z-index: 70;
 }
 
