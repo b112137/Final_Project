@@ -565,9 +565,11 @@
                     for(var i = 0; i < data.chatroom_ID.length; i++){
                         $('#mission_group_box_'+mission_ID).append(
                             '<div class="group-item">\
-                                <div class="group-name">' + data.group_name[i] + '</div>\
-                                <div class="group-need">缺' + (parseInt(data.group_most[i], 10) - parseInt(data.group_now[i], 10)).toString()  + '人</div>\
-                                <button class="btn-join" data-toggle="modal" data-target="#join-group-modal_' + data.chatroom_ID[i] + '"></button>\
+                                <div class="group-name">' + data.group_name[i] + '<br>目前: '+ data.group_now[i] +'人<br>尚缺: '+ (parseInt(data.group_most[i], 10) - parseInt(data.group_now[i], 10)).toString() +'人</div>\
+                                <div>\
+                                    <button class="btn-join" data-toggle="modal" data-target="#join-group-modal_' + data.chatroom_ID[i] + '"></button>\
+                                    <div class="click-text">點擊加入</div>\
+                                </div>\
                             </div>'
                         )
 

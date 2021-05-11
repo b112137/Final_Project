@@ -3,6 +3,11 @@
     src: url(src/font/jf-openhuninn-1.1.ttf);
 }
 
+@font-face {
+    font-family: HP_Hans;
+    src: url(src/font/hp.ttf);
+}
+
 body {
     margin: 0px;
     padding: 0px;
@@ -385,34 +390,45 @@ input {
     display: inline-flex;
     justify-content: space-between;
     width: 62vw;
-    height: 15vw;
+    height: 25vw;
     background-color: #F5E0CD;
     border-radius: 2vw;
     left: 5vw;
     margin-bottom: 3vw;
-    font-family: jf_open;
-    font-size: 6vw;
+    font-family: HP_Hans;
+    font-size: 5vw;
+    padding: 2.5vw;
 }
 
-.group-item > .group-name, .group-item > .group-need {
-    margin-top: 3vw;
-    margin-left: 2vw;
+.group-name {
+    width: 45vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .btn-join {
-    width: 9vw;
-    height: 9vw;
+    display: block;
+    width: 12vw;
+    height: 12vw;
     border-radius: 50%;
     border-width: 0px;
-    margin-right: 2vw;
-    margin-top: 3vw;
+    margin-top: 2vw;
     background-image: url('src/btn_join_group.png');
     background-size: cover;
 }
 
-.group-item > button:active {
+.btn-join:active {
     opacity: 0.5;
 }
+
+.click-text {
+    color: black;
+    font-family: HP_Hans;
+    font-size: 3vw;
+    margin-top: 1vw;
+}
+
 
 .quarter_circle {
     position: fixed;

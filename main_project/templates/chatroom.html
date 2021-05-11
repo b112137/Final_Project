@@ -358,15 +358,50 @@
                             //                 + '-' + time.getHours() + '-' + time.getMinutes() + '-' + time.getSeconds()
 
                             // html_code += chatroom_history[i].fields.sender_ID + ' : ' + chatroom_history[i].fields.message + "  " + time_modify + '\n'
-                        
+                                var time = new Date(chatroom_history[i].fields.time)
+                                var title = ""
+                                var hour = "00"
+                                var minutes = time.getMinutes().toString();
+                                if (time.getHours() >= 12){
+                                    title = "下午"
+                                    if (time.getHours()!=12){
+                                        hour = (time.getHours()-12).toString();
+                                    }
+                                    else{
+                                        hour = time.getHours().toString();
+                                    }
+                                        
+                                }
+                                else if(time.getHours() < 12){
+                                    title = "上午"
+                                    hour = time.getHours().toString();
+                                    if(hour=="0"){
+                                        hour="12"
+                                    }
+                                }
+                                
+                                // if (hour.length==1){
+                                //     hour = "0"+hour;
+                                // }
+
+                                if (minutes.length==1){
+                                    minutes = "0"+minutes;
+                                }
+
+                                var chat_time = title + hour + ":" + minutes;
+
+
                             if (chatroom_history[i].fields.sender_ID==account){
                                 // html_code += 
+                                
+                                
+
                                 $("#chatroom-record-content-ID").append(
                                     '<div class="msg from-me">\
                                         <div class="msg-content-time-flex">\
-                                            <div class="msg-content-time from-me">\
-                                                下午 12:45\
-                                            </div>\
+                                            <div class="msg-content-time from-me">'
+                                                +chat_time+
+                                            '</div>\
                                         </div>\
                                         <div class="msg-content from-me">'
                                             + chatroom_history[i].fields.message +
@@ -386,9 +421,9 @@
                                             '</div>\
                                         </div>\
                                         <div class="msg-content-time-flex">\
-                                            <div class="msg-content-time from-others">\
-                                                下午 12:45\
-                                            </div>\
+                                            <div class="msg-content-time from-others">'
+                                                +chat_time+
+                                            '</div>\
                                         </div>\
                                     </div>'
                                 )
@@ -458,15 +493,47 @@
 
                             //     html_code += chatroom_history[i].fields.sender_ID + ' : ' + chatroom_history[i].fields.message + "  " + time_modify + '\n'
                             // }
+                            var time = new Date(chatroom_history[i].fields.time)
+                            var title = ""
+                            var hour = "00"
+                            var minutes = time.getMinutes().toString();
+                            if (time.getHours() >= 12){
+                                title = "下午"
+                                if (time.getHours()!=12){
+                                    hour = (time.getHours()-12).toString();
+                                }
+                                else{
+                                    hour = time.getHours().toString();
+                                }
+                                    
+                            }
+                            else if(time.getHours() < 12){
+                                title = "上午"
+                                hour = time.getHours().toString();
+                                if(hour=="0"){
+                                    hour="12"
+                                }
+                            }
+
+                            // if (hour.length==1){
+                            //     hour = "0"+hour;
+                            // }
+
+                            if (minutes.length==1){
+                                minutes = "0"+minutes;
+                            }
+                            
+                            var chat_time = title + hour + ":" + minutes;
+
                             if(chatroom_history[i].fields.message!=""){
                                 if (chatroom_history[i].fields.sender_ID==account){
                                     // html_code += 
                                     $("#chatroom-record-content-ID").append(
                                         '<div class="msg from-me">\
                                             <div class="msg-content-time-flex">\
-                                                <div class="msg-content-time from-me">\
-                                                    下午 12:45\
-                                                </div>\
+                                                <div class="msg-content-time from-me">'
+                                                    +chat_time+
+                                                '</div>\
                                             </div>\
                                             <div class="msg-content from-me">'
                                                 + chatroom_history[i].fields.message +
@@ -486,9 +553,9 @@
                                                 '</div>\
                                             </div>\
                                             <div class="msg-content-time-flex">\
-                                                <div class="msg-content-time from-others">\
-                                                    下午 12:45\
-                                                </div>\
+                                                <div class="msg-content-time from-others">'
+                                                    +chat_time+
+                                                '</div>\
                                             </div>\
                                         </div>'
                                     )
