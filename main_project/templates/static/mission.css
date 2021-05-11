@@ -146,20 +146,26 @@ input {
     align-items: center;
 }
 
+.type-select-bar {
+    display: inline-flex;
+    justify-content: center;
+}
+
+.type-select-btn {
+    z-index: 5;
+}
+
 .select-btn {
-    position: absolute;
     width: 17.6vw;
     height: 9.3vw;
-    left: 10.9vw;
-    top: 15vw;
     border-radius: 2.7vw;
-    border-width: 0px;
+    border: none;
     background-color: #E26F50;
-    font-family: jf_open;
+    font-family: HP_Hans;
     font-size: 5.5vw;
     color: white;
-    z-index: 5;
     text-align: center;
+    margin-left: 10vw;
 }
 
 [aria-expanded="true"] .select-btn {
@@ -168,14 +174,14 @@ input {
 
 .btn-group {
     position: absolute;
-    width: 80vw;
-    left: 15vw;
-    top: 15vw;
+    width: 70vw;
     background-color: #F5E0CD;
-    border-radius: 2.7vw;
-    border-width: 0px;
+    border-top-right-radius: 2.7vw;
+    border-bottom-right-radius: 2.7vw;
+    border: none;
     display: flex;
-    justify-content: right;
+    justify-content: flex-end;
+    margin-left: -3vw;
 }
 
 .btn-group > button {
@@ -185,18 +191,12 @@ input {
     height: 9.3vw;
     text-align: center;
     border-radius: 2.7vw;
-    border-width: 0px;
+    border: none;
     font-family: jf_open;
     font-size: 5vw;
 }
 
-#useless-btn:hover {
-    background-color: #F5E0CD;
-}
 
-#useless-btn:active {
-    background-color: #F5E0CD;    
-}
 
 .btn-group > button:active {
     background-color: rgba(226, 112, 80, 0.692);
@@ -208,11 +208,21 @@ input {
     color: white;
 }
 
-.tab-content {
+.tab-footer {
+    position: fixed;
+    top: 35vw;
+    width: 100vw;
+    height: 5vw;
+    background-color: white;
+    z-index: 5;
+}
+
+
+.body-tab-content {
     position: fixed;
     width: 100vw;
-    height: 80vh;
-    top: 36vw;
+    height: 100vh;
+    padding-top: 39vw;
     overflow-y: scroll !important;
 }
 
