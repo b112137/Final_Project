@@ -207,6 +207,39 @@ body {
 
 }
 
+.msg_date {
+    width: 100vw;
+    height: 8vw;
+    /* font-size: 5vw; */
+    text-align: center;
+    padding: 2vw;
+    padding-top: 0vw;
+    position: relative;
+    display: flex;
+    justify-content: center
+}
+
+.msg_date_text {
+    display: block;
+    min-width: 8vw;
+    height: 5vw;
+    /* word-wrap: break-word; */
+    /* font-family: HP_Hans; */
+    font-size: 3vw;
+    text-align: center;
+    /* margin: 2.5vw; add */
+    /* margin-top: 1vw; */
+    /* font-weight: bold; */
+    padding: 0.5vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    background-color: rgba(255, 223, 176, 0.85);
+    
+    color: white;
+    border-radius: 7vw;
+}
+
+
 .msg {
     width: 100vw;
     height: auto;

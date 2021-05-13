@@ -351,6 +351,10 @@
 
                         // html_code = ""
                         $('#chatroom-record-content-ID').html("")
+                        var last_time = new Date("1911/01/01")
+                        var today = new Date();
+                        var yesterday = new Date(new Date().setTime(today.getTime()-24*60*60*1000))
+                        var weekDay = ["日", "一", "二", "三", "四", "五", "六"];
                         for(var i = 0; i < chatroom_history.length; i++){
                             // var time = new Date(chatroom_history[i].fields.time)
                             // var time_modify = ""
@@ -358,43 +362,71 @@
                             //                 + '-' + time.getHours() + '-' + time.getMinutes() + '-' + time.getSeconds()
 
                             // html_code += chatroom_history[i].fields.sender_ID + ' : ' + chatroom_history[i].fields.message + "  " + time_modify + '\n'
-                                var time = new Date(chatroom_history[i].fields.time)
-                                var title = ""
-                                var hour = "00"
-                                var minutes = time.getMinutes().toString();
-                                if (time.getHours() >= 12){
-                                    title = "下午"
-                                    if (time.getHours()!=12){
-                                        hour = (time.getHours()-12).toString();
+                            var time_first = 0;
+                            var time = new Date(chatroom_history[i].fields.time)
+                            var title = ""
+                            var hour = "00"
+                            var minutes = time.getMinutes().toString();
+                            if (time.getHours() >= 12){
+                                title = "下午"
+                                if (time.getHours()!=12){
+                                    hour = (time.getHours()-12).toString();
+                                }
+                                else{
+                                    hour = time.getHours().toString();
+                                }
+                                    
+                            }
+                            else if(time.getHours() < 12){
+                                title = "上午"
+                                hour = time.getHours().toString();
+                                if(hour=="0"){
+                                    hour="12"
+                                }
+                            }
+                            
+                            // if (hour.length==1){
+                            //     hour = "0"+hour;
+                            // }
+
+                            if (minutes.length==1){
+                                minutes = "0"+minutes;
+                            }
+
+                            var chat_time = title + hour + ":" + minutes;
+
+                            var date_time_text = "";
+                            var time_judge = new Date(time);
+                            if(time_judge.setHours(0,0,0,0) != last_time.setHours(0,0,0,0)){
+                                last_time = time;
+                                time_first = 1;
+                                if(time_judge.setHours(0,0,0,0) == today.setHours(0,0,0,0)){
+                                    date_time_text = "今天"
+                                }
+                                else if(time_judge.setHours(0,0,0,0) == yesterday.setHours(0,0,0,0)){
+                                    date_time_text = "昨天"
+                                }
+                                else{
+                                    if(time_judge.getFullYear() == today.getFullYear()){
+                                        date_time_text = (time.getMonth()+1) + '月' + time.getDate() + '日(' + weekDay[time.getDay()] + ')';
                                     }
                                     else{
-                                        hour = time.getHours().toString();
-                                    }
-                                        
-                                }
-                                else if(time.getHours() < 12){
-                                    title = "上午"
-                                    hour = time.getHours().toString();
-                                    if(hour=="0"){
-                                        hour="12"
+                                        date_time_text = time.getFullYear() + '年' + (time.getMonth()+1) + '月' + time.getDate() + '日(' + weekDay[time.getDay()] + ')';
                                     }
                                 }
-                                
-                                // if (hour.length==1){
-                                //     hour = "0"+hour;
-                                // }
-
-                                if (minutes.length==1){
-                                    minutes = "0"+minutes;
-                                }
-
-                                var chat_time = title + hour + ":" + minutes;
-
+                            }
 
                             if (chatroom_history[i].fields.sender_ID==account){
                                 // html_code += 
-                                
-                                
+                                if(time_first==1){
+                                    $("#chatroom-record-content-ID").append(
+                                        '<div class="msg_date">\
+                                            <div class="msg_date_text">'+
+                                                date_time_text+
+                                            '</div>\
+                                        </div>'
+                                    )
+                                }
 
                                 $("#chatroom-record-content-ID").append(
                                     '<div class="msg from-me">\
@@ -411,6 +443,16 @@
                             }
                             else {
                                 // html_code +=
+                                if(time_first==1){
+                                    $("#chatroom-record-content-ID").append(
+                                        '<div class="msg_date">\
+                                            <div class="msg_date_text">'+
+                                                date_time_text+
+                                            '</div>\
+                                        </div>'
+                                    )
+                                }
+
                                 $("#chatroom-record-content-ID").append(
                                     '<div class="msg from-others">\
                                         <div class="msg-photo" id="msg_photo_' + i.toString() + '"></div>\
@@ -484,6 +526,10 @@
 
                         // html_code = ""
                         $('#chatroom-record-content-ID').html("")
+                        var last_time = new Date("1911/01/01")
+                        var today = new Date();
+                        var yesterday = new Date(new Date().setTime(today.getTime()-24*60*60*1000))
+                        var weekDay = ["日", "一", "二", "三", "四", "五", "六"];
                         for(var i = 0; i < chatroom_history.length; i++){
                             // if(chatroom_history[i].fields.message!=""){
                             //     var time = new Date(chatroom_history[i].fields.time)
@@ -493,6 +539,7 @@
 
                             //     html_code += chatroom_history[i].fields.sender_ID + ' : ' + chatroom_history[i].fields.message + "  " + time_modify + '\n'
                             // }
+                            var time_first = 0;
                             var time = new Date(chatroom_history[i].fields.time)
                             var title = ""
                             var hour = "00"
@@ -505,7 +552,6 @@
                                 else{
                                     hour = time.getHours().toString();
                                 }
-                                    
                             }
                             else if(time.getHours() < 12){
                                 title = "上午"
@@ -515,19 +561,45 @@
                                 }
                             }
 
-                            // if (hour.length==1){
-                            //     hour = "0"+hour;
-                            // }
-
                             if (minutes.length==1){
                                 minutes = "0"+minutes;
                             }
-                            
                             var chat_time = title + hour + ":" + minutes;
 
                             if(chatroom_history[i].fields.message!=""){
+                                var date_time_text = "";
+                                var time_judge = new Date(time);
+                                if(time_judge.setHours(0,0,0,0) != last_time.setHours(0,0,0,0)){
+                                    last_time = time;
+                                    time_first = 1;
+                                    if(time_judge.setHours(0,0,0,0) == today.setHours(0,0,0,0)){
+                                        date_time_text = "今天"
+                                    }
+                                    else if(time_judge.setHours(0,0,0,0) == yesterday.setHours(0,0,0,0)){
+                                        date_time_text = "昨天"
+                                    }
+                                    else{
+                                        if(time_judge.getFullYear() == today.getFullYear()){
+                                            date_time_text = (time.getMonth()+1) + '月' + time.getDate() + '日(' + weekDay[time.getDay()] + ')';
+                                        }
+                                        else{
+                                            date_time_text = time.getFullYear() + '年' + (time.getMonth()+1) + '月' + time.getDate() + '日(' + weekDay[time.getDay()] + ')';
+                                        }
+                                    }
+                                }
+
                                 if (chatroom_history[i].fields.sender_ID==account){
                                     // html_code += 
+                                    if(time_first==1){
+                                        $("#chatroom-record-content-ID").append(
+                                            '<div class="msg_date">\
+                                                <div class="msg_date_text">'+
+                                                    date_time_text+
+                                                '</div>\
+                                            </div>'
+                                        )
+                                    }
+                                    
                                     $("#chatroom-record-content-ID").append(
                                         '<div class="msg from-me">\
                                             <div class="msg-content-time-flex">\
@@ -543,6 +615,16 @@
                                 }
                                 else {
                                     // html_code +=
+                                    if(time_first==1){
+                                        $("#chatroom-record-content-ID").append(
+                                            '<div class="msg_date">\
+                                                <div class="msg_date_text">'+
+                                                    date_time_text+
+                                                '</div>\
+                                            </div>'
+                                        )
+                                    }
+
                                     $("#chatroom-record-content-ID").append(
                                         '<div class="msg from-others">\
                                             <div class="msg-photo" id="msg_photo_' + i.toString() + '"></div>\
