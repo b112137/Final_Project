@@ -123,6 +123,10 @@ def profile_page(request):
         # 'friend_ID': ast.literal_eval(profile.friend_ID),
     })
 
+def friend_page(request):
+    return render(request, 'friend.html', {
+    })
+
 def register_submit(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -1010,6 +1014,39 @@ def mission_filter(account, mission_ID):
 
     return chatroom_ID, group_name, group_now, group_most, leader_ID
 
+def get_friend_page(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        profile = Profile.objects.filter(account=account)[0]
+
+        
+        friend_list = ast.literal_eval(profile.friend_ID)
+        friend_chatroom_list = ast.literal_eval(profile.friend_chatroom_ID)
+        mission_chatroom_ID = ast.literal_eval(profile.mission_doing_chatroom_ID)
+
+        friend_name, friend_sex, friend_birth, friend_intro, friend_photo, friend_character_name = [], [], [], [], [], []
+        if friend_list:
+            for friend in friend_list:
+                friend_profile = Profile.objects.filter(account=friend)[0]
+                friend_name.append(friend_profile.name)
+                friend_sex.append(friend_profile.sex) 
+                friend_birth.append(friend_profile.birth) 
+                friend_intro.append(friend_profile.intro) 
+                friend_photo.append(friend_profile.profile_photo)
+                friend_character_name.append(friend_profile.character_name)
+
+        return JsonResponse({
+            'result' : "success",
+            'friend_list': friend_list,
+            'friend_chatroom_list':friend_chatroom_list,
+            'mission_chatroom_ID':mission_chatroom_ID,
+            'friend_name':friend_name,
+            'friend_sex':friend_sex,
+            'friend_birth':friend_birth,
+            'friend_intro':friend_intro,
+            'friend_photo':friend_photo,
+            'friend_character_name':friend_character_name
+        })
 
 
 # def modify_profile(request):
