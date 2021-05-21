@@ -28,7 +28,11 @@
               success: function (data) {
                 if(data.result == 'success'){
                     console.log("load success")
-                    if(data.friend_list){
+                    if(data.friend_list.length==0){
+                        $('#friend').append("哈哈哈你沒朋友" + '<br>')
+                    }
+                    else
+                    {
                         for(var i = 0; i < data.friend_list.length;i++){
                         $('#friend').append(
                           "朋友名字: " +　data.friend_name + '<br>' +
@@ -38,7 +42,9 @@
                           "大頭照: " +　data.friend_photo + '<br>' +
                           "自我介紹: " +　data.friend_intro + '<br>' 
                         )
-                      }
+                        }
+                    }
+                    
                       $('#friend').append(
                             "任務聊天室 : "  + '<br>'
                       )
@@ -53,10 +59,6 @@
                           $('#friend').append(
                             " : " + data.friend_chatroom_list[j] + '<br>'
                       )}   
-                    }
-                    else{
-                        $('friend').append("哈哈你沒朋友")
-                    }
                     }
                 }
     })
