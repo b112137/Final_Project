@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+        <meta charset="utf-8">
+        <script src="static/jquery.js"></script>
+    </head>
+    <body>
+        <div id="shop">
+            
+        </div>
+    </body>
+</html>
+
+<script>
+    $.ajaxSetup({
+        data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
+    })    
+
+    window.onload = function(){
+       $.ajax({
+              url: '/get_shop_page',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  "account": window.location.href.split('?')[1].split('=')[1]
+              },
+              success: function (data) {
+                if(data.result == 'success'){
+                    console.log("load success")
+                    if(data.own_product_ID.length==0){
+                        $('#shop').append("哈哈哈你啥都沒有" + '<br>')
+                    }
+                    else
+                    {
+                        for(var i = 0; i < data.own_product_ID.length;i++){
+                        $('#shop').append(
+                          "ID: " +　data.own_product_ID[i] + '<br>' +
+                          "名字: " +　data.own_product_name[i] + '<br>' +
+                          "詳細資料: " +　data.own_product_detail[i] + '<br>' 
+                        )
+                        }
+                    }
+                    
+                      $('#shop').append(
+                            "商品列表 : "  + '<br>'
+                      )
+                      for(var i = 0;i < data.product_ID.length;i++){
+                          $('#shop').append(
+                            "ID" + data.product_ID[i] + '<br>' +
+                            "名字: " +　data.product_name[i] + '<br>' +
+                            "詳細資料: " +　data.product_detail[i] + '<br>' +
+                            "價格: " +　data.product_price[i] + '<br>' +
+                            "剩餘數量: " + data.product_left[i] + '<br>'
+                      )}
+                }
+            }
+        })
+    }
+</script>

@@ -33,6 +33,7 @@ urlpatterns = [
     path('manager', backend.manager_page),
     path('profile', backend.profile_page),
     path('friend', backend.friend_page),
+    path('shop',backend.shop_page),
 
     path('register_submit', backend.register_submit),
     path('login_check', backend.login_check),
@@ -59,6 +60,7 @@ urlpatterns = [
     path('get_profile_page' , backend.get_profile_page),
     path('get_main_page' , backend.get_main_page),
     path('get_friend_page', backend.get_friend_page),
+    path('get_shop_page', backend.get_shop_page)
     # 
     # path('chat_update', backend.chat_update),
 

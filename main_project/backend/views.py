@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from django.views.generic import View
 import json
 from backend.models import Chat
-from backend.models import Profile, Mission_imformation, Mission_group, Mission_Chatroom, Mission_submission, Friend_Chatroom
+from backend.models import Profile, Mission_imformation, Mission_group, Mission_Chatroom, Mission_submission, Friend_Chatroom, Shop
 
 from rest_framework import serializers
 from django.core import serializers as core_serializers
@@ -125,6 +125,10 @@ def profile_page(request):
 
 def friend_page(request):
     return render(request, 'friend.html', {
+    })
+
+def shop_page(request):
+    return render(request, 'shop.html',{
     })
 
 def register_submit(request):
@@ -1047,6 +1051,42 @@ def get_friend_page(request):
             'friend_photo':friend_photo,
             'friend_character_name':friend_character_name
         })
+
+def get_shop_page(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        profile = Profile.objects.filter(account=account)[0]
+        own_product_ID = ast.literal_eval(profile.owned_product_ID)
+
+        shop_imformation = Shop.objects.all()
+        all_product = core_serializers.serialize("json", shop_imformation)
+        all_product = json.loads(all_product)
+  
+        product_ID, product_name, product_detail, product_price, product_left = [], [], [], [], []
+        for product in all_product:
+            product_ID.append(product['fields']['product_ID'])
+            product_name.append(product['fields']['product_name'])
+            product_detail.append(product['fields']['product_detail'])
+            product_price.append(product['fields']['product_price'])
+            product_left.append(product['fields']['product_left'])
+
+        own_product_name, own_product_detail = [], []
+        for own in own_product_ID:
+            own_product_name.append(Shop.objects.filter(product_ID=own)[0].product_name)
+            own_product_detail.append(Shop.objects.filter(product_ID=own)[0].product_detail)
+
+        return JsonResponse({
+            'result' : "success",
+            'own_product_ID': own_product_ID,
+            'own_product_name': own_product_name,
+            'own_product_detail': own_product_detail,
+            'product_ID': product_ID,
+            'product_name': product_name,
+            'product_detail': product_detail,
+            'product_price': product_price,
+            'product_left': product_left
+        })
+        
 
 
 # def modify_profile(request):
