@@ -123,10 +123,13 @@ def profile_page(request):
         # 'friend_ID': ast.literal_eval(profile.friend_ID),
     })
 
-def shop_page(request):
-    return render(request, 'shop.html', {
+def friend_page(request):
+    return render(request, 'friend.html', {
     })
 
+def shop_page(request):
+    return render(request, 'shop.html',{
+    })
 
 def register_submit(request):
     if request.method == 'POST':
@@ -1080,6 +1083,75 @@ def mission_filter(account, mission_ID):
 
     return chatroom_ID, group_name, group_now, group_most, leader_ID
 
+def get_friend_page(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        profile = Profile.objects.filter(account=account)[0]
+
+        
+        friend_list = ast.literal_eval(profile.friend_ID)
+        friend_chatroom_list = ast.literal_eval(profile.friend_chatroom_ID)
+        mission_chatroom_ID = ast.literal_eval(profile.mission_doing_chatroom_ID)
+
+        friend_name, friend_sex, friend_birth, friend_intro, friend_photo, friend_character_name = [], [], [], [], [], []
+        if friend_list:
+            for friend in friend_list:
+                friend_profile = Profile.objects.filter(account=friend)[0]
+                friend_name.append(friend_profile.name)
+                friend_sex.append(friend_profile.sex) 
+                friend_birth.append(friend_profile.birth) 
+                friend_intro.append(friend_profile.intro) 
+                friend_photo.append(friend_profile.profile_photo)
+                friend_character_name.append(friend_profile.character_name)
+
+        return JsonResponse({
+            'result' : "success",
+            'friend_list': friend_list,
+            'friend_chatroom_list':friend_chatroom_list,
+            'mission_chatroom_ID':mission_chatroom_ID,
+            'friend_name':friend_name,
+            'friend_sex':friend_sex,
+            'friend_birth':friend_birth,
+            'friend_intro':friend_intro,
+            'friend_photo':friend_photo,
+            'friend_character_name':friend_character_name
+        })
+
+def get_shop_page(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        profile = Profile.objects.filter(account=account)[0]
+        own_product_ID = ast.literal_eval(profile.owned_product_ID)
+
+        shop_imformation = Shop.objects.all()
+        all_product = core_serializers.serialize("json", shop_imformation)
+        all_product = json.loads(all_product)
+  
+        product_ID, product_name, product_detail, product_price, product_left = [], [], [], [], []
+        for product in all_product:
+            product_ID.append(product['fields']['product_ID'])
+            product_name.append(product['fields']['product_name'])
+            product_detail.append(product['fields']['product_detail'])
+            product_price.append(product['fields']['product_price'])
+            product_left.append(product['fields']['product_left'])
+
+        own_product_name, own_product_detail = [], []
+        for own in own_product_ID:
+            own_product_name.append(Shop.objects.filter(product_ID=own)[0].product_name)
+            own_product_detail.append(Shop.objects.filter(product_ID=own)[0].product_detail)
+
+        return JsonResponse({
+            'result' : "success",
+            'own_product_ID': own_product_ID,
+            'own_product_name': own_product_name,
+            'own_product_detail': own_product_detail,
+            'product_ID': product_ID,
+            'product_name': product_name,
+            'product_detail': product_detail,
+            'product_price': product_price,
+            'product_left': product_left
+        })
+        
 
 
 

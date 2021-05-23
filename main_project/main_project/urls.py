@@ -13,6 +13,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# from clone.Final_Project.main_project.backend.views import friend_page
+# from Final_Project.main_project.backend.views import friend_page
 from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
@@ -30,7 +32,8 @@ urlpatterns = [
     path('chatroom', backend.chatroom_page),
     path('manager', backend.manager_page),
     path('profile', backend.profile_page),
-    path('shop', backend.shop_page),
+    path('friend', backend.friend_page),
+    path('shop',backend.shop_page),
 
     path('register_submit', backend.register_submit),
     path('login_check', backend.login_check),
@@ -57,6 +60,8 @@ urlpatterns = [
     path('get_my_mission' , backend.get_my_mission),
     path('get_profile_page' , backend.get_profile_page),
     path('get_main_page' , backend.get_main_page),
+    path('get_friend_page', backend.get_friend_page),
+    path('get_shop_page', backend.get_shop_page)
     # 
     # path('chat_update', backend.chat_update),
 
