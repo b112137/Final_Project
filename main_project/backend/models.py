@@ -102,6 +102,7 @@ class Shop(models.Model):
     product_detail = models.TextField()
     product_price = models.TextField()
     product_left = models.TextField()
+    product_pic = models.TextField()
 
 # class Profile(models.Model):
 
