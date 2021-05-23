@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from django.views.generic import View
 import json
 from backend.models import Chat
-from backend.models import Profile, Mission_imformation, Mission_group, Mission_Chatroom, Mission_submission, Friend_Chatroom
+from backend.models import Profile, Mission_imformation, Mission_group, Mission_Chatroom, Mission_submission, Friend_Chatroom, Shop
 
 from rest_framework import serializers
 from django.core import serializers as core_serializers
@@ -122,6 +122,11 @@ def profile_page(request):
         # 'mission_done_chatroom_ID': ast.literal_eval(profile.mission_done_chatroom_ID),
         # 'friend_ID': ast.literal_eval(profile.friend_ID),
     })
+
+def shop_page(request):
+    return render(request, 'shop.html', {
+    })
+
 
 def register_submit(request):
     if request.method == 'POST':
@@ -923,7 +928,6 @@ def save_profile_intro(request):
         account = request.POST.get("account")
         intro = request.POST.get("intro")
         profile = Profile.objects.filter(account=account)
-        print(intro)
         
         profile.update(intro=intro)
 
@@ -981,6 +985,72 @@ def get_main_page(request):
             'type': char,
         })
 
+def get_all_shop(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        balance = Profile.objects.filter(account=account)[0].balance
+
+        shop = Shop.objects.all()
+        shop_all = core_serializers.serialize("json", shop)
+        shop_all = json.loads(shop_all)
+
+        product_ID, product_name, product_detail, product_price, product_left, product_pic = [], [], [], [], [], []
+        for product in shop_all:
+            product_ID.append(product['fields']['product_ID'])
+            product_name.append(product['fields']['product_name'])
+            product_detail.append(product['fields']['product_detail'])
+            product_price.append(product['fields']['product_price'])
+            product_left.append(product['fields']['product_left'])
+            product_pic.append(product['fields']['product_pic'])
+
+        return JsonResponse({
+            'result' : "success", "balance": balance,
+            "product_ID":product_ID, "product_name":product_name, "product_detail":product_detail,
+            "product_price":product_price, "product_left":product_left, "product_pic":product_pic, 
+        })
+
+def buy_product(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        product_ID = request.POST.get("product_ID")
+
+        profile = Profile.objects.filter(account=account)
+        balance = int(profile[0].balance)
+        owned_product_ID = profile[0].owned_product_ID
+        owned_product_ID = ast.literal_eval(owned_product_ID)
+
+        product = Shop.objects.filter(product_ID=product_ID)
+        product_price = int(product[0].product_price)
+        product_left = int(product[0].product_left)
+
+        if product_left > 0:
+            if balance >= product_price:
+                balance = balance - product_price
+                owned_product_ID.append(product_ID)
+                product_left -= 1
+
+                print(balance, owned_product_ID, product_left)
+                profile.update(balance = balance, owned_product_ID=owned_product_ID)
+                product.update(product_left = product_left)
+                return JsonResponse({
+                    'result' : "success",
+                })
+            else:
+                return JsonResponse({
+                    'result' : "no_money",
+                })
+        else:
+            return JsonResponse({
+                'result' : "no_product",
+            })
+
+def get_my_shop(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        profile = Profile.objects.filter(account=account)
+        owned_product_ID = profile[0].owned_product_ID
+        owned_product_ID = ast.literal_eval(owned_product_ID)
+
 
 def get_profile(account):
     profile = Profile.objects.filter(account=account)
@@ -1009,6 +1079,8 @@ def mission_filter(account, mission_ID):
                 leader_ID.append(group.leader_ID)
 
     return chatroom_ID, group_name, group_now, group_most, leader_ID
+
+
 
 
 

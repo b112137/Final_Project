@@ -30,6 +30,7 @@ urlpatterns = [
     path('chatroom', backend.chatroom_page),
     path('manager', backend.manager_page),
     path('profile', backend.profile_page),
+    path('shop', backend.shop_page),
 
     path('register_submit', backend.register_submit),
     path('login_check', backend.login_check),
@@ -46,7 +47,8 @@ urlpatterns = [
     path('submit_mission_group', backend.submit_mission_group),
     path('friend_chatroom_update', backend.friend_chatroom_update),
     path('save_profile_intro', backend.save_profile_intro),
-
+    path('get_all_shop', backend.get_all_shop),
+    path('buy_product', backend.buy_product),
     
     path('submission_to_finish', backend.submission_to_finish),
     
