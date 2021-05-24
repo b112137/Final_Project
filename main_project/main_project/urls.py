@@ -53,6 +53,8 @@ urlpatterns = [
     path('get_all_shop', backend.get_all_shop),
     path('buy_product', backend.buy_product),
     path('get_my_shop', backend.get_my_shop),
+    path('use_product', backend.use_product),
+
 
     path('submission_to_finish', backend.submission_to_finish),
     

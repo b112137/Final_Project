@@ -31,6 +31,7 @@
               },
               success: function (data) {
                 if (data.result == "success"){
+                    $('#newpic').html("");
                     var pic_list = data.product_pic
                     $('#balance').append(data.balance)
                     for(var i = 0; i < pic_list.length; i++){
@@ -98,10 +99,53 @@
               success: function (data) {
                 if (data.result == "success"){
                     // window.location.href = window.location.href;         
-
+                    $('#newpic').html("");
+                    var pic_list = data.product_pic
+                    for(var i = 0; i < pic_list.length; i++){
+                        $.ajax({
+                        url: '/get_img',
+                        method: 'POST',
+                        type: 'POST',
+                        async: false, //改成同步執行(等待上一個回傳)
+                        data: {
+                            "img_path": pic_list[i],
+                        },
+                        success: function (img) {
+                            // console.log()
+                            
+                            $('#newpic').append("<img src=" + '"data:image/jpg;base64,'+img+'"> <br>' +
+                                data.product_name[i] + '<br>'+
+                                "商品ID: " + data.product_ID[i]+ '<br>'+
+                                "商品描述: " + data.product_detail[i]+ '<br>'+
+                                "商品剩餘: " + data.product_num[i]+ '<br>'                             
+                            )
+                            $('#newpic').append('<button onclick=use('+ data.product_ID[i] +')>使用</button><br>')
+                        }
+                        });
+                    }
+                    // $('#newpic').append('<button onclick=use('+ data.product_ID[i] +')>使用</button>')
                 }
             }
         });
-    })
+    });
 
+    function use(product_ID){
+        $.ajax({
+              url: '/use_product',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                  'product_ID': product_ID,
+              },
+              success: function (data) {
+                if (data.result == "success"){
+                    $("#chat_button").click();
+                }
+                console.log(data.result)
+                
+            }
+        });
+    };
 </script>

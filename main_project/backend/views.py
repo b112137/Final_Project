@@ -1053,6 +1053,7 @@ def get_my_shop(request):
         profile = Profile.objects.filter(account=account)
         owned_product_ID = profile[0].owned_product_ID
         owned_product_ID = ast.literal_eval(owned_product_ID)
+        owned_product_ID.reverse()
 
         product_ID, product_name, product_detail, product_pic, product_num = [], [], [], [] ,[]
         for ID in owned_product_ID:
@@ -1080,11 +1081,25 @@ def get_my_shop(request):
             'product_pic': product_pic,
         })
 
+def use_product(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        product_ID = request.POST.get("product_ID")
+        profile = Profile.objects.filter(account=account)
+        owned_product_ID = profile[0].owned_product_ID
+        owned_product_ID = ast.literal_eval(owned_product_ID)
+
+        owned_product_ID.remove(product_ID)
+        profile.update(owned_product_ID=owned_product_ID)
+        
+        return JsonResponse({
+            'result' : "success",
+        })
+
 
 def get_profile(account):
     profile = Profile.objects.filter(account=account)
     return profile
-
 
 def mission_filter(account, mission_ID):
     group_search = Mission_group.objects.filter(mission_ID=mission_ID)
@@ -1108,6 +1123,7 @@ def mission_filter(account, mission_ID):
                 leader_ID.append(group.leader_ID)
 
     return chatroom_ID, group_name, group_now, group_most, leader_ID
+
 
 def get_friend_page(request):
     if request.method == 'POST':
