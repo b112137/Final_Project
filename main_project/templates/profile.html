@@ -13,7 +13,9 @@
                 </a>
                 <div class="title_text">個人資訊</div>
             </div> 
-            <div id="photo"></div>
+            
+            <div id="container"></div>
+            <!-- <div id="photo"></div>
             <p id="name" class="profile">{{ name }}</p>
             <p id="user_id"  class="profile">{{ account }}</p>
             <p id="age" class="profile">{{birth}}</p>
@@ -26,16 +28,16 @@
                 <progress id="exp_2" value={{exp2}} max="100" > 60% </progress>
                 <progress id="exp_3" value={{exp3}} max="100" > 65% </progress>
             </div>
-            <div id="role">
-                <!-- <img src="./static/src/肌肉5.png" id="role_image"> -->
-            </div>
+            <div id="role"></div>
             <p id="intro">自我介紹</p>
             <img src="./static/src/pen.PNG" id="pen">
             <button type="button" id="save" >儲存</button>
             <div id="edit"></div>
             <p id="edit_text">{{intro}}</p>
-            <textarea id="intro_text"></textarea>
-            <p id="story">故事牆</p>
+            <textarea id="intro_text"></textarea> -->
+
+            
+            
             <div id="photo1">
                 <div id="photo1_text" class="photo_text"></div>
             </div>
@@ -60,71 +62,213 @@
 
     window.onload = function(){
         document.getElementById('back_arrow_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
-        
-        $.ajax({
-              url: '/get_profile_page',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
-              },
-              success: function (data) {
-                if (data.result == "success"){
-                        $.ajax({
-                        url: '/get_img',
-                        method: 'POST',
-                        type: 'POST',
-                        async: false, //改成同步執行(等待上一個回傳)
-                        data: {
-                            "img_path": data.profile_photo,
-                        },
-                        success: function (img) {
-                            console.log("success")
-                            $('#photo').attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
-                        }
-                        });
-                    
-                        $('#role').attr('style', 'background-image: url(static/src/' + data.character_name + ')' )
 
-                        var pic_list = data.story_pic
-                        console.log(pic_list)
-                        for(var i = 0; i < pic_list.length; i++){
-                            if(pic_list[i] == "media/mission_submit_upload/none.jpg"){
-                                console.log(i)
-                                $('#photo'+(i+1).toString()).attr('style', 'background:#C4C4C4; ')
-                                $('#photo'+(i+1).toString()+'_text').html('完成更多任務吧!')
-                            }
-                            else{
-                                $.ajax({
-                                    url: '/get_img',
-                                    method: 'POST',
-                                    type: 'POST',
-                                    async: false, //改成同步執行(等待上一個回傳)
-                                    data: {
-                                        "img_path": pic_list[i],
-                                    },
-                                    success: function (img) {
-                                        $('#photo'+(i+1).toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
-                                    }
-                                });
-                            }
-                            
+        parameter = window.location.href.split('?')[1].split('&')
+        if(parameter.length == 1){
+            my_profile();
+        }
+        else if(parameter.length == 2){
+            others_profile();
+        }
+    }
+
+    function my_profile(){
+        $.ajax({
+            url: '/get_profile_page',
+            method: 'POST',
+            type: 'POST',
+            dataType: "json",
+            data: {
+                'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+            },
+            success: function (data) {
+                if (data.result == "success"){
+                    $('#container').html(
+                        '<div id="photo"></div>\
+                        <p id="name" class="profile">'+ data.name +'</p>\
+                        <p id="user_id"  class="profile">'+ data.account +'</p>\
+                        <p id="age" class="profile">'+ data.birth +'</p>\
+                        <p id="level" >等級 '+ data.level +'</p>\
+                        <p id="knowledge" class="exp">知識</p>\
+                        <p id="social" class="exp">社會參與</p>\
+                        <p id="physical" class="exp">體能</p>\
+                        <div id="bar">\
+                            <progress id="exp_1" value='+ data.exp1 +' max="100" > 70% </progress>\
+                            <progress id="exp_2" value='+ data.exp2 +' max="100" > 60% </progress>\
+                            <progress id="exp_3" value='+ data.exp3 +' max="100" > 65% </progress>\
+                        </div>\
+                        <div id="role"></div>\
+                        <p id="intro">自我介紹</p>\
+                        <img src="./static/src/pen.PNG" id="pen">\
+                        <button type="button" id="save" >儲存</button>\
+                        <div id="edit"></div>\
+                        <p id="edit_text">'+ data.intro +'</p>\
+                        <textarea id="intro_text"></textarea>\
+                        <p id="story">故事牆</p>'
+                    )
+
+                    $.ajax({
+                    url: '/get_img',
+                    method: 'POST',
+                    type: 'POST',
+                    async: false, //改成同步執行(等待上一個回傳)
+                    data: {
+                        "img_path": data.profile_photo,
+                    },
+                    success: function (img) {
+                        console.log("success")
+                        $('#photo').attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                    }
+                    });
+                
+                    $('#role').attr('style', 'background-image: url(static/src/' + data.character_name + ')' )
+
+                    var pic_list = data.story_pic
+                    console.log(pic_list)
+                    for(var i = 0; i < pic_list.length; i++){
+                        if(pic_list[i] == "media/mission_submit_upload/none.jpg"){
+                            console.log(i)
+                            $('#photo'+(i+1).toString()).attr('style', 'background:#C4C4C4; ')
+                            $('#photo'+(i+1).toString()+'_text').html('完成更多任務吧!')
                         }
+                        else{
+                            $.ajax({
+                                url: '/get_img',
+                                method: 'POST',
+                                type: 'POST',
+                                async: false, //改成同步執行(等待上一個回傳)
+                                data: {
+                                    "img_path": pic_list[i],
+                                },
+                                success: function (img) {
+                                    $('#photo'+(i+1).toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                                }
+                            });
+                        }
+                    }
                 }
             }
         });
     }
 
-    $("#pen").click(function(){
+    function others_profile(){
+        $.ajax({
+            url: '/get_profile_page',
+            method: 'POST',
+            type: 'POST',
+            dataType: "json",
+            data: {
+                'account': window.location.href.split('?')[1].split('&')[1].split('=')[1],
+            },
+            success: function (data) {
+                if (data.result == "success"){
+                    $('#container').html(
+                        '<div id="photo"></div>\
+                        <p id="name" class="profile" style="top:22vw">'+ data.name +'</p>\
+                        <p id="user_id"  class="profile" style="top:32vw">'+ data.account +'</p>\
+                        <p id="age" class="profile" style="top:42vw">'+ data.birth +'</p>\
+                        <p id="level" >等級 '+ data.level +'</p>\
+                        <p id="knowledge" class="exp">知識</p>\
+                        <p id="social" class="exp">社會參與</p>\
+                        <p id="physical" class="exp">體能</p>\
+                        <div id="bar">\
+                            <progress id="exp_1" value='+ data.exp1 +' max="100" > 70% </progress>\
+                            <progress id="exp_2" value='+ data.exp2 +' max="100" > 60% </progress>\
+                            <progress id="exp_3" value='+ data.exp3 +' max="100" > 65% </progress>\
+                        </div>\
+                        <div id="role"></div>\
+                        <p id="intro">自我介紹</p>\
+                        <button type="button" id="save" >儲存</button>\
+                        <div id="edit"></div>\
+                        <p id="edit_text">'+ data.intro +'</p>\
+                        <textarea id="intro_text"></textarea>\
+                        <p id="story">故事牆</p>'
+                    )
+                    
+
+                    $.ajax({
+                        url: '/get_friend_ID',
+                        method: 'POST',
+                        type: 'POST',
+                        dataType: "json",
+                        data: {
+                            'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                        },
+                        success: function (data) {
+                            var check_in = 0;
+                            for(var i = 0; i < data.friend_ID.length; i++){
+                                if(window.location.href.split('?')[1].split('&')[1].split('=')[1] == data.friend_ID[i]){
+                                    check_in = 1;
+                                }
+                            }
+                            if(check_in){
+                                $('#container').append('<div class="friend_button_delete"></div>')
+                            }
+                            else{
+                                $('#container').append('<div class="friend_button"></div>')
+                            }
+                                
+                        }
+                    })
+
+
+                    
+
+                    $.ajax({
+                    url: '/get_img',
+                    method: 'POST',
+                    type: 'POST',
+                    async: false, //改成同步執行(等待上一個回傳)
+                    data: {
+                        "img_path": data.profile_photo,
+                    },
+                    success: function (img) {
+                        console.log("success")
+                        $('#photo').attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                    }
+                    });
+                
+                    $('#role').attr('style', 'background-image: url(static/src/' + data.character_name + ')' )
+
+                    var pic_list = data.story_pic
+                    console.log(pic_list)
+                    for(var i = 0; i < pic_list.length; i++){
+                        if(pic_list[i] == "media/mission_submit_upload/none.jpg"){
+                            console.log(i)
+                            $('#photo'+(i+1).toString()).attr('style', 'background:#C4C4C4; ')
+                            $('#photo'+(i+1).toString()+'_text').html('完成更多任務吧!')
+                        }
+                        else{
+                            $.ajax({
+                                url: '/get_img',
+                                method: 'POST',
+                                type: 'POST',
+                                async: false, //改成同步執行(等待上一個回傳)
+                                data: {
+                                    "img_path": pic_list[i],
+                                },
+                                success: function (img) {
+                                    $('#photo'+(i+1).toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+
+
+    $(document).on('click', "#pen",function(){
         $('#save').css("visibility", "visible");
         $('#pen').css("visibility", "hidden");
         $("#intro_text").val($('#edit_text').text().substring(0,48)  );
         $('#intro_text').css("visibility", "visible");
         $('#edit_text').css("visibility", "hidden");
+    })
 
-    });
-    $("#save").click(function(){
+    $(document).on('click', "#save",function(){
         $("#pen").css("visibility", "visible");
         $("#save").css("visibility", "hidden");
 
@@ -147,6 +291,6 @@
                 }
             }
         });
-    });
-    
+    })
+
 </script>

@@ -12,6 +12,30 @@ body {
     padding: 0;
 }
 
+.friend_button {
+    background-image: url("src/invite_friend.PNG");
+    background-repeat: no-repeat;
+    background-size: 40vw auto;
+    background-position: center;
+    position: absolute;
+    top: 57vw;
+    left: 44vw;
+    width: 40vw;
+    height: 15vw;
+}
+
+.friend_button_delete {
+    background-image: url("src/delete_friend.PNG");
+    background-repeat: no-repeat;
+    background-size: 40vw auto;
+    background-position: center;
+    position: absolute;
+    top: 57vw;
+    left: 44vw;
+    width: 40vw;
+    height: 15vw;
+}
+
 .title_text {
     position: absolute;
     width: 100vw;

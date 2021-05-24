@@ -5,7 +5,13 @@
         <script src="static/jquery.js"></script>
     </head>
     <body>
+        <button id="group_button">群組</button>
+        <input type="text" placeholder="搜尋" id="search">
+        <button id="search_button">搜尋</button>
         <div id="friend">
+            
+        </div>
+        <div id="group">
             
         </div>
     </body>
@@ -17,50 +23,156 @@
     })    
 
     window.onload = function(){
-       $.ajax({
-              url: '/get_friend_page',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-                  "account": window.location.href.split('?')[1].split('=')[1]
-              },
-              success: function (data) {
+        $.ajax({
+            url: '/get_friend_page',
+            method: 'POST',
+            type: 'POST',
+            dataType: "json",
+            data: {
+                "account": window.location.href.split('?')[1].split('=')[1],
+                'search': "",
+            },
+            success: function (data) {
+            if(data.result == 'success'){
+                $('#friend').html("");
+                console.log("load success")
+                if(data.friend_ID.length==0){
+                    $('#friend').append("哈哈哈你沒朋友" + '<br>')
+                }
+                else
+                {
+                    var pic_list = data.friend_photo
+                    for(var i = 0; i < pic_list.length;i++){
+                        $.ajax({
+                        url: '/get_img',
+                        method: 'POST',
+                        type: 'POST',
+                        async: false, //改成同步執行(等待上一個回傳)
+                        data: {
+                            "img_path": pic_list[i],
+                        },
+                        success: function (img) {
+                            $('#friend').append(
+                                "朋友名字: " +　data.friend_name[i] + '<br>' +
+                                "ID: " +　data.friend_ID[i] + '<br>' +
+                                "<img src=" + '"data:image/jpg;base64,'+img+'"> <br>'
+                            )
+                        }
+                        });
+                        
+                        
+                    }
+                }
+                
+                    $('#friend').append(
+                        "任務聊天室 : "  + '<br>'
+                    )
+                    for(var i = 0;i < data.mission_chatroom_ID.length;i++){
+                        $('#friend').append(
+                        " : " + data.mission_chatroom_ID[i] + '<br>'
+                    )}
+                    $('#friend').append(
+                        "好友聊天室 : " + '<br>'
+                    )
+                    for(var j = 0;j< data.friend_chatroom_list.length;j++){
+                        $('#friend').append(
+                        " : " + data.friend_chatroom_list[j] + '<br>'
+                    )}   
+                }
+            }
+        })
+    }
+
+    $('#group_button').click( function(){
+        $.ajax({
+            url: '/get_friend_group',
+            method: 'POST',
+            type: 'POST',
+            dataType: "json",
+            data: {
+                "account": window.location.href.split('?')[1].split('=')[1],
+                'search': "",
+            },
+            success: function (data) {
                 if(data.result == 'success'){
+                    $('#friend').html("");
                     console.log("load success")
-                    if(data.friend_list.length==0){
+                    if(data.group_name.length==0){
                         $('#friend').append("哈哈哈你沒朋友" + '<br>')
                     }
                     else
                     {
-                        for(var i = 0; i < data.friend_list.length;i++){
-                        $('#friend').append(
-                          "朋友名字: " +　data.friend_name + '<br>' +
-                          "性別: " +　data.friend_sex + '<br>' +
-                          "生日: " +　data.friend_birth + '<br>' +
-                          "腳色名稱: " +　data.friend_character_name + '<br>' +
-                          "大頭照: " +　data.friend_photo + '<br>' +
-                          "自我介紹: " +　data.friend_intro + '<br>' 
-                        )
+                        var pic_list = data.chat_img
+                        for(var i = 0; i < pic_list.length;i++){
+                            $.ajax({
+                            url: '/get_img',
+                            method: 'POST',
+                            type: 'POST',
+                            async: false, //改成同步執行(等待上一個回傳)
+                            data: {
+                                "img_path": pic_list[i],
+                            },
+                            success: function (img) {
+                                $('#friend').append(
+                                    "群組名字: " +　data.group_name[i] + '<br>' +
+                                    "群組ID: " +　data.chatroom_ID[i] + '<br>' +
+                                    "群組人數: " +　data.group_number[i] + '<br>' +
+                                    "狀態: " +　data.status[i] + '<br>' +
+                                    "<img src=" + '"data:image/jpg;base64,'+img+'"> <br>'
+                                )
+                            }
+                            });
+                            
+                            
                         }
                     }
-                    
-                      $('#friend').append(
-                            "任務聊天室 : "  + '<br>'
-                      )
-                      for(var i = 0;i < data.mission_chatroom_ID.length;i++){
-                          $('#friend').append(
-                            " : " + data.mission_chatroom_ID[i] + '<br>'
-                      )}
-                      $('#friend').append(
-                            "好友聊天室 : " + '<br>'
-                      )
-                      for(var j = 0;j< data.friend_chatroom_list.length;j++){
-                          $('#friend').append(
-                            " : " + data.friend_chatroom_list[j] + '<br>'
-                      )}   
-                    }
+                
                 }
+            }
+        })
     })
-    }
+
+
+    $("#search_button").click( function() {
+        $.ajax({
+              url: '/search_friend_ID',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                  'search': document.getElementById('search').value,
+              },
+              success: function (data) {
+                if (data.result == "success"){
+                    $('#friend').html("");
+                    $.ajax({
+                        url: '/get_img',
+                        method: 'POST',
+                        type: 'POST',
+                        async: false, //改成同步執行(等待上一個回傳)
+                        data: {
+                            "img_path": data.profile_photo,
+                        },
+                        success: function (img) {
+                            $('#friend').append(
+                                "名字: " +　data.name + '<br>' +
+                                "ID: " +　data.ID + '<br>' +
+                                "<img src=" + '"data:image/jpg;base64,'+img+'"> <br>'                           
+                            )
+                        }
+                    });
+
+                }
+                else if (data.result == "not_found") {
+                    $('#friend').html("找不到欸!");
+                }
+                else if (data.result == "found_self") {
+                    $('#friend').html("不要找自己喇!");
+                }
+                
+            }
+        });
+
+    })
 </script>

@@ -54,7 +54,9 @@ urlpatterns = [
     path('buy_product', backend.buy_product),
     path('get_my_shop', backend.get_my_shop),
     path('use_product', backend.use_product),
-
+    path('get_friend_group', backend.get_friend_group),
+    path('search_friend_ID', backend.search_friend_ID),
+    path('get_friend_ID', backend.get_friend_ID),
 
     path('submission_to_finish', backend.submission_to_finish),
     

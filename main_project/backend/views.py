@@ -78,9 +78,6 @@ def chatroom_page(request):
 def profile_page(request):
     account = request.GET.get("account")
     profile = Profile.objects.filter(account=account)[0]
-    # return JsonResponse({
-        
-    # })
     exp = int(profile.exp1) + int(profile.exp2) + int(profile.exp3)
     level = 1
     exp_temp = exp
@@ -850,6 +847,33 @@ def get_profile_page(request):
         account = request.POST.get("account")
         profile = Profile.objects.filter(account=account)[0]
 
+        # friend_ID = ast.literal_eval(profile.friend_ID)
+
+        # exp = int(profile.exp1) + int(profile.exp2) + int(profile.exp3)
+        # level = 1
+        # exp_temp = exp
+        # for i in range(1, 200):
+        #     exp_temp -= i*10
+        #     if exp_temp >= 0:
+        #         level += 1
+        #     else:
+        #         exp_temp += i*10
+        #         break
+
+        Max = max(int(profile.exp1), int(profile.exp2), int(profile.exp3))
+        print(Max)
+        Max_lenth = 0
+        for i in range(1, 200):
+            Max_lenth += i*10
+            if Max_lenth >= int(Max):
+                break
+        print(Max_lenth)
+        exp1 = (int(profile.exp1)/Max_lenth) * 100
+        exp2 = (int(profile.exp2)/Max_lenth) * 100
+        exp3 = (int(profile.exp3)/Max_lenth) * 100
+
+
+
         exp = [int(profile.exp1), int(profile.exp2), int(profile.exp3)]
         max_index = -1
         max_num = -1
@@ -910,6 +934,17 @@ def get_profile_page(request):
 
         return JsonResponse({
             'result' : "success",
+
+            'name': profile.name,
+            'account': profile.account,
+            'sex': profile.sex,
+            'birth': profile.birth,
+            'intro': profile.intro,
+            'level': level,
+            'exp1': exp1,
+            'exp2': exp2,
+            'exp3': exp3,
+
             # 'name': profile.name,
             # 'sex': profile.sex,
             # 'birth': profile.birth,
@@ -925,6 +960,18 @@ def get_profile_page(request):
             # 'mission_done_chatroom_ID': ast.literal_eval(profile.mission_done_chatroom_ID),
             # 'friend_ID': ast.literal_eval(profile.friend_ID),
         })
+
+def get_friend_ID(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        profile = Profile.objects.filter(account=account)[0]
+        friend_ID = ast.literal_eval(profile.friend_ID)
+
+        return JsonResponse({
+            'result' : "success",
+            'friend_ID': friend_ID,
+        })
+
 
 def save_profile_intro(request):
     if request.method == 'POST':
@@ -1128,36 +1175,118 @@ def mission_filter(account, mission_ID):
 def get_friend_page(request):
     if request.method == 'POST':
         account = request.POST.get("account")
-        profile = Profile.objects.filter(account=account)[0]
-
+        search = request.POST.get("search")
+        profile = Profile.objects.filter(account=account)[0]  
         
         friend_list = ast.literal_eval(profile.friend_ID)
         friend_chatroom_list = ast.literal_eval(profile.friend_chatroom_ID)
         mission_chatroom_ID = ast.literal_eval(profile.mission_doing_chatroom_ID)
 
-        friend_name, friend_sex, friend_birth, friend_intro, friend_photo, friend_character_name = [], [], [], [], [], []
-        if friend_list:
-            for friend in friend_list:
-                friend_profile = Profile.objects.filter(account=friend)[0]
-                friend_name.append(friend_profile.name)
-                friend_sex.append(friend_profile.sex) 
-                friend_birth.append(friend_profile.birth) 
-                friend_intro.append(friend_profile.intro) 
-                friend_photo.append(friend_profile.profile_photo)
-                friend_character_name.append(friend_profile.character_name)
-
+        friend_name, friend_ID, friend_photo = [], [], []
+        if search == "":
+            if friend_list:
+                for friend in friend_list:
+                    friend_profile = Profile.objects.filter(account=friend)[0]
+                    friend_ID.append(friend_profile.account)
+                    friend_name.append(friend_profile.name)
+                    friend_photo.append(friend_profile.profile_photo)
+        else:
+            search_profile = Profile.objects.filter(name__contains=search)      
+            for p in search_profile:
+                check_in = 0
+                for friend in friend_list:
+                    if p.account == friend:
+                        check_in = 1
+                        break
+                
+                if check_in:
+                    print(p.account)
+                    friend_ID.append(p.account)
+                    friend_name.append(p.name)
+                    friend_photo.append(p.profile_photo)
+        
         return JsonResponse({
             'result' : "success",
             'friend_list': friend_list,
             'friend_chatroom_list':friend_chatroom_list,
             'mission_chatroom_ID':mission_chatroom_ID,
             'friend_name':friend_name,
-            'friend_sex':friend_sex,
-            'friend_birth':friend_birth,
-            'friend_intro':friend_intro,
+            'friend_ID':friend_ID,
             'friend_photo':friend_photo,
-            'friend_character_name':friend_character_name
         })
+
+
+def get_friend_group(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        search = request.POST.get("search")
+        profile = Profile.objects.filter(account=account)[0]  
+        
+        mission_chatroom_ID = ast.literal_eval(profile.mission_doing_chatroom_ID) + ast.literal_eval(profile.mission_done_chatroom_ID)
+
+        ID, group_name, chat_img, group_number, status = [], [], [], [], []
+
+        if search == "":
+            if mission_chatroom_ID:
+                for chatroom_ID in mission_chatroom_ID:
+                    ID.append(chatroom_ID)
+                    group_search = Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0]
+                    group_name.append(group_search.group_name)
+                    chat_img.append( Mission_imformation.objects.filter(mission_ID=group_search.mission_ID)[0].mission_pic )
+                    group_number.append( len(ast.literal_eval(group_search.member_ID)) )
+                    status.append(group_search.status)
+        else:
+            search_group = Mission_group.objects.filter(group_name__contains=search)      
+            for g in search_group:
+                check_in = 0
+                for chatroom_ID in mission_chatroom_ID:
+                    if g.chatroom_ID == chatroom_ID:
+                        check_in = 1
+                        break
+                
+                if check_in:
+                    print(g.chatroom_ID)
+                    ID.append(g.chatroom_ID)
+                    group_name.append(g.group_name)
+                    chat_img.append( Mission_imformation.objects.filter(mission_ID=g.mission_ID)[0].mission_pic )
+                    group_number.append( len(ast.literal_eval(g.member_ID)) )
+                    status.append(g.status)
+        
+        return JsonResponse({
+            'result' : "success",
+            'chatroom_ID': ID,
+            'group_name': group_name,
+            'group_number':group_number,
+            'status':status,
+            'chat_img':chat_img,
+        })
+
+def search_friend_ID(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        search = request.POST.get("search")
+        profile = Profile.objects.filter(account=search)
+        if profile:
+            profile = profile[0]
+            if profile.account == account:
+                return JsonResponse({
+                    'result' : "found_self",
+                })
+            else:
+                ID = profile.account
+                name = profile.name
+                profile_photo = profile.profile_photo
+                return JsonResponse({
+                    'result' : "success",
+                    'ID': ID,
+                    'name': name,
+                    'profile_photo':profile_photo,
+                })
+        else:
+            return JsonResponse({
+                'result' : "not_found",
+            })
+
 
 def get_shop_page(request):
     if request.method == 'POST':
@@ -1165,10 +1294,16 @@ def get_shop_page(request):
         profile = Profile.objects.filter(account=account)[0]
         # own_product_ID = ast.literal_eval(profile.owned_product_ID)
 
-        shop_imformation = Shop.objects.all()
-        all_product = core_serializers.serialize("json", shop_imformation)
-        all_product = json.loads(all_product)
-  
+        search = request.POST.get("search")
+        if search == "all":
+            shop_imformation = Shop.objects.all()
+            all_product = core_serializers.serialize("json", shop_imformation)
+            all_product = json.loads(all_product)
+        else:
+            prodcuct_name_filter = Shop.objects.filter(product_name__contains=search)
+            all_product = core_serializers.serialize("json", prodcuct_name_filter)
+            all_product = json.loads(all_product)
+
         product_ID, product_name, product_detail, product_price, product_left, product_pic = [], [], [], [], [], []
         for product in all_product:
             product_ID.append(product['fields']['product_ID'])

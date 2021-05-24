@@ -27,6 +27,9 @@ class Profile(models.Model):
     friend_ID = models.TextField() #List
     friend_chatroom_ID = models.TextField() #List
     owned_product_ID = models.TextField() #List
+    invitation_send = models.TextField() #List
+    invitation_receive = models.TextField() #List
+
     time = models.DateTimeField(auto_now_add=True)
 
     # def __str__(self):
