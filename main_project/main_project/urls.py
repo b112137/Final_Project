@@ -52,7 +52,8 @@ urlpatterns = [
     path('save_profile_intro', backend.save_profile_intro),
     path('get_all_shop', backend.get_all_shop),
     path('buy_product', backend.buy_product),
-    
+    path('get_my_shop', backend.get_my_shop),
+
     path('submission_to_finish', backend.submission_to_finish),
     
     

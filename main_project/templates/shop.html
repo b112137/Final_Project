@@ -5,10 +5,14 @@
         <script src="static/jquery.js"></script>
     </head>
     <body>
-        <div id="shop">
-            
-        </div>
+        <div id="balance"></div>
+
+        <div id="newpic"></div>
+
+        <button id="mission_button">購買</button>
+        <button id="chat_button">我的商品</button>
     </body>
+
 </html>
 
 <script>
@@ -17,44 +21,87 @@
     })    
 
     window.onload = function(){
-       $.ajax({
+        $.ajax({
               url: '/get_shop_page',
               method: 'POST',
               type: 'POST',
               dataType: "json",
               data: {
-                  "account": window.location.href.split('?')[1].split('=')[1]
+                  "account": window.location.href.split('?')[1].split('&')[0].split('=')[1],
               },
               success: function (data) {
-                if(data.result == 'success'){
-                    console.log("load success")
-                    if(data.own_product_ID.length==0){
-                        $('#shop').append("哈哈哈你啥都沒有" + '<br>')
-                    }
-                    else
-                    {
-                        for(var i = 0; i < data.own_product_ID.length;i++){
-                        $('#shop').append(
-                          "ID: " +　data.own_product_ID[i] + '<br>' +
-                          "名字: " +　data.own_product_name[i] + '<br>' +
-                          "詳細資料: " +　data.own_product_detail[i] + '<br>' 
-                        )
+                if (data.result == "success"){
+                    var pic_list = data.product_pic
+                    $('#balance').append(data.balance)
+                    for(var i = 0; i < pic_list.length; i++){
+                        $.ajax({
+                        url: '/get_img',
+                        method: 'POST',
+                        type: 'POST',
+                        async: false, //改成同步執行(等待上一個回傳)
+                        data: {
+                            "img_path": pic_list[i],
+                        },
+                        success: function (img) {
+                            // console.log()
+                            
+                            $('#newpic').append("<img src=" + '"data:image/jpg;base64,'+img+'"> <br>' +
+                                data.product_name[i] + '<br>'+
+                                "商品ID: " + data.product_ID[i]+ '<br>'+
+                                "商品描述: " + data.product_detail[i]+ '<br>'+
+                                "商品金額: " + data.product_price[i]+ '<br>'+
+                                "商品剩餘: " + data.product_left[i]+ '<br>'                             
+                            )
                         }
+                        });
                     }
-                    
-                      $('#shop').append(
-                            "商品列表 : "  + '<br>'
-                      )
-                      for(var i = 0;i < data.product_ID.length;i++){
-                          $('#shop').append(
-                            "ID" + data.product_ID[i] + '<br>' +
-                            "名字: " +　data.product_name[i] + '<br>' +
-                            "詳細資料: " +　data.product_detail[i] + '<br>' +
-                            "價格: " +　data.product_price[i] + '<br>' +
-                            "剩餘數量: " + data.product_left[i] + '<br>'
-                      )}
+                }
+              }
+        });
+    }
+
+
+    $("#mission_button").click( function() {
+        // account = window.location.href.split('?')[1].split('=')[1]
+        // window.location.href = "/mission?account="+account
+
+        $.ajax({
+              url: '/buy_product',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                  'product_ID': "40000001",
+              },
+              success: function (data) {
+                if (data.result == "success"){
+                    window.location.href = window.location.href;         
+
+                }
+                console.log(data.result)
+                
+            }
+        });
+
+    })
+
+    $("#chat_button").click( function() {
+        $.ajax({
+              url: '/get_my_shop',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+              },
+              success: function (data) {
+                if (data.result == "success"){
+                    // window.location.href = window.location.href;         
+
                 }
             }
-        })
-    }
+        });
+    })
+
 </script>

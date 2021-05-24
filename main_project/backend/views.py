@@ -1054,6 +1054,32 @@ def get_my_shop(request):
         owned_product_ID = profile[0].owned_product_ID
         owned_product_ID = ast.literal_eval(owned_product_ID)
 
+        product_ID, product_name, product_detail, product_pic, product_num = [], [], [], [] ,[]
+        for ID in owned_product_ID:
+            check_in = 0
+            for i in range(len(product_ID)):
+                if str(ID) == str(product_ID[i]):
+                    check_in = 1
+                    product_num[i] += 1
+                    break
+        
+            if check_in == 0:
+                product = Shop.objects.filter(product_ID=ID)[0]
+                product_ID.append(ID)
+                product_name.append(product.product_name)
+                product_detail.append(product.product_detail)
+                product_pic.append(product.product_pic)
+                product_num.append(1)
+
+        return JsonResponse({
+            'result' : "success",
+            'product_ID': product_ID,
+            'product_name': product_name,
+            'product_detail': product_detail,
+            'product_num': product_num,
+            'product_pic': product_pic,
+        })
+
 
 def get_profile(account):
     profile = Profile.objects.filter(account=account)
@@ -1121,35 +1147,37 @@ def get_shop_page(request):
     if request.method == 'POST':
         account = request.POST.get("account")
         profile = Profile.objects.filter(account=account)[0]
-        own_product_ID = ast.literal_eval(profile.owned_product_ID)
+        # own_product_ID = ast.literal_eval(profile.owned_product_ID)
 
         shop_imformation = Shop.objects.all()
         all_product = core_serializers.serialize("json", shop_imformation)
         all_product = json.loads(all_product)
   
-        product_ID, product_name, product_detail, product_price, product_left = [], [], [], [], []
+        product_ID, product_name, product_detail, product_price, product_left, product_pic = [], [], [], [], [], []
         for product in all_product:
             product_ID.append(product['fields']['product_ID'])
             product_name.append(product['fields']['product_name'])
             product_detail.append(product['fields']['product_detail'])
             product_price.append(product['fields']['product_price'])
             product_left.append(product['fields']['product_left'])
+            product_pic.append(product['fields']['product_pic'])
 
-        own_product_name, own_product_detail = [], []
-        for own in own_product_ID:
-            own_product_name.append(Shop.objects.filter(product_ID=own)[0].product_name)
-            own_product_detail.append(Shop.objects.filter(product_ID=own)[0].product_detail)
+        # own_product_name, own_product_detail = [], []
+        # for own in own_product_ID:
+        #     own_product_name.append(Shop.objects.filter(product_ID=own)[0].product_name)
+        #     own_product_detail.append(Shop.objects.filter(product_ID=own)[0].product_detail)
 
         return JsonResponse({
             'result' : "success",
-            'own_product_ID': own_product_ID,
-            'own_product_name': own_product_name,
-            'own_product_detail': own_product_detail,
+            # 'own_product_ID': own_product_ID,
+            # 'own_product_name': own_product_name,
+            # 'own_product_detail': own_product_detail,
             'product_ID': product_ID,
             'product_name': product_name,
             'product_detail': product_detail,
             'product_price': product_price,
-            'product_left': product_left
+            'product_left': product_left,
+            'product_pic': product_pic,
         })
         
 
