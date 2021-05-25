@@ -55,9 +55,13 @@ urlpatterns = [
     path('get_my_shop', backend.get_my_shop),
     path('use_product', backend.use_product),
     path('get_friend_group', backend.get_friend_group),
+    path('get_friend_invitation', backend.get_friend_invitation),
     path('search_friend_ID', backend.search_friend_ID),
     path('is_friend', backend.is_friend),
     path('send_invitation', backend.send_invitation),
+    path('accept_invitation', backend.accept_invitation),
+    path('reject_invitation', backend.reject_invitation),
+    path('cancel_invitation', backend.cancel_invitation),
 
     path('submission_to_finish', backend.submission_to_finish),
     

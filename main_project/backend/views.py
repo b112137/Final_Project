@@ -961,23 +961,6 @@ def get_profile_page(request):
             # 'friend_ID': ast.literal_eval(profile.friend_ID),
         })
 
-def is_friend(request):
-    if request.method == 'POST':
-        account = request.POST.get("account")
-        others = request.POST.get("others")
-        profile = Profile.objects.filter(account=account)[0]
-        friend_ID = ast.literal_eval(profile.friend_ID)
-
-        if others in friend_ID:
-            result = "yes"
-        else:
-            result = "no"
-
-        return JsonResponse({
-            'result' : result,
-            'friend_ID': friend_ID,
-        })
-
 
 def save_profile_intro(request):
     if request.method == 'POST':
@@ -1267,6 +1250,27 @@ def get_friend_group(request):
             'chat_img':chat_img,
         })
 
+def get_friend_invitation(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        profile = Profile.objects.filter(account=account)[0]
+        invitation_receive = ast.literal_eval(profile.invitation_receive)
+
+        friend_name, friend_ID, friend_photo = [], [], []
+        for friend in invitation_receive:
+            friend_profile = Profile.objects.filter(account=friend)[0]
+            friend_ID.append(friend)
+            friend_name.append(friend_profile.name)
+            friend_photo.append(friend_profile.profile_photo)
+        
+        print(invitation_receive, friend_name, friend_ID, friend_photo)
+        return JsonResponse({
+            'result' : "success",
+            'friend_name':friend_name,
+            'friend_ID':friend_ID,
+            'friend_photo':friend_photo,
+        })
+
 def search_friend_ID(request):
     if request.method == 'POST':
         account = request.POST.get("account")
@@ -1319,12 +1323,178 @@ def send_invitation(request):
                 invitation_send_me.append(invitation_ID)
                 invitation_receive_others.append(account)
 
-                print(invitation_send_me)
-                print(invitation_receive_others)
+                # profile_me.update(invitation_send = invitation_send_me)
+                # profile_others.update(invitation_receive = invitation_receive_others)
 
                 return JsonResponse({
                     'result' : "success",
                 })
+
+def accept_invitation(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        invitation_ID = request.POST.get("invitation_ID")
+
+        profile_me = Profile.objects.filter(account=account)
+        profile_others = Profile.objects.filter(account=invitation_ID)
+
+        friend_ID_me = ast.literal_eval(profile_me[0].friend_ID)
+        friend_ID_others = ast.literal_eval(profile_others[0].friend_ID)
+
+        if invitation_ID in friend_ID_me:
+            return JsonResponse({
+                'result' : "error",
+            })
+        else:
+            invitation_receive_me = ast.literal_eval(profile_me[0].invitation_receive)
+            invitation_send_others = ast.literal_eval(profile_others[0].invitation_send)
+
+            if (invitation_ID not in invitation_receive_me) or (account not in invitation_send_others):
+                return JsonResponse({
+                    'result' : "error",
+                })
+            else:
+                invitation_receive_me.remove(invitation_ID)
+                invitation_send_others.remove(account)
+
+                friend_ID_me.append(invitation_ID)
+                friend_ID_others.append(account)
+                print(friend_ID_me, friend_ID_others, invitation_receive_me, invitation_send_others)
+
+                # profile_me.update(friend_ID = friend_ID_me)
+                # profile_others.update(friend_ID = friend_ID_others)
+                # profile_me.update(invitation_receive = invitation_receive_me)
+                # profile_others.update(invitation_send = invitation_send_others)
+
+                return JsonResponse({
+                    'result' : "success",
+                })
+
+def reject_invitation(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        invitation_ID = request.POST.get("invitation_ID")
+
+        profile_me = Profile.objects.filter(account=account)
+        profile_others = Profile.objects.filter(account=invitation_ID)
+
+        friend_ID_me = ast.literal_eval(profile_me[0].friend_ID)
+        friend_ID_others = ast.literal_eval(profile_others[0].friend_ID)
+
+        if invitation_ID in friend_ID_me:
+            return JsonResponse({
+                'result' : "error",
+            })
+        else:
+            invitation_receive_me = ast.literal_eval(profile_me[0].invitation_receive)
+            invitation_send_others = ast.literal_eval(profile_others[0].invitation_send)
+            print(invitation_receive_me, invitation_send_others)
+            if (invitation_ID not in invitation_receive_me) or (account not in invitation_send_others):
+                return JsonResponse({
+                    'result' : "error",
+                })
+            else:
+                invitation_receive_me.remove(invitation_ID)
+                invitation_send_others.remove(account)
+
+                print(invitation_receive_me, invitation_send_others)
+
+                # profile_me.update(invitation_receive = invitation_receive_me)
+                # profile_others.update(invitation_send = invitation_send_others)
+
+                return JsonResponse({
+                    'result' : "success",
+                })
+
+def cancel_invitation(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        invitation_ID = request.POST.get("invitation_ID")
+
+        profile_me = Profile.objects.filter(account=account)
+        profile_others = Profile.objects.filter(account=invitation_ID)
+
+        friend_ID_me = ast.literal_eval(profile_me[0].friend_ID)
+        friend_ID_others = ast.literal_eval(profile_others[0].friend_ID)
+
+        if invitation_ID in friend_ID_me:
+            return JsonResponse({
+                'result' : "error",
+            })
+        else:
+            invitation_send_me = ast.literal_eval(profile_me[0].invitation_send)
+            invitation_receive_others = ast.literal_eval(profile_others[0].invitation_receive)
+
+            print(invitation_send_me, invitation_receive_others)
+            if (invitation_ID not in invitation_send_me) or (account not in invitation_receive_others):
+                return JsonResponse({
+                    'result' : "error",
+                })
+            else:
+                invitation_send_me.remove(invitation_ID)
+                invitation_receive_others.remove(account)
+
+                print(invitation_send_me, invitation_receive_others)
+
+                # profile_me.update(invitation_send= invitation_send_me)
+                # profile_others.update(invitation_receive = invitation_receive_others)
+
+                return JsonResponse({
+                    'result' : "success",
+                })
+
+
+
+def is_friend(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        others = request.POST.get("others")
+        profile = Profile.objects.filter(account=account)[0]
+        friend_ID = ast.literal_eval(profile.friend_ID)
+
+        if others in friend_ID:
+            result = "yes"
+        else:
+            result = "no"
+
+        return JsonResponse({
+            'result' : result,
+            'friend_ID': friend_ID,
+        })
+
+def is_invite_others(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        others = request.POST.get("others")
+        profile = Profile.objects.filter(account=account)[0]
+        invitation_send = ast.literal_eval(profile.invitation_send)
+
+        if others in invitation_send:
+            result = "yes"
+        else:
+            result = "no"
+
+        return JsonResponse({
+            'result' : result,
+            'invitation_send': invitation_send,
+        })
+
+def is_invite_me(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        others = request.POST.get("others")
+        profile = Profile.objects.filter(account=account)[0]
+        invitation_receive = ast.literal_eval(profile.invitation_receive)
+
+        if others in invitation_receive:
+            result = "yes"
+        else:
+            result = "no"
+
+        return JsonResponse({
+            'result' : result,
+            'invitation_receive': invitation_receive,
+        })
 
 
 def get_shop_page(request):
