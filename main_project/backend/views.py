@@ -961,14 +961,20 @@ def get_profile_page(request):
             # 'friend_ID': ast.literal_eval(profile.friend_ID),
         })
 
-def get_friend_ID(request):
+def is_friend(request):
     if request.method == 'POST':
         account = request.POST.get("account")
+        others = request.POST.get("others")
         profile = Profile.objects.filter(account=account)[0]
         friend_ID = ast.literal_eval(profile.friend_ID)
 
+        if others in friend_ID:
+            result = "yes"
+        else:
+            result = "no"
+
         return JsonResponse({
-            'result' : "success",
+            'result' : result,
             'friend_ID': friend_ID,
         })
 
@@ -1286,6 +1292,39 @@ def search_friend_ID(request):
             return JsonResponse({
                 'result' : "not_found",
             })
+
+def send_invitation(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        invitation_ID = request.POST.get("invitation_ID")
+
+        profile_me = Profile.objects.filter(account=account)
+        profile_others = Profile.objects.filter(account=invitation_ID)
+
+        friend_ID = ast.literal_eval(profile_me[0].friend_ID)
+
+        if invitation_ID in friend_ID:
+            return JsonResponse({
+                'result' : "error",
+            })
+        else:
+            invitation_send_me = ast.literal_eval(profile_me[0].invitation_send)
+            invitation_receive_others = ast.literal_eval(profile_others[0].invitation_receive)
+
+            if (invitation_ID in invitation_send_me) or (account in invitation_receive_others):
+                return JsonResponse({
+                    'result' : "error",
+                })
+            else:
+                invitation_send_me.append(invitation_ID)
+                invitation_receive_others.append(account)
+
+                print(invitation_send_me)
+                print(invitation_receive_others)
+
+                return JsonResponse({
+                    'result' : "success",
+                })
 
 
 def get_shop_page(request):

@@ -56,7 +56,8 @@ urlpatterns = [
     path('use_product', backend.use_product),
     path('get_friend_group', backend.get_friend_group),
     path('search_friend_ID', backend.search_friend_ID),
-    path('get_friend_ID', backend.get_friend_ID),
+    path('is_friend', backend.is_friend),
+    path('send_invitation', backend.send_invitation),
 
     path('submission_to_finish', backend.submission_to_finish),
     

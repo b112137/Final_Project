@@ -158,7 +158,9 @@
                             $('#friend').append(
                                 "名字: " +　data.name + '<br>' +
                                 "ID: " +　data.ID + '<br>' +
-                                "<img src=" + '"data:image/jpg;base64,'+img+'"> <br>'                           
+                                "<img src=" + '"data:image/jpg;base64,' + img + '"> <br>'+
+                                "<button onclick=send_invitation('" + data.ID + "')>好友邀請</button>"
+
                             )
                         }
                     });
@@ -175,4 +177,27 @@
         });
 
     })
+
+    function send_invitation(invitation_ID){
+        console.log(invitation_ID)
+        $.ajax({
+              url: '/send_invitation',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                  'invitation_ID': invitation_ID,
+              },
+              success: function (data) {
+                if (data.result == "success"){
+
+                }
+                else if (data.result == "error") {
+                    console.log(data.result)
+                }                
+            }
+        });
+
+    }
 </script>

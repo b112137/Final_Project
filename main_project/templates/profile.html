@@ -187,21 +187,16 @@
                     
 
                     $.ajax({
-                        url: '/get_friend_ID',
+                        url: '/is_friend',
                         method: 'POST',
                         type: 'POST',
                         dataType: "json",
                         data: {
                             'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                            'others': window.location.href.split('?')[1].split('&')[1].split('=')[1],
                         },
                         success: function (data) {
-                            var check_in = 0;
-                            for(var i = 0; i < data.friend_ID.length; i++){
-                                if(window.location.href.split('?')[1].split('&')[1].split('=')[1] == data.friend_ID[i]){
-                                    check_in = 1;
-                                }
-                            }
-                            if(check_in){
+                            if(data.result=="yes"){
                                 $('#container').append('<div class="friend_button_delete"></div>')
                             }
                             else{
