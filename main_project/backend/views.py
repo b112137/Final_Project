@@ -47,9 +47,14 @@ def main_page(request):
             exp_temp += i*10
             break
 
-    exp1 = (int(profile.exp1)/exp)*100
-    exp2 = (int(profile.exp2)/exp)*100
-    exp3 = 100 - exp1 - exp2
+    if exp == 0:
+        exp1 = 34
+        exp2 = 33
+        exp3 = 33
+    else:
+        exp1 = (int(profile.exp1)/exp)*100
+        exp2 = (int(profile.exp2)/exp)*100
+        exp3 = 100 - exp1 - exp2
 
     print(exp1, exp2, exp3)
 
@@ -135,13 +140,16 @@ def register_submit(request):
         password = request.POST.get('password')
         sex = request.POST.get('sex')
         birth = request.POST.get('birth')
+        email = request.POST.get('email')
         
         print(len(Profile.objects.filter(account=account)))
         if len(Profile.objects.filter(account=account)) == 0:
-            Profile.objects.create(name=name, account=account, password=password, sex=sex, birth=birth,\
-                                    exp1=0, exp2=0, exp3=0, balance=0, character_name="test.jpg", profile_photo="none.jpg",\
-                                    mission_doing_chatroom_ID=[], mission_done_chatroom_ID=[], friend_ID=[], owned_product_ID=[]
+            Profile.objects.create(name=name, account=account, password=password, sex=sex, birth=birth, email=email,\
+                                    exp1=5, exp2=5, exp3=5, balance=0, character_name="test.jpg", profile_photo="none.jpg",\
+                                    mission_doing_chatroom_ID=[], mission_done_chatroom_ID=[], friend_ID=[], friend_chatroom_ID=[],\
+                                    owned_product_ID=[], invitation_send=[], invitation_receive=[]
             )
+            print(name, account, password, sex, birth, email)
             return JsonResponse({
                 'result' : "success",
             })
@@ -492,18 +500,18 @@ def get_mission_chatroom_list(request):
                 count += 1
 
         time_copy = time.copy()
+        
+        if chatroom_ID_all:
+            time, chatroom_ID_all = (list(t) for t in zip(*sorted(zip(time_copy, chatroom_ID_all), reverse=True  )))
+            time, mission_ID = (list(t) for t in zip(*sorted(zip(time_copy, mission_ID), reverse=True  )))
+            time, mission_name = (list(t) for t in zip(*sorted(zip(time_copy, mission_name), reverse=True  )))
+            time, chat_img = (list(t) for t in zip(*sorted(zip(time_copy, chat_img), reverse=True  )))
+            time, group_name = (list(t) for t in zip(*sorted(zip(time_copy, group_name), reverse=True  )))
+            time, group_number = (list(t) for t in zip(*sorted(zip(time_copy, group_number), reverse=True  )))
+            time, status = (list(t) for t in zip(*sorted(zip(time_copy, status), reverse=True  )))
+            time, message = (list(t) for t in zip(*sorted(zip(time_copy, message), reverse=True  )))
 
-        time, chatroom_ID_all = (list(t) for t in zip(*sorted(zip(time_copy, chatroom_ID_all), reverse=True  )))
-        time, mission_ID = (list(t) for t in zip(*sorted(zip(time_copy, mission_ID), reverse=True  )))
-        time, mission_name = (list(t) for t in zip(*sorted(zip(time_copy, mission_name), reverse=True  )))
-        time, chat_img = (list(t) for t in zip(*sorted(zip(time_copy, chat_img), reverse=True  )))
-        time, group_name = (list(t) for t in zip(*sorted(zip(time_copy, group_name), reverse=True  )))
-        time, group_number = (list(t) for t in zip(*sorted(zip(time_copy, group_number), reverse=True  )))
-        time, status = (list(t) for t in zip(*sorted(zip(time_copy, status), reverse=True  )))
-        time, message = (list(t) for t in zip(*sorted(zip(time_copy, message), reverse=True  )))
-
-        # print(chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time)
-        last_chatroom_list = [str(x) for x in last_chatroom_list]
+            last_chatroom_list = [str(x) for x in last_chatroom_list]
 
         if last_chatroom_list == chatroom_ID_all:
             return JsonResponse({
@@ -1300,7 +1308,7 @@ def search_friend_ID(request):
 def send_invitation(request):
     if request.method == 'POST':
         account = request.POST.get("account")
-        invitation_ID = request.POST.get("invitation_ID")
+        invitation_ID = request.POST.get("others")
 
         profile_me = Profile.objects.filter(account=account)
         profile_others = Profile.objects.filter(account=invitation_ID)
@@ -1323,8 +1331,10 @@ def send_invitation(request):
                 invitation_send_me.append(invitation_ID)
                 invitation_receive_others.append(account)
 
-                # profile_me.update(invitation_send = invitation_send_me)
-                # profile_others.update(invitation_receive = invitation_receive_others)
+                print(invitation_send_me, invitation_receive_others)
+
+                profile_me.update(invitation_send = invitation_send_me)
+                profile_others.update(invitation_receive = invitation_receive_others)
 
                 return JsonResponse({
                     'result' : "success",
@@ -1333,7 +1343,7 @@ def send_invitation(request):
 def accept_invitation(request):
     if request.method == 'POST':
         account = request.POST.get("account")
-        invitation_ID = request.POST.get("invitation_ID")
+        invitation_ID = request.POST.get("others")
 
         profile_me = Profile.objects.filter(account=account)
         profile_others = Profile.objects.filter(account=invitation_ID)
@@ -1373,7 +1383,7 @@ def accept_invitation(request):
 def reject_invitation(request):
     if request.method == 'POST':
         account = request.POST.get("account")
-        invitation_ID = request.POST.get("invitation_ID")
+        invitation_ID = request.POST.get("others")
 
         profile_me = Profile.objects.filter(account=account)
         profile_others = Profile.objects.filter(account=invitation_ID)
@@ -1409,7 +1419,7 @@ def reject_invitation(request):
 def cancel_invitation(request):
     if request.method == 'POST':
         account = request.POST.get("account")
-        invitation_ID = request.POST.get("invitation_ID")
+        invitation_ID = request.POST.get("others")
 
         profile_me = Profile.objects.filter(account=account)
         profile_others = Profile.objects.filter(account=invitation_ID)
@@ -1436,13 +1446,66 @@ def cancel_invitation(request):
 
                 print(invitation_send_me, invitation_receive_others)
 
-                # profile_me.update(invitation_send= invitation_send_me)
-                # profile_others.update(invitation_receive = invitation_receive_others)
+                profile_me.update(invitation_send= invitation_send_me)
+                profile_others.update(invitation_receive = invitation_receive_others)
 
                 return JsonResponse({
                     'result' : "success",
                 })
 
+def delete_friend(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        others = request.POST.get("others")
+
+        profile_me = Profile.objects.filter(account=account)
+        friend_ID_me = ast.literal_eval(profile_me[0].friend_ID)
+
+        profile_others = Profile.objects.filter(account=others)
+        friend_ID_others = ast.literal_eval(profile_others[0].friend_ID)
+
+        if (others not in friend_ID_me) or (account not in friend_ID_others):
+            return JsonResponse({
+                'result' : "error",
+            })
+        else:
+            friend_ID_me.remove(others)
+            friend_ID_others.remove(account)
+
+            print(friend_ID_me, friend_ID_others)
+
+            # profile_me.update(friend_ID= friend_ID_me)
+            # profile_others.update(friend_ID = friend_ID_others)
+
+            return JsonResponse({
+                'result' : "success",
+            })
+
+
+def get_relationship(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        others = request.POST.get("others")
+        profile = Profile.objects.filter(account=account)[0]
+        friend_ID = ast.literal_eval(profile.friend_ID)
+        invitation_send = ast.literal_eval(profile.invitation_send)
+        invitation_receive = ast.literal_eval(profile.invitation_receive)
+
+        if others in friend_ID:
+            result = "friend"
+        elif others in invitation_send:
+            result = "invitation_send"
+        elif others in invitation_receive:
+            result = "invitation_receive"
+        else:
+            result = "no"
+
+        return JsonResponse({
+            'result' : result,
+            'friend_ID': friend_ID,
+            'invitation_send': invitation_send,
+            'invitation_receive': invitation_receive,
+        })
 
 
 def is_friend(request):

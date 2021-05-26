@@ -58,10 +58,13 @@ urlpatterns = [
     path('get_friend_invitation', backend.get_friend_invitation),
     path('search_friend_ID', backend.search_friend_ID),
     path('is_friend', backend.is_friend),
+    path('get_relationship', backend.get_relationship),
+    
     path('send_invitation', backend.send_invitation),
     path('accept_invitation', backend.accept_invitation),
     path('reject_invitation', backend.reject_invitation),
     path('cancel_invitation', backend.cancel_invitation),
+    path('delete_friend', backend.delete_friend),
 
     path('submission_to_finish', backend.submission_to_finish),
     

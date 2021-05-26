@@ -13,7 +13,7 @@ body {
 }
 
 .friend_button {
-    background-image: url("src/invite_friend.PNG");
+    /* background-image: url("src/invite_friend.PNG"); */
     background-repeat: no-repeat;
     background-size: 40vw auto;
     background-position: center;

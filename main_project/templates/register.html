@@ -44,6 +44,10 @@
  
         <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
         <script>
+            $.ajaxSetup({
+                data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
+            })  
+
             var birth="";
             var year=1921;
             var month=1;
@@ -85,37 +89,50 @@
                 $("#password_register").val("");
             })
 
-            $('#register_check').click((event) => {
+            // $('#register_check').click((event) => {
+            //     birth=$("#year").val();
+            //     birth+="/"+$("#month").val();
+            //     birth+="/"+$("#date").val();
+            //     console.log( birth);
+            // })
+
+            $("#register_check").click( function() {
                 birth=$("#year").val();
                 birth+="/"+$("#month").val();
                 birth+="/"+$("#date").val();
                 console.log( birth);
-            })
 
-/*            $("#register_check").click( function() {
-                $.ajax({
-                    url: '/register_submit',
-                    method: 'POST',
-                    type: 'POST',
-                    dataType: "json",
-                    data: {
-                        "name": document.getElementById("name").value,
-                        "account": document.getElementById("register_account").value,
-                        "password": document.getElementById("register_password").value,
-                        "sex": sex,
-                        "birth": document.getElementById("birth").value,
-                    },
-                    success: function (data) {
-                        if (data.result == "success"){
-                            console.log("success")
+                if(document.getElementById("name").value=="" | document.getElementById("account_register").value=="" | 
+                    document.getElementById("password_register").value =="" | document.getElementById("mail").value==""){
+                    alert("欄位不得為空!")
+                }
+                else{
+                    $.ajax({
+                        url: '/register_submit',
+                        method: 'POST',
+                        type: 'POST',
+                        dataType: "json",
+                        data: {
+                            "name": document.getElementById("name").value,
+                            "account": document.getElementById("account_register").value,
+                            "password": document.getElementById("password_register").value,
+                            "sex": sex,
+                            "birth": birth,
+                            "email": document.getElementById("mail").value,
+                        },
+                        success: function (data) {
+                            if (data.result == "success"){
+                                console.log("success")
+                                window.location.href = "/main?account="+document.getElementById("account_register").value
+                            }
+                            if (data.result == "account_exist"){
+                                console.log("account_exist")
+                            }
+                            
                         }
-                        if (data.result == "account_exist"){
-                            console.log("account_exist")
-                        }
-                        
-                    }
-                });
-            });*/
+                    });
+                }
+            });
         </script>
     </body>
 </html>

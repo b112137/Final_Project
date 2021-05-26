@@ -25,20 +25,28 @@
                     <div id="social" style="width: {{exp2}}%"></div>
                     <div id="physical" style="width: {{exp3}}%"></div>
                 </div>
-            </div>      
-            <img src="./static/src/shop.png" id="shop">
-            <img src="./static/src/shop_text.png" id="shop_text">
+            </div>    
+
+            <a id="shop_link">
+                <img src="./static/src/shop.png" id="shop">
+                <img src="./static/src/shop_text.png" id="shop_text">
+            </a>
+            
             <a id="mission_link">
                 <img src="./static/src/mission.png" id="mission">
                 <img src="./static/src/mission_text.png" id="mission_text">
             </a>
+
             <a id="profile_link">
                 <img src="./static/src/profile.png" id="profile">
                 <img src="./static/src/profile_text.png" id="profile_text">
             </a>
             
-            <img src="./static/src/friends.png" id="friends">
-            <img src="./static/src/friends_text.png" id="friends_text">
+            <a id="friend_link">
+                <img src="./static/src/friends.png" id="friends">
+                <img src="./static/src/friends_text.png" id="friends_text">
+            </a>
+
             <a id="chatroom_link">
                 <img src="./static/src/chat.png" id="chat">
             </a>
@@ -68,6 +76,8 @@
         $('#chatroom_link').attr('href', "chatroom?account="+window.location.href.split('?')[1].split('=')[1]);
         $('#mission_link').attr('href', "mission?account="+window.location.href.split('?')[1].split('=')[1]);
         $('#profile_link').attr('href', "profile?account="+window.location.href.split('?')[1].split('=')[1]);
+        $('#shop_link').attr('href', "shop?account="+window.location.href.split('?')[1].split('=')[1]);
+        $('#friend_link').attr('href', "friend?account="+window.location.href.split('?')[1].split('=')[1]);
         
         $.ajax({
               url: '/get_main_page',

@@ -182,31 +182,11 @@
                         <div id="edit"></div>\
                         <p id="edit_text">'+ data.intro +'</p>\
                         <textarea id="intro_text"></textarea>\
-                        <p id="story">故事牆</p>'
+                        <p id="story">故事牆</p>\
+                        <div id="friend_button"></div>'
                     )
                     
-
-                    $.ajax({
-                        url: '/is_friend',
-                        method: 'POST',
-                        type: 'POST',
-                        dataType: "json",
-                        data: {
-                            'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
-                            'others': window.location.href.split('?')[1].split('&')[1].split('=')[1],
-                        },
-                        success: function (data) {
-                            if(data.result=="yes"){
-                                $('#container').append('<div class="friend_button_delete"></div>')
-                            }
-                            else{
-                                $('#container').append('<div class="friend_button"></div>')
-                            }
-                                
-                        }
-                    })
-
-
+                    update_friend_button();
                     
 
                     $.ajax({
@@ -253,6 +233,125 @@
         });
     }
 
+    function friend_button(others, type) {
+        if(type == "delete"){
+            $.ajax({
+                url: '/delete_friend',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                    'others': others,
+                },
+                success: function (data) {
+                    if (data.result == "success"){
+                        console.log(data.result)
+                    }
+                    else if (data.result == "error") {
+                        console.log(data.result)
+                    }                
+                }
+            });
+        }
+        else if(type == "cancel"){
+            $.ajax({
+                url: '/cancel_invitation',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                    'others': others,
+                },
+                success: function (data) {
+                    if (data.result == "success"){
+                        console.log(data.result)
+                        update_friend_button();
+                    }
+                    else if (data.result == "error") {
+                        console.log(data.result)
+                    }                
+                }
+            });
+        }
+        else if(type == "check"){
+            $.ajax({
+                url: '/accept_invitation',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                    'others': others,
+                },
+                success: function (data) {
+                    if (data.result == "success"){
+                        console.log(data.result)
+                    }
+                    else if (data.result == "error") {
+                        console.log(data.result)
+                    }                
+                }
+            });
+        }
+        else{
+            $.ajax({
+                url: '/send_invitation',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                    'others': others,
+                },
+                success: function (data) {
+                    if (data.result == "success"){
+                        console.log(data.result)
+                        update_friend_button();
+                    }
+                    else if (data.result == "error") {
+                        console.log(data.result)
+                    }                
+                }
+            });
+        }
+    }
+
+    function update_friend_button(){
+        $.ajax({
+            url: '/get_relationship',
+            method: 'POST',
+            type: 'POST',
+            dataType: "json",
+            data: {
+                'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                'others': window.location.href.split('?')[1].split('&')[1].split('=')[1],
+            },
+            success: function (data) {
+                console.log(data.result)
+                others = window.location.href.split('?')[1].split('&')[1].split('=')[1]
+                $('#friend_button').html('<div class="friend_button"></div>')
+                if(data.result=="friend"){
+                    $('.friend_button').attr('style', 'background-image: url(static/src/delete_friend.png)' )
+                    $('.friend_button').attr('onclick', 'friend_button("'+ others +'", "delete")' )
+                }
+                else if(data.result=="invitation_send"){
+                    // $('#container').append('<div class="friend_button"></div>')
+                    $('.friend_button').attr('style', 'background-image: url(static/src/cancel_invitation.png)' )
+                    $('.friend_button').attr('onclick', 'friend_button("'+ others +'", "cancel")' )
+                }
+                else if(data.result=="invitation_receive"){
+                    $('.friend_button').attr('style', 'background-image: url(static/src/invite_check.png)' )
+                    $('.friend_button').attr('onclick', 'friend_button("'+ others +'", "check")' )
+                }
+                else{
+                    $('.friend_button').attr('style', 'background-image: url(static/src/invite_friend.png)' )
+                    $('.friend_button').attr('onclick', 'friend_button("'+ others +'", "invite")' )
+                }
+            }
+        })
+    }
 
 
     $(document).on('click', "#pen",function(){
