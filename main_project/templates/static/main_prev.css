@@ -82,7 +82,7 @@ body {
 }
 #level{
     position: absolute;
-    top: 98vw;
+    top: 88vw;
     left: 8vw;
     width: 15vw;
     text-align: center;
@@ -96,7 +96,7 @@ body {
 }
 #char_name{
     position: absolute;
-    top: 97vw;
+    top: 87vw;
     width: 50vw;
     left: 25vw;
     text-align: center;
@@ -202,14 +202,6 @@ body {
     height: 22.2vw;
     right: 0vw;
     bottom: 0vw;
-}
-
-#card_icon{
-    position: absolute;
-    width: 45vw;
-    height: 22.2vw;
-    left: 2vw;
-    bottom: 0vw;
 } 
 #navbar{
     position: absolute;
@@ -266,167 +258,3 @@ body {
     left: 10vh;
 }
 */
-/*///modal*/
-.card-dialog {
-  display: inline-block;
-  text-align: center;
-  vertical-align: middle;
-  margin-top: 10vh;
-}
-
-.card-content {
-    position: relative;
-    font-family: jf;
-    background-color: #ffffff;
-    border-radius: 5vw;
-    border-width: 0px;
-    width: 100vw;
-    height: 150vw;
-}
-
-#card-title{
-    position: relative;
-    font-size:8vw;
-    top: 15vw;
-}
-#select_pic{
-    position: absolute;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    width: 35vw;
-    height: 35vw;
-    left: 6vw;
-    top: 33vw;
-    border-radius: 50%;
-
-}
-
-#card_name{
-    position: absolute;
-    /* right: 22vw; */
-    left:45vw;
-    top: 36vw;
-    font-size: 7vw;
-}
-
-#card_ID{
-    position: absolute;
-    /* right: 1vw; */
-    left:45vw;
-    top: 46vw;
-    font-size: 7vw;
-}
-
-#card_age{
-    position: absolute;
-    /* right: 17vw; */
-    left:45vw;
-    top: 57vw;
-    font-size: 7vw;
-}
-
-#card_lv{
-    position: absolute; 
-    left:27vw;
-    top: 76vw;
-    font-size: 8vw;
-}
-
-
-
-.card-content > button {
-    position: absolute;
-    bottom: 5vw;
-    width: 27vw;
-    height: 12vw;
-    background-color: #E26F50;
-    border-width: 0px;
-    border-radius: 2vw;
-    color: white;
-    font-size: 7vw;
-}
-
-.card-content >button:active {
-    opacity: 0.8;
-}
-
-.card-cancel {
-    left: 20vw;
-}
-
-.card-confirm {
-    right: 20vw;
-}
-
-/*///modal*/
-
-/*///exp*/
-#exp_1::-webkit-progress-bar {
-    background-color:#F5E0CD; 
-    width: 60vw;
-    height:4vw;
-    border-radius: 5.32vw;
-}
-#exp_1::-webkit-progress-value {
-    background-color:#E83000 !important;
-    border-radius: 5.32vw;
-    opacity:0.5;
-}
-#exp_1 {
-    position:absolute;
-    color: #E83000;
-    border-radius:5.32vw;
-    opacity:0.5;
-    top:93vw;
-    left:30vw;
-    background-color: #F5E0CD;
-}
-
-#exp_2::-webkit-progress-bar {
-    background-color:#F5E0CD; 
-    width: 60vw;
-    height:4vw;
-    border-radius: 5.32vw;
-}
-#exp_2::-webkit-progress-value {
-    background-color:#F7931E !important;
-    border-radius: 5.32vw;
-    opacity:0.5;
-}
-#exp_2 {
-    position:absolute;
-    color: #F7931E;
-    border-radius:5.32vw;
-    opacity:0.5;
-    top:103vw;
-    left:30vw;
-    background-color: #F5E0CD;
-}
-
-#exp_3::-webkit-progress-bar {
-    background-color:#F5E0CD; 
-    width: 60vw;
-    height:4vw;
-    border-radius: 5.32vw;
-}
-#exp_3::-webkit-progress-value {
-    background-color:#2992A3 !important;
-    border-radius: 5.32vw;
-    opacity:0.5;
-}
-#exp_3 {
-    position:absolute;
-    color: #2992A3;
-    border-radius:5.32vw;
-    opacity:0.5;
-    top:113vw;
-    left:30vw;
-    background-color: #F5E0CD;
-}
-
-/*///exp*/
-
-
-
-

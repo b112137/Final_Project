@@ -3,11 +3,14 @@
     <head>
         <meta charset="utf-8">
         <link href="static/main.css" rel="stylesheet">
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
-        </script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>  
+
         <link href= "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     </head>
     <body>
+        
         <div id="all">
             <div id="container">
                 <img src="./static/src/setting.png" id="setting" >
@@ -25,8 +28,8 @@
                     <div id="social" style="width: {{exp2}}%"></div>
                     <div id="physical" style="width: {{exp3}}%"></div>
                 </div>
-            </div>    
-
+            </div>
+               
             <a id="shop_link">
                 <img src="./static/src/shop.png" id="shop">
                 <img src="./static/src/shop_text.png" id="shop_text">
@@ -50,6 +53,10 @@
             <a id="chatroom_link">
                 <img src="./static/src/chat.png" id="chat">
             </a>
+            
+            
+            <a href="#create-group-modal" data-toggle="modal"> <img src ="./static/select_card/22.png" id ="card_icon"></a>
+
             <div id="navbar">
                 <!--img src="./src/setting2.png" id="setting2" class="setting1"-->
                 <img src="./static/src/set.png" id="set">
@@ -58,10 +65,40 @@
                 <!--img src="./src/Ellipse 5.png" id="logout">
                 <img src="./src/logout_text.png" id="logout_text"-->
             </div>
+
         </div>
+        <div class="modal fade" id="create-group-modal" tabindex="-1" aria-hidden="true" data-backdrop="static">
+            <div class="card-dialog">
+                <div class="card-content" id="card_content">
+                    <!-- <div id="card-title">好友抽卡</div>
+                    <div id ="select_pic"><img src="./static/select_card/41.png"></div>
+                    <div id ="card_name">{{name}}</div>
+                    <p style= "position: absolute; right:35vw;top: 45vw;font-size: 8vw;">ID:</p>
+                    <div id ="card_ID">{{account}}</div>
+                    <p style= "position: absolute; right:27vw;top: 55vw;font-size: 8vw;">年齡:</p>
+                    <div id = "card_age">{{birth}}</div>
+                    <p style="position: absolute; left:5vw;top: 75vw;font-size: 10vw;">等級:</p>
+                    <div id = "card_lv">{{level}}</div>
+                    <p style="position: absolute; left:16.5vw;top: 90vw;font-size: 6vw;">知識</p>
+                    <p style="position: absolute; left:5vw;top: 100vw;font-size: 6vw;">社會參與</p>
+                    <p style="position: absolute; left:16.5vw;top: 110vw;font-size: 6vw;">體能</p>
+                    <div id="exp_bar">
+                        <progress id="exp_1" value={{exp1}} max="100" > 70% </progress>
+                        <progress id="exp_2" value={{exp2}} max="100" > 70% </progress>
+                        <progress id="exp_3" value={{exp3}} max="100" > 70% </progress>
+                    </div>
+
+                    <button type="button" class="card-cancel" data-dismiss="modal">先不要</button>
+                    <button type="button" class="card-confirm">有興趣</button>      -->
+                     
+                    
+                </div>
+            </div>
+        </div>
+
         <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
-        <!-- <script src="main.js"></script>    -->
+        <!-- <script src="main.js"></script> -->
     </body>
 </html>
 
@@ -141,4 +178,125 @@
     
 
     });
+
+    $("#card_icon").click( function(){
+        $.ajax({
+              url: '/get_card',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+              },
+              success: function (data_card) {
+                if (data_card.result == "success"){
+                    $.ajax({
+                        url: '/get_profile_page',
+                        method: 'POST',
+                        type: 'POST',
+                        dataType: "json",
+                        data: {
+                            'account': data_card.card_ID,
+                        },
+                        success: function (data) {
+                            if (data.result == "success"){
+                                
+
+
+                                $('#card_content').html(
+                                    '<div id="card-title">好友抽卡</div>\
+                                    <div id ="select_pic"></div>\
+                                    <div id ="card_name">'+ data.name +'</div>\
+                                    <div id ="card_ID">'+ data.account +'</div>\
+                                    <div id = "card_age">'+ data.birth +'</div>\
+                                    <p style="position: absolute; left:5vw;top: 75vw;font-size: 9vw;">等級:</p>\
+                                    <div id = "card_lv">'+ data.level +'</div>\
+                                    <p style="position: absolute; left:16.5vw;top: 90vw;font-size: 6vw;">知識</p>\
+                                    <p style="position: absolute; left:5vw;top: 100vw;font-size: 6vw;">社會參與</p>\
+                                    <p style="position: absolute; left:16.5vw;top: 110vw;font-size: 6vw;">體能</p>\
+                                    <div id="exp_bar">\
+                                        <progress id="exp_1" value='+ data.exp1 +' max="100" > 70% </progress>\
+                                        <progress id="exp_2" value='+ data.exp2 +' max="100" > 70% </progress>\
+                                        <progress id="exp_3" value='+ data.exp3 +' max="100" > 70% </progress>\
+                                    </div>\
+                                    <button type="button" class="card-cancel" data-dismiss="modal">先不要</button>\
+                                    <button type="button" class="card-confirm" onclick=friend_button("'+ data.account +'") data-dismiss="modal">有興趣</button>'
+
+
+                                    // '<div id="photo"></div>\
+                                    // <p id="name" class="profile">'+ data.name +'</p>\
+                                    // <p id="user_id"  class="profile">'+ data.account +'</p>\
+                                    // <p id="age" class="profile">'+ data.birth +'</p>\
+                                    // <p id="level" >等級 '+ data.level +'</p>\
+                                    // <p id="knowledge" class="exp">知識</p>\
+                                    // <p id="social" class="exp">社會參與</p>\
+                                    // <p id="physical" class="exp">體能</p>\
+                                    // <div id="bar">\
+                                    //     <progress id="exp_1" value='+ data.exp1 +' max="100" > 70% </progress>\
+                                    //     <progress id="exp_2" value='+ data.exp2 +' max="100" > 60% </progress>\
+                                    //     <progress id="exp_3" value='+ data.exp3 +' max="100" > 65% </progress>\
+                                    // </div>\
+                                    // <div id="role"></div>\
+                                    // <p id="intro">自我介紹</p>\
+                                    // <img src="./static/src/pen.PNG" id="pen">\
+                                    // <button type="button" id="save" >儲存</button>\
+                                    // <div id="edit"></div>\
+                                    // <p id="edit_text">'+ data.intro +'</p>\
+                                    // <textarea id="intro_text"></textarea>\
+                                    // <p id="story">故事牆</p>'
+                                )
+
+                                $.ajax({
+                                url: '/get_img',
+                                    method: 'POST',
+                                    type: 'POST',
+                                    async: false, //改成同步執行(等待上一個回傳)
+                                    data: {
+                                        "img_path": data.profile_photo,
+                                    },
+                                    success: function (img) {
+                                        console.log("success")
+                                        $('#select_pic').attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                                    }
+                                });
+                            
+                            }
+                            
+                        }
+                    });
+                }
+                else{
+                    $("#card_content").html(
+                        '<div id="card-title">沒人可以加了</div>\
+                        <button type="button" class="card-cancel" data-dismiss="modal">確認</button>'
+                    )
+                }
+            }
+        });
+    })
+
+    function friend_button(others) {
+        console.log(others)
+        $.ajax({
+            url: '/send_invitation',
+            method: 'POST',
+            type: 'POST',
+            dataType: "json",
+            data: {
+                'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                'others': others,
+            },
+            success: function (data) {
+                if (data.result == "success"){
+                    console.log(data.result)
+                }
+                else if (data.result == "error") {
+                    console.log(data.result)
+                }                
+            }
+        });
+    }
+
+
+
 </script>

@@ -1371,10 +1371,10 @@ def accept_invitation(request):
                 friend_ID_others.append(account)
                 print(friend_ID_me, friend_ID_others, invitation_receive_me, invitation_send_others)
 
-                # profile_me.update(friend_ID = friend_ID_me)
-                # profile_others.update(friend_ID = friend_ID_others)
-                # profile_me.update(invitation_receive = invitation_receive_me)
-                # profile_others.update(invitation_send = invitation_send_others)
+                profile_me.update(friend_ID = friend_ID_me)
+                profile_others.update(friend_ID = friend_ID_others)
+                profile_me.update(invitation_receive = invitation_receive_me)
+                profile_others.update(invitation_send = invitation_send_others)
 
                 return JsonResponse({
                     'result' : "success",
@@ -1409,8 +1409,8 @@ def reject_invitation(request):
 
                 print(invitation_receive_me, invitation_send_others)
 
-                # profile_me.update(invitation_receive = invitation_receive_me)
-                # profile_others.update(invitation_send = invitation_send_others)
+                profile_me.update(invitation_receive = invitation_receive_me)
+                profile_others.update(invitation_send = invitation_send_others)
 
                 return JsonResponse({
                     'result' : "success",
@@ -1474,8 +1474,8 @@ def delete_friend(request):
 
             print(friend_ID_me, friend_ID_others)
 
-            # profile_me.update(friend_ID= friend_ID_me)
-            # profile_others.update(friend_ID = friend_ID_others)
+            profile_me.update(friend_ID= friend_ID_me)
+            profile_others.update(friend_ID = friend_ID_others)
 
             return JsonResponse({
                 'result' : "success",
@@ -1578,12 +1578,13 @@ def get_shop_page(request):
 
         product_ID, product_name, product_detail, product_price, product_left, product_pic = [], [], [], [], [], []
         for product in all_product:
-            product_ID.append(product['fields']['product_ID'])
-            product_name.append(product['fields']['product_name'])
-            product_detail.append(product['fields']['product_detail'])
-            product_price.append(product['fields']['product_price'])
-            product_left.append(product['fields']['product_left'])
-            product_pic.append(product['fields']['product_pic'])
+            if int(product['fields']['product_left']) > 0:
+                product_ID.append(product['fields']['product_ID'])
+                product_name.append(product['fields']['product_name'])
+                product_detail.append(product['fields']['product_detail'])
+                product_price.append(product['fields']['product_price'])
+                product_left.append(product['fields']['product_left'])
+                product_pic.append(product['fields']['product_pic'])
 
         # own_product_name, own_product_detail = [], []
         # for own in own_product_ID:
@@ -1601,11 +1602,43 @@ def get_shop_page(request):
             'product_price': product_price,
             'product_left': product_left,
             'product_pic': product_pic,
+            'balance': profile.balance,
         })
         
+def get_card(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        profile = Profile.objects.filter(account=account)[0]
+        friend_ID = ast.literal_eval(profile.friend_ID)
+        invitation_send = ast.literal_eval(profile.invitation_send)
+        invitation_receive = ast.literal_eval(profile.invitation_receive)
 
+        exception_ID = friend_ID + invitation_send + invitation_receive
+        exception_ID.append(account)
 
+        profile_all = Profile.objects.values_list("account")
 
+        profile_list = []
+        for pro in profile_all:
+            profile_list.append(pro[0])
+        print(profile_list)
+
+        card_list = []
+        for pro in profile_list:
+            if pro not in exception_ID:
+                card_list.append(pro)
+        if card_list:
+            random_card = random.randint(0, len(card_list)-1)
+            print(random_card)
+            card_ID = card_list[random_card]
+            return JsonResponse({
+                'result' : "success",
+                "card_ID": card_ID,
+            })
+        else:
+            return JsonResponse({
+                'result' : "error",
+            })
 
 # def modify_profile(request):
 # #     if request.method == 'POST':

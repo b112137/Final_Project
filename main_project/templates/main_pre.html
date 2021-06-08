@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href="static/main.css" rel="stylesheet">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+        </script>
+        <link href= "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="all">
+            <div id="container">
+                <img src="./static/src/setting.png" id="setting" >
+                <img src="./static/src/circle.png" id="circle">
+                <img src="./static/src/LOGO.png" id="logo">
+                <!-- <img src="./static/src/肌肉.png" id="character"> -->
+                <div id="character_vertical"></div>
+                <div id="character_horizontal"></div>
+                <img src="./static/src/exp_back.png" id="exp_back">
+                <img src="./static/src/exp_circle.png" id="exp_circle">
+                <p id="level">{{level}}</p>
+                <p id="char_name">{{name}}</p>
+                <div id="bar">
+                    <div id="knowledge" style="width: {{exp1}}%"></div>
+                    <div id="social" style="width: {{exp2}}%"></div>
+                    <div id="physical" style="width: {{exp3}}%"></div>
+                </div>
+            </div>    
+
+            <a id="shop_link">
+                <img src="./static/src/shop.png" id="shop">
+                <img src="./static/src/shop_text.png" id="shop_text">
+            </a>
+            
+            <a id="mission_link">
+                <img src="./static/src/mission.png" id="mission">
+                <img src="./static/src/mission_text.png" id="mission_text">
+            </a>
+
+            <a id="profile_link">
+                <img src="./static/src/profile.png" id="profile">
+                <img src="./static/src/profile_text.png" id="profile_text">
+            </a>
+            
+            <a id="friend_link">
+                <img src="./static/src/friends.png" id="friends">
+                <img src="./static/src/friends_text.png" id="friends_text">
+            </a>
+
+            <a id="chatroom_link">
+                <img src="./static/src/chat.png" id="chat">
+            </a>
+            <div id="navbar">
+                <!--img src="./src/setting2.png" id="setting2" class="setting1"-->
+                <img src="./static/src/set.png" id="set">
+                <img src="./static/src/guided.png" id="guided">
+                <img src="./static/src/aboutus.png" id="aboutus">
+                <!--img src="./src/Ellipse 5.png" id="logout">
+                <img src="./src/logout_text.png" id="logout_text"-->
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+        <!-- <script src="main.js"></script>    -->
+    </body>
+</html>
+
+<script>
+    
+
+    $.ajaxSetup({
+        data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
+    })    
+
+    window.onload = function(){
+        $('#chatroom_link').attr('href', "chatroom?account="+window.location.href.split('?')[1].split('=')[1]);
+        $('#mission_link').attr('href', "mission?account="+window.location.href.split('?')[1].split('=')[1]);
+        $('#profile_link').attr('href', "profile?account="+window.location.href.split('?')[1].split('=')[1]);
+        $('#shop_link').attr('href', "shop?account="+window.location.href.split('?')[1].split('=')[1]);
+        $('#friend_link').attr('href', "friend?account="+window.location.href.split('?')[1].split('=')[1]);
+        
+        $.ajax({
+              url: '/get_main_page',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+              },
+              success: function (data) {
+                if (data.result == "success"){
+                    if(data.type=="知識"){
+                        $('#character_vertical').attr('style', 'background-image: url(static/src/' + data.character_name + ')' )
+                    }
+                    else{
+                        $('#character_horizontal').attr('style', 'background-image: url(static/src/' + data.character_name + ')' )
+                    }
+                        
+
+                }
+            }
+        });
+    }
+
+    var count=0;
+    var temp=0;
+    $(document).ready(function(){
+
+        $("#setting").click(function(){
+        if(temp==0)
+        {
+            $('#navbar').css("visibility", "visible");
+            $(this).attr('src', './static/src/setting2.png');
+            temp=1;
+        }
+        else{
+            var $marginLefty =    $("#navbar"); // your selector here
+
+
+            $marginLefty.animate({
+                width:'toggle',
+                marginLeft: parseInt($marginLefty.css('marginLeft'),10) == 0 ?
+                $marginLefty.outerWidth() :
+                0
+            });
+            if(count==0)
+            {
+                window.setTimeout(( () => $(this).attr('src', './static/src/setting.png') ), 270);
+
+                // $(this).attr('src', './static/src/setting.png');
+                count=1;
+            }
+            else
+            {
+                window.setTimeout(( () => $(this).attr('src', './static/src/setting2.png') ), 100);
+                // $(this).attr('src', './static/src/setting2.png')
+                count=0;
+            }
+        }
+        });
+    
+
+    });
+</script>

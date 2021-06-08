@@ -3,205 +3,488 @@
     <head> 
         <meta charset="utf-8">
         <script src="static/jquery.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>        
+        <link href="static/shop.css" rel="stylesheet">
     </head>
     <body>
-        <input type="text" placeholder="搜尋" id="search">
-        <button id="search_button">搜尋</button>
-        <br>
-        <div id="balance"></div>
+        <div class="shop_header">
+            <a id="last_arrow_link">
+                <div class="last_arrow"></div>
+            </a>
+            
+            <div class="shop_text">商 店</div>
+        </div>
 
-        <div id="newpic"></div>
+        <ul class="nav nav-tabs nav-justified shop-tab" style="position: fixed; top: 22.9183vw;">
+            <li class="active">
+                <div id="tab-shopping" data-toggle="tab" href="#shopping" ></div>
+            </li>
+            <li>
+                <div id="tab-owned" data-toggle="tab" href="#owned" ></div>
+            </li>
+        </ul>
+        <div class="shop-footer"></div>
+        <div class="shop-tab-content tab-content">
+            <div id="shopping" class="tab-pane fade in active">
+                    <!-- <p id="balance">用戶餘額:$100000000</p> -->
+                    <!-- <div class="shop-container">
+                        <div id="item1">
+                            <div class="product" >
+                                <div class="shop_card-header">
+                                    <div href="#collapse1" data-toggle="collapse" data-parent="#shopping">
+                                        
+                                            <div class="product_information" >
+                                                <img src="static/src/spicy.jpg" class="product_pic"  >
+                                                <p class="product_name" id="product1">頂好辣椒醬xxxxx</p>
+                                                <p class="product_discount" id="discount1">折20元</p>
+                                                <p class="product_date" id="date1">期限:2021/5/6</p>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <p class="price" id="price1">$100</p>
+                                    <button type="button" class="btn_buy" id="Buy1" >Buy</button>
+                                </div>
+                            
+                                
+                            </div>
+                            <div id="collapse1" class="collapse" aria-expanded="false" style="height: 0px;">
+                                <div class="shop_card-body">
+                                    <p class="product_detail">
+                                        詳細說明</p>
+                                </div>
+                            </div>
+                        </div>
 
-        <button id="mission_button">購買</button>
-        <button id="chat_button">我的商品</button>
+                        <div id="item2">
+                            <div class="product">
+                                <div class="shop_card-header">
+                                    <div href="#collapse2" data-toggle="collapse" data-parent="#shopping">
+                                        
+                                            <div class="product_information">
+                                                <img src="static/src/spicy.jpg" class="product_pic">
+                                                <p class="product_name" id="product2">全家辣椒醬xxxxx</p>
+                                                <p class="product_discount" id="discount2">折20元</p>
+                                                <p class="product_date" id="date2">期限:2021/5/6</p>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <p class="price" id="price2">$100</p>
+                                    <button type="button" class="btn_buy" id="Buy2" >Buy</button>
+                                </div>
+                            
+                                
+                            </div>
+                            <div id="collapse2" class="collapse" aria-expanded="false" style="height: 0px;">
+                                <div class="shop_card-body">
+                                    <p class="product_detail">
+                                        詳細說明</p>
+                                </div>
+                            </div>
+                        </div>
 
-        <br>
-        
+                        <div id="item3">
+                            <div class="product">
+                                <div class="shop_card-header">
+                                    <div href="#collapse3" data-toggle="collapse" data-parent="#shopping">
+                                        
+                                            <div class="product_information">
+                                                <img src="static/src/spicy.jpg" class="product_pic">
+                                                <p class="product_name" id="product3">小七辣椒醬xxxxx</p>
+                                                <p class="product_discount" id="discount3">折20元</p>
+                                                <p class="product_date" id="date3">期限:2021/5/6</p>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <p class="price" id="price3">$100</p>
+                                    <button type="button" class="btn_buy" id="Buy3" >Buy</button>
+                                </div>
+                            
+                                
+                            </div>
+                            <div id="collapse3" class="collapse" aria-expanded="false" style="height: 0px;">
+                                <div class="shop_card-body">
+                                    <p class="product_detail">
+                                        詳細說明</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="item4">
+                            <div class="product">
+                                <div class="shop_card-header">
+                                    <div href="#collapse4" data-toggle="collapse" data-parent="#shopping">
+                                        
+                                            <div class="product_information">
+                                                <img src="static/src/spicy.jpg" class="product_pic">
+                                                <p class="product_name" id="product4">全連辣椒醬xxxxx</p>
+                                                <p class="product_discount" id="discount4">折20元</p>
+                                                <p class="product_date" id="date4">期限:2021/5/6</p>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <p class="price" id="price4">$100</p>
+                                    <button type="button" class="btn_buy" id="Buy4" >Buy</button>
+                                </div>
+                            
+                                
+                            </div>
+                            <div id="collapse4" class="collapse" aria-expanded="false" style="height: 0px;">
+                                <div class="shop_card-body">
+                                    <p class="product_detail">
+                                        詳細說明</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="item5">
+                            <div class="product">
+                                <div class="shop_card-header">
+                                    <div href="#collapse5" data-toggle="collapse" data-parent="#shopping">
+                                        
+                                            <div class="product_information">
+                                                <img src="static/src/spicy.jpg" class="product_pic">
+                                                <p class="product_name" id="product5">全連辣椒醬xxxxx</p>
+                                                <p class="product_discount" id="discount5">折20元</p>
+                                                <p class="product_date" id="date5">期限:2021/5/6</p>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <p class="price" id="price5">$100</p>
+                                    <button type="button" class="btn_buy" id="Buy5" >Buy</button>
+                                </div>
+                            
+                                
+                            </div>
+                            <div id="collapse5" class="collapse" aria-expanded="false" style="height: 0px;">
+                                <div class="shop_card-body">
+                                    <p class="product_detail">
+                                        詳細說明</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="item6">
+                            <div class="product">
+                                <div class="shop_card-header">
+                                    <div href="#collapse6" data-toggle="collapse" data-parent="#shopping">
+                                        
+                                            <div class="product_information">
+                                                <img src="static/src/spicy.jpg" class="product_pic">
+                                                <p class="product_name" id="product6">全連辣椒醬xxxxx</p>
+                                                <p class="product_discount" id="discount6">折20元</p>
+                                                <p class="product_date" id="date6">期限:2021/5/6</p>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <p class="price" id="price6">$100</p>
+                                    <button type="button" class="btn_buy" id="Buy6" >Buy</button>
+                                </div>
+                            
+                                
+                            </div>
+                            <div id="collapse6" class="collapse" aria-expanded="false" style="height: 0px;">
+                                <div class="shop_card-body">
+                                    <p class="product_detail">
+                                        詳細說明</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> -->
+            </div>
+
+            <div id="owned" class="tab-pane fade">
+                <div class="owned-container">
+                    <div class="owned_product" id="owned_p1">
+                        <div class="owned_information">
+                            <p class="product_name" id="owned_product1">萊爾辣椒醬xxxxx</p>
+                            <p class="product_discount" id="owned_discount1">折20元</p>
+                            <p class="product_date" id="owned_date1">期限:2021/5/6</p>
+                        </div>
+
+                        <button type="button" class="btn_use"  id="Use1">使用</button>
+
+                    </div>
+
+                    <div class="owned_product" id="owned_p2">
+                        <div class="owned_information">
+                            <p class="product_name" id="owned_product2">全連辣椒醬xxxxx</p>
+                            <p class="product_discount" id="owned_discount2">折20元</p>
+                            <p class="product_date" id="owned_date2">期限:2021/5/6</p>
+                        </div>
+
+                        <button type="button" class="btn_use" id="Use2"  >使用</button>
+                        
+                    </div>
+
+                    <div class="owned_product" id="owned_p3">
+                        <div class="owned_information">
+                            <p class="product_name" id="owned_product3">全連辣椒醬xxxxx</p>
+                            <p class="product_discount" id="owned_discount3">折20元</p>
+                            <p class="product_date" id="owned_date3">期限:2021/5/6</p>
+                        </div>
+
+                        <button type="button" class="btn_use"  id="Use3" >使用</button>
+                        
+                    </div>
+
+                    <div class="owned_product" id="owned_p4">
+                        <div class="owned_information">
+                            <p class="product_name" id="owned_product4">全連辣椒醬xxxxx</p>
+                            <p class="product_discount" id="owned_discount4">折20元</p>
+                            <p class="product_date" id="owned_date4">期限:2021/5/6</p>
+                        </div>
+
+                        <button type="button" class="btn_use" id="Use4" >使用</button>
+                        
+                    </div>
+
+                    <div class="owned_product" id="owned_p5">
+                        <div class="owned_information">
+                            <p class="product_name" id="owned_product5">全連辣椒醬xxxxx</p>
+                            <p class="product_discount" id="owned_discount5">折20元</p>
+                            <p class="product_date" id="owned_date5">期限:2021/5/6</p>
+                        </div>
+
+                        <button type="button" class="btn_use" id="Use5" >使用</button>
+                        
+                    </div>
+
+                    <div class="owned_product" id="owned_p6">
+                        <div class="owned_information">
+                            <p class="product_name" id="owned_product6">全連辣椒醬xxxxx</p>
+                            <p class="product_discount" id="owned_discount6">折20元</p>
+                            <p class="product_date" id="owned_date6">期限:2021/5/6</p>
+                        </div>
+
+                        <button type="button" class="btn_use" id="Use6" >使用</button>
+                        
+                    </div>
+                    <div class="owned_product" id="owned_p7">
+                        <div class="owned_information">
+                            <p class="product_name" id="owned_product7">全連辣椒醬xxxxx</p>
+                            <p class="product_discount" id="owned_discount7">折20元</p>
+                            <p class="product_date" id="owned_date7">期限:2021/5/6</p>
+                        </div>
+
+                        <button type="button" class="btn_use" id="Use7" >使用</button>
+                        
+                    </div>
+                </div>
+            </div> 
+ 
+        </div>
+    
+        <a id="home_link">
+            <div class="quarter_circle" style="left: 0vw; background-image: url('static/src/home.png');"></div>
+        </a>
+        <a id="chat_link">
+            <div class="quarter_circle" style="right: 0vw; background-image: url('static/src/chat.png');"></div>
+        </a>
+        <div id="modal_page1">
+            <div id="balance_after">
+                用戶餘額
+                <br>
+                <p id="Deduct"></p>
+            </div>
+        </div>
+        <div id="modal_page2">
+            <div id="qrcode">
+                <img src="static/src/qrcode.PNG">
+            </div>
+        </div>
     </body>
+    <script>
+        $.ajaxSetup({
+            data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
+        }) 
 
+        window.onload = function(){
+            get_shop_page();
+        }
+
+        function get_shop_page(){
+            $.ajax({
+                url: '/get_shop_page',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    "account": window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                    "search": "all",
+                },
+                success: function (data) {
+                    if (data.result == "success"){
+                        $('#shopping').html("");
+                        var pic_list = data.product_pic
+                        console.log(data.balance)
+                        $('#shopping').append( '<p id="balance">用戶餘額:$'+data.balance+'</p>')
+                        for(var i = 0; i < pic_list.length; i++){
+                            $.ajax({
+                            url: '/get_img',
+                            method: 'POST',
+                            type: 'POST',
+                            async: false, //改成同步執行(等待上一個回傳)
+                            data: {
+                                "img_path": pic_list[i],
+                            },
+                            success: function (img) {
+                                $('#shopping').append(
+                                    '<div class="shop-container">\
+                                        <div id="item1">\
+                                            <div class="product" >\
+                                                <div class="shop_card-header">\
+                                                    <div href="#collapse'+ i.toString() +'" data-toggle="collapse" data-parent="#shopping">\
+                                                            <div class="product_information" >\
+                                                                <div class="product_pic" id="product_pic'+ i.toString()+'"></div>\
+                                                                <p class="product_name" id="product1">'+ data.product_name[i] +'</p>\
+                                                                <p class="product_discount" id="discount1"></p>\
+                                                                <p class="product_date" id="date1">期限:2021/5/6</p>\
+                                                            </div>\
+                                                    </div>\
+                                                </div>\
+                                                <div class="right">\
+                                                    <p class="price" id="price1">$'+ data.product_price[i] +'</p>\
+                                                    <button type="button" class="btn_buy" id="Buy1" onclick=buy_product('+ data.product_ID[i] +','+ data.product_price[i] +') >Buy</button>\
+                                                </div>\
+                                            </div>\
+                                            <div id="collapse'+ i.toString() +'" class="collapse" aria-expanded="false" style="height: 0px;">\
+                                                <div class="shop_card-body">\
+                                                    <p class="product_detail">'+ data.product_detail[i] +'</p>\
+                                                </div>\
+                                            </div>\
+                                        </div>\
+                                    </div>'
+                                )
+                                $('#product_pic'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                            }
+                            });
+                        }
+                        
+                        $('#shopping').append(
+                            '<div class="shop-container">\
+                                <div id="item1">\
+                                    <div class="product" >\
+                                        <div class="shop_card-header" style="height: 20vw">\
+                                        </div>\
+                                        <div class="right">\
+                                        </div>\
+                                    </div>\
+                                    <div id="collapse'+ (i+1).toString() +'" class="collapse" aria-expanded="false" style="height: 0px;">\
+                                    </div>\
+                                </div>\
+                            </div>'
+                        )
+                    }
+                }
+            });
+        }
+
+        function buy_product(product_ID, price){
+            $.ajax({
+                url: '/buy_product',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                    'product_ID': product_ID,
+                },
+                success: function (data) {
+                    if (data.result == "success"){
+                        $('#Deduct').text("-$"+price.toString())
+                        $('#modal_page1').css("visibility", "visible");
+                        $('.shop_header').css("opacity","0.5");
+                        $('.nav').css("opacity","0.5");	
+                        get_shop_page();
+                    }
+                    console.log(data.result)
+                }
+            });
+            
+        }
+
+        var owned_id=7;
+        var money=100000000;
+        $('#Buy1').click( function() {
+            owned_id+=1;
+            $('#Deduct').text("-"+$('#price1').text())
+            money=money-$('#price1').text().substring(1,$('#price1').text().length );
+            $('#modal_page1').css("visibility", "visible");
+            $('.shop_header').css("opacity","0.5");
+            $('.nav').css("opacity","0.5");	
+            //購物Buy完item加到已擁有
+            $('.owned-container').append(                             
+                    '<div class="owned_product">\
+                    <div class="owned_information">\
+                        <p class="product_name" id="owned_product'+owned_id+'\"">'+$('#product1').text()+'</p>\
+                        <p class="product_discount" id="owned_discount'+owned_id+'\"">'+$('#discount1').text()+'</p>\
+                        <p class="product_date" id="owned_date'+owned_id+'\"">'+$('#date1').text()+'</p>\
+                    </div>\
+                    <button type="button" class="btn_use"  >使用</button>\
+                </div>'
+                )
+            //購物Buy完item移除
+            $( "#item1" ).remove();
+            //購物Buy完扣餘額
+            $("#balance").html("用戶餘額:$"+money);
+        })
+
+
+        $('#Buy2').click( function() {
+            $('#Deduct').text($('#price2').text())
+            $('#modal_page1').css("visibility", "visible");
+            $('.shop_header').css("opacity","0.5");
+            $('.nav').css("opacity","0.5");
+        })
+        $('#Buy3').click( function() {
+            $('#Deduct').text($('#price3').text())
+            $('#modal_page1').css("visibility", "visible");
+            $('.shop_header').css("opacity","0.5");
+            $('.nav').css("opacity","0.5");
+        })
+        $('#Buy4').click( function() {
+            $('#Deduct').text($('#price4').text())
+            $('#modal_page1').css("visibility", "visible");
+            $('.shop_header').css("opacity","0.5");
+            $('.nav').css("opacity","0.5");
+        })
+        $('#Buy5').click( function() {
+            $('#Deduct').text($('#price5').text())
+            $('#modal_page1').css("visibility", "visible");
+            $('.shop_header').css("opacity","0.5");
+            $('.nav').css("opacity","0.5");
+        })
+        $('#Buy6').click( function() {
+            $('#Deduct').text($('#price6').text())
+            $('#modal_page1').css("visibility", "visible");
+            $('.shop_header').css("opacity","0.5");
+            $('.nav').css("opacity","0.5");
+        })
+        $('#modal_page1').click( function() {
+            $('#modal_page1').css("visibility", "hidden");
+            $('.shop_header').css("opacity","1");
+            $('.nav').css("opacity","1");
+        })
+        $('#Use1').click(function(){
+            //已擁有使用後移除
+            $( "#owned_p1" ).remove();
+            $('#modal_page2').css("visibility", "visible");
+            $('.shop_header').css("opacity","0.5");
+            $('.nav').css("opacity","0.5");
+        })
+        $('#modal_page2').click( function() {
+            $('#modal_page2').css("visibility", "hidden");
+            $('.shop_header').css("opacity","1");
+            $('.nav').css("opacity","1");
+        })
+    </script>
 </html>
-
-<script>
-    $.ajaxSetup({
-        data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
-    })    
-
-    window.onload = function(){
-        $.ajax({
-              url: '/get_shop_page',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-                  "account": window.location.href.split('?')[1].split('&')[0].split('=')[1],
-                  "search": "all",
-              },
-              success: function (data) {
-                if (data.result == "success"){
-                    $('#newpic').html("");
-                    var pic_list = data.product_pic
-                    $('#balance').append(data.balance)
-                    for(var i = 0; i < pic_list.length; i++){
-                        $.ajax({
-                        url: '/get_img',
-                        method: 'POST',
-                        type: 'POST',
-                        async: false, //改成同步執行(等待上一個回傳)
-                        data: {
-                            "img_path": pic_list[i],
-                        },
-                        success: function (img) {
-                            // console.log()
-                            
-                            $('#newpic').append("<img src=" + '"data:image/jpg;base64,'+img+'"> <br>' +
-                                data.product_name[i] + '<br>'+
-                                "商品ID: " + data.product_ID[i]+ '<br>'+
-                                "商品描述: " + data.product_detail[i]+ '<br>'+
-                                "商品金額: " + data.product_price[i]+ '<br>'+
-                                "商品剩餘: " + data.product_left[i]+ '<br>'                             
-                            )
-                        }
-                        });
-                    }
-                }
-              }
-        });
-    }
-
-    $("#search_button").click( function() {
-        // account = window.location.href.split('?')[1].split('=')[1]
-        // window.location.href = "/mission?account="+account
-
-        $.ajax({
-              url: '/get_shop_page',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
-                  'search': document.getElementById('search').value,
-              },
-              success: function (data) {
-                if (data.result == "success"){
-                    $('#newpic').html("");
-                    var pic_list = data.product_pic
-                    $('#balance').append(data.balance)
-                    for(var i = 0; i < pic_list.length; i++){
-                        $.ajax({
-                        url: '/get_img',
-                        method: 'POST',
-                        type: 'POST',
-                        async: false, //改成同步執行(等待上一個回傳)
-                        data: {
-                            "img_path": pic_list[i],
-                        },
-                        success: function (img) {
-                            // console.log()
-                            
-                            $('#newpic').append("<img src=" + '"data:image/jpg;base64,'+img+'"> <br>' +
-                                data.product_name[i] + '<br>'+
-                                "商品ID: " + data.product_ID[i]+ '<br>'+
-                                "商品描述: " + data.product_detail[i]+ '<br>'+
-                                "商品金額: " + data.product_price[i]+ '<br>'+
-                                "商品剩餘: " + data.product_left[i]+ '<br>'                             
-                            )
-                        }
-                        });
-                    }
-
-                }
-                console.log(data.result)
-                
-            }
-        });
-
-    })
-
-
-    $("#mission_button").click( function() {
-        // account = window.location.href.split('?')[1].split('=')[1]
-        // window.location.href = "/mission?account="+account
-
-        $.ajax({
-              url: '/buy_product',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
-                  'product_ID': "40000001",
-              },
-              success: function (data) {
-                if (data.result == "success"){
-                    window.location.href = window.location.href;         
-
-                }
-                console.log(data.result)
-                
-            }
-        });
-
-    })
-
-    $("#chat_button").click( function() {
-        $.ajax({
-              url: '/get_my_shop',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
-              },
-              success: function (data) {
-                if (data.result == "success"){
-                    // window.location.href = window.location.href;         
-                    $('#newpic').html("");
-                    var pic_list = data.product_pic
-                    for(var i = 0; i < pic_list.length; i++){
-                        $.ajax({
-                        url: '/get_img',
-                        method: 'POST',
-                        type: 'POST',
-                        async: false, //改成同步執行(等待上一個回傳)
-                        data: {
-                            "img_path": pic_list[i],
-                        },
-                        success: function (img) {
-                            // console.log()
-                            
-                            $('#newpic').append("<img src=" + '"data:image/jpg;base64,'+img+'"> <br>' +
-                                data.product_name[i] + '<br>'+
-                                "商品ID: " + data.product_ID[i]+ '<br>'+
-                                "商品描述: " + data.product_detail[i]+ '<br>'+
-                                "商品剩餘: " + data.product_num[i]+ '<br>'                             
-                            )
-                            $('#newpic').append('<button onclick=use('+ data.product_ID[i] +')>使用</button><br>')
-                        }
-                        });
-                    }
-                    // $('#newpic').append('<button onclick=use('+ data.product_ID[i] +')>使用</button>')
-                }
-            }
-        });
-    });
-
-    function use(product_ID){
-        $.ajax({
-              url: '/use_product',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
-                  'product_ID': product_ID,
-              },
-              success: function (data) {
-                if (data.result == "success"){
-                    $("#chat_button").click();
-                }
-                console.log(data.result)
-                
-            }
-        });
-    };
-</script>

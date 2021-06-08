@@ -1,0 +1,308 @@
+@font-face {
+    font-family: jf_open;
+    src: url(src/font/jf-openhuninn-1.1.ttf);
+}
+
+@font-face {
+    font-family: HP_Hans;
+    src: url(src/font/hp.ttf);
+}
+
+body {
+    margin: 0vw;
+    padding: 0vw;
+    background-color: white;
+}
+.shop_header {
+    position: fixed;
+    width: 105vw;
+    height: 22vw;
+    left: 0vw;
+    top: 0vw;
+    background: #F59E56;
+    z-index: 10;
+}
+
+.last_arrow {
+    position: absolute;
+    width: 12vw;
+    height: 12vw;
+    top: 6.1vw;
+    left: 5vw;
+    background-image: url('src/back_arrow.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 30;
+}
+
+.shop_text {
+    position: absolute;
+    width: 100vw;
+    height: 12vw;
+    top: 1vw;
+    font-size: 15vw;
+    font-family: jf_open;
+    text-align: right;
+    right: 7vw;
+    color: white;
+}
+
+.shop-tab > li {
+    background-color: #F59E56;
+    top: -1vw;
+}
+
+
+.shop-tab > li.active > #tab-shopping {
+    background-image: url('src/icon_tab_shopping_enabled.png');
+    margin-bottom: -3.5vw;
+}
+
+.shop-tab > li.active > #tab-owned {
+    background-image: url('src/icon_tab_owned_enabled.png');
+}
+.shop-tab {
+    position: fixed;
+    z-index: 10;
+    display: block;
+}
+
+#tab-shopping {
+    background-image: url('src/icon_tab_shopping_disabled.png');
+    background-size: cover;
+    width: 50vw;
+    height: 18vw;
+    margin-bottom: -2vw;
+}
+
+#tab-owned {
+    background-image: url('src/icon_tab_owned_disabled.png');   
+    background-size: cover;
+    width: 50vw;
+    height: 15vw;
+    margin-bottom: -1vw;
+}
+.shop-footer {
+    position: fixed;
+    top: 35vw;
+    width: 100vw;
+    height: 5vw;
+    background-color: white;
+    z-index: 5;
+}
+
+.shop-tab-content {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    padding-top: 39vw;
+    overflow-y: scroll !important;
+}
+#balance {    
+    font-size:7vw;
+    font-family: HP_Hans;
+    color:#E26F50;
+    letter-spacing:1vw;
+    margin-left: 3vw;
+}
+.shop-container{
+    margin-top:5vw;
+}
+.shop_card-header{
+    position: relative;
+    margin-bottom: -3vw;
+    width: 70vw;
+    height: 30vw;
+    
+    margin-left: 3vw;
+}
+.product_information{
+    font-size:5vw;
+    font-family: HP_Hans;
+    width: 50vw;
+    line-height: 5vw;
+    border-style: solid  solid  solid solid ;
+    border-color: #E26F50;
+    border-radius:6vw 6vw 6vw 6vw ;
+    padding-left:2vw;
+    padding-top:2.5vw;
+    padding-right:1vw;
+    padding-bottom:2vw;   
+    border-width:0.8vw; 
+}
+[aria-expanded="true"] .product_information {
+    border-style: solid  solid  none solid ;
+    border-radius:6vw 6vw 0vw 0vw ;
+    padding-top: 30vw;
+    
+}
+[aria-expanded="true"] .product_pic {
+    /*visibility: visible;*/
+    height: 25vw;
+    background-size: auto 25vw;
+}
+
+.product_pic{
+    position: absolute;
+    width: 40vw;
+    transition: height 0.3s;
+    height: 0vw;
+    background-color: #ffffff;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 4vw;
+    top: 3vw;
+    left: 3vw;
+    /*visibility: hidden;*/
+}
+.product{
+    display: inline-flex;
+}
+.product_name{
+    letter-spacing:0.7vw;
+}
+.product_discount{
+    letter-spacing:0.7vw;
+}
+.product_date{
+    color:gray;
+}
+.right{
+    margin-left: -13vw;
+    display: block;
+}
+.price{
+    font-size:7vw;
+    font-family: HP_Hans;
+    color: #E26F50;   
+    letter-spacing:1vw;
+}
+.money{
+    font-size:7vw;
+    font-family: HP_Hans;
+    color: #E26F50;   
+    letter-spacing:1vw;
+}
+.btn_buy {
+    width: 35vw;
+    height: 12vw;
+    border-radius: 2vw;
+    border-width: 0px;
+    font-family: HP_Hans;
+    font-size: 7vw;
+    color:white;    
+    background-color:#E26F50;
+    padding:-1vw;
+}
+.btn_buy:active {
+    background-color: rgba(226, 112, 80, 0.692);
+}
+.shop_card-body {
+    position: relative;
+    top: -20vw;
+    font-size:5vw;
+    font-family: HP_Hans;
+    width: 50vw;
+    height: 25vw;
+    z-index: 4;
+    margin-left: 3vw;
+    margin-bottom: -13vw;
+    border:solid 0.8vw;
+    border-top-style: none;
+    border-color: #E26F50;
+    border-bottom-right-radius:6vw;
+    border-bottom-left-radius:6vw;
+}
+.product_detail{
+    margin-top: 33vw;
+    margin-left: 2vw;
+    margin-right: 2vw;
+}
+#modal_page1 {
+    position: absolute;
+    height: 217vw;
+    width: 100vw;
+    margin: auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    top: 0px;
+    visibility: hidden;
+}
+#modal_page2 {
+    position: absolute;
+    height: 217vw;
+    width: 100vw;
+    margin: auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    top: 0px;
+    visibility: hidden;
+}
+#balance_after {
+    position: absolute;
+    left: 30vw;
+    top:90vw;
+    width: 43vw;
+    height: 29vw;
+    background-color: #EAC5A9;;
+    border-width: 0px;
+    border-radius: 6vw;
+    color: black;
+    font-size: 7vw;
+    font-family: HP_Hans;
+    padding:5vw;
+    text-align: center;
+}
+.owned-container{
+    margin-top:3vw;
+}
+.owned_information{
+    margin-left: 3vw;
+    font-size:5vw;
+    font-family: HP_Hans;
+    width: 50vw;
+    line-height: 5vw;
+    border-style: solid  solid  solid solid ;
+    border-color: #E26F50;
+    border-radius:6vw 6vw 6vw 6vw ;
+    padding-left:2vw;
+    padding-top:2.5vw;
+    padding-right:1vw;
+    padding-bottom:2vw;   
+    border-width:0.8vw; 
+}
+.owned_product{
+    display: inline-flex;
+    margin-top:3vw;
+}
+.btn_use {
+    width: 35vw;
+    height: 12vw;
+    border-radius: 2vw;
+    border-width: 0px;
+    font-family: HP_Hans;
+    font-size: 7vw;
+    color:white;    
+    background-color:#E26F50;
+    margin-top: 5vw;
+    margin-left: 7vw;
+}
+.btn_use:active {
+    background-color: rgba(226, 112, 80, 0.692);
+}
+#qrcode {
+    position: absolute;
+    left: 25vw;
+    top:90vw;
+    width: 43vw;
+    border-width: 0px;
+    border-radius: 6vw;
+    color: black;
+
+}
+.quarter_circle {
+    position: fixed;
+    width: 20vw;
+    height: 20vw;
+    bottom: 0vw;
+    background-size: cover;
+}
