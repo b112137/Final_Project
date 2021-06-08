@@ -2,317 +2,794 @@
 <html>
     <head> 
         <meta charset="utf-8">
-        <script src="static/jquery.js"></script>
+        <!-- <script src="static/jquery.js"></script> -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link href="static/friend.css" rel="stylesheet">
     </head>
     <body>
-        <button id="group_button">群組</button>
-        <button id="invite_button">好友邀請</button>
-        <input type="text" placeholder="搜尋" id="search">
-        <button id="search_button">搜尋</button>
-        <div id="friend">
-            
+        <div class="friend-header">
+            <a id="back_arrow_link">
+                <div class="back-arrow"></div>
+            </a>
+            <div class="friend-title">好 友</div>
         </div>
-        <div id="group">
-            
+
+        <ul class="nav nav-tabs nav-justified friend-top-tab" style="position: fixed; top: 22vw;">
+            <li id="tab_friend" class="">
+                <div id="tab-friend" data-toggle="tab" href="#friend-list">好 友</div>
+            </li>
+            <li id="tab_group">
+                <div id="tab-group" data-toggle="tab" href="#group-list">群 組</div>
+            </li>
+            <li id="tab_invite">
+                <div id="tab-add-friend" data-toggle="tab" href="#add-friend">新增好友</div>
+            </li>
+        </ul>
+        
+        <div class="friend-tab-content tab-content">
+            <!-- Friend List -->
+            <div id="friend-list" class="tab-pane fade in active">
+                <div class="friend-search-bar">
+                    <form class="form-search-friend">
+                        <input id="friend_search" type="search" placeholder="輸入好友名稱" class="search-friend-input">
+                        <div id="friend_search_delete" type="button" class="delete-btn"></div>
+                    </form>    
+                </div>
+                <div id="friend_container" class="friend-item-field">
+                    <!-- <div id="friend_1" class="friend-item" data-toggle="modal" data-target="#check-friend-modal">
+                        <div class="friend-photo"></div>
+                        <div class="friend-name">好友名稱</div>
+                    </div>
+                    <div class="friend-item">
+                        <div class="friend-photo"></div>
+                        <div class="friend-name">喔嗚嗚嗚嗚嗚嗚嗚嗚嗚嗚嗚嗚嗚嗚嗚嗚嗚</div>
+                    </div>
+                    <div class="friend-item">
+                        <div class="friend-photo"></div>
+                        <div class="friend-name"></div>
+                    </div>
+                    <div class="friend-item">
+                        <div class="friend-photo"></div>
+                        <div class="friend-name"></div>
+                    </div>
+                    <div class="friend-item">
+                        <div class="friend-photo"></div>
+                        <div class="friend-name"></div>
+                    </div>
+                    <div class="friend-item">
+                        <div class="friend-photo"></div>
+                        <div class="friend-name"></div>
+                    </div> -->
+                </div>
+            </div>
+
+            <!-- Group List -->
+            <div id="group-list" class="tab-pane fade">
+                <div class="group-search-bar">
+                    <form class="form-search-group">
+                        <input id="group_search" type="search" placeholder="輸入群組名稱" class="search-group-input">
+                        <div id="group_search_delete" type="button" class="delete-btn"></div>
+                    </form>    
+                </div>
+                <div id="group_container" class="group-item-field">
+                    <!-- <div class="friend-group-item">
+                        <div class="friend-group-photo"></div>
+                        <div class="friend-group-name">群組名稱</div>
+                    </div>
+                    <div class="friend-group-item">
+                        <div class="friend-group-photo"></div>
+                        <div class="friend-group-name">群組名稱</div>
+                    </div>
+                    <div class="friend-group-item">
+                        <div class="friend-group-photo"></div>
+                        <div class="friend-group-name">群組名稱</div>
+                    </div>
+                    <div class="friend-group-item">
+                        <div class="friend-group-photo"></div>
+                        <div class="friend-group-name">群組名稱</div>
+                    </div>
+                    <div class="friend-group-item">
+                        <div class="friend-group-photo"></div>
+                        <div class="friend-group-name">群組名稱</div>
+                    </div>
+                    <div class="friend-group-item">
+                        <div class="friend-group-photo"></div>
+                        <div class="friend-group-name">群組名稱</div>
+                    </div> -->
+                </div>
+            </div>
+
+            <!-- Add Friend -->
+            <div id="add-friend" class="tab-pane fade">
+                <div class="add-friend-search-bar">
+                    <form class="form-add-friend">
+                        <input id="invitation_search" type="search" placeholder="輸入ID" class="add-friend-input">
+                        <div type="button" class="delete-btn" style="right: 25vw;" id="cancel-new-friend"></div>
+                        <div type="button" class="confirm-add-id-btn">搜尋</div>
+                    </form>    
+                </div>
+                <div id="friend_invitation_container" class="add-friend-field">
+                    <!-- <div class="add-friend-item">
+                        <div class="add-friend-photo"></div>
+                        <div class="add-friend-name">好友名稱</div>
+                        <div class="add-friend-btn">確認</div>
+                        <div class="cancel-friend-btn">取消</div>
+                    </div>
+                    <div class="add-friend-item">
+                        <div class="add-friend-photo"></div>
+                        <div class="add-friend-name">好友名稱</div>
+                        <div class="add-friend-btn">確認</div>
+                        <div class="cancel-friend-btn">取消</div>
+                    </div>
+                    <div class="add-friend-item">
+                        <div class="add-friend-photo"></div>
+                        <div class="add-friend-name">好友名稱</div>
+                        <div class="add-friend-btn">確認</div>
+                        <div class="cancel-friend-btn">取消</div>
+                    </div>
+                    <div class="add-friend-item">
+                        <div class="add-friend-photo"></div>
+                        <div class="add-friend-name">好友名稱</div>
+                        <div class="add-friend-btn">確認</div>
+                        <div class="cancel-friend-btn">取消</div>
+                    </div>
+                    <div class="add-friend-item">
+                        <div class="add-friend-photo"></div>
+                        <div class="add-friend-name">好友名稱</div>
+                        <div class="add-friend-btn">確認</div>
+                        <div class="cancel-friend-btn">取消</div>
+                    </div>
+                    <div class="add-friend-item">
+                        <div class="add-friend-photo"></div>
+                        <div class="add-friend-name">好友名稱</div>
+                        <div class="add-friend-btn">確認</div>
+                        <div class="cancel-friend-btn">取消</div>
+                    </div>
+                    <div class="add-friend-item">
+                        <div class="add-friend-photo"></div>
+                        <div class="add-friend-name">好友名稱</div>
+                        <div class="add-friend-btn">確認</div>
+                        <div class="cancel-friend-btn">取消</div>
+                    </div>
+                    <div class="add-friend-item">
+                        <div class="add-friend-photo"></div>
+                        <div class="add-friend-name">好友名稱</div>
+                        <div class="add-friend-btn">確認</div>
+                        <div class="cancel-friend-btn">取消</div>
+                    </div> -->
+                </div>
+                <div id="search_friend_container" class="new-friend-field" style="display: none;">
+                    <!-- <div class="new-friend-photo"></div>
+                    <div class="new-friend-name">某人名稱</div>
+                    <div type="button" class="new-friend-btn" data-toggle="modal" data-target="#add-friend-modal">好友邀請</div> -->
+                </div>
+            </div>
         </div>
+
+        <!-- Add New Friend Modal -->
+        <div class="modal fade" id="add-friend-modal" tabindex="-1" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog">
+                <div id="check_modal_container" class="modal-content">
+                    <!-- <div class="modal-body">
+                        <div class="modal-body-photo"></div>
+                        <div class="modal-body-text">
+                            確定發送好友邀請給<br>
+                            某人名稱 嗎？
+                        </div>                        
+                    </div>
+                    <button type="button" class="modal-btn-cancel" data-dismiss="modal">取消</button>
+                    <button type="button" class="modal-btn-confirm">確認</button>                         -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Check Friend Modal -->
+        <div class="modal fade" id="check-friend-modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div id="profile_modal_container" class="modal-content" style="height: 75vw;">
+                    <!-- <div class="modal-body">
+                        <div class="modal-body-photo"></div>
+                        <div class="modal-body-text" style="font-size: 7vw;">某人名稱</div>                        
+                    </div>
+                    <button type="button" class="modal-btn-cancel" style="height: auto;">開始<br>聊天</button>
+                    <button type="button" class="modal-btn-confirm" style="height: auto;">個人<br>資訊</button> -->
+                </div>
+            </div>
+        </div>
+
+        <a id="home_link">
+            <div class="quarter_circle" style="left: 0vw; background-image: url('static/src/home.png');"></div>
+        </a>
+        <a id="chat_link">
+            <div class="quarter_circle" style="right: 0vw; background-image: url('static/src/chat.png');"></div>
+        </a>
     </body>
-</html>
-
-<script>
-    $.ajaxSetup({
-        data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
-    })    
-
-    window.onload = function(){
-        $.ajax({
-            url: '/get_friend_page',
-            method: 'POST',
-            type: 'POST',
-            dataType: "json",
-            data: {
-                "account": window.location.href.split('?')[1].split('=')[1],
-                'search': "",
-            },
-            success: function (data) {
-            if(data.result == 'success'){
-                $('#friend').html("");
-                console.log("load success")
-                if(data.friend_ID.length==0){
-                    $('#friend').append("哈哈哈你沒朋友" + '<br>')
+    <script>
+        $.ajaxSetup({
+            data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
+        })    
+        
+        window.onload = function(){
+            parameter = window.location.href.split('?')[1].split('&')
+            if(parameter.length == 1){
+                $("#tab_friend").attr('class', 'active' )
+                $("#tab_group").attr('class', '' )
+                $("#tab_invite").attr('class', '' )
+                $("#friend-list").attr('class', 'tab-pane fade in active')
+                $("#group-list").attr('class', 'tab-pane fade')
+                $("#add-friend").attr('class', 'tab-pane fade')
+                get_friend_page();
+            }
+            else if(parameter.length == 2){
+                if(parameter[1].split('=')[1] == "friend"){
+                    $("#tab_friend").attr('class', 'active' )
+                    $("#tab_group").attr('class', '' )
+                    $("#tab_invite").attr('class', '' )
+                    $("#friend-list").attr('class', 'tab-pane fade in active')
+                    $("#group-list").attr('class', 'tab-pane fade')
+                    $("#add-friend").attr('class', 'tab-pane fade')
+                    get_friend_page();
                 }
-                else
-                {
-                    var pic_list = data.friend_photo
-                    for(var i = 0; i < pic_list.length;i++){
+                else if(parameter[1].split('=')[1] == "group"){
+                    $("#tab_friend").attr('class', '' )
+                    $("#tab_group").attr('class', 'active' )
+                    $("#tab_invite").attr('class', '' )
+                    $("#friend-list").attr('class', 'tab-pane fade')
+                    $("#group-list").attr('class', 'tab-pane fade in active')
+                    $("#add-friend").attr('class', 'tab-pane fade')
+                    get_friend_group();
+                }
+                else{
+                    $("#tab_friend").attr('class', '' )
+                    $("#tab_group").attr('class', '' )
+                    $("#tab_invite").attr('class', 'active' )
+                    $("#friend-list").attr('class', 'tab-pane fade')
+                    $("#group-list").attr('class', 'tab-pane fade')
+                    $("#add-friend").attr('class', 'tab-pane fade in active')
+                    get_friend_invitation();
+                }
+            }
+            else if(parameter.length == 3){
+                $("#tab_friend").attr('class', '' )
+                $("#tab_group").attr('class', '' )
+                $("#tab_invite").attr('class', 'active' )
+                $("#friend-list").attr('class', 'tab-pane fade')
+                $("#group-list").attr('class', 'tab-pane fade')
+                $("#add-friend").attr('class', 'tab-pane fade in active')
+                search_friend();
+            }
+
+            // get_friend_page();
+            document.getElementById('back_arrow_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
+            document.getElementById('home_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
+            document.getElementById('chat_link').href = "/chatroom?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
+        }
+
+        $('#tab_friend').click( function() {
+            window.location.href = "/friend?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
+            // get_friend_page();
+        })
+
+        $('#tab_group').click( function() {
+            window.location.href = "/friend?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1] +'&pg=group';
+            // get_friend_group();
+        })
+
+        $('#tab_invite').click( function() {
+            window.location.href = "/friend?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1] +'&pg=invite';
+            // get_friend_invitation();
+        })
+
+        $(document).on('change', "#friend_search",function(){
+            get_friend_page();
+        })
+
+        $('#friend_search_delete').click(function(){
+            document.getElementById("friend_search").value = ""
+            get_friend_page();
+        })
+
+        $(document).on('change', "#group_search",function(){
+            get_friend_group();
+        })
+
+        $('#group_search_delete').click(function(){
+            document.getElementById("group_search").value = ""
+            get_friend_group();
+        })
+
+        function get_friend_page() {
+            console.log(document.getElementById("friend_search").value)
+            $.ajax({
+                url: '/get_friend_page',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    "account": window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                    'search': document.getElementById("friend_search").value,
+                },
+                success: function (data) {
+                    if(data.result == 'success'){
+                        $('#friend_container').html("");
+                        console.log("load success")
+                        if(data.friend_ID.length==0){
+                            // $('#friend_container').append("哈哈哈你沒朋友" + '<br>')
+                            if(document.getElementById("friend_search").value==""){
+                                $('#friend_container').append(
+                                    '<div class="error_text">尚無好友，快去抽卡<br>或破任務認識新朋友吧!</div>'    
+                                )
+                            }
+                            else{
+                                $('#friend_container').append(
+                                    '<div class="error_text">查無此好友名稱!</div>'    
+                                )
+                            }
+                            
+                        }
+                        else
+                        {
+                            var pic_list = data.friend_photo
+                            for(var i = 0; i < pic_list.length;i++){
+                                $.ajax({
+                                url: '/get_img',
+                                method: 'POST',
+                                type: 'POST',
+                                async: false, //改成同步執行(等待上一個回傳)
+                                data: {
+                                    "img_path": pic_list[i],
+                                },
+                                success: function (img) {
+                                    $('#friend_container').append(
+                                        // '<div onclick=goto_profile("'+ data.friend_ID[i] +'") class="friend-item">\
+                                        '<div onclick=create_profile_modal("'+ data.friend_ID[i]+'") class="friend-item" data-toggle="modal" data-target="#check-friend-modal">\
+                                            <div class="friend-photo" style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
+                                            <div class="friend-name">'+ data.friend_name[i] +'</div>\
+                                        </div>'
+                                    )
+                                }
+                                });
+                            }
+                            $('#friend_container').append(
+                                '<div class="friend-item">\
+                                </div>'
+                            )
+                        }
+                    }
+                }
+            })
+        }
+
+        function create_profile_modal(friend_ID){
+            console.log(friend_ID)
+            $.ajax({
+                url: '/get_friend_chatroom',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    "account": window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                    'others': friend_ID,
+                },
+                success: function (data) {
+                    if(data.result == 'success'){
                         $.ajax({
-                        url: '/get_img',
-                        method: 'POST',
-                        type: 'POST',
-                        async: false, //改成同步執行(等待上一個回傳)
-                        data: {
-                            "img_path": pic_list[i],
-                        },
-                        success: function (img) {
-                            $('#friend').append(
-                                "朋友名字: " +　data.friend_name[i] + '<br>' +
-                                "ID: " +　data.friend_ID[i] + '<br>' +
-                                "<img src=" + '"data:image/jpg;base64,'+img+'"> <br>'
-                            )
-                        }
+                            url: '/get_img',
+                            method: 'POST',
+                            type: 'POST',
+                            async: false, //改成同步執行(等待上一個回傳)
+                            data: {
+                                "img_path": data.friend_photo,
+                            },
+                            success: function (img) {
+                                $('#profile_modal_container').html(
+                                    '<div class="modal-body">\
+                                            <div class="modal-body-photo" style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
+                                            <div class="modal-body-text" style="font-size: 7vw;">'+ data.friend_name +'</div>\
+                                        </div>\
+                                        <button onclick=goto_chatroom('+ data.chatroom_ID +') type="button" class="modal-btn-cancel" style="height: auto;">開始<br>聊天</button>\
+                                        <button onclick=goto_profile("'+ friend_ID +'") type="button" class="modal-btn-confirm" style="height: auto;">個人<br>資訊</button>'
+                                )
+                            }
                         });
-                        
-                        
                     }
                 }
-                
-                    $('#friend').append(
-                        "任務聊天室 : "  + '<br>'
-                    )
-                    for(var i = 0;i < data.mission_chatroom_ID.length;i++){
-                        $('#friend').append(
-                        " : " + data.mission_chatroom_ID[i] + '<br>'
-                    )}
-                    $('#friend').append(
-                        "好友聊天室 : " + '<br>'
-                    )
-                    for(var j = 0;j< data.friend_chatroom_list.length;j++){
-                        $('#friend').append(
-                        " : " + data.friend_chatroom_list[j] + '<br>'
-                    )}   
-                }
-            }
-        })
-    }
+            })
 
-    $('#group_button').click( function(){
-        $.ajax({
-            url: '/get_friend_group',
-            method: 'POST',
-            type: 'POST',
-            dataType: "json",
-            data: {
-                "account": window.location.href.split('?')[1].split('=')[1],
-                'search': "",
-            },
-            success: function (data) {
-                if(data.result == 'success'){
-                    $('#friend').html("");
-                    console.log("load success")
-                    if(data.group_name.length==0){
-                        $('#friend').append("哈哈哈你沒朋友" + '<br>')
-                    }
-                    else
-                    {
-                        var pic_list = data.chat_img
-                        for(var i = 0; i < pic_list.length;i++){
-                            $.ajax({
-                            url: '/get_img',
-                            method: 'POST',
-                            type: 'POST',
-                            async: false, //改成同步執行(等待上一個回傳)
-                            data: {
-                                "img_path": pic_list[i],
-                            },
-                            success: function (img) {
-                                $('#friend').append(
-                                    "群組名字: " +　data.group_name[i] + '<br>' +
-                                    "群組ID: " +　data.chatroom_ID[i] + '<br>' +
-                                    "群組人數: " +　data.group_number[i] + '<br>' +
-                                    "狀態: " +　data.status[i] + '<br>' +
-                                    "<img src=" + '"data:image/jpg;base64,'+img+'"> <br>'
+            
+                    
+        }
+
+        function get_friend_group(){
+            $.ajax({
+                url: '/get_friend_group',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    "account": window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                    'search': document.getElementById("group_search").value,
+                },
+                success: function (data) {
+                    if(data.result == 'success'){
+                        $('#group_container').html("");
+                        console.log("load success")
+                        if(data.group_name.length==0){
+                            if(document.getElementById("friend_search").value==""){
+                                $('#group_container').append(
+                                    '<div class="error_text">尚無群組<br>快去揪團破任務吧!</div>'    
                                 )
                             }
-                            });
-                            
-                            
-                        }
-                    }
-                
-                }
-            }
-        })
-    })
-
-    $('#invite_button').click( function(){
-        $.ajax({
-            url: '/get_friend_invitation',
-            method: 'POST',
-            type: 'POST',
-            dataType: "json",
-            data: {
-                "account": window.location.href.split('?')[1].split('=')[1],
-            },
-            success: function (data) {
-                if(data.result == 'success'){
-                    $('#friend').html("");
-                    console.log("load success")
-                    if(data.friend_ID.length==0){
-                        $('#friend').append("哈哈哈你沒朋友" + '<br>')
-                    }
-                    else
-                    {
-                        var pic_list = data.friend_photo
-                        for(var i = 0; i < pic_list.length;i++){
-                            $.ajax({
-                            url: '/get_img',
-                            method: 'POST',
-                            type: 'POST',
-                            async: false, //改成同步執行(等待上一個回傳)
-                            data: {
-                                "img_path": pic_list[i],
-                            },
-                            success: function (img) {
-                                $('#friend').append(
-                                    "名字: " +　data.friend_name[i] + '<br>' +
-                                    "ID: " +　data.friend_ID[i] + '<br>' +
-                                    "<img src=" + '"data:image/jpg;base64,'+img+'"> <br>'+
-                                    "<button onclick=accept_invitation('" + data.friend_ID[i] + "')>接受</button>"+
-                                    "<button onclick=reject_invitation('" + data.friend_ID[i] + "')>拒絕</button>"
+                            else{
+                                $('#group_container').append(
+                                    '<div class="error_text">查無此群組名稱!</div>'    
                                 )
                             }
-                            });
-                            
                             
                         }
-                    }
-                
-                }
-            }
-        })
-    })
-
-
-    $("#search_button").click( function() {
-        $.ajax({
-              url: '/search_friend_ID',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
-                  'search': document.getElementById('search').value,
-              },
-              success: function (data) {
-                if (data.result == "success"){
-                    $('#friend').html("");
-                    $.ajax({
-                        url: '/get_img',
-                        method: 'POST',
-                        type: 'POST',
-                        async: false, //改成同步執行(等待上一個回傳)
-                        data: {
-                            "img_path": data.profile_photo,
-                        },
-                        success: function (img) {
-                            $('#friend').append(
-                                "名字: " +　data.name + '<br>' +
-                                "ID: " +　data.ID + '<br>' +
-                                "<img src=" + '"data:image/jpg;base64,' + img + '"> <br>'+
-                                "<button onclick=send_invitation('" + data.ID + "')>好友邀請</button>"+
-                                "<button onclick=cancel_invitation('" + data.ID + "')>取消邀請</button>"
-
+                        else
+                        {
+                            var pic_list = data.chat_img
+                            for(var i = 0; i < pic_list.length;i++){
+                                $.ajax({
+                                    url: '/get_img',
+                                    method: 'POST',
+                                    type: 'POST',
+                                    async: false, //改成同步執行(等待上一個回傳)
+                                    data: {
+                                        "img_path": pic_list[i],
+                                    },
+                                    success: function (img) {
+                                        $('#group_container').append(
+                                            '<div onclick=goto_chatroom('+ data.chatroom_ID[i] +') class="friend-group-item">\
+                                                <div class="friend-group-photo" style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
+                                                <div class="friend-group-name">'+　data.group_name[i]+'('+ data.group_number[i] +')</div>\
+                                            </div>'
+                                        )
+                                    }
+                                });
+                            }
+                            $('#group_container').append(
+                                '<div class="friend-group-item">\
+                                </div>'
                             )
                         }
-                    });
-
+                    
+                    }
                 }
-                else if (data.result == "not_found") {
-                    $('#friend').html("找不到欸!");
+            })
+        }
+
+        function get_friend_invitation(){
+            console.log("?")
+            $.ajax({
+                url: '/get_friend_invitation',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    "account": window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                },
+                success: function (data) {
+                    if(data.result == 'success'){
+                        $('#friend_invitation_container').html("");
+                        console.log("load success")
+                        if(data.friend_ID.length==0){
+                            $('#friend_invitation_container').append(
+                                '<div class="error_text">尚無好友邀請!</div>'    
+                            )
+                        }
+                        else
+                        {
+                            var pic_list = data.friend_photo
+                            for(var i = 0; i < pic_list.length;i++){
+                                $.ajax({
+                                    url: '/get_img',
+                                    method: 'POST',
+                                    type: 'POST',
+                                    async: false, //改成同步執行(等待上一個回傳)
+                                    data: {
+                                        "img_path": pic_list[i],
+                                    },
+                                    success: function (img) {
+                                        $('#friend_invitation_container').append(
+                                            '<div class="add-friend-item">\
+                                                <div onclick=goto_profile("'+ data.friend_ID[i] +'") class="add-friend-photo" style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
+                                                <div onclick=goto_profile("'+ data.friend_ID[i] +'") class="add-friend-name">'+ data.friend_name[i] +'</div>\
+                                                <div class="add-friend-btn" onclick=accept_invitation("' + data.friend_ID[i] + '")>確認</div>\
+                                                <div class="cancel-friend-btn" onclick=reject_invitation("' + data.friend_ID[i] + '")>取消</div>\
+                                            </div>'
+                                        )
+                                    }
+                                });
+                            }
+                            $('#friend_invitation_container').append(
+                                '<div class="add-friend-item">\
+                                </div>'
+                            )
+                        }
+                    
+                    }
                 }
-                else if (data.result == "found_self") {
-                    $('#friend').html("不要找自己喇!");
+            })
+        }
+
+
+        function accept_invitation(invitation_ID, type=0){
+            console.log(invitation_ID)
+            $.ajax({
+                url: '/accept_invitation',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                    'others': invitation_ID,
+                },
+                success: function (data) {
+                    if (data.result == "success"){
+                        if(type==0){
+                            get_friend_invitation();
+                        }
+                        else{
+                            $('.confirm-add-id-btn').click();
+                        }
+                    }
+                    else if (data.result == "error") {
+                        console.log(data.result)
+                    }                
                 }
-                
-            }
-        });
+            });
+        }
 
-    })
-
-    function accept_invitation(invitation_ID){
-        console.log(invitation_ID)
-        $.ajax({
-              url: '/accept_invitation',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
-                  'others': invitation_ID,
-              },
-              success: function (data) {
-                if (data.result == "success"){
-
+        function reject_invitation(invitation_ID, type=0){
+            console.log(invitation_ID)
+            $.ajax({
+                url: '/reject_invitation',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                    'others': invitation_ID,
+                },
+                success: function (data) {
+                    if (data.result == "success"){
+                        if(type==0){
+                            get_friend_invitation();
+                        }
+                        else{
+                            $('.confirm-add-id-btn').click();
+                        }
+                    }
+                    else if (data.result == "error") {
+                        console.log(data.result)
+                    }
                 }
-                else if (data.result == "error") {
-                    console.log(data.result)
-                }                
-            }
-        });
-    }
+            });
+        }
 
-    function reject_invitation(invitation_ID){
-        console.log(invitation_ID)
-        $.ajax({
-              url: '/reject_invitation',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
-                  'others': invitation_ID,
-              },
-              success: function (data) {
-                if (data.result == "success"){
-
+        function send_invitation(invitation_ID){
+            console.log(invitation_ID)
+            $.ajax({
+                url: '/send_invitation',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                    'others': invitation_ID,
+                },
+                success: function (data) {
+                    if (data.result == "success"){
+                        $('.confirm-add-id-btn').click();
+                    }
+                    else if (data.result == "error") {
+                        console.log(data.result)
+                    }                
                 }
-                else if (data.result == "error") {
-                    console.log(data.result)
-                }                
-            }
-        });
-    }
+            });
+        }
 
-    function send_invitation(invitation_ID){
-        console.log(invitation_ID)
-        $.ajax({
-              url: '/send_invitation',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
-                  'others': invitation_ID,
-              },
-              success: function (data) {
-                if (data.result == "success"){
-
+        function cancel_invitation(invitation_ID){
+            console.log(invitation_ID)
+            $.ajax({
+                url: '/cancel_invitation',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                    'others': invitation_ID,
+                },
+                success: function (data) {
+                    if (data.result == "success"){
+                        $('.confirm-add-id-btn').click();
+                    }
+                    else if (data.result == "error") {
+                        console.log(data.result)
+                    }                
                 }
-                else if (data.result == "error") {
-                    console.log(data.result)
-                }                
-            }
-        });
-    }
+            });
+        }
 
-    function cancel_invitation(invitation_ID){
-        console.log(invitation_ID)
-        $.ajax({
-              url: '/cancel_invitation',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
-                  'others': invitation_ID,
-              },
-              success: function (data) {
-                if (data.result == "success"){
-
+        function delete_friend(others){
+            $.ajax({
+                url: '/delete_friend',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                    'others': others,
+                },
+                success: function (data) {
+                    if (data.result == "success"){
+                        $('.confirm-add-id-btn').click();
+                    }
+                    else if (data.result == "error") {
+                        console.log(data.result)
+                    }                
                 }
-                else if (data.result == "error") {
-                    console.log(data.result)
-                }                
-            }
-        });
-    }
-</script>
+            });
+        }
+
+        function search_friend(){
+            $('.add-friend-field').hide();
+            $('.new-friend-field').show();
+            document.getElementById('invitation_search').value = window.location.href.split('?')[1].split('&')[2].split('=')[1];
+            $.ajax({
+                url: '/search_friend_ID',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                    'search': window.location.href.split('?')[1].split('&')[2].split('=')[1],
+                },
+                success: function (data) {
+                    if (data.result == "success"){
+                        $('#search_friend_container').html("");
+                        $("#check_modal_container").html("");
+                        $.ajax({
+                            url: '/get_img',
+                            method: 'POST',
+                            type: 'POST',
+                            async: false, //改成同步執行(等待上一個回傳)
+                            data: {
+                                "img_path": data.profile_photo,
+                            },
+                            success: function (img) {
+                                $('#search_friend_container').append(
+                                    '<div onclick=goto_profile("'+ document.getElementById('invitation_search').value +'")>\
+                                        <div class="new-friend-photo" style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
+                                        <div class="new-friend-name">'+ data.name +'</div>\
+                                    </div>'
+                                )
+
+                                $.ajax({
+                                    url: '/get_relationship',
+                                    method: 'POST',
+                                    type: 'POST',
+                                    dataType: "json",
+                                    data: {
+                                        'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                                        'others': data.ID,
+                                    },
+                                    success: function (relation) {
+                                        others = data.ID
+                                        $('#friend_button').html('<div class="friend_button"></div>')
+                                        if(relation.result=="friend"){
+                                            $('#search_friend_container').append(
+                                                '<div class="new-friend-name" style="font-size: 5vw;">已經是您的好友</div>\
+                                                <div style="background-color: #E26F50;" type="button" class="new-friend-btn" data-toggle="modal" data-target="#add-friend-modal">刪除好友</div>'
+                                            )
+
+                                            $("#check_modal_container").append(
+                                                '<div class="modal-body">\
+                                                    <div class="modal-body-photo" style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
+                                                    <div class="modal-body-text">\
+                                                        確定刪除好友 ' + data.name + ' 嗎？\
+                                                    </div>\
+                                                </div>\
+                                                <button type="button" class="modal-btn-cancel" data-dismiss="modal">取消</button>\
+                                                <button type="button" class="modal-btn-confirm" data-dismiss="modal" onclick=delete_friend("'+ others +'")>確認</button>'
+                                            )
+                                        }
+                                        else if(relation.result=="invitation_send"){
+                                            $('#search_friend_container').append(
+                                                '<div class="new-friend-name" style="font-size: 5vw;">您已送出好友邀請</div>\
+                                                <div style="background-color: #E26F50;" type="button" class="new-friend-btn" data-toggle="modal" data-target="#add-friend-modal">取消邀請</div>'
+                                            )
+
+                                            $("#check_modal_container").append(
+                                                '<div class="modal-body">\
+                                                    <div class="modal-body-photo" style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
+                                                    <div class="modal-body-text">\
+                                                        確定取消對 ' + data.name + '<br>的好友邀請嗎？\
+                                                    </div>\
+                                                </div>\
+                                                <button type="button" class="modal-btn-cancel" data-dismiss="modal">取消</button>\
+                                                <button type="button" class="modal-btn-confirm" data-dismiss="modal" onclick=cancel_invitation("'+ others +'")>確認</button>'
+                                            )
+                                        }
+                                        else if(relation.result=="invitation_receive"){
+                                            $('#search_friend_container').append(
+                                                '<div class="new-friend-name" style="font-size: 5vw;">已對您送出好友邀請</div>\
+                                                <div type="button" class="new-friend-btn" data-toggle="modal" data-target="#add-friend-modal">確認邀請</div>'
+                                            )
+
+                                            $("#check_modal_container").append(
+                                                '<div class="modal-body">\
+                                                    <div class="modal-body-photo" style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
+                                                    <div class="modal-body-text">\
+                                                        確定接受 ' + data.name + '<br>的好友邀請嗎？\
+                                                    </div>\
+                                                </div>\
+                                                <button type="button" class="modal-btn-cancel" data-dismiss="modal">取消</button>\
+                                                <button type="button" class="modal-btn-confirm" data-dismiss="modal" onclick=accept_invitation("'+ others +'", 1)>確認</button>'
+                                            )                                            
+                                        }
+                                        else{
+                                            $('#search_friend_container').append(
+                                                '<div class="new-friend-name" style="font-size: 5vw;">尚未加入好友</div>\
+                                                <div type="button" class="new-friend-btn" data-toggle="modal" data-target="#add-friend-modal">新增好友</div>'
+                                            )
+
+                                            $("#check_modal_container").append(
+                                                '<div class="modal-body">\
+                                                    <div class="modal-body-photo" style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
+                                                    <div class="modal-body-text">\
+                                                        確定發送好友邀請給<br>' + data.name + ' 嗎？\
+                                                    </div>\
+                                                </div>\
+                                                <button type="button" class="modal-btn-cancel" data-dismiss="modal">取消</button>\
+                                                <button type="button" class="modal-btn-confirm" data-dismiss="modal" onclick=send_invitation("'+ others +'")>確認</button>'
+                                            )                                            
+                                        }
+                                    }
+                                })
+                            }
+                        });
+                    }
+                    else if (data.result == "not_found") {
+                        $('#search_friend_container').html(
+                            '<div class="error_text">找無此ID，請重新搜尋!</div>'
+                        );
+                    }
+                    else if (data.result == "found_self") {
+                        $('#search_friend_container').html(
+                            '<div class="error_text">無法搜尋自己ID，請重新搜尋!</div>'
+                        );
+                    }
+                    
+                }
+            });
+        }
+
+
+        $('.confirm-add-id-btn').on("click", function(){
+            search_ID = document.getElementById('invitation_search').value;
+            window.location.href = "/friend?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1] +'&pg=invite&search=' + search_ID;
+        })
+
+        function goto_profile(others){
+            window.location.href = "/profile?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1] +'&profileID='+ others;
+        }
+
+        function goto_chatroom(chatroom_ID){
+            window.location.href = "/chatroom?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1] + "&chatroom_ID=" + chatroom_ID;
+        }
+
+        $('#cancel-new-friend').on("click", function(){
+            window.location.href = "/friend?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1] +'&pg=invite';
+            $('.add-friend-field').show();
+            $('.new-friend-field').hide();
+            $('#search_friend_container').html("");
+            document.getElementById('invitation_search').value = "";
+        })
+
+    </script>
+</html>

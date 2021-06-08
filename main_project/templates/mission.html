@@ -31,8 +31,8 @@
                 <div class="search-bar">
                     <form class="search">
                         <!-- <img src="src/search.png" class="mission-search-icon"> -->
-                        <input type="search" placeholder=" 搜尋" class="search-input">
-                        <button type="reset" class="btn_cancel">取消</button>
+                        <input id="mission_search" type="search" placeholder=" 搜尋" class="search-input">
+                        <button id="mission_search_delete" type="reset" class="btn_cancel">取消</button>
                     </form>    
                 </div> 
 
@@ -237,6 +237,15 @@
         document.getElementById('chat_link').href = "/chatroom?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
 
     }
+
+    $(document).on('change', "#mission_search",function(){
+        all_mission();
+    })
+
+    $('#mission_search_delete').click(function(){
+        document.getElementById("mission_search").value = ""
+        all_mission();
+    })
 
     $('#tab-explore').click( function() {
         all_mission();
@@ -453,6 +462,7 @@
               type: 'POST',
               dataType: "json",
               data: {
+                  "search": document.getElementById("mission_search").value,
               },
               success: function (data) {
                 if (data.result == "success"){

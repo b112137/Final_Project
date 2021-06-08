@@ -10,9 +10,10 @@
     </head>
     <body>
         <div class="shop_header">
-            <a id="last_arrow_link">
+            <a id="back_arrow_link">
                 <div class="last_arrow"></div>
             </a>
+            
             
             <div class="shop_text">商 店</div>
         </div>
@@ -29,8 +30,8 @@
         <div class="shop-tab-content tab-content">
             <div id="shopping" class="tab-pane fade in active">
                     <!-- <p id="balance">用戶餘額:$100000000</p> -->
-                    <!-- <div class="shop-container">
-                        <div id="item1">
+                    <div id="shop_container" class="shop-container">
+                        <!-- <div id="item1">
                             <div class="product" >
                                 <div class="shop_card-header">
                                     <div href="#collapse1" data-toggle="collapse" data-parent="#shopping">
@@ -196,14 +197,14 @@
                                         詳細說明</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
-                    </div> -->
+                    </div>
             </div>
 
             <div id="owned" class="tab-pane fade">
-                <div class="owned-container">
-                    <div class="owned_product" id="owned_p1">
+                <div id="owned_container" class="owned-container">
+                    <!-- <div class="owned_product" id="owned_p1">
                         <div class="owned_information">
                             <p class="product_name" id="owned_product1">萊爾辣椒醬xxxxx</p>
                             <p class="product_discount" id="owned_discount1">折20元</p>
@@ -277,7 +278,7 @@
 
                         <button type="button" class="btn_use" id="Use7" >使用</button>
                         
-                    </div>
+                    </div> -->
                 </div>
             </div> 
  
@@ -308,8 +309,21 @@
         }) 
 
         window.onload = function(){
+            document.getElementById('back_arrow_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
+            document.getElementById('home_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
+            document.getElementById('chat_link').href = "/chatroom?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
             get_shop_page();
         }
+
+        
+
+        $('#tab-shopping').click( function() {
+            get_shop_page();
+        })
+
+        $('#tab-owned').click( function() {
+            get_my_shop();
+        })
 
         function get_shop_page(){
             $.ajax({
@@ -323,10 +337,10 @@
                 },
                 success: function (data) {
                     if (data.result == "success"){
-                        $('#shopping').html("");
+                        $('#shop_container').html("");
                         var pic_list = data.product_pic
                         console.log(data.balance)
-                        $('#shopping').append( '<p id="balance">用戶餘額:$'+data.balance+'</p>')
+                        $('#shop_container').append( '<p id="balance">用戶餘額:$'+data.balance+'</p>')
                         for(var i = 0; i < pic_list.length; i++){
                             $.ajax({
                             url: '/get_img',
@@ -337,30 +351,30 @@
                                 "img_path": pic_list[i],
                             },
                             success: function (img) {
-                                $('#shopping').append(
-                                    '<div class="shop-container">\
-                                        <div id="item1">\
-                                            <div class="product" >\
-                                                <div class="shop_card-header">\
-                                                    <div href="#collapse'+ i.toString() +'" data-toggle="collapse" data-parent="#shopping">\
-                                                            <div class="product_information" >\
-                                                                <div class="product_pic" id="product_pic'+ i.toString()+'"></div>\
-                                                                <p class="product_name" id="product1">'+ data.product_name[i] +'</p>\
-                                                                <p class="product_discount" id="discount1"></p>\
-                                                                <p class="product_date" id="date1">期限:2021/5/6</p>\
-                                                            </div>\
-                                                    </div>\
-                                                </div>\
-                                                <div class="right">\
-                                                    <p class="price" id="price1">$'+ data.product_price[i] +'</p>\
-                                                    <button type="button" class="btn_buy" id="Buy1" onclick=buy_product('+ data.product_ID[i] +','+ data.product_price[i] +') >Buy</button>\
+                                $('#shop_container').append(
+                                    '<div id="item1">\
+                                        <div class="product" >\
+                                            <div class="shop_card-header">\
+                                                <div href="#collapse'+ i.toString() +'" data-toggle="collapse" data-parent="#shopping">\
+                                                        <div class="product_information" >\
+                                                            <div class="product_pic" id="product_pic'+ i.toString()+'"></div>\
+                                                            <p class="product_name" id="product1">'+ data.product_name[i] +'</p>\
+                                                            <p class="product_discount" id="discount1"></p>\
+                                                            <p class="product_date" id="date1">期限:2021/5/6</p>\
+                                                        </div>\
                                                 </div>\
                                             </div>\
-                                            <div id="collapse'+ i.toString() +'" class="collapse" aria-expanded="false" style="height: 0px;">\
-                                                <div class="shop_card-body">\
-                                                    <p class="product_detail">'+ data.product_detail[i] +'</p>\
-                                                </div>\
+                                            <div class="right">\
+                                                <p class="price" id="price1">$'+ data.product_price[i] +'</p>\
+                                                <button type="button" class="btn_buy" id="Buy1" onclick=buy_product('+ data.product_ID[i] +','+ data.product_price[i] +') >Buy</button>\
                                             </div>\
+                                        </div>\
+                                        <div>\
+                                        <div id="collapse'+ i.toString() +'" class="collapse" aria-expanded="false" style="height: 0px;">\
+                                            <div class="shop_card-body">\
+                                                <p class="product_detail">'+ data.product_detail[i] +'</p>\
+                                            </div>\
+                                        </div>\
                                         </div>\
                                     </div>'
                                 )
@@ -369,7 +383,7 @@
                             });
                         }
                         
-                        $('#shopping').append(
+                        $('#shop_container').append(
                             '<div class="shop-container">\
                                 <div id="item1">\
                                     <div class="product" >\
@@ -412,75 +426,85 @@
             
         }
 
-        var owned_id=7;
-        var money=100000000;
-        $('#Buy1').click( function() {
-            owned_id+=1;
-            $('#Deduct').text("-"+$('#price1').text())
-            money=money-$('#price1').text().substring(1,$('#price1').text().length );
-            $('#modal_page1').css("visibility", "visible");
-            $('.shop_header').css("opacity","0.5");
-            $('.nav').css("opacity","0.5");	
-            //購物Buy完item加到已擁有
-            $('.owned-container').append(                             
-                    '<div class="owned_product">\
-                    <div class="owned_information">\
-                        <p class="product_name" id="owned_product'+owned_id+'\"">'+$('#product1').text()+'</p>\
-                        <p class="product_discount" id="owned_discount'+owned_id+'\"">'+$('#discount1').text()+'</p>\
-                        <p class="product_date" id="owned_date'+owned_id+'\"">'+$('#date1').text()+'</p>\
-                    </div>\
-                    <button type="button" class="btn_use"  >使用</button>\
-                </div>'
-                )
-            //購物Buy完item移除
-            $( "#item1" ).remove();
-            //購物Buy完扣餘額
-            $("#balance").html("用戶餘額:$"+money);
-        })
+        function get_my_shop(){
+            console.log('123')
+            $.ajax({
+              url: '/get_my_shop',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+              },
+              success: function (data) {
+                if (data.result == "success"){
+                    // window.location.href = window.location.href;         
+                    $('#owned_container').html("");
+                    var pic_list = data.product_pic
+                    for(var i = 0; i < pic_list.length; i++){
+                        $.ajax({
+                        url: '/get_img',
+                        method: 'POST',
+                        type: 'POST',
+                        async: false, //改成同步執行(等待上一個回傳)
+                        data: {
+                            "img_path": pic_list[i],
+                        },
+                        success: function (img) {
+                            console.log('123')
+                            
+                            $('#owned_container').append(
+                                // "<img src=" + '"data:image/jpg;base64,'+img+'"> <br>' +
+                                // data.product_name[i] + '<br>'+
+                                // "商品ID: " + data.product_ID[i]+ '<br>'+
+                                // "商品描述: " + data.product_detail[i]+ '<br>'+
+                                // "商品剩餘: " + data.product_num[i]+ '<br>'          
+                                
+                                '<div class="owned_product" id="owned_p2">\
+                                    <div class="owned_information">\
+                                        <p class="product_name" id="owned_product2">'+ data.product_name[i] +'</p>\
+                                        <p class="product_date" id="owned_date2">剩餘數量:'+ data.product_num[i] +'</p>\
+                                    </div>\
+                                    <button onclick=use('+ data.product_ID[i] +') type="button" class="btn_use" id="Use2"  >使用</button>\
+                                </div>'
+                            )
+                        }
+                        });
+                    }
+                    // $('#newpic').append('<button onclick=use('+ data.product_ID[i] +')>使用</button>')
+                }
+            }
+        });
+        }
 
-
-        $('#Buy2').click( function() {
-            $('#Deduct').text($('#price2').text())
-            $('#modal_page1').css("visibility", "visible");
-            $('.shop_header').css("opacity","0.5");
-            $('.nav').css("opacity","0.5");
-        })
-        $('#Buy3').click( function() {
-            $('#Deduct').text($('#price3').text())
-            $('#modal_page1').css("visibility", "visible");
-            $('.shop_header').css("opacity","0.5");
-            $('.nav').css("opacity","0.5");
-        })
-        $('#Buy4').click( function() {
-            $('#Deduct').text($('#price4').text())
-            $('#modal_page1').css("visibility", "visible");
-            $('.shop_header').css("opacity","0.5");
-            $('.nav').css("opacity","0.5");
-        })
-        $('#Buy5').click( function() {
-            $('#Deduct').text($('#price5').text())
-            $('#modal_page1').css("visibility", "visible");
-            $('.shop_header').css("opacity","0.5");
-            $('.nav').css("opacity","0.5");
-        })
-        $('#Buy6').click( function() {
-            $('#Deduct').text($('#price6').text())
-            $('#modal_page1').css("visibility", "visible");
-            $('.shop_header').css("opacity","0.5");
-            $('.nav').css("opacity","0.5");
-        })
+        function use(product_ID){
+            $.ajax({
+                url: '/use_product',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                    'product_ID': product_ID,
+                },
+                success: function (data) {
+                    if (data.result == "success"){
+                        $('#modal_page2').css("visibility", "visible");
+                        $('.shop_header').css("opacity","0.5");
+                        $('.nav').css("opacity","0.5");
+                        get_my_shop();
+                    }
+                    console.log(data.result)
+                }
+            });
+        };
+        
         $('#modal_page1').click( function() {
             $('#modal_page1').css("visibility", "hidden");
             $('.shop_header').css("opacity","1");
             $('.nav').css("opacity","1");
         })
-        $('#Use1').click(function(){
-            //已擁有使用後移除
-            $( "#owned_p1" ).remove();
-            $('#modal_page2').css("visibility", "visible");
-            $('.shop_header').css("opacity","0.5");
-            $('.nav').css("opacity","0.5");
-        })
+
         $('#modal_page2').click( function() {
             $('#modal_page2').css("visibility", "hidden");
             $('.shop_header').css("opacity","1");

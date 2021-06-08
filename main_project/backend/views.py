@@ -186,10 +186,15 @@ def login_check(request):
 
 def get_all_mission(request):
     if request.method == 'POST':
-        mission_imformation = Mission_imformation.objects.all()
+        search = request.POST.get('search')
+        if search == "":
+            mission_imformation = Mission_imformation.objects.all()
+        else:
+            mission_imformation = Mission_imformation.objects.filter(mission_name__contains=search)
         # print(mission_imformation)
         mission_all = core_serializers.serialize("json", mission_imformation)
         mission_all = json.loads(mission_all)
+        mission_all.reverse()
 
         mission_ID, mission_name, mission_pic, joined, mission_intro, mission_type, group_required, exp1, exp2, exp3, reward = [], [], [], [], [], [], [], [], [], [], []
         for mission in mission_all:
@@ -476,10 +481,10 @@ def get_mission_chatroom_list(request):
             
 
             sender_ID = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID)[0].sender_ID
-            reciever_ID = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID)[0].receiver_ID
+            receiver_ID = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID)[0].receiver_ID
             if sender_ID == account:
-                group_name_ID = reciever_ID
-            elif reciever_ID == account:
+                group_name_ID = receiver_ID
+            elif receiver_ID == account:
                 group_name_ID = sender_ID
 
             chat_img.append( Profile.objects.filter(account=group_name_ID)[0].profile_photo )
@@ -578,10 +583,10 @@ def friend_chatroom_update(request):
             message = request.POST.get('message')
 
             sender_ID = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID)[0].sender_ID
-            reciever_ID = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID)[0].receiver_ID
+            receiver_ID = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID)[0].receiver_ID
             if sender_ID == account:
-                group_name_ID = reciever_ID
-            elif reciever_ID == account:
+                group_name_ID = receiver_ID
+            elif receiver_ID == account:
                 group_name_ID = sender_ID
 
             Friend_Chatroom.objects.create(chatroom_ID=chatroom_ID, sender_ID=account, receiver_ID=group_name_ID,  message=message)
@@ -596,10 +601,10 @@ def friend_chatroom_update(request):
             history = core_serializers.serialize("json", Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID).order_by("time"))
 
             sender_ID = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID)[0].sender_ID
-            reciever_ID = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID)[0].receiver_ID
+            receiver_ID = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID)[0].receiver_ID
             if sender_ID == account:
-                group_name_ID = reciever_ID
-            elif reciever_ID == account:
+                group_name_ID = receiver_ID
+            elif receiver_ID == account:
                 group_name_ID = sender_ID
 
             group_name = Profile.objects.filter(account=group_name_ID)[0].name
@@ -1351,6 +1356,9 @@ def accept_invitation(request):
         friend_ID_me = ast.literal_eval(profile_me[0].friend_ID)
         friend_ID_others = ast.literal_eval(profile_others[0].friend_ID)
 
+        friend_chatroom_ID_me = ast.literal_eval(profile_me[0].friend_chatroom_ID)
+        friend_chatroom_ID_others = ast.literal_eval(profile_others[0].friend_chatroom_ID)
+
         if invitation_ID in friend_ID_me:
             return JsonResponse({
                 'result' : "error",
@@ -1370,6 +1378,20 @@ def accept_invitation(request):
                 friend_ID_me.append(invitation_ID)
                 friend_ID_others.append(account)
                 print(friend_ID_me, friend_ID_others, invitation_receive_me, invitation_send_others)
+
+                if len(Friend_Chatroom.objects.filter(sender_ID= account, receiver_ID=invitation_ID)) >=1 :
+                    print("No")
+                else:
+                    if len(Friend_Chatroom.objects.filter(sender_ID=invitation_ID , receiver_ID=account)) >= 1:
+                        print("No")
+                    else:
+                        lastest_chatroom_ID = str(int(Friend_Chatroom.objects.order_by('chatroom_ID').last().chatroom_ID) + 1)
+                        Friend_Chatroom.objects.create(chatroom_ID=lastest_chatroom_ID, sender_ID=invitation_ID, receiver_ID=account,  message="")
+                        friend_chatroom_ID_me.append(lastest_chatroom_ID)
+                        friend_chatroom_ID_others.append(lastest_chatroom_ID)
+                        
+                        profile_me.update(friend_chatroom_ID = friend_chatroom_ID_me)
+                        profile_others.update(friend_chatroom_ID = friend_chatroom_ID_others)
 
                 profile_me.update(friend_ID = friend_ID_me)
                 profile_others.update(friend_ID = friend_ID_others)
@@ -1639,6 +1661,29 @@ def get_card(request):
             return JsonResponse({
                 'result' : "error",
             })
+
+def get_friend_chatroom(request):
+    if request.method == 'POST':
+        account = request.POST.get("account")
+        others = request.POST.get("others")
+        
+        if len(Friend_Chatroom.objects.filter(sender_ID= account, receiver_ID=others)) >=1 :
+            chatroom_ID = Friend_Chatroom.objects.filter(sender_ID= account, receiver_ID=others)[0].chatroom_ID
+        else:
+            if len(Friend_Chatroom.objects.filter(sender_ID=others , receiver_ID=account)) >= 1:
+                chatroom_ID = Friend_Chatroom.objects.filter(sender_ID=others , receiver_ID=account)[0].chatroom_ID
+            else:
+                chatroom_ID = "None"
+
+        friend_name = Profile.objects.filter(account=others)[0].name
+        friend_photo = Profile.objects.filter(account=others)[0].profile_photo
+
+        return JsonResponse({
+            'result' : "success",
+            "chatroom_ID": chatroom_ID,
+            "friend_name": friend_name,
+            "friend_photo": friend_photo,
+        })
 
 # def modify_profile(request):
 # #     if request.method == 'POST':

@@ -9,7 +9,7 @@
         <div id="all">
             <div class="navbar">
                 <a id="back_arrow_link">
-                    <img src="./static/src/back_arrow.png" class="prev">
+                    <div class="prev"></div>
                 </a>
                 <div class="title_text">個人資訊</div>
             </div> 
@@ -61,7 +61,9 @@
     }) 
 
     window.onload = function(){
-        document.getElementById('back_arrow_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
+        // console.log(document.referrer)
+        document.getElementById('back_arrow_link').href = document.referrer;
+        // document.getElementById('back_arrow_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
 
         parameter = window.location.href.split('?')[1].split('&')
         if(parameter.length == 1){

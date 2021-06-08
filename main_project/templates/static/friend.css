@@ -1,0 +1,358 @@
+@font-face {
+    font-family: HP_Hans;
+    src: url(src/font/HP_Simplified_Hans.ttf);
+}
+
+@font-face {
+    font-family: jf_open;
+    src: url(src/font/jf-openhuninn-1.1.ttf);
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+.back-arrow {
+    position: absolute;
+    width: 12vw;
+    height: 12vw;
+    top: 6.1vw;
+    left: 5vw;
+    background-image: url('src/back_arrow.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 20;
+}
+
+.friend-header {
+    position: fixed;
+    width: 100vw;
+    height: 22vw;
+    left: 0px;
+    top: 0px;
+    background-color: #F59E56;
+    z-index: 10;
+}
+
+.friend-title {
+    position: absolute;
+    width: 100vw;
+    height: auto;
+    padding-top: 1vw;
+    padding-right: 7vw;
+    font-size: 15vw;
+    font-family: jf_open;
+    text-align: right;
+    color: white;
+}
+
+.friend-top-tab {
+    position: fixed;
+    padding-top: 2vw;
+    background-color: white;
+}
+
+.friend-top-tab > li {
+    height: 15vw;
+    font-size: 5vw;
+}
+
+.friend-top-tab > li.active > div {
+    background-color: #F59E56;
+    color: white;
+}
+
+.friend-top-tab > li > div {
+    background-color: white;
+    width: 27vw;
+    height: 12vw;
+    border-width: 0.8vw;
+    border-color: rgba(245, 158, 86, 0.8);
+    border-style: solid;
+    border-radius: 10vw;
+    margin: 2vw;
+    text-align: center;
+    padding: 1.5vw;
+    font-family: HP_Hans;
+    color: rgba(245, 158, 86, 0.8);
+}
+
+.friend-tab-content {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    padding-top: 40vw;
+    overflow-y: scroll;
+    z-index: -1;
+}
+
+.form-search-friend, .form-search-group, .form-add-friend {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 14vw;
+    width: 100vw;
+    top: 25vw;
+}
+
+.search-friend-input, .search-group-input {
+    width: 85vw;
+    height: 9vw;
+    border-radius: 1.5vw;
+    border-width: 0px;
+    font-size: 4vw;
+    font-family: HP_Hans;
+    color: #999595;
+    /* #B5B2B2 */
+    background-color: #F5F1F0;
+    padding-left: 2vw;
+}
+
+.add-friend-input {
+    width: 75vw;
+    height: 9vw;
+    border-radius: 1.5vw;
+    border-width: 0px;
+    font-size: 4vw;
+    font-family: HP_Hans;
+    color: #999595;
+    background-color: #F5F1F0;
+    padding-left: 2vw;
+}
+
+.confirm-add-id-btn {
+    width: 14vw;
+    height: 7vw;
+    border-radius: 2vw;
+    font-family: HP_Hans;
+    font-size: 5vw;
+    color: white;
+    background-color: #999595;
+    margin: 3vw;
+    text-align: center
+}
+
+.delete-btn {
+    position: absolute;
+    right: 10vw;
+    width: 7vw;
+    height: 7vw;
+    /* background-color: #B5B2B2; */
+    background-image: url('src/close-cross-symbol-in-a-circle.png');
+    background-size: cover;
+    border-radius: 50%;
+}
+
+.friend-item-field, .group-item-field, .add-friend-field, .new-friend-field {
+    position: relative;
+    width: 100vw;
+    height: auto;
+}
+
+.friend-item, .friend-group-item, .add-friend-item {
+    display: inline-flex;
+    justify-content: flex-start;
+    width: 100vw;
+    height: auto;
+    margin: 5.5vw 0vw;
+}
+
+.friend-photo, .friend-group-photo {
+    width: 20vw;
+    height: 20vw;
+    border-radius: 3vw;
+    background-size: cover;
+    background-position: center;
+    background-color: #ffffff;
+    /* E26F50 */
+    margin-left: 10vw;
+}
+
+.friend-name, .friend-group-name {
+    width: 70vw;
+    font-family: HP_Hans;
+    font-size: 7vw;
+    color: #999595;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 5vw;
+}
+
+
+.add-friend-photo {
+    width: 16vw;
+    height: 16vw;
+    background-size: cover;
+    background-position: center;
+    background-color: #ffffff;
+    border-radius: 2vw;
+    margin-left: 5vw;
+}
+
+.add-friend-name {
+    width: 35vw;
+    font-family: HP_Hans;
+    font-size: 7vw;
+    color: #999595;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 3vw;
+}
+
+.add-friend-btn {
+    width: 20vw;
+    height: 9vw;
+    background-color: #E26F50;
+    border-radius: 2vw;
+    font-family: HP_Hans;
+    font-size: 5vw;
+    color: white;
+    text-align: center;
+    margin: 3.5vw 1.5vw;
+    padding: 1vw;
+}
+
+.cancel-friend-btn {
+    width: 20vw;
+    height: 9vw;
+    background-color: white;
+    border-width: 0.7vw;
+    border-radius: 2vw;
+    border-color: rgba(245, 158, 86, 0.8);
+    border-style: solid;
+    font-family: HP_Hans;
+    font-size: 5vw;
+    color: rgba(245, 158, 86, 0.8);
+    text-align: center;
+    margin: 3.5vw 1.5vw;
+    padding: 0.5vw;
+}
+
+.new-friend-photo {
+    width: 50vw;
+    height: 50vw;
+    background-size: cover;
+    background-position: center;
+    background-color: #ffffff;
+    border-radius: 3vw;
+    margin: 15vw 25vw 5vw;
+}
+
+.new-friend-name {
+    width: 100vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: HP_Hans;
+    font-size: 9vw;
+    color: #999595;
+    text-align: center;
+}
+
+.new-friend-btn {
+    width: 35vw;
+    height: 12vw;
+    background-color: #E26F50;
+    border-radius: 2vw;
+    font-family: HP_Hans;
+    font-size: 7vw;
+    color: white;
+    text-align: center;
+    padding-top: 1vw;
+    margin: 5vw 32.5vw;
+}
+
+.error_text {
+    width: 100vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: HP_Hans;
+    font-size: 7vw;
+    color: #999595;
+    text-align: center;
+    top: 55vw;
+    position: absolute;
+}
+
+
+.quarter_circle {
+    position: fixed;
+    width: 20vw;
+    height: 20vw;
+    bottom: 0vw;
+    background-size: cover;
+}
+
+
+.modal-dialog {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    margin-left: 16vw;
+    margin-top: 40vh;
+}
+  
+.modal-content {
+    position: relative;
+    font-family: jf_open;
+    font-size: 4vw;
+    background-color: #E9BBA4;
+    border-radius: 5vw;
+    border-width: 0px;
+    width: 68vw;
+    height: 68vw;;
+}
+
+.modal-body-photo {
+    /* position: absolute; */
+    width: 20vw;
+    height: 20vw;
+    background-size: cover;
+    background-position: center;
+    background-color: #ffffff;
+    border-radius: 2vw;
+    margin: 10vw 22.3vw 5vw;
+}
+
+.modal-body-text {
+    position: absolute;
+    top: 38vw;
+    width: 68vw;
+    right: 0px;
+}
+
+.modal-body-text-confirm {
+    position: absolute;
+    top: 5vw;
+    width: 68vw;
+    right: 0px;
+    font-size: 5vw;
+}
+
+.modal-content > button {
+    position: absolute;
+    bottom: 5vw;
+    width: 22vw;
+    height: 9vw;
+    background-color: #E26F50;
+    border-width: 0px;
+    border-radius: 2vw;
+    color: white;
+    font-size: 5.5vw;
+}
+
+.modal-content > button:active {
+    opacity: 0.8;
+}
+
+.modal-btn-cancel {
+    left: 10vw;
+}
+
+.modal-btn-confirm {
+    right: 10vw;
+}

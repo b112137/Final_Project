@@ -136,6 +136,8 @@ body {
     padding-top: 30vw;
     
 }
+
+
 [aria-expanded="true"] .product_pic {
     /*visibility: visible;*/
     height: 25vw;
@@ -148,7 +150,8 @@ body {
     transition: height 0.3s;
     height: 0vw;
     background-color: #ffffff;
-    background-size: cover;
+    /* background-size: cover; */
+    background-size: auto 25vw;
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 4vw;

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+        <meta charset="utf-8">
+        <script src="static/jquery.js"></script>
+    </head>
+    <body>
+        <button id="group_button">群組</button>
+        <button id="invite_button">好友邀請</button>
+        <input type="text" placeholder="搜尋" id="search">
+        <button id="search_button">搜尋</button>
+        <div id="friend">
+            
+        </div>
+        <div id="group">
+            
+        </div>
+    </body>
+</html>
+
+<script>
+    $.ajaxSetup({
+        data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
+    })    
+
+    window.onload = function(){
+        $.ajax({
+            url: '/get_friend_page',
+            method: 'POST',
+            type: 'POST',
+            dataType: "json",
+            data: {
+                "account": window.location.href.split('?')[1].split('=')[1],
+                'search': "",
+            },
+            success: function (data) {
+            if(data.result == 'success'){
+                $('#friend').html("");
+                console.log("load success")
+                if(data.friend_ID.length==0){
+                    $('#friend').append("哈哈哈你沒朋友" + '<br>')
+                }
+                else
+                {
+                    var pic_list = data.friend_photo
+                    for(var i = 0; i < pic_list.length;i++){
+                        $.ajax({
+                        url: '/get_img',
+                        method: 'POST',
+                        type: 'POST',
+                        async: false, //改成同步執行(等待上一個回傳)
+                        data: {
+                            "img_path": pic_list[i],
+                        },
+                        success: function (img) {
+                            $('#friend').append(
+                                "朋友名字: " +　data.friend_name[i] + '<br>' +
+                                "ID: " +　data.friend_ID[i] + '<br>' +
+                                "<img src=" + '"data:image/jpg;base64,'+img+'"> <br>'
+                            )
+                        }
+                        });
+                        
+                        
+                    }
+                }
+                
+                    $('#friend').append(
+                        "任務聊天室 : "  + '<br>'
+                    )
+                    for(var i = 0;i < data.mission_chatroom_ID.length;i++){
+                        $('#friend').append(
+                        " : " + data.mission_chatroom_ID[i] + '<br>'
+                    )}
+                    $('#friend').append(
+                        "好友聊天室 : " + '<br>'
+                    )
+                    for(var j = 0;j< data.friend_chatroom_list.length;j++){
+                        $('#friend').append(
+                        " : " + data.friend_chatroom_list[j] + '<br>'
+                    )}   
+                }
+            }
+        })
+    }
+
+    $('#group_button').click( function(){
+        $.ajax({
+            url: '/get_friend_group',
+            method: 'POST',
+            type: 'POST',
+            dataType: "json",
+            data: {
+                "account": window.location.href.split('?')[1].split('=')[1],
+                'search': "",
+            },
+            success: function (data) {
+                if(data.result == 'success'){
+                    $('#friend').html("");
+                    console.log("load success")
+                    if(data.group_name.length==0){
+                        $('#friend').append("哈哈哈你沒朋友" + '<br>')
+                    }
+                    else
+                    {
+                        var pic_list = data.chat_img
+                        for(var i = 0; i < pic_list.length;i++){
+                            $.ajax({
+                            url: '/get_img',
+                            method: 'POST',
+                            type: 'POST',
+                            async: false, //改成同步執行(等待上一個回傳)
+                            data: {
+                                "img_path": pic_list[i],
+                            },
+                            success: function (img) {
+                                $('#friend').append(
+                                    "群組名字: " +　data.group_name[i] + '<br>' +
+                                    "群組ID: " +　data.chatroom_ID[i] + '<br>' +
+                                    "群組人數: " +　data.group_number[i] + '<br>' +
+                                    "狀態: " +　data.status[i] + '<br>' +
+                                    "<img src=" + '"data:image/jpg;base64,'+img+'"> <br>'
+                                )
+                            }
+                            });
+                            
+                            
+                        }
+                    }
+                
+                }
+            }
+        })
+    })
+
+    $('#invite_button').click( function(){
+        $.ajax({
+            url: '/get_friend_invitation',
+            method: 'POST',
+            type: 'POST',
+            dataType: "json",
+            data: {
+                "account": window.location.href.split('?')[1].split('=')[1],
+            },
+            success: function (data) {
+                if(data.result == 'success'){
+                    $('#friend').html("");
+                    console.log("load success")
+                    if(data.friend_ID.length==0){
+                        $('#friend').append("哈哈哈你沒朋友" + '<br>')
+                    }
+                    else
+                    {
+                        var pic_list = data.friend_photo
+                        for(var i = 0; i < pic_list.length;i++){
+                            $.ajax({
+                            url: '/get_img',
+                            method: 'POST',
+                            type: 'POST',
+                            async: false, //改成同步執行(等待上一個回傳)
+                            data: {
+                                "img_path": pic_list[i],
+                            },
+                            success: function (img) {
+                                $('#friend').append(
+                                    "名字: " +　data.friend_name[i] + '<br>' +
+                                    "ID: " +　data.friend_ID[i] + '<br>' +
+                                    "<img src=" + '"data:image/jpg;base64,'+img+'"> <br>'+
+                                    "<button onclick=accept_invitation('" + data.friend_ID[i] + "')>接受</button>"+
+                                    "<button onclick=reject_invitation('" + data.friend_ID[i] + "')>拒絕</button>"
+                                )
+                            }
+                            });
+                            
+                            
+                        }
+                    }
+                
+                }
+            }
+        })
+    })
+
+
+    $("#search_button").click( function() {
+        $.ajax({
+              url: '/search_friend_ID',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                  'search': document.getElementById('search').value,
+              },
+              success: function (data) {
+                if (data.result == "success"){
+                    $('#friend').html("");
+                    $.ajax({
+                        url: '/get_img',
+                        method: 'POST',
+                        type: 'POST',
+                        async: false, //改成同步執行(等待上一個回傳)
+                        data: {
+                            "img_path": data.profile_photo,
+                        },
+                        success: function (img) {
+                            $('#friend').append(
+                                "名字: " +　data.name + '<br>' +
+                                "ID: " +　data.ID + '<br>' +
+                                "<img src=" + '"data:image/jpg;base64,' + img + '"> <br>'+
+                                "<button onclick=send_invitation('" + data.ID + "')>好友邀請</button>"+
+                                "<button onclick=cancel_invitation('" + data.ID + "')>取消邀請</button>"
+
+                            )
+                        }
+                    });
+
+                }
+                else if (data.result == "not_found") {
+                    $('#friend').html("找不到欸!");
+                }
+                else if (data.result == "found_self") {
+                    $('#friend').html("不要找自己喇!");
+                }
+                
+            }
+        });
+
+    })
+
+    function accept_invitation(invitation_ID){
+        console.log(invitation_ID)
+        $.ajax({
+              url: '/accept_invitation',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                  'others': invitation_ID,
+              },
+              success: function (data) {
+                if (data.result == "success"){
+
+                }
+                else if (data.result == "error") {
+                    console.log(data.result)
+                }                
+            }
+        });
+    }
+
+    function reject_invitation(invitation_ID){
+        console.log(invitation_ID)
+        $.ajax({
+              url: '/reject_invitation',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                  'others': invitation_ID,
+              },
+              success: function (data) {
+                if (data.result == "success"){
+
+                }
+                else if (data.result == "error") {
+                    console.log(data.result)
+                }                
+            }
+        });
+    }
+
+    function send_invitation(invitation_ID){
+        console.log(invitation_ID)
+        $.ajax({
+              url: '/send_invitation',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                  'others': invitation_ID,
+              },
+              success: function (data) {
+                if (data.result == "success"){
+
+                }
+                else if (data.result == "error") {
+                    console.log(data.result)
+                }                
+            }
+        });
+    }
+
+    function cancel_invitation(invitation_ID){
+        console.log(invitation_ID)
+        $.ajax({
+              url: '/cancel_invitation',
+              method: 'POST',
+              type: 'POST',
+              dataType: "json",
+              data: {
+                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                  'others': invitation_ID,
+              },
+              success: function (data) {
+                if (data.result == "success"){
+
+                }
+                else if (data.result == "error") {
+                    console.log(data.result)
+                }                
+            }
+        });
+    }
+</script>

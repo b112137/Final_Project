@@ -66,6 +66,7 @@ urlpatterns = [
     path('cancel_invitation', backend.cancel_invitation),
     path('delete_friend', backend.delete_friend),
     path('get_card', backend.get_card),
+    path('get_friend_chatroom', backend.get_friend_chatroom),
 
     path('submission_to_finish', backend.submission_to_finish),
     

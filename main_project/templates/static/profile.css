@@ -40,12 +40,13 @@ body {
     position: absolute;
     width: 100vw;
     height: 12vw;
-    top: 5vw;
+    top: 3vw;
     font-size: 13vw;
     font-family: jf_open;
     text-align: right;
-    right: 7vw;
+    right: 6vw;
     color: white;
+    
 }
 
 #all {
@@ -56,19 +57,23 @@ body {
     
 }
 .navbar{
-    position: absolute;
+    position: fixed;
     width: 100vw;
-    height: 25.9vw;
+    height: 22vw;
     left: 0px;
     top: 0px;
-    background:#F59E56;
+    background-color: #F59E56;
+    z-index: 10;
 }
 .prev{
     position: absolute;
-    width: 12.95vw;
-    height: 12.95vw;
-    left: 5.55vw;
-    top: 7vw;
+    width: 12vw;
+    height: 12vw;
+    top: 6.1vw;
+    left: 5vw;
+    background-image: url(src/back_arrow.png);
+    background-size: cover;
+    background-repeat: no-repeat;
     z-index: 20;
 }
 #photo{
