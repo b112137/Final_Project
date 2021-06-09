@@ -16,7 +16,6 @@
                 <img src="./static/src/setting.png" id="setting" >
                 <img src="./static/src/circle.png" id="circle">
                 <img src="./static/src/LOGO.png" id="logo">
-                <!-- <img src="./static/src/肌肉.png" id="character"> -->
                 <div id="character_vertical"></div>
                 <div id="character_horizontal"></div>
                 <img src="./static/src/exp_back.png" id="exp_back">
@@ -70,28 +69,7 @@
         <div class="modal fade" id="create-group-modal" tabindex="-1" aria-hidden="true" data-backdrop="static">
             <div class="card-dialog">
                 <div class="card-content" id="card_content">
-                    <!-- <div id="card-title">好友抽卡</div>
-                    <div id ="select_pic"><img src="./static/select_card/41.png"></div>
-                    <div id ="card_name">{{name}}</div>
-                    <p style= "position: absolute; right:35vw;top: 45vw;font-size: 8vw;">ID:</p>
-                    <div id ="card_ID">{{account}}</div>
-                    <p style= "position: absolute; right:27vw;top: 55vw;font-size: 8vw;">年齡:</p>
-                    <div id = "card_age">{{birth}}</div>
-                    <p style="position: absolute; left:5vw;top: 75vw;font-size: 10vw;">等級:</p>
-                    <div id = "card_lv">{{level}}</div>
-                    <p style="position: absolute; left:16.5vw;top: 90vw;font-size: 6vw;">知識</p>
-                    <p style="position: absolute; left:5vw;top: 100vw;font-size: 6vw;">社會參與</p>
-                    <p style="position: absolute; left:16.5vw;top: 110vw;font-size: 6vw;">體能</p>
-                    <div id="exp_bar">
-                        <progress id="exp_1" value={{exp1}} max="100" > 70% </progress>
-                        <progress id="exp_2" value={{exp2}} max="100" > 70% </progress>
-                        <progress id="exp_3" value={{exp3}} max="100" > 70% </progress>
-                    </div>
-
-                    <button type="button" class="card-cancel" data-dismiss="modal">先不要</button>
-                    <button type="button" class="card-confirm">有興趣</button>      -->
-                     
-                    
+                    <!-- JavaScript append -->
                 </div>
             </div>
         </div>
@@ -163,14 +141,11 @@
             if(count==0)
             {
                 window.setTimeout(( () => $(this).attr('src', './static/src/setting.png') ), 270);
-
-                // $(this).attr('src', './static/src/setting.png');
                 count=1;
             }
             else
             {
                 window.setTimeout(( () => $(this).attr('src', './static/src/setting2.png') ), 100);
-                // $(this).attr('src', './static/src/setting2.png')
                 count=0;
             }
         }
@@ -200,9 +175,6 @@
                         },
                         success: function (data) {
                             if (data.result == "success"){
-                                
-
-
                                 $('#card_content').html(
                                     '<div id="card-title">好友抽卡</div>\
                                     <div id ="select_pic"></div>\
@@ -222,28 +194,6 @@
                                     <button type="button" class="card-cancel" data-dismiss="modal">先不要</button>\
                                     <button type="button" class="card-confirm" onclick=friend_button("'+ data.account +'") data-dismiss="modal">有興趣</button>'
 
-
-                                    // '<div id="photo"></div>\
-                                    // <p id="name" class="profile">'+ data.name +'</p>\
-                                    // <p id="user_id"  class="profile">'+ data.account +'</p>\
-                                    // <p id="age" class="profile">'+ data.birth +'</p>\
-                                    // <p id="level" >等級 '+ data.level +'</p>\
-                                    // <p id="knowledge" class="exp">知識</p>\
-                                    // <p id="social" class="exp">社會參與</p>\
-                                    // <p id="physical" class="exp">體能</p>\
-                                    // <div id="bar">\
-                                    //     <progress id="exp_1" value='+ data.exp1 +' max="100" > 70% </progress>\
-                                    //     <progress id="exp_2" value='+ data.exp2 +' max="100" > 60% </progress>\
-                                    //     <progress id="exp_3" value='+ data.exp3 +' max="100" > 65% </progress>\
-                                    // </div>\
-                                    // <div id="role"></div>\
-                                    // <p id="intro">自我介紹</p>\
-                                    // <img src="./static/src/pen.PNG" id="pen">\
-                                    // <button type="button" id="save" >儲存</button>\
-                                    // <div id="edit"></div>\
-                                    // <p id="edit_text">'+ data.intro +'</p>\
-                                    // <textarea id="intro_text"></textarea>\
-                                    // <p id="story">故事牆</p>'
                                 )
 
                                 $.ajax({

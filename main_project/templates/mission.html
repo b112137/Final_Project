@@ -7,6 +7,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>        
         <link href="static/mission.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     </head>
     <body>
         <div class="header">
@@ -31,7 +32,7 @@
                 <div class="search-bar">
                     <form class="search">
                         <!-- <img src="src/search.png" class="mission-search-icon"> -->
-                        <input id="mission_search" type="search" placeholder=" 搜尋" class="search-input">
+                        <input id="mission_search" type="search" placeholder=" 輸入任務名稱" class="search-input">
                         <button id="mission_search_delete" type="reset" class="btn_cancel">取消</button>
                     </form>    
                 </div> 
@@ -54,157 +55,12 @@
                 </div>
                 
                 <div id="mission_container">
-
-
+                    <!-- JavaScript append -->
                 </div>
-
-                <!-- <div class="mission-card">
-                    <div class="card-header">
-                        <div href='#collapse1' data-toggle="collapse" data-parent="#explore-mission">
-                            <div class="card-img"></div>
-                            <div class="mission-title">任務名稱</div>
-                            <div class="mission-joined">已有15人參加</div>
-                            <div class="mission-exp">
-                                <div class="exp-val">
-                                    <p>+5</p><p>+5</p><p>+5</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="collapse1" class="collapse">
-                        <div class="card-body">
-                            <ul class="nav nav-tabs nav-justified mission-info-tab">
-                                <li id="left-tab" class="active">
-                                    <a data-toggle="tab" href="#mission-intro1">任務介紹</a>
-                                </li>
-                                <li id="right-tab">
-                                    <a data-toggle="tab" href="#mission-signup1">揪團報名</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content card-tab-content">
-                                <div id="mission-intro1" class="tab-pane fade in active">
-                                    <div class="mission-intro-content">
-                                        我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣
-                                        我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣
-                                        我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣
-                                        我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣
-                                        我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣
-                                    </div>
-                                </div>
-                                <div id="mission-signup1" class="tab-pane fade">
-                                    <button class="btn-create-group">我要開團</button>
-                                    <div class="group-item-box">
-                                        <div class="group-item">
-                                            <div class="group-name">團名團名</div>
-                                            <div class="group-need">缺5人</div>
-                                            <button></button>
-                                        </div>
-                                        <div class="group-item">
-                                            <div class="group-name">團名團名</div>
-                                            <div class="group-need">缺5人</div>
-                                            <button></button>
-                                        </div>
-                                        <div class="group-item">
-                                            <div class="group-name">團名團名</div>
-                                            <div class="group-need">缺5人</div>
-                                            <button></button>
-                                        </div>
-                                        <div class="group-item">
-                                            <div class="group-name">團名團名</div>
-                                            <div class="group-need">缺5人</div>
-                                            <button></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mission-card">
-                    <div class="card-header">
-                        <div href='#collapse2' data-toggle="collapse" data-parent="#explore-mission">
-                            <div class="card-img"></div>
-                            <div class="mission-title">任務名稱</div>
-                            <div class="mission-joined">已有15人參加</div>
-                            <div class="mission-exp">
-                                <div class="exp-val">
-                                    <p>+5</p><p>+5</p><p>+5</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="collapse2" class="collapse">
-                        <div class="card-body">
-                            <ul class="nav nav-tabs nav-justified mission-info-tab">
-                                <li id="left-tab" class="active">
-                                    <a data-toggle="tab" href="#mission-intro2">任務介紹</a>
-                                </li>
-                                <li id="right-tab">
-                                    <a data-toggle="tab" href="#mission-signup2">揪團報名</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content card-tab-content">
-                                <div id="mission-intro2" class="tab-pane fade in active">
-                                    <div class="mission-intro-content">
-                                        我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣
-                                        我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣
-                                        我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣
-                                        我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣
-                                        我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣我是文宣
-                                    </div>
-                                </div>
-                                <div id="mission-signup2" class="tab-pane fade">
-                                    <button class="btn-create-group">我要開團</button>
-                                    <div class="group-item-box">
-                                        <div class="group-item">
-                                            <div class="group-name">團名團名</div>
-                                            <div class="group-need">缺5人</div>
-                                            <button></button>
-                                        </div>
-                                        <div class="group-item">
-                                            <div class="group-name">團名團名</div>
-                                            <div class="group-need">缺5人</div>
-                                            <button></button>
-                                        </div>
-                                        <div class="group-item">
-                                            <div class="group-name">團名團名</div>
-                                            <div class="group-need">缺5人</div>
-                                            <button></button>
-                                        </div>
-                                        <div class="group-item">
-                                            <div class="group-name">團名團名</div>
-                                            <div class="group-need">缺5人</div>
-                                            <button></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
             </div>
             <div id="my-mission" class="tab-pane fade">
                 <div class="jf-continer" id = 'page1'>
-                    <!-- <img src="static/Rectangle 60.png" id = "joined" class = "joined_clicked">
-                    <img src ="static/Rectangle 61.png"id = "finished" class  = "finished_noclick">
-                
-                    <div class="joined_text" id = "joined_t">已加入</div>
-                    <div class="finished_text" id ="finished_t">已完成</div> -->
-                    
-                    <!-- <div style='position: absolute'>\
-                        <img src='static/Rectangle 31.png' class = 'joined_mission'>
-                        <img src='static/Rectangle 34.png' class = 'joined_name'>
-                        <img src= 'static/Rectangle 62.png' class = 'submit_btn'>
-                        <div class='submit_text' id = 'submit'>提交</div>
-                    </div>
-
-                    <div style='position: absolute'>\
-                        <img src='static/Rectangle 31.png' class = 'joined_mission'>
-                        <img src='static/Rectangle 34.png' class = 'joined_name'>
-                        <img src= 'static/Rectangle 62.png' class = 'submit_btn'>
-                        <div class='submit_text' id = 'submit'>提交</div>
-                    </div> -->
+                    <!-- JavaScript append -->
                 </div>
             </div>
         </div>
@@ -220,8 +76,6 @@
         <a id="chat_link">
             <div class="quarter_circle" style="right: 0vw; background-image: url('static/src/chat.png');"></div>
         </a>
-        
-        <!-- <script src="mission.js"></script> -->
     </body>
 </html>
 
@@ -425,26 +279,63 @@
                             data:formdata,
                             dataType:"json",
                             success: function (data) {
-                                alert("提交完成")
+                                // alert("提交完成")
                                 $('#submit-modal-btn-confirm'+ i.toString()).attr('data-dismiss', "modal");
                                 // window.location.href = "/mission?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
+                                Swal.fire({
+                                    title: '提交完成!',
+                                    icon: 'success',
+                                    width: '70vw',
+                                    heightAuto: false,
+                                    background: '#E9BBA4',
+                                    showConfirmButton: false,
+                                    customClass: 'swal-custom'
+                                });
+
                                 $('#tab-my-mission').click();
                             }
                         });
                     }
                     else if(data.result=="not_enough"){
-                        alert("人數不足以提交任務")
+                        // alert("人數不足以提交任務")
                         $("#submit-modal-btn-confirm"+ i.toString()).attr('data-dismiss', "modal");
+                        Swal.fire({
+                            title: '人數不足以提交任務!',
+                            icon: 'error',
+                            width: '70vw',
+                            heightAuto: false,
+                            background: '#E9BBA4',
+                            showConfirmButton: false,
+                            customClass: 'swal-custom'
+                        });
                     }
                     else if(data.result=="error"){
-                        alert("error")
+                        // alert("error")
                         $("#submit-modal-btn-confirm"+ i.toString()).attr('data-dismiss', "modal");
+                        Swal.fire({
+                            title: '出現錯誤，請再試一次!',
+                            icon: 'error',
+                            width: '70vw',
+                            heightAuto: false,
+                            background: '#E9BBA4',
+                            showConfirmButton: false,
+                            customClass: 'swal-custom'
+                        });
                     }
                 }
             });
         }
         else{
-            alert("請上傳照片!")
+            // alert("請上傳照片!")
+            Swal.fire({
+                title: '請上傳相片！',
+                icon: 'warning',
+                width: '70vw',
+                heightAuto: false,
+                background: '#E9BBA4',
+                showConfirmButton: false,
+                customClass: 'swal-custom'
+            });
         }
         image_change = 0;
     }
@@ -467,88 +358,94 @@
               success: function (data) {
                 if (data.result == "success"){
                     var pic_list = data.mission_pic
-                    for(var i = 0; i < pic_list.length; i++){
-                        $.ajax({
-                        url: '/get_img',
-                        method: 'POST',
-                        type: 'POST',
-                        async: false, //改成同步執行(等待上一個回傳)
-                        data: {
-                            "img_path": pic_list[i],
-                        },
-                        success: function (img) {
-                            console.log("success")
-                            $('#mission_container').append(                             
-                                '<div class="mission-card">\
-                                    <div class="card-header">\
-                                        <div href="#collapse'+ i.toString() +'" data-toggle="collapse" data-parent="#explore-mission">\
-                                            <div class="card-img" style="background-size: cover; background-image: url(data:image/jpg;base64,' + img + ') ">\
-                                            </div>\
-                                            <div class="mission-title">'+ data.mission_name[i] +'</div>\
-                                            <div class="mission-joined">已有'+ data.joined[i]  +'人參加</div>\
-                                            <div class="mission-exp">\
-                                                <div class="exp-val">\
-                                                    <p>'+ data.exp1[i] +'</p><p>' + data.exp2[i] + '</p><p>' + data.exp3[i] +'</p>\
+                    if(pic_list.length == 0){
+                        $("#mission_container").html('<div class="error_text">搜尋不到此任務名稱!</div>'  )
+                    }
+                    else{
+                        for(var i = 0; i < pic_list.length; i++){
+                            $.ajax({
+                            url: '/get_img',
+                            method: 'POST',
+                            type: 'POST',
+                            async: false, //改成同步執行(等待上一個回傳)
+                            data: {
+                                "img_path": pic_list[i],
+                            },
+                            success: function (img) {
+                                console.log("success")
+                                $('#mission_container').append(                             
+                                    '<div class="mission-card">\
+                                        <div class="card-header">\
+                                            <div href="#collapse'+ i.toString() +'" data-toggle="collapse" data-parent="#explore-mission">\
+                                                <div class="card-img" style="background-size: cover; background-image: url(data:image/jpg;base64,' + img + ') ">\
                                                 </div>\
-                                            </div>\
-                                        </div>\
-                                    </div>\
-                                    <div id="collapse' + i.toString() + '"class="collapse">\
-                                        <div class="card-body">\
-                                            <ul class="nav nav-tabs nav-justified mission-info-tab">\
-                                                <li id="left-tab" class="active">\
-                                                    <a data-toggle="tab" href="#mission-intro'+ i.toString() +'">任務介紹</a>\
-                                                </li>\
-                                                <li id="right-tab">\
-                                                    <a data-toggle="tab" onclick="mission_signup(' + data.mission_ID[i] + "," + data.group_required[i] + ')" href="#mission-signup_'+ data.mission_ID[i] +'">揪團報名</a>\
-                                                </li>\
-                                            </ul>\
-                                            <div class="tab-content card-tab-content">\
-                                                <div id="mission-intro'+ i.toString() +'" class="tab-pane fade in active">\
-                                                    <div class="mission-intro-content">\
-                                                        ' +data.mission_intro[i]+ '\
+                                                <div class="mission-title">'+ data.mission_name[i] +'</div>\
+                                                <div class="mission-joined">已有'+ data.joined[i]  +'人參加</div>\
+                                                <div class="mission-exp">\
+                                                    <div class="exp-val">\
+                                                        <p>'+ data.exp1[i] +'</p><p>' + data.exp2[i] + '</p><p>' + data.exp3[i] +'</p>\
                                                     </div>\
                                                 </div>\
-                                                <div id="mission-signup_'+ data.mission_ID[i] +'" class="tab-pane fade">\
-                                                    <button class="btn-create-group" type="button" data-toggle="modal" data-target="#create-group-modal">我要開團</button>\
-                                                    <div id="mission_group_box_'+ data.mission_ID[i] +'" class="group-item-box">'+
-                                                        // <div class="group-item">\
-                                                        //     <div class="group-name">團名團名</div>\
-                                                        //     <div class="group-need">缺5人</div>\
-                                                        //     <button></button>\
-                                                        // </div>\
-                                                        // <div class="group-item">\
-                                                        //     <div class="group-name">團名團名</div>\
-                                                        //     <div class="group-need">缺5人</div>\
-                                                        //     <button></button>\
-                                                        // </div>\
-                                                        // <div class="group-item">\
-                                                        //     <div class="group-name">團名團名</div>\
-                                                        //     <div class="group-need">缺5人</div>\
-                                                        //     <button></button>\
-                                                        // </div>\
-                                                        // <div class="group-item">\
-                                                        //     <div class="group-name">團名團名</div>\
-                                                        //     <div class="group-need">缺5人</div>\
-                                                        //     <button></button>\
-                                                        // </div>\
-                                                    '</div>\
+                                            </div>\
+                                        </div>\
+                                        <div id="collapse' + i.toString() + '"class="collapse">\
+                                            <div class="card-body">\
+                                                <ul class="nav nav-tabs nav-justified mission-info-tab">\
+                                                    <li id="left-tab" class="active">\
+                                                        <a data-toggle="tab" href="#mission-intro'+ i.toString() +'">任務介紹</a>\
+                                                    </li>\
+                                                    <li id="right-tab">\
+                                                        <a data-toggle="tab" onclick="mission_signup(' + data.mission_ID[i] + "," + data.group_required[i] + ')" href="#mission-signup_'+ data.mission_ID[i] +'">揪團報名</a>\
+                                                    </li>\
+                                                </ul>\
+                                                <div class="tab-content card-tab-content">\
+                                                    <div id="mission-intro'+ i.toString() +'" class="tab-pane fade in active">\
+                                                        <div class="mission-intro-content">\
+                                                            ' +data.mission_intro[i]+ '\
+                                                        </div>\
+                                                    </div>\
+                                                    <div id="mission-signup_'+ data.mission_ID[i] +'" class="tab-pane fade">\
+                                                        <button class="btn-create-group" type="button" data-toggle="modal" data-target="#create-group-modal">我要開團</button>\
+                                                        <div id="mission_group_box_'+ data.mission_ID[i] +'" class="group-item-box">'+
+                                                            // <div class="group-item">\
+                                                            //     <div class="group-name">團名團名</div>\
+                                                            //     <div class="group-need">缺5人</div>\
+                                                            //     <button></button>\
+                                                            // </div>\
+                                                            // <div class="group-item">\
+                                                            //     <div class="group-name">團名團名</div>\
+                                                            //     <div class="group-need">缺5人</div>\
+                                                            //     <button></button>\
+                                                            // </div>\
+                                                            // <div class="group-item">\
+                                                            //     <div class="group-name">團名團名</div>\
+                                                            //     <div class="group-need">缺5人</div>\
+                                                            //     <button></button>\
+                                                            // </div>\
+                                                            // <div class="group-item">\
+                                                            //     <div class="group-name">團名團名</div>\
+                                                            //     <div class="group-need">缺5人</div>\
+                                                            //     <button></button>\
+                                                            // </div>\
+                                                        '</div>\
+                                                    </div>\
                                                 </div>\
                                             </div>\
                                         </div>\
-                                    </div>\
-                                </div>'
-                            )
+                                    </div>'
+                                )
+                            }
+                            });
                         }
-                        });
-                    }
 
-                    $('#mission_container').append(                             
-                        '<div class="mission-card">\
-                            <div class="card-header" style="background-color: white; height: 20vw;">\
-                            </div>\
-                        </div>'
-                    )
+                        $('#mission_container').append(                             
+                            '<div class="mission-card">\
+                                <div class="card-header" style="background-color: white; height: 20vw;">\
+                                </div>\
+                            </div>'
+                        )
+                    }
+                    
                 }
               }
         });
@@ -636,16 +533,44 @@
         console.log(group_name.length)
 
         if( group_name=="" || group_most==""){
-            alert("團名或人數不得為空");
+            // alert("團名或人數不得為空");
+            Swal.fire({
+                title: '團名或人數不得為空!',
+                icon: 'error',
+                width: '70vw',
+                heightAuto: false,
+                background: '#E9BBA4',
+                showConfirmButton: false,
+                customClass: 'swal-custom'
+            });
         }
         else{
             if (group_name.length > 10){
-                alert("團名不得超過10字");
+                // alert("團名不得超過10字");
+                Swal.fire({
+                    title: '團名不得超過十個字!',
+                    icon: 'error',
+                    width: '70vw',
+                    heightAuto: false,
+                    background: '#E9BBA4',
+                    showConfirmButton: false,
+                    customClass: 'swal-custom'
+                });
             }
             else {
                 if ( Number.isInteger( parseInt(group_most, 10) ) ){
                     if (group_most < group_required){
-                        alert("人數不得低於"+ group_required +"人");
+                        // alert("人數不得低於"+ group_required +"人");
+                        var temp = "人數不得低於"+ group_required +"人!";
+                        Swal.fire({
+                            title: temp,
+                            icon: 'error',
+                            width: '70vw',
+                            heightAuto: false,
+                            background: '#E9BBA4',
+                            showConfirmButton: false,
+                            customClass: 'swal-custom'
+                        });
                     }
                     else {
                         $('#modal-btn-confirm-id').attr('data-dismiss', "modal");
@@ -672,7 +597,16 @@
                     }
                 }
                 else {
-                    alert("人數必須為整數");
+                    // alert("人數必須為整數");
+                    Swal.fire({
+                        title: '人數必須為整數!',
+                        icon: 'error',
+                        width: '70vw',
+                        heightAuto: false,
+                        background: '#E9BBA4',
+                        showConfirmButton: false,
+                        customClass: 'swal-custom'
+                    });
                 }
             }
         }        
@@ -699,11 +633,29 @@
                 }
                 else if (data.result == "group_full"){
                     $('#modal-btn-confirm-id_' + chatroom_ID).attr('data-dismiss', "modal");
-                    alert("此團已額滿")
+                    // alert("此團已額滿")
+                    Swal.fire({
+                        title: '此團已額滿!',
+                        icon: 'error',
+                        width: '70vw',
+                        heightAuto: false,
+                        background: '#E9BBA4',
+                        showConfirmButton: false,
+                        customClass: 'swal-custom'
+                    });
                 }
                 else if (data.result == "group_repeat"){
                     $('#modal-btn-confirm-id_' + chatroom_ID).attr('data-dismiss', "modal");
-                    alert("您已在此團中")
+                    // alert("您已在此團中")
+                    Swal.fire({
+                        title: '您已在此團中!',
+                        icon: 'error',
+                        width: '70vw',
+                        heightAuto: false,
+                        background: '#E9BBA4',
+                        showConfirmButton: false,
+                        customClass: 'swal-custom'
+                    });
                 }
                 
               }

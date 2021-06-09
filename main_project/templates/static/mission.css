@@ -8,6 +8,28 @@
     src: url(src/font/hp.ttf);
 }
 
+.swal-custom {
+    height: 50vw;
+    font-size: 3vw !important;
+    font-family: HP_Hans !important;
+    color: #4D4D4D;
+    border-radius: 5vw !important;
+}
+
+.error_text {
+    width: 100vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: HP_Hans;
+    font-size: 7vw;
+    color: #999595;
+    text-align: center;
+    top: 110vw;
+    position: absolute;
+}
+
+
 body {
     margin: 0px;
     padding: 0px;
