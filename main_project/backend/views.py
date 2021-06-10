@@ -637,13 +637,18 @@ def get_mission_chatroom_member(request):
         member_ID = ast.literal_eval(Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0].member_ID)
         leader_ID = Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0].leader_ID
         status = Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0].status
+        group_name = Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0].group_name
+        
 
-        member_name = []
+        member_name, profile_photo = [], []
         for member in member_ID:
             member_name.append(Profile.objects.filter(account=member)[0].name)
+            profile_photo.append(Profile.objects.filter(account=member)[0].profile_photo)
 
         return JsonResponse({
             'result' : "success",
+            'group_name': group_name,
+            'profile_photo': profile_photo,
             'member_ID' : member_ID,
             'leader_ID' : leader_ID,
             'member_name' : member_name,

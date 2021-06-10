@@ -225,21 +225,21 @@
                             var pic_list = data.friend_photo
                             for(var i = 0; i < pic_list.length;i++){
                                 $.ajax({
-                                url: '/get_img',
-                                method: 'POST',
-                                type: 'POST',
-                                async: false, //改成同步執行(等待上一個回傳)
-                                data: {
-                                    "img_path": pic_list[i],
-                                },
-                                success: function (img) {
-                                    $('#friend_container').append(
-                                        '<div onclick=create_profile_modal("'+ data.friend_ID[i]+'") class="friend-item" data-toggle="modal" data-target="#check-friend-modal">\
-                                            <div class="friend-photo" style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
-                                            <div class="friend-name">'+ data.friend_name[i] +'</div>\
-                                        </div>'
-                                    )
-                                }
+                                    url: '/get_img',
+                                    method: 'POST',
+                                    type: 'POST',
+                                    async: false, //改成同步執行(等待上一個回傳)
+                                    data: {
+                                        "img_path": pic_list[i],
+                                    },
+                                    success: function (img) {
+                                        $('#friend_container').append(
+                                            '<div onclick=create_profile_modal("'+ data.friend_ID[i]+'") class="friend-item" data-toggle="modal" data-target="#check-friend-modal">\
+                                                <div class="friend-photo" style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
+                                                <div class="friend-name">'+ data.friend_name[i] +'</div>\
+                                            </div>'
+                                        )
+                                    }
                                 });
                             }
                             $('#friend_container').append(

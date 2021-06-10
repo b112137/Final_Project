@@ -40,6 +40,51 @@
                 <img id="chat-message-submit" class="btn-send" src="static/src/icon_send.png" type="button">
             </div>
         </div>
+
+        <div class="chatroom-member-page" style="display: none">
+            <div class="chatroom-member-header">
+                <a id="back-to-chatroom-record">
+                    <div class="back_arrow" ></div>
+                </a>
+                
+                <!-- <div class="member-title">群組名要可以放十個字</div> -->
+                <!-- <img class="edit-member" src="static/src/edit.png" type="button" data-toggle="collapse" data-target=".delete-member"> -->
+            </div>
+            <div class="chatroom-member-list">
+                <!-- <div class="chatroom-member-item">
+                    <img class="collapse width delete-member" type="button" src="static/src/delete.png" data-toggle="modal" data-target="#delete-member-modal">
+                    <div class="chatroom-member-photo"></div>
+                    <div class="chatroom-member-name">嗨嗨嗨是我啦哈哈</div>
+                </div>
+                <div class="chatroom-member-item">
+                    <img class="collapse width delete-member" type="button" src="static/src/delete.png" data-toggle="modal" data-target="#delete-member-modal">
+                    <div class="chatroom-member-photo"></div>
+                    <div class="chatroom-member-name">嗨嗨嗨是我啦哈哈</div>
+                </div>
+                <div class="chatroom-member-item">
+                    <img class="collapse width delete-member" type="button" src="static/src/delete.png" data-toggle="modal" data-target="#delete-member-modal">
+                    <div class="chatroom-member-photo"></div>
+                    <div class="chatroom-member-name">嗨嗨嗨是我啦哈哈</div>
+                </div> -->
+            </div>
+        </div>
+
+        <!--Delete Member Modal -->
+        <div class="modal fade" id="delete-member-modal" tabindex="-1" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog">
+                <div id="delete_modal" class="modal-content" style='height: 48vw;'>
+                    <!-- <div class="modal-body">
+                        <div class="modal-body-text-confirm">
+                            確定將成員<br>
+                            是我啦哈哈<br>
+                            從此群組中刪除嗎？
+                        </div>                        
+                    </div>
+                    <button type="button" class="modal-btn-cancel" data-dismiss="modal">取消</button>
+                    <button type="button" class="modal-btn-confirm">確認</button>                         -->
+                </div>
+            </div>
+        </div>
     </body>
 </html>
 
@@ -59,7 +104,7 @@
         // $('#newpic').html("")
         document.getElementById('back_arrow_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
         document.getElementById('home_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
-
+        
         parameter = window.location.href.split('?')[1].split('&')
         if(parameter.length == 1){
             $('#chatroom_list_page').show();
@@ -73,9 +118,124 @@
             update_mission_msg( chatroom_ID, "first" );
             timeout_update_mission_msg = window.setInterval( ( ()=>update_mission_msg(chatroom_ID) ) , 500);
         }
+        else if(parameter.length == 3){
+            console.log("inin")
+            chatroom_ID = parameter[1].split('=')[1];
+            $('.chatroom-member-page').show();
+            
+            $("#back-to-chatroom-record").attr("href", "/chatroom?"+parameter[0]+"&"+parameter[1])
+            
+            group_member();
+            // update_mission_msg( chatroom_ID, "first" );
+            // timeout_update_mission_msg = window.setInterval( ( ()=>update_mission_msg(chatroom_ID) ) , 500);
+        }
     }
     
-    
+    function group_member(){
+        window.clearInterval(timeout_update_mission_msg);        
+        
+        $.ajax({
+            url: '/get_mission_chatroom_member',
+            method: 'POST',
+            type: 'POST',
+            dataType: "json",
+            data: {
+                "chatroom_ID": window.location.href.split('?')[1].split('&')[1].split('=')[1],
+            },
+            success: function (data) {
+                if (data.result == "success"){
+                    console.log("success")
+                    console.log(data.member_ID)
+                    $(".chatroom-member-header").append('<div class="member-title">'+ data.group_name +'</div>');
+                    console.log(data.status)
+                    if( (data.member_ID.length > 1) && (window.location.href.split('?')[1].split('&')[0].split('=')[1] == data.leader_ID) && (data.status == "acceptable" || data.status == "full") ){
+                        $(".chatroom-member-header").append('<img class="edit-member" src="static/src/edit.png" type="button" data-toggle="collapse" data-target=".delete-member">');
+                        // $("#member").append('<button id="edit">編輯成員</button>')
+                        // $("#edit").click( function() {
+                        //     for(var i = 0; i < member_ID.length; i++){
+                        //         $('#'+member_ID[i]).show();
+                        //     }
+                        // })
+                    }
+                    
+                    var pic_list = data.profile_photo;
+                    for(var i = 0; i < data.member_ID.length; i++){
+                        $.ajax({
+                            url: '/get_img',
+                            method: 'POST',
+                            type: 'POST',
+                            async: false, //改成同步執行(等待上一個回傳)
+                            data: {
+                                "img_path": pic_list[i],
+                            },
+                            success: function (img) {
+                                if (data.member_ID[i] == data.leader_ID){
+                                    $(".chatroom-member-list").append(
+                                        '<div class="chatroom-member-item">\
+                                            <img style="opacity:0" class="collapse width delete-member" type="button" src="static/src/delete.png" data-toggle="modal" data-target="#delete-member-modal">\
+                                            <div class="chatroom-member-photo" style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
+                                            <div class="chatroom-member-name">'+ data.member_name[i] +'(組長)</div>\
+                                        </div>'
+                                    )
+                                }
+                                else{
+                                    $(".chatroom-member-list").append(
+                                        '<div class="chatroom-member-item">\
+                                            <img onclick=create_delete_modal("'+ data.member_ID[i] +'","'+ data.member_name[i] +'") class="collapse width delete-member" type="button" src="static/src/delete.png" data-toggle="modal" data-target="#delete-member-modal">\
+                                            <div class="chatroom-member-photo" style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
+                                            <div class="chatroom-member-name">'+ data.member_name[i] +'</div>\
+                                        </div>'
+                                    )
+                                    $(".chatroom-member-list").append(
+                                        '<div class="chatroom-member-item">\
+                                            <div class="exit_text-btn">退出群組</div>\
+                                        </div>'
+                                    )
+                                }
+                            }
+                        });
+
+                        
+                    }
+
+                }
+            }
+        });
+        
+    }
+
+    function create_delete_modal(others, others_name){
+        $("#delete_modal").html(
+            '<div class="modal-body">\
+                <div class="modal-body-text-confirm">\
+                    確定將成員<br>'+ others_name +'<br>從此群組中刪除嗎？\
+                </div>\
+            </div>\
+            <button type="button" class="modal-btn-cancel" data-dismiss="modal">取消</button>\
+            <button onclick=kick_mission_chatroom_member("'+ others +'") type="button" class="modal-btn-confirm">確認</button>'
+        );
+    }
+
+    function kick_mission_chatroom_member(others){
+        $.ajax({
+            url: '/kick_mission_chatroom_member',
+            method: 'POST',
+            type: 'POST',
+            dataType: "json",
+            data: {
+                "kicked_ID": others,
+                "user_ID": window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                "chatroom_ID": window.location.href.split('?')[1].split('&')[1].split('=')[1],
+            },
+            success: function (data) {
+                if (data.result == "success"){
+                    // $("#"+this_id+"_div").hide()
+                    window.location.href = window.location.href
+                    console.log("success")
+                }
+            }
+        });
+    }
 
     // $("#group_member").click( function() {
     //     window.clearInterval(timeout_update_mission_msg);
@@ -240,7 +400,9 @@
                                     <div class="back_arrow"></div>\
                                 </a>\
                                 <div class="chatroom-title">' + data.group_name +'(' + data.group_number + ')</div>\
-                                <img class="check-member" src="static/src/check_member.png">'
+                                <a href="/chatroom?account='+ window.location.href.split('?')[1].split('&')[0].split('=')[1] +'&chatroom_ID='+ chatroom_ID +'&check">\
+                                    <img class="check-member" src="static/src/check_member.png">\
+                                </a>'       
                             );
                         }
 
@@ -401,8 +563,7 @@
                                 '<a href="/chatroom?account=' + account + '">\
                                     <div class="back_arrow"></div>\
                                 </a>\
-                                <div class="chatroom-title">' + data.group_name + '</div>\
-                                <img class="check-member" src="static/src/check_member.png">'
+                                <div class="chatroom-title">' + data.group_name + '</div>'
                             );
                         }
 

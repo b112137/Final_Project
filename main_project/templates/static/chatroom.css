@@ -162,7 +162,7 @@ body {
     background-color: white;
 }
 
-.chatroom-record-header {
+.chatroom-record-header, .chatroom-member-header {
     position: fixed;
     width: 100vw;
     height: 22vw;
@@ -173,7 +173,7 @@ body {
     z-index: 10;
 }
 
-.chatroom-title {
+.chatroom-title, .member-title {
     position: absolute;
     top: 7vw;
     left: 19vw;
@@ -183,17 +183,21 @@ body {
     color: white;
     font-family: HP_Hans;
     font-size: 5.5vw;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
-.check-member {
+.check-member, .edit-member {
     position: absolute;
-    top: 6.6vw;
+    top: 6.1vw;
     right: 5vw;
     width: 15vw;
     height: auto;
+}
+
+.edit-member {
+    opacity: 0.8;
+    width: 8vw;
+    right: 6vw;
+    top: 7vw;
 }
 
 .chatroom-record-content {
@@ -374,9 +378,9 @@ body {
 }
 
 /* Chatroom Member Page */
-.chatroom-member-page {
+/* .chatroom-member-page {
     display: none;
-}
+} */
 
 .chatroom-member-list {
     position: fixed;
@@ -384,7 +388,7 @@ body {
     overflow-y: scroll;
     width: 100vw;
     height: 100vh;
-    background-color: #F59E56;
+    background-color: #FFFFFF;
 }
 
 .chatroom-member-item {
@@ -404,7 +408,8 @@ body {
 .delete-member {
     /* display: inline-block; */
     display: none;
-    width: 10vw;
+    padding-top: 1vw;
+    width: 9vw;
     height: auto;
 }
 
@@ -414,6 +419,9 @@ body {
     height: 15vw;
     border: none;
     border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    /* background-color: #ffffff; */
     background-color: #B5B2B2;
     margin-left: 2vw;
 }
@@ -425,8 +433,45 @@ body {
     text-overflow: ellipsis;
     white-space: nowrap;
     height: 15vw;
-    padding: 2vw;
+    padding: 3vw;
 }
+
+.exit_text {
+    display: inline-block;
+    width: 55vw;
+    text-align: center;
+    /* height: 15vw; */
+    /* padding: 3vw; */
+    /* height: 15vw; */
+    /* padding: 3vw; */
+
+
+    /* width: 100vw; */
+    /* overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: HP_Hans;
+    font-size: 7vw;
+    color: #999595;
+    
+    top: 55vw;
+    position: absolute; */
+}
+
+.exit_text-btn {
+    display: inline-block;
+    width: 35vw;
+    height: 10.5vw;
+    background-color: #E26F50;
+    border-radius: 2vw;
+    font-family: HP_Hans;
+    font-size: 7vw;
+    color: white;
+    text-align: center;
+    /* padding-top: 1vw; */
+    /* margin: 5vw 32.5vw; */
+}
+
 
 /* Delete Member Modal */
 .modal-dialog {
