@@ -304,8 +304,8 @@ body {
 }
 .quarter_circle {
     position: fixed;
-    width: 20vw;
-    height: 20vw;
+    width: 22.2vw;
+    height: 22.2vw;
     bottom: 0vw;
     background-size: cover;
 }
