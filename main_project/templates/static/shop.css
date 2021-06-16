@@ -13,6 +13,29 @@ body {
     padding: 0vw;
     background-color: white;
 }
+
+.swal-custom-guide {
+    height: 100vh;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+}
+
+.swal2-close {
+    top: 8vw !important;
+    right: 8vw !important;
+}
+
+.btn-help {
+    position: absolute;
+    top: 10vw;
+    right: 10vw; /* why QQ */
+    width: 8vw;
+    height: 8vw;
+    background-image: url('help/icon_help.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .shop_header {
     position: fixed;
     width: 105vw;
@@ -38,12 +61,12 @@ body {
 .shop_text {
     position: absolute;
     width: 100vw;
-    height: 12vw;
-    top: 1vw;
+    height: auto;
+    padding-top: 1vw;
+    padding-right: 15vw;
     font-size: 15vw;
     font-family: jf_open;
     text-align: right;
-    right: 7vw;
     color: white;
 }
 

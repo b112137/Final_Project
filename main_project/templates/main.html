@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>  
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
         <link href= "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     </head>
     <body>
@@ -59,7 +59,7 @@
             <div id="navbar">
                 <!--img src="./src/setting2.png" id="setting2" class="setting1"-->
                 <img src="./static/src/set.png" id="set">
-                <img src="./static/src/guided.png" id="guided">
+                <img src="./static/src/guided.png" id="guided" type="button">
                 <img src="./static/src/aboutus.png" id="aboutus">
                 <!--img src="./src/Ellipse 5.png" id="logout">
                 <img src="./src/logout_text.png" id="logout_text"-->
@@ -116,6 +116,17 @@
             }
         });
     }
+
+    // ADD GUIDE
+    $('#guided').click( function(){
+        Swal.fire({
+            width: '100vw',
+            background: 'url(static/help/h.png)',
+            showConfirmButton: false,
+            showCloseButton: true,
+            customClass: 'swal-custom-guide'
+        });
+    })
 
     var count=0;
     var temp=0;

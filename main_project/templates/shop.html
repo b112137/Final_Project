@@ -7,6 +7,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>        
         <link href="static/shop.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     </head>
     <body>
         <div class="shop_header">
@@ -16,13 +17,14 @@
             
             
             <div class="shop_text">商 店</div>
+            <div class="btn-help" type="button"></div>
         </div>
 
         <ul class="nav nav-tabs nav-justified shop-tab" style="position: fixed; top: 22.9183vw;">
-            <li class="active">
+            <li class="active" id="tab_shopping">
                 <div id="tab-shopping" data-toggle="tab" href="#shopping" ></div>
             </li>
-            <li>
+            <li id="tab_owned">
                 <div id="tab-owned" data-toggle="tab" href="#owned" ></div>
             </li>
         </ul>
@@ -74,7 +76,26 @@
             get_shop_page();
         }
 
-        
+        // ADD GUIDE
+        $('.btn-help').click( function(){
+            if($('#tab_shopping').hasClass('active')){
+                Swal.fire({
+                    width: '100vw',
+                    background: 'url(static/help/s1.png)',
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    customClass: 'swal-custom-guide'
+                });
+            }else {
+                Swal.fire({
+                    width: '100vw',
+                    background: 'url(static/help/s2.png)',
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    customClass: 'swal-custom-guide'
+                });
+            }
+        })
 
         $('#tab-shopping').click( function() {
             get_shop_page();
