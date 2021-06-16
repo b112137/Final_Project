@@ -102,6 +102,7 @@
     var last_sender_name_len = ""
     window.onload = function(){
         // $('#newpic').html("")
+        // document.getElementById('back_arrow_link').href = document.referrer;
         document.getElementById('back_arrow_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
         document.getElementById('home_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
         
@@ -396,7 +397,8 @@
 
                         if (first=="first"){
                             $('.chatroom-record-header').html(
-                                '<a href="/chatroom?account=' + account + '">\
+                                // '<a href="/chatroom?account=' + account + '">\
+                                '<a id="chatroom_back">\
                                     <div class="back_arrow"></div>\
                                 </a>\
                                 <div class="chatroom-title">' + data.group_name +'(' + data.group_number + ')</div>\
@@ -404,6 +406,13 @@
                                     <img class="check-member" src="static/src/check_member.png">\
                                 </a>'       
                             );
+                            console.log(document.referrer.split("?")[0].indexOf('friend'))
+                            if (document.referrer.split("?")[0].indexOf('friend') > -1){
+                                document.getElementById("chatroom_back").href = document.referrer
+                            }
+                            else{
+                                document.getElementById("chatroom_back").href = '/chatroom?account=' + account + ''
+                            }
                         }
 
                         // html_code = ""
@@ -560,12 +569,22 @@
 
                         if (first=="first"){
                             $('.chatroom-record-header').html(
-                                '<a href="/chatroom?account=' + account + '">\
+                                // '<a href="/chatroom?account=' + account + '">\
+                                '<a id="chatroom_back">\
                                     <div class="back_arrow"></div>\
                                 </a>\
                                 <div class="chatroom-title">' + data.group_name + '</div>'
                             );
+
+                            console.log(document.referrer.split("?")[0].indexOf('friend'))
+                            if (document.referrer.split("?")[0].indexOf('friend') > -1){
+                                document.getElementById("chatroom_back").href = document.referrer
+                            }
+                            else{
+                                document.getElementById("chatroom_back").href = '/chatroom?account=' + account + ''
+                            }
                         }
+
 
                         $('#chatroom-record-content-ID').html("")
                         var last_time = new Date("1911/01/01")
@@ -758,7 +777,9 @@
         document.getElementById("chat-message-input").value = "";
     });
 
-    
+    function test(){
+        // history.go(-1);
+    }
 
 
 </script>
