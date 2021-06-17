@@ -6,6 +6,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <link href="static/friend.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     </head>
     <body>
         <div class="friend-header">
@@ -13,6 +14,7 @@
                 <div class="back-arrow"></div>
             </a>
             <div class="friend-title">好 友</div>
+            <div class="btn-help" type="button"></div>
         </div>
 
         <ul class="nav nav-tabs nav-justified friend-top-tab" style="position: fixed; top: 22vw;">
@@ -171,6 +173,45 @@
         $('#tab_invite').click( function() {
             window.location.href = "/friend?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1] +'&pg=invite';
             // get_friend_invitation();
+        })
+
+        // ADD GUIDE
+        $('.btn-help').click( function(){
+            if($('#tab_friend').hasClass('active')){
+                Swal.fire({
+                    width: '100vw',
+                    background: 'url(static/help/f1.png)',
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    customClass: 'swal-custom-guide'
+                });
+            }else if($('#tab_group').hasClass('active')){
+                Swal.fire({
+                    width: '100vw',
+                    background: 'url(static/help/f2.png)',
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    customClass: 'swal-custom-guide'
+                });
+            }else if($('#tab_invite').hasClass('active')){
+                if($('#search_friend_container').css('display') != 'none'){
+                    Swal.fire({
+                        width: '100vw',
+                        background: 'url(static/help/f4.png)',
+                        showConfirmButton: false,
+                        showCloseButton: true,
+                        customClass: 'swal-custom-guide'
+                    });
+                }else {
+                    Swal.fire({
+                        width: '100vw',
+                        background: 'url(static/help/f3.png)',
+                        showConfirmButton: false,
+                        showCloseButton: true,
+                        customClass: 'swal-custom-guide'
+                    });
+                }
+            }
         })
 
         $(document).on('change', "#friend_search",function(){

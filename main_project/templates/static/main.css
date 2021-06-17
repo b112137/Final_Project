@@ -2,6 +2,18 @@
     font-family: jf;
     src: url(src/font/jf-openhuninn-1.1.ttf);
 }
+
+.swal-custom-guide {
+    height: 100vh;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+}
+
+.swal2-close {
+    top: 8vw !important;
+    right: 8vw !important;
+}
+
 body {
     margin: 0;
     padding: 0;

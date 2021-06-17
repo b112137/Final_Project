@@ -8,6 +8,28 @@
     src: url(src/font/jf-openhuninn-1.1.ttf);
 }
 
+.swal-custom-guide {
+    height: 100vh;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+}
+
+.swal2-close {
+    top: 8vw !important;
+    right: 8vw !important;
+}
+
+.btn-help {
+    position: absolute;
+    top: 10vw;
+    right: 5vw;
+    width: 8vw;
+    height: 8vw;
+    background-image: url('help/icon_help.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 body {
     margin: 0px;
     padding: 0px;
@@ -40,7 +62,7 @@ body {
     width: 100vw;
     height: auto;
     padding-top: 1vw;
-    padding-right: 7vw;
+    padding-right: 15vw;
     font-size: 15vw;
     font-family: jf_open;
     text-align: right;
@@ -281,8 +303,8 @@ body {
 
 .quarter_circle {
     position: fixed;
-    width: 20vw;
-    height: 20vw;
+    width: 22.2vw;
+    height: 22.2vw;
     bottom: 0vw;
     background-size: cover;
 }

@@ -16,13 +16,14 @@
             </a>
             
             <div class="title_text">任 務</div>
+            <div class="btn-help" type="button"></div>
         </div>
 
         <ul class="nav nav-tabs nav-justified top-tab" style="position: fixed; top: 22vw;">
-            <li class="active">
+            <li class="active" id="top-tab-explore">
                 <div id="tab-explore" data-toggle="tab" href="#explore-mission" ></div>
             </li>
-            <li>
+            <li id="top-tab-my-mission">
                 <div id="tab-my-mission" data-toggle="tab" href="#my-mission" ></div>
             </li>
         </ul>
@@ -76,6 +77,7 @@
         <a id="chat_link">
             <div class="quarter_circle" style="right: 0vw; background-image: url('static/src/chat.png');"></div>
         </a>
+        
     </body>
 </html>
 
@@ -117,13 +119,67 @@
         my_mission("join");
     })
 
+    // ADD GUIDE
+    $('.btn-help').click( function(){
+        if($('#top-tab-explore').hasClass('active')) {
+            if($('.collapse').hasClass('in')) {
+                if($('#right-tab').hasClass('active')){
+                    Swal.fire({
+                        width: '100vw',
+                        background: 'url(static/help/m3.png)',
+                        showConfirmButton: false,
+                        showCloseButton: true,
+                        customClass: 'swal-custom-guide'
+                    });    
+                }else {
+                    Swal.fire({
+                        width: '100vw',
+                        background: 'url(static/help/m2.png)',
+                        showConfirmButton: false,
+                        showCloseButton: true,
+                        customClass: 'swal-custom-guide'
+                    });    
+                }        
+            }else {
+                Swal.fire({
+                    width: '100vw',
+                    background: 'url(static/help/m1.png)',
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    customClass: 'swal-custom-guide'
+                });    
+            }        
+        }else if($('#top-tab-my-mission').hasClass('active')) {
+            if($('#joined_t').css('color') == 'rgb(255, 255, 255)') {
+                Swal.fire({
+                    width: '100vw',
+                    background: 'url(static/help/m4.png)',
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    customClass: 'swal-custom-guide'
+                });        
+            }else {
+                Swal.fire({
+                    width: '100vw',
+                    background: 'url(static/help/m5.png)',
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    customClass: 'swal-custom-guide'
+                });
+            }
+            
+        }
+        
+    })
+    
+
 
     function my_mission(type) {
         $('#page1').html("");
         if(type=="join"){
             $('#page1').append(
                 "<div class='top_block'>\
-                    <div class='joined_text' id = 'joined_t'>已加入</div>\
+                    <div class='joined_text' id = 'joined_t'>待完成</div>\
                     <div class='finished_text' id ='finished_t'>已完成</div>\
                     <img src = 'static/new_element/asset 321.png' class = 'design_line'>\
                 </div>"
@@ -133,12 +189,12 @@
         else if(type=="finished"){
             $('#page1').append(
                 "<div class='top_block'>\
-                    <div class='joined_text' id = 'joined_t' >已加入</div>\
+                    <div class='joined_text' id = 'joined_t' >待完成</div>\
                     <div class='finished_text' id ='finished_t' >已完成</div>\
                     <img src = 'static/new_element/asset 321.png' class = 'design_line'>\
                 </div>"
             )
-            $('#joined_t').attr('style', "background-image: url(static/new_element/asset320.png); color:#E26F50;")
+            $('#joined_t').attr('style', "background-image: url(static/new_element/asset320.png); color:rgba(245, 158, 86, 0.8);")
             $('#finished_t').attr('style', "background-image: url(static/new_element/asset319.png); color:white;")
 
         }
