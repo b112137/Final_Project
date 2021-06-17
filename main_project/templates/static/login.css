@@ -43,6 +43,7 @@ body {
     font-size: 14.8vw;
     color:white;
 }
+
 .input{
     position: absolute;
     width: 61.75vw;
@@ -57,11 +58,13 @@ body {
     font-family: jf_open;
     padding-left: 3vw; 
 }
+
 input::placeholder {
     color:#B5B2B2;
     font-size: 6.29vw;
     font-family:jf_open;
   }
+  
 #account{
     left: 18.5vw;
     top: 77.7vw;
