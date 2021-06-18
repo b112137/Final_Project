@@ -94,11 +94,15 @@
 
     }
 
-    $(document).on('change', "#mission_search",function(){
-        all_mission();
+    $(document).on('click', "#mission_search",function(){
+        mission_search_timer = window.setInterval( all_mission , 500)
+        // all_mission();
     })
 
+
+
     $('#mission_search_delete').click(function(){
+        window.clearInterval(mission_search_timer);
         document.getElementById("mission_search").value = ""
         all_mission();
     })
@@ -400,9 +404,8 @@
         image_change = 0;
     }
 
+    var last_mission_list = ""
     function all_mission() {
-        $('#mission_container').html("");
-        console.log($('#mission_container'))
         $.ajax({
               url: '/get_all_mission',
               method: 'POST',
@@ -410,9 +413,13 @@
               dataType: "json",
               data: {
                   "search": document.getElementById("mission_search").value,
+                  "mission_type": "all",
+                  "last_mission_list": last_mission_list.toString(),
               },
               success: function (data) {
                 if (data.result == "success"){
+                    last_mission_list = data.mission_ID
+                    $('#mission_container').html("");
                     var pic_list = data.mission_pic
                     if(pic_list.length == 0){
                         $("#mission_container").html('<div class="error_text">搜尋不到此任務名稱!</div>'  )
@@ -501,6 +508,8 @@
                             </div>'
                         )
                     }
+                }
+                else if(data.result=="same"){
                     
                 }
               }

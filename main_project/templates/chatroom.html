@@ -17,7 +17,7 @@
                 </a>
                 
                 <img class="icon-chatroom" src="static/src/icon_chatroom.png" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls1" data-bs-slide="prev">
-                <input type="text" placeholder="搜尋" class="search-bar">
+                <input id="chatroom_search" type="text" placeholder="搜尋" class="search-bar">
                 <button class="btn-cancel">取消</button>
             </div>
             <div class="chatroom-list" id="chatroom_list_div">
@@ -324,6 +324,7 @@
               dataType: "json",
               data: {
                   "account": window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                  "search": document.getElementById("chatroom_search").value,
                   "last_chatroom_list" : last_chatroom_list.toString(),
               },
               success: function (data) {
@@ -776,6 +777,20 @@
         update_mission_msg( chatroom_ID );
         document.getElementById("chat-message-input").value = "";
     });
+
+    $(document).on('click', "#chatroom_search",function(){
+        window.clearInterval(timeout_update_chat_list);
+        timeout_update_chat_list = window.setInterval( update_chat_list , 500)
+        // friend_search_timer = window.setInterval( get_friend_page , 500)
+    })
+
+    $('.btn-cancel').click(function(){
+        document.getElementById("chatroom_search").value = ""
+        update_chat_list();
+        window.clearInterval(timeout_update_chat_list);
+        timeout_update_chat_list = window.setInterval( update_chat_list , 1000)
+        
+    })
 
     function test(){
         // history.go(-1);

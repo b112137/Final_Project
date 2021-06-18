@@ -214,24 +214,29 @@
             }
         })
 
-        $(document).on('change', "#friend_search",function(){
-            get_friend_page();
+        $(document).on('click', "#friend_search",function(){
+            friend_search_timer = window.setInterval( get_friend_page , 500)
+            // get_friend_page();
         })
 
         $('#friend_search_delete').click(function(){
+            window.clearInterval(friend_search_timer);
             document.getElementById("friend_search").value = ""
             get_friend_page();
         })
 
-        $(document).on('change', "#group_search",function(){
-            get_friend_group();
+        $(document).on('click', "#group_search",function(){
+            group_search_timer = window.setInterval( get_friend_group , 500)
+            // get_friend_group();
         })
 
         $('#group_search_delete').click(function(){
+            window.clearInterval(group_search_timer);
             document.getElementById("group_search").value = ""
             get_friend_group();
         })
 
+        var last_friend_list = ""
         function get_friend_page() {
             console.log(document.getElementById("friend_search").value)
             $.ajax({
@@ -242,9 +247,11 @@
                 data: {
                     "account": window.location.href.split('?')[1].split('&')[0].split('=')[1],
                     'search': document.getElementById("friend_search").value,
+                    "last_friend_list": last_friend_list.toString(),
                 },
                 success: function (data) {
                     if(data.result == 'success'){
+                        last_friend_list = data.friend_ID;
                         $('#friend_container').html("");
                         console.log("load success")
                         if(data.friend_ID.length==0){
@@ -288,6 +295,9 @@
                                 </div>'
                             )
                         }
+                    }
+                    else if(data.result == 'same'){
+
                     }
                 }
             })
@@ -334,6 +344,7 @@
         }
 
         function get_friend_group(){
+            var last_group_list = ""
             $.ajax({
                 url: '/get_friend_group',
                 method: 'POST',
@@ -342,9 +353,11 @@
                 data: {
                     "account": window.location.href.split('?')[1].split('&')[0].split('=')[1],
                     'search': document.getElementById("group_search").value,
+                    "last_group_list": last_group_list.toString(),
                 },
                 success: function (data) {
                     if(data.result == 'success'){
+                        last_group_list = data.chatroom_ID;
                         $('#group_container').html("");
                         console.log("load success")
                         if(data.group_name.length==0){
@@ -388,6 +401,9 @@
                             )
                         }
                     
+                    }
+                    else if (data.result == "same"){
+                        
                     }
                 }
             })

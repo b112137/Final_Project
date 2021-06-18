@@ -145,7 +145,7 @@ def register_submit(request):
         print(len(Profile.objects.filter(account=account)))
         if len(Profile.objects.filter(account=account)) == 0:
             Profile.objects.create(name=name, account=account, password=password, sex=sex, birth=birth, email=email,\
-                                    exp1=5, exp2=5, exp3=5, balance=0, character_name="test.jpg", profile_photo="none.jpg",\
+                                    exp1=5, exp2=5, exp3=5, balance=0, character_name="test.jpg", profile_photo="media/profile_img/none.jpg",\
                                     mission_doing_chatroom_ID=[], mission_done_chatroom_ID=[], friend_ID=[], friend_chatroom_ID=[],\
                                     owned_product_ID=[], invitation_send=[], invitation_receive=[]
             )
@@ -187,10 +187,21 @@ def login_check(request):
 def get_all_mission(request):
     if request.method == 'POST':
         search = request.POST.get('search')
-        if search == "":
-            mission_imformation = Mission_imformation.objects.all()
+        mission_type = request.POST.get('mission_type')
+        last_mission_list = request.POST.get("last_mission_list")
+        last_mission_list = ast.literal_eval( '[' + last_mission_list + ']') 
+
+        if mission_type == "all":
+            if search == "":
+                mission_imformation = Mission_imformation.objects.all()
+            else:
+                mission_imformation = Mission_imformation.objects.filter(mission_name__contains=search)
         else:
-            mission_imformation = Mission_imformation.objects.filter(mission_name__contains=search)
+            if search == "":
+                mission_imformation = Mission_imformation.objects.filter(mission_type=mission_type)
+            else:
+                mission_imformation = Mission_imformation.objects.filter(mission_type=mission_type, mission_name__contains=search)
+        
         # print(mission_imformation)
         mission_all = core_serializers.serialize("json", mission_imformation)
         mission_all = json.loads(mission_all)
@@ -211,14 +222,19 @@ def get_all_mission(request):
             reward.append(mission['fields']['reward'])
 
         # print(mission_ID, mission_name, mission_pic, joined, mission_intro, mission_type, group_required, exp1, exp2, exp3, reward)
+        last_mission_list = [str(x) for x in last_mission_list]
 
-
-        return JsonResponse({
-            'result' : "success",
-            "mission_ID":mission_ID, "mission_name":mission_name, "mission_pic":mission_pic,
-            "joined":joined, "mission_intro":mission_intro, "mission_type":mission_type, "group_required":group_required,
-            "exp1":exp1, "exp2":exp2, "exp3":exp3, "reward":reward
-        })
+        if last_mission_list == mission_ID:
+            return JsonResponse({
+                'result' : "same",
+            })
+        else:
+            return JsonResponse({
+                'result' : "success",
+                "mission_ID":mission_ID, "mission_name":mission_name, "mission_pic":mission_pic,
+                "joined":joined, "mission_intro":mission_intro, "mission_type":mission_type, "group_required":group_required,
+                "exp1":exp1, "exp2":exp2, "exp3":exp3, "reward":reward
+            })
 
 def get_img(request):
     if request.method == 'POST':
@@ -437,6 +453,7 @@ def submit_mission_group(request):
 def get_mission_chatroom_list(request):
     if request.method == 'POST':
         account = request.POST.get("account")
+        search = request.POST.get("search")
         last_chatroom_list = request.POST.get("last_chatroom_list")
         last_chatroom_list = ast.literal_eval( '[' + last_chatroom_list + ']') 
         profile_search_all = Profile.objects.filter(account=account)
@@ -448,61 +465,74 @@ def get_mission_chatroom_list(request):
         chatroom_ID_all, mission_ID, mission_name, chat_img, group_name, group_number, status, message, time = [], [], [], [], [], [], [], [], []
         count = 0
         for chatroom_ID in mission_do_chatroom_ID:
-            chatroom_ID_all.append(chatroom_ID)
-
             group_search = Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0]
-            mission_ID.append(group_search.mission_ID)
-            mission_name.append(group_search.mission_name)
-            chat_img.append( Mission_imformation.objects.filter(mission_ID=group_search.mission_ID)[0].mission_pic )
-            group_name.append(group_search.group_name)
-            group_number.append( len(ast.literal_eval(group_search.member_ID)) )
-            status.append(group_search.status)
-
-            lastest_message = Mission_Chatroom.objects.filter(chatroom_ID=chatroom_ID).order_by('pk').last()
-
-            if lastest_message:
-                message.append(lastest_message.message)
-                time.append(lastest_message.time)
-                # print(lastest_message.time)
+            if search != "":
+                if str(search) in str(group_search.group_name):
+                    check = 1
+                else:
+                    check = 0
             else:
-                message.append("")
-                time.append(datetime(1999, 3, 26, 0, 0, 0, count, tzinfo=timezone.utc))
-                count += 1
+                check = 1
+
+            if check:
+                chatroom_ID_all.append(chatroom_ID)
+                mission_ID.append(group_search.mission_ID)
+                mission_name.append(group_search.mission_name)
+                chat_img.append( Mission_imformation.objects.filter(mission_ID=group_search.mission_ID)[0].mission_pic )
+                group_name.append(group_search.group_name)
+                group_number.append( len(ast.literal_eval(group_search.member_ID)) )
+                status.append(group_search.status)
+
+                lastest_message = Mission_Chatroom.objects.filter(chatroom_ID=chatroom_ID).order_by('pk').last()
+
+                if lastest_message:
+                    message.append(lastest_message.message)
+                    time.append(lastest_message.time)
+                    # print(lastest_message.time)
+                else:
+                    message.append("")
+                    time.append(datetime(1999, 3, 26, 0, 0, 0, count, tzinfo=timezone.utc))
+                    count += 1
 
         # print(chatroom_ID_all, mission_ID, mission_name, group_name, status, message, time)
 
         friend_chatroom_ID = ast.literal_eval(profile_search.friend_chatroom_ID)
         # print(friend_chatroom_ID)
         for chatroom_ID in friend_chatroom_ID:
-            chatroom_ID_all.append(chatroom_ID)
-
-            mission_ID.append('none')
-            mission_name.append('none')
-            
-
             sender_ID = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID)[0].sender_ID
             receiver_ID = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID)[0].receiver_ID
             if sender_ID == account:
                 group_name_ID = receiver_ID
             elif receiver_ID == account:
                 group_name_ID = sender_ID
-
-            chat_img.append( Profile.objects.filter(account=group_name_ID)[0].profile_photo )
-
-            group_name.append(Profile.objects.filter(account=group_name_ID)[0].name)
-            group_number.append("none")
-            status.append("friend")
-
-            lastest_message = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID).order_by('pk').last()
-
-            if lastest_message:
-                message.append(lastest_message.message)
-                time.append(lastest_message.time)
-                # print(lastest_message.time)
+            
+            if search != "":
+                if str(search) in Profile.objects.filter(account=group_name_ID)[0].name:
+                    check = 1
+                else:
+                    check = 0
             else:
-                message.append("")
-                time.append(datetime(1999, 3, 26, 0, 0, 0, count, tzinfo=timezone.utc))
-                count += 1
+                check = 1
+
+            if check:
+                chatroom_ID_all.append(chatroom_ID)
+                mission_ID.append('none')
+                mission_name.append('none')
+                chat_img.append( Profile.objects.filter(account=group_name_ID)[0].profile_photo )
+                group_name.append(Profile.objects.filter(account=group_name_ID)[0].name)
+                group_number.append("none")
+                status.append("friend")
+
+                lastest_message = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID).order_by('pk').last()
+
+                if lastest_message:
+                    message.append(lastest_message.message)
+                    time.append(lastest_message.time)
+                    # print(lastest_message.time)
+                else:
+                    message.append("")
+                    time.append(datetime(1999, 3, 26, 0, 0, 0, count, tzinfo=timezone.utc))
+                    count += 1
 
         time_copy = time.copy()
         
@@ -1183,6 +1213,15 @@ def get_friend_page(request):
     if request.method == 'POST':
         account = request.POST.get("account")
         search = request.POST.get("search")
+        last_friend_list = request.POST.get("last_friend_list")
+        last_friend_list_split = last_friend_list.split(",")
+        last_friend_list = []
+        for split in last_friend_list_split:
+            last_friend_list.append(split)
+
+        # print('[' + last_friend_list + ']')
+        # last_friend_list = ast.literal_eval( '[' + last_friend_list + ']') 
+
         profile = Profile.objects.filter(account=account)[0]  
         
         friend_list = ast.literal_eval(profile.friend_ID)
@@ -1212,21 +1251,34 @@ def get_friend_page(request):
                     friend_name.append(p.name)
                     friend_photo.append(p.profile_photo)
         
-        return JsonResponse({
-            'result' : "success",
-            'friend_list': friend_list,
-            'friend_chatroom_list':friend_chatroom_list,
-            'mission_chatroom_ID':mission_chatroom_ID,
-            'friend_name':friend_name,
-            'friend_ID':friend_ID,
-            'friend_photo':friend_photo,
-        })
+        last_friend_list = [str(x) for x in last_friend_list]
+
+        if last_friend_list == friend_ID:
+            return JsonResponse({
+                'result' : "same",
+            })
+        else:
+            return JsonResponse({
+                'result' : "success",
+                'friend_list': friend_list,
+                'friend_chatroom_list':friend_chatroom_list,
+                'mission_chatroom_ID':mission_chatroom_ID,
+                'friend_name':friend_name,
+                'friend_ID':friend_ID,
+                'friend_photo':friend_photo,
+            })
 
 
 def get_friend_group(request):
     if request.method == 'POST':
         account = request.POST.get("account")
         search = request.POST.get("search")
+        last_group_list = request.POST.get("last_group_list")
+        last_group_list_split = last_group_list.split(",")
+        last_group_list = []
+        for split in last_group_list_split:
+            last_group_list.append(split)
+
         profile = Profile.objects.filter(account=account)[0]  
         
         mission_chatroom_ID = ast.literal_eval(profile.mission_doing_chatroom_ID) + ast.literal_eval(profile.mission_done_chatroom_ID)
@@ -1259,14 +1311,21 @@ def get_friend_group(request):
                     group_number.append( len(ast.literal_eval(g.member_ID)) )
                     status.append(g.status)
         
-        return JsonResponse({
-            'result' : "success",
-            'chatroom_ID': ID,
-            'group_name': group_name,
-            'group_number':group_number,
-            'status':status,
-            'chat_img':chat_img,
-        })
+        last_group_list = [str(x) for x in last_group_list]
+
+        if last_group_list == ID:
+            return JsonResponse({
+                'result' : "same",
+            })
+        else:
+            return JsonResponse({
+                'result' : "success",
+                'chatroom_ID': ID,
+                'group_name': group_name,
+                'group_number':group_number,
+                'status':status,
+                'chat_img':chat_img,
+            })
 
 def get_friend_invitation(request):
     if request.method == 'POST':
