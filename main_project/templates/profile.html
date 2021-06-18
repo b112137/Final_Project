@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <link href="./static/profile.css" rel="stylesheet">
         <script src="static/jquery.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>     
     </head>
     <body>
         <div id="all">
@@ -30,6 +31,29 @@
                 <div id="photo4_text" class="photo_text"></div>
             </div>
         </div>
+        
+        <div id = "profile_modal">
+            <div class="modal fade" id="btn-submit-modal" tabindex="-1" aria-hidden="true" data-backdrop="static">
+                <div class="submit-modal-dialog">
+                    <div class="submit-modal-content">
+                        <form>
+                            {% csrf_token %}
+                            <label>
+                                <input id="image-input" type="file" name="image" style="visibility: hidden;" value="">
+                            </label>
+                            <div type="button" onclick="upload_img()"  id="upload_img" class="upload_img_div">
+                                <img type="button" id="img_upload_img">
+                            </div>
+                        </form>
+                        <button onclick="submit_no()" type="button" class="submit-modal-btn-cancel" data-dismiss="modal">取消</button>
+                        <button id="submit-modal-btn-confirm" onclick="submit_yes()" type="button" class="submit-modal-btn-confirm" data-dismiss="modal">確認</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
         <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     </body>
 </html>
@@ -65,7 +89,7 @@
             success: function (data) {
                 if (data.result == "success"){
                     $('#container').html(
-                        '<div id="photo"></div>\
+                        '<div id="photo" type="button" data-toggle="modal" data-target="#btn-submit-modal"></div>\
                         <p id="name" class="profile">'+ data.name +'</p>\
                         <p id="user_id"  class="profile">'+ data.account +'</p>\
                         <p id="age" class="profile">'+ data.birth +'</p>\

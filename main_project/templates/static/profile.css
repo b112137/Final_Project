@@ -372,3 +372,61 @@ progress{
     font-family: hp;
     color: black;
 }
+
+
+
+.submit-modal-dialog {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    margin-left: 16vw;
+    margin-top: 30vh;
+}
+  
+.submit-modal-content {
+    position: relative;
+    font-family: jf_open;
+    font-size: 4vw;
+    background-color: #E9BBA4;
+    border-radius: 5vw;
+    border-width: 0px;
+    width: 70vw;
+    height: 80vw;;
+}
+
+.submit-modal-content > button {
+    position: absolute;
+    bottom: 5vw;
+    width: 22vw;
+    height: 9vw;
+    background-color: #E26F50;
+    border-width: 0px;
+    border-radius: 2vw;
+    color: white;
+    font-size: 5.5vw;
+}
+
+.submit-modal-content >button:active {
+    opacity: 0.8;
+}
+
+.upload_img_div{
+    background-image: url('new_element/upload.png');
+    background-size: 64vw auto;
+    background-position: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 64vw;
+    height: 52vw;
+    left: 3vw;
+    top: 6vw;
+    border-radius: 2vw;
+}
+
+.submit-modal-btn-cancel {
+    left: 10vw;
+}
+
+.submit-modal-btn-confirm {
+    right: 10vw;
+}
