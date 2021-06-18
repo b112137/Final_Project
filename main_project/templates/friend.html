@@ -361,7 +361,7 @@
                         $('#group_container').html("");
                         console.log("load success")
                         if(data.group_name.length==0){
-                            if(document.getElementById("friend_search").value==""){
+                            if(document.getElementById("group_search").value==""){
                                 $('#group_container').append(
                                     '<div class="error_text">尚無群組<br>快去揪團破任務吧!</div>'    
                                 )
@@ -403,7 +403,7 @@
                     
                     }
                     else if (data.result == "same"){
-                        
+
                     }
                 }
             })
