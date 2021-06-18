@@ -12,6 +12,7 @@ import ast
 import cv2
 import base64
 import random
+import io
 
 # Create your views here.
 def start_page(request):
@@ -400,10 +401,35 @@ def submit_mission_group_check(request):
 def submit_mission_group(request):
     if request.method == 'POST':
         image = request.FILES.get('image')
+        x = float(request.POST.get('x'))
+        y = float(request.POST.get('y'))
+        width = float(request.POST.get('width'))
+        height = float(request.POST.get('height'))
+        print(x,y, width, height)
         chatroom_ID = request.POST.get('chatroom_ID')
         with open('media/mission_submit_upload/' + chatroom_ID +'.jpg', 'wb') as f:
             for line in image:
                 f.write(line)
+
+        image = cv2.imread('media/mission_submit_upload/' + chatroom_ID +'.jpg')
+        
+        x_min = x
+        x_max = x + width
+        y_min = y
+        y_max = y + height
+
+        if x_min < 0:
+            x_min = 0
+        if x_max >= image.shape[1]:
+            x_max = image.shape[1]
+
+        if y_min < 0:
+            y_min = 0
+        if y_max >= image.shape[0]:
+            y_max = image.shape[0]
+
+        crop_img = image[int(y_min):int(y_max), int(x_min):int(x_max)]
+        cv2.imwrite('media/mission_submit_upload/' + chatroom_ID +'.jpg',crop_img)
 
         ### 修改 Mission group
         group_search_all = Mission_group.objects.filter(chatroom_ID=chatroom_ID)
@@ -441,13 +467,12 @@ def submit_mission_group(request):
                                 member_ID=member_ID, submission_pic=submission_pic, check_status=check_status, check_preson=check_preson
         )
 
-        ## 取得刷新頁面資料
-        ## ToDo ###
+        # 取得刷新頁面資料
+        # ToDo ###
 
         return JsonResponse({
             'result' : "success",
         })
-
 
 
 def get_mission_chatroom_list(request):

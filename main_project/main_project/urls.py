@@ -48,6 +48,7 @@ urlpatterns = [
     path('kick_mission_chatroom_member', backend.kick_mission_chatroom_member),
     path('submit_mission_group_check', backend.submit_mission_group_check),
     path('submit_mission_group', backend.submit_mission_group),
+
     path('friend_chatroom_update', backend.friend_chatroom_update),
     path('save_profile_intro', backend.save_profile_intro),
     path('get_all_shop', backend.get_all_shop),

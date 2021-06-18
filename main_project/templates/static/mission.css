@@ -1043,7 +1043,7 @@ input {
 .upload_img_div{
     background-image: url('new_element/upload.png');
     background-size: 64vw auto;
-    background-position: center;
+    background-position: contain;
     background-repeat: no-repeat;
     position: absolute;
     width: 64vw;

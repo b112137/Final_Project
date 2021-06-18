@@ -8,6 +8,9 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>        
         <link href="static/mission.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/3.1.3/cropper.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/3.1.3/cropper.min.js"></script>
+
     </head>
     <body>
         <div class="header">
@@ -180,6 +183,7 @@
 
     function my_mission(type) {
         $('#page1').html("");
+        $('#submit_modal').html("");
         if(type=="join"){
             $('#page1').append(
                 "<div class='top_block'>\
@@ -244,9 +248,11 @@
                                                 <form>\
                                                     {% csrf_token %}\
                                                     <label>\
-                                                        <input id="image-input'+ i.toString() +'" type="file" name="image" style="visibility: hidden;">\
+                                                        <input id="image-input'+ i.toString() +'" type="file" name="image" style="visibility: hidden;" value="">\
                                                     </label>\
-                                                    <div type="button" onclick="upload_img('+i.toString()+')"  id="upload_img_'+ i.toString() +'" class="upload_img_div"></div>\
+                                                    <div type="button" onclick="upload_img('+i.toString()+')"  id="upload_img_'+ i.toString() +'" class="upload_img_div">\
+                                                        <img type="button" id="img_upload_img_'+ i.toString() +'">\
+                                                    </div>\
                                                 </form>\
                                                 <button onclick="submit_no()" type="button" class="submit-modal-btn-cancel" data-dismiss="modal">取消</button>\
                                                 <button id="submit-modal-btn-confirm'+ i.toString() +'" onclick="submit_yes('+i.toString()+','+data.mission_doing_chatroom_ID[i]+')" type="button" class="submit-modal-btn-confirm" data-dismiss="modal">確認</button>\
@@ -296,94 +302,162 @@
         });
     }
 
+    // var image_change = 0;
+    // function upload_img(i) {
+    //     console.log('#image-input'+i.toString())
+    //     $(document).on('change','#image-input'+i.toString(),function () {
+    //         image_change = 1;
+    //         console.log("change")
+    //         var choose_file = $(this)[0].files[0];
+    //         var reader = new FileReader();
+    //         reader.readAsDataURL(choose_file);
+    //         reader.onload = function () {
+    //             console.log(reader.result)
+    //             $("#upload_img_"+i.toString()).attr("style", 'background-image: url('+reader.result+')')
+    //         }
+    //     })
+    //     console.log('#image-input'+i.toString())
+    //     $('#image-input'+i.toString()).click();
+    // }
+
+    var $t;
     var image_change = 0;
+    var imgNewWidth = 600;  // px
+    var imgNewHeight;
+    var imgNewSize = 600;  // k
     function upload_img(i) {
-        console.log('#image-input'+i.toString())
+        console.log("in")
+        $t = $("#img_upload_img_"+i.toString());
+
         $(document).on('change','#image-input'+i.toString(),function () {
             image_change = 1;
-            console.log("change")
             var choose_file = $(this)[0].files[0];
             var reader = new FileReader();
-            reader.readAsDataURL(choose_file);
-            reader.onload = function () {
-                console.log(reader.result)
-                $("#upload_img_"+i.toString()).attr("style", 'background-image: url('+reader.result+')')
+            
+            reader.onload = function (evt) {
+                let imgSrc = evt.target.result;
+                $t.cropper('replace', imgSrc, false);
+
+                // console.log(reader.result)
+                // $("#upload_img_"+i.toString()).attr("style", 'background-image: url('+reader.result+')')
             }
+            reader.readAsDataURL(choose_file);
         })
-        console.log('#image-input'+i.toString())
         $('#image-input'+i.toString()).click();
+
+        // cropper圖片裁剪
+        $t.cropper({
+            aspectRatio : 1,  // 預設比例
+            // preview : '#previewImg',  // 預覽檢視
+            guides : false,   // 裁剪框的虛線(九宮格)
+            autoCropArea : 0.95, // 0-1之間的數值，定義自動剪裁區域的大小，預設0.8
+            dragMode: 'crop', // 拖曳模式 crop(Default,新增裁剪框) / move(移動裁剪框&圖片) / none(無動作)
+            cropBoxResizable : true, // 是否有裁剪框調整四邊八點
+            movable : true, // 是否允許移動圖片
+            zoomable : true, // 是否允許縮放圖片大小
+            rotatable : false,   // 是否允許旋轉圖片
+            zoomOnWheel : true, // 是否允許通過滑鼠滾輪來縮放圖片
+            zoomOnTouch : true, // 是否允許通過觸控移動來縮放圖片
+            ready : function(e) {  
+                console.log('ready!');
+            }
+        });
     }
     
     function submit_yes(i,chatroom_ID) {
+        var newImg;
+        var x, y, width, height;
         if(image_change==1){
-            $.ajax({
-                url: '/submit_mission_group_check',
-                method: 'POST',
-                type: 'POST',
-                dataType: "json",
-                data: {
-                    "chatroom_ID": chatroom_ID,
-                },
-                success: function (data) {
-                    if (data.result == "success"){
-                        var formdata = new FormData();
-                        console.log($('#image-input'+i.toString())[0].files[0])
-                        formdata.append("image", $('#image-input'+i.toString())[0].files[0]);
-                        formdata.append("chatroom_ID",chatroom_ID);
-                        formdata.append("csrfmiddlewaretoken",$("[name='csrfmiddlewaretoken']").val());
-                        $.ajax({
-                            processData:false,
-                            contentType:false,
-                            url:'/submit_mission_group',
-                            type:'POST',
-                            data:formdata,
-                            dataType:"json",
-                            success: function (data) {
-                                // alert("提交完成")
-                                $('#submit-modal-btn-confirm'+ i.toString()).attr('data-dismiss', "modal");
-                                // window.location.href = "/mission?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
-                                Swal.fire({
-                                    title: '提交完成!',
-                                    icon: 'success',
-                                    width: '70vw',
-                                    heightAuto: false,
-                                    background: '#E9BBA4',
-                                    showConfirmButton: false,
-                                    customClass: 'swal-custom'
-                                });
+            // if(0){
+            if (!$t.attr("src")) {
+                return false;
+            } 
+            else {
+                var cropImg = $("#img_upload_img_"+i.toString()).cropper('getData');
+                
+                console.log('cropImg', cropImg);
+                console.log('cropImg', cropImg.height, cropImg.width);
+                x = cropImg.x;
+                y = cropImg.y;
+                width = cropImg.width;
+                height = cropImg.height;
 
-                                $('#tab-my-mission').click();
-                            }
-                        });
+                $.ajax({
+                    url: '/submit_mission_group_check',
+                    method: 'POST',
+                    type: 'POST',
+                    dataType: "json",
+                    data: {
+                        "chatroom_ID": chatroom_ID,
+                    },
+                    success: function (data) {
+                        if (data.result == "success"){
+                            var formdata = new FormData();
+                            console.log($('#image-input'+i.toString())[0].files[0])
+                            formdata.append("image", $('#image-input'+i.toString())[0].files[0]);
+                            formdata.append("x", x);
+                            formdata.append("y", y);
+                            formdata.append("width", width);
+                            formdata.append("height", height);
+                            formdata.append("chatroom_ID",chatroom_ID);
+                            formdata.append("csrfmiddlewaretoken",$("[name='csrfmiddlewaretoken']").val());
+                            $.ajax({
+                                processData:false,
+                                contentType:false,
+                                url:'/submit_mission_group',
+                                type:'POST',
+                                async: false,
+                                data:formdata,
+                                dataType:"json",
+                                success: function (data) {
+                                    // alert("提交完成")
+                                    $('#submit-modal-btn-confirm'+ i.toString()).attr('data-dismiss', "modal");
+                                    // window.location.href = "/mission?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
+                                    Swal.fire({
+                                        title: '提交完成!',
+                                        icon: 'success',
+                                        width: '70vw',
+                                        heightAuto: false,
+                                        background: '#E9BBA4',
+                                        showConfirmButton: false,
+                                        customClass: 'swal-custom'
+                                    }).then(function () {
+                                        $('#tab-my-mission').click();
+                                    });
+                                }
+                            });
+                        }
+                        else if(data.result=="not_enough"){
+                            // alert("人數不足以提交任務")
+                            $("#submit-modal-btn-confirm"+ i.toString()).attr('data-dismiss', "modal");
+                            Swal.fire({
+                                title: '人數不足以提交任務!',
+                                icon: 'error',
+                                width: '70vw',
+                                heightAuto: false,
+                                background: '#E9BBA4',
+                                showConfirmButton: false,
+                                customClass: 'swal-custom'
+                            });
+                        }
+                        else if(data.result=="error"){
+                            // alert("error")
+                            $("#submit-modal-btn-confirm"+ i.toString()).attr('data-dismiss', "modal");
+                            Swal.fire({
+                                title: '出現錯誤，請再試一次!',
+                                icon: 'error',
+                                width: '70vw',
+                                heightAuto: false,
+                                background: '#E9BBA4',
+                                showConfirmButton: false,
+                                customClass: 'swal-custom'
+                            });
+                        }
                     }
-                    else if(data.result=="not_enough"){
-                        // alert("人數不足以提交任務")
-                        $("#submit-modal-btn-confirm"+ i.toString()).attr('data-dismiss', "modal");
-                        Swal.fire({
-                            title: '人數不足以提交任務!',
-                            icon: 'error',
-                            width: '70vw',
-                            heightAuto: false,
-                            background: '#E9BBA4',
-                            showConfirmButton: false,
-                            customClass: 'swal-custom'
-                        });
-                    }
-                    else if(data.result=="error"){
-                        // alert("error")
-                        $("#submit-modal-btn-confirm"+ i.toString()).attr('data-dismiss', "modal");
-                        Swal.fire({
-                            title: '出現錯誤，請再試一次!',
-                            icon: 'error',
-                            width: '70vw',
-                            heightAuto: false,
-                            background: '#E9BBA4',
-                            showConfirmButton: false,
-                            customClass: 'swal-custom'
-                        });
-                    }
-                }
-            });
+                });
+
+            }
+            
         }
         else{
             // alert("請上傳照片!")
@@ -399,6 +473,7 @@
         }
         image_change = 0;
     }
+
 
     function submit_no() {
         image_change = 0;

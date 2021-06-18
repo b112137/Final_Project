@@ -36,10 +36,62 @@
                 <input id="image-input" type="file" name="image">
             </label>
         </form> -->
-    
+        <div class="actions">
+            <input type="file" id="upload" accept="image/jpeg,image/png" value="" />
+            <hr>
+            <div class="crop">
+              <div class="box tailoring-box">
+                <img id="tailoringImg" src="">
+              </div>
+              圖片預覽：
+              <div class="box preview">
+                <div id="previewImg"></div>
+              </div>
+              
+              <button id="sureCut">裁剪</button>
+            </div>
+        </div>
+          
+        <div class="result">
+            裁切壓縮後：
+            <p></p>
+            <span></span>
+            <input type="hidden">
+            <img id="newImg" src="">
+        </div>
+        
+
     </body>
 
 </html>
+    
+<style>
+    .actions .crop .box {
+        margin: 14px 4px;
+        border: solid 1px #ddd;
+    }
+
+    .tailoring-box {
+        width: 400px;
+        height: 300px;
+    }
+    .preview {
+        width: 400px;
+        height: 200px;
+    }
+    .previewImg {
+        width: 100%;
+        height: 200px;
+        margin: auto;
+        overflow: hidden;
+    }
+    
+    .result{
+        display: none;
+    }  
+
+
+</style>
 
 <script>
     $.ajaxSetup({
