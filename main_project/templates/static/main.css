@@ -209,11 +209,13 @@ body {
     top: 185vw;
 }
 #chat{
-    position: absolute;
+    position: fixed;
     width: 22.2vw;
     height: 22.2vw;
     right: 0vw;
     bottom: 0vw;
+    background-image: url('src/chat.png');
+    background-size: cover;
 }
 
 #card_icon{
