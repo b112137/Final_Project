@@ -92,7 +92,7 @@ body {
     left: 45vw;
     font-style: normal;
     font-weight: normal;
-    line-height: 8vw;
+    line-height: 20vw;
     font-family: hp;
     font-size: 7.5vw;
 }
@@ -250,7 +250,7 @@ progress{
 #edit_text{
     position: absolute;
     left: 9vw;
-    top: 109vw;
+    top: 112vw;
     width: 84vw;
     height: 23vw;
     font-size: 5vw;

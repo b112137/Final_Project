@@ -13,6 +13,14 @@ import cv2
 import base64
 import random
 import io
+from django .contrib.auth.decorators import login_required
+from django.contrib import auth
+from django.shortcuts import redirect
+
+import hashlib
+
+check_login_open = 1
+check_login = 1
 
 # Create your views here.
 def start_page(request):
@@ -33,106 +41,190 @@ def register_page(request):
         'datetime': time
     })
 
+# @login_required
 def main_page(request):
-    account = request.GET.get("account")
-    profile = get_profile(account)[0]
-
-    exp = int(profile.exp1) + int(profile.exp2) + int(profile.exp3)
-    level = 1
-    exp_temp = exp
-    for i in range(1, 200):
-        exp_temp -= i*10
-        if exp_temp >= 0:
-            level += 1
-        else:
-            exp_temp += i*10
-            break
-
-    if exp == 0:
-        exp1 = 34
-        exp2 = 33
-        exp3 = 33
+    global check_login
+    if check_login_open == 1:
+        account = request.COOKIES.get("account")
+        token = hashlib.sha256(str(account).encode("utf-8")).hexdigest()
+        if request.COOKIES.get('is_login') == "True" and request.COOKIES.get('token') == token:
+            check_login = 1
+        else: 
+            check_login = 0
     else:
-        exp1 = (int(profile.exp1)/exp)*100
-        exp2 = (int(profile.exp2)/exp)*100
-        exp3 = 100 - exp1 - exp2
+        account = request.GET.get("account")
 
-    print(exp1, exp2, exp3)
+    if check_login:
+        profile = get_profile(account)[0]
 
-    # name = profile[0].name
-    # exp1 = profile[0].exp1
-    # exp2 = profile[0].exp2
-    # exp3 = profile[0].exp3
+        exp = int(profile.exp1) + int(profile.exp2) + int(profile.exp3)
+        level = 1
+        exp_temp = exp
+        for i in range(1, 200):
+            exp_temp -= i*10
+            if exp_temp >= 0:
+                level += 1
+            else:
+                exp_temp += i*10
+                break
 
-    return render(request, 'main.html', {
-        # 'character_name': character_name,
-        'name': profile.name,
-        'level': level,
-        'exp1': exp1,
-        'exp2': exp2,
-        'exp3': exp3,
-    })
+        if exp == 0:
+            exp1 = 34
+            exp2 = 33
+            exp3 = 33
+        else:
+            exp1 = (int(profile.exp1)/exp)*100
+            exp2 = (int(profile.exp2)/exp)*100
+            exp3 = 100 - exp1 - exp2
+
+        print(exp1, exp2, exp3)
+
+        return render(request, 'main.html', {
+            # 'character_name': character_name,
+            'name': profile.name,
+            'level': level,
+            'exp1': exp1,
+            'exp2': exp2,
+            'exp3': exp3,
+        })
+    else:
+        return render(request, 'login.html', {
+        })
 
 def mission_page(request):
-    return render(request, 'mission.html', {
-    })
+    global check_login
+    if check_login_open == 1:
+        account = request.COOKIES.get("account")
+        token = hashlib.sha256(str(account).encode("utf-8")).hexdigest()
+        if request.COOKIES.get('is_login') == "True" and request.COOKIES.get('token') == token:
+            check_login = 1
+        else: 
+            check_login = 0
+    else:
+        account = request.GET.get("account")
+
+    if check_login:
+        return render(request, 'mission.html', {
+        })
+    else:
+        return render(request, 'login.html', {
+        })
 
 def chatroom_page(request):
-    return render(request, 'chatroom.html', {
-    })
+    global check_login
+    if check_login_open == 1:
+        account = request.COOKIES.get("account")
+        token = hashlib.sha256(str(account).encode("utf-8")).hexdigest()
+        if request.COOKIES.get('is_login') == "True" and request.COOKIES.get('token') == token:
+            check_login = 1
+        else: 
+            check_login = 0
+    else:
+        account = request.GET.get("account")
+
+    if check_login:
+        return render(request, 'chatroom.html', {
+        })
+    else:
+        return render(request, 'login.html', {
+        })
 
 def profile_page(request):
-    account = request.GET.get("account")
-    profile = Profile.objects.filter(account=account)[0]
-    exp = int(profile.exp1) + int(profile.exp2) + int(profile.exp3)
-    level = 1
-    exp_temp = exp
-    for i in range(1, 200):
-        exp_temp -= i*10
-        if exp_temp >= 0:
-            level += 1
-        else:
-            exp_temp += i*10
-            break
+    global check_login
+    if check_login_open == 1:
+        account = request.COOKIES.get("account")
+        token = hashlib.sha256(str(account).encode("utf-8")).hexdigest()
+        if request.COOKIES.get('is_login') == "True" and request.COOKIES.get('token') == token:
+            check_login = 1
+        else: 
+            check_login = 0
+    else:
+        account = request.GET.get("account")
 
-    Max = max(int(profile.exp1), int(profile.exp2), int(profile.exp3))
-    print(Max)
-    Max_lenth = 0
-    for i in range(1, 200):
-        Max_lenth += i*10
-        if Max_lenth >= int(Max):
-            break
-    print(Max_lenth)
-    exp1 = (int(profile.exp1)/Max_lenth) * 100
-    exp2 = (int(profile.exp2)/Max_lenth) * 100
-    exp3 = (int(profile.exp3)/Max_lenth) * 100
+    if check_login:
+        profile = Profile.objects.filter(account=account)[0]
+        exp = int(profile.exp1) + int(profile.exp2) + int(profile.exp3)
+        level = 1
+        exp_temp = exp
+        for i in range(1, 200):
+            exp_temp -= i*10
+            if exp_temp >= 0:
+                level += 1
+            else:
+                exp_temp += i*10
+                break
 
-    return render(request,'profile.html',{
-        'result' : "success",
-        'name': profile.name,
-        'account': profile.account,
-        'sex': profile.sex,
-        'birth': profile.birth,
-        'intro': profile.intro,
-        'level': level,
-        'exp1': exp1,
-        'exp2': exp2,
-        'exp3': exp3,
-        # 'balance': profile.balance,
-        'character_name': profile.character_name,
-        'profile_photo': profile.profile_photo,
-        # 'mission_doing_chatroom_ID': ast.literal_eval(profile.mission_doing_chatroom_ID),
-        # 'mission_done_chatroom_ID': ast.literal_eval(profile.mission_done_chatroom_ID),
-        # 'friend_ID': ast.literal_eval(profile.friend_ID),
-    })
+        Max = max(int(profile.exp1), int(profile.exp2), int(profile.exp3))
+        Max_lenth = 0
+        for i in range(1, 200):
+            Max_lenth += i*10
+            if Max_lenth >= int(Max):
+                break
+        exp1 = (int(profile.exp1)/Max_lenth) * 100
+        exp2 = (int(profile.exp2)/Max_lenth) * 100
+        exp3 = (int(profile.exp3)/Max_lenth) * 100
+
+        return render(request,'profile.html',{
+            'result' : "success",
+            'name': profile.name,
+            'account': profile.account,
+            'sex': profile.sex,
+            'birth': profile.birth,
+            'intro': profile.intro,
+            'level': level,
+            'exp1': exp1,
+            'exp2': exp2,
+            'exp3': exp3,
+            # 'balance': profile.balance,
+            'character_name': profile.character_name,
+            'profile_photo': profile.profile_photo,
+            # 'mission_doing_chatroom_ID': ast.literal_eval(profile.mission_doing_chatroom_ID),
+            # 'mission_done_chatroom_ID': ast.literal_eval(profile.mission_done_chatroom_ID),
+            # 'friend_ID': ast.literal_eval(profile.friend_ID),
+        })
+    else:
+        return render(request, 'login.html', {
+        })
+
 
 def friend_page(request):
-    return render(request, 'friend.html', {
-    })
+    global check_login
+    if check_login_open == 1:
+        account = request.COOKIES.get("account")
+        print(account)
+        token = hashlib.sha256(str(account).encode("utf-8")).hexdigest()
+        if request.COOKIES.get('is_login') == "True" and request.COOKIES.get('token') == token:
+            check_login = 1
+        else: 
+            check_login = 0
+    else:
+        account = request.GET.get("account")
+
+    if check_login:
+        return render(request, 'friend.html', {
+        })
+    else:
+        return render(request, 'login.html', {
+        })
 
 def shop_page(request):
-    return render(request, 'shop.html',{
-    })
+    global check_login
+    if check_login_open == 1:
+        account = request.COOKIES.get("account")
+        token = hashlib.sha256(str(account).encode("utf-8")).hexdigest()
+        if request.COOKIES.get('is_login') == "True" and request.COOKIES.get('token') == token:
+            check_login = 1
+        else: 
+            check_login = 0
+    else:
+        account = request.GET.get("account")
+
+    if check_login:
+        return render(request, 'shop.html',{
+        })
+    else:
+        return render(request, 'login.html', {
+        })
 
 def register_submit(request):
     if request.method == 'POST':
@@ -165,14 +257,22 @@ def login_check(request):
         account = request.POST.get('account')
         password = request.POST.get('password')
         profile = get_profile(account)
-        # print(profile)
 
         if profile:  ## 有此帳號
             if profile[0].password == password:
-                print("登入成功")
-                return JsonResponse({
+            #     print("登入成功")
+            #     return JsonResponse({
+            #         'result' : "success",
+            #     })
+                token = hashlib.sha256(str(account).encode("utf-8")).hexdigest()
+                rep = JsonResponse({
                     'result' : "success",
                 })
+                rep.set_cookie("account", account)
+                rep.set_cookie("is_login", True)
+                rep.set_cookie("token", token)
+                
+                return rep
             else:
                 print("密碼錯誤")
                 return JsonResponse({
@@ -183,6 +283,16 @@ def login_check(request):
             return JsonResponse({
                 'result' : "not_found",
             })
+
+def logout(request):
+    rep = JsonResponse({
+        'result' : "success",
+    })
+    rep.delete_cookie("account")
+    rep.delete_cookie("is_login")
+    rep.delete_cookie("token")
+
+    return rep
 
 
 def get_all_mission(request):
@@ -248,7 +358,11 @@ def get_img(request):
 
 def get_mission_group(request):
     if request.method == 'POST':
-        account = request.POST.get("user_ID")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
+        # account = request.POST.get("user_ID")
         mission_ID = request.POST.get('mission_ID')
 
         chatroom_ID, group_name, group_now, group_most, leader_ID = mission_filter(account, mission_ID)
@@ -261,7 +375,11 @@ def get_mission_group(request):
 
 def join_mission_group(request):
     if request.method == 'POST':
-        account = request.POST.get("user_ID")
+        # account = request.POST.get("user_ID")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         mission_ID = request.POST.get('mission_ID')
         chatroom_ID = request.POST.get('chatroom_ID')
 
@@ -320,9 +438,14 @@ def join_mission_group(request):
 
 def create_mission_group(request):
     if request.method == 'POST':
+        if check_login_open:
+            leader_ID = request.COOKIES.get("account")
+        else:
+            leader_ID = request.GET.get("account")
+
         group_name = request.POST.get("group_name")
         mission_ID = request.POST.get('mission_ID')
-        leader_ID = request.POST.get('leader_ID')
+        # leader_ID = request.POST.get('leader_ID')
         group_most = request.POST.get('group_most')
 
         group_required = Mission_imformation.objects.filter(mission_ID=mission_ID)[0].group_required
@@ -405,7 +528,6 @@ def submit_mission_group(request):
         y = float(request.POST.get('y'))
         width = float(request.POST.get('width'))
         height = float(request.POST.get('height'))
-        print(x,y, width, height)
         chatroom_ID = request.POST.get('chatroom_ID')
         with open('media/mission_submit_upload/' + chatroom_ID +'.jpg', 'wb') as f:
             for line in image:
@@ -477,7 +599,11 @@ def submit_mission_group(request):
 
 def get_mission_chatroom_list(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
+
         search = request.POST.get("search")
         last_chatroom_list = request.POST.get("last_chatroom_list")
         last_chatroom_list = ast.literal_eval( '[' + last_chatroom_list + ']') 
@@ -584,14 +710,45 @@ def get_mission_chatroom_list(request):
                 "group_name": group_name, "group_number": group_number, "status": status, "message": message, "time": time
             })
 
+def check_chatroom(request):
+    if request.method == 'POST':
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
+
+        chatroom_ID = request.POST.get("chatroom_ID")
+
+        profile_search_all = Profile.objects.filter(account=account)
+        profile_search = profile_search_all[0]
+        mission_doing_chatroom_ID = ast.literal_eval(profile_search.mission_doing_chatroom_ID)
+        mission_done_chatroom_ID = ast.literal_eval(profile_search.mission_done_chatroom_ID)
+        mission_do_chatroom_ID = mission_doing_chatroom_ID + mission_done_chatroom_ID
+        friend_chatroom_ID = ast.literal_eval(profile_search.friend_chatroom_ID)
+
+        all_chatroom_ID = mission_do_chatroom_ID + friend_chatroom_ID
+
+        if chatroom_ID in all_chatroom_ID:
+            return JsonResponse({
+                'result' : "success",
+            })
+        else:
+            return JsonResponse({
+                'result' : "error",
+            })
+
+
 def mission_chatroom_update(request):
     if request.method == 'POST':
         post_type = request.POST.get('post_type')
         if post_type == "Send":
-            chatroom_ID = request.POST.get('chatroom_ID')
-            sender_ID = request.POST.get('sender_ID')
-            message = request.POST.get('message')
+            if check_login_open:
+                sender_ID = request.COOKIES.get('account')
+            else:
+                sender_ID = request.POST.get('sender_ID')
 
+            chatroom_ID = request.POST.get('chatroom_ID')
+            message = request.POST.get('message')
 
             Mission_Chatroom.objects.create(chatroom_ID=chatroom_ID, sender_ID=sender_ID,  message=message)
             return JsonResponse({
@@ -633,8 +790,12 @@ def friend_chatroom_update(request):
     if request.method == 'POST':
         post_type = request.POST.get('post_type')
         if post_type == "Send":
+            if check_login_open:
+                account = request.COOKIES.get("account")
+            else:
+                account = request.GET.get("account")
             chatroom_ID = request.POST.get('chatroom_ID')
-            account = request.POST.get('sender_ID')
+            # account = request.POST.get('sender_ID')
             message = request.POST.get('message')
 
             sender_ID = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID)[0].sender_ID
@@ -649,10 +810,14 @@ def friend_chatroom_update(request):
                 'result' : "success"
             })
 
-        elif post_type == "Receive":            
+        elif post_type == "Receive":
+            if check_login_open:
+                account = request.COOKIES.get("account")
+            else:
+                account = request.GET.get("account")   
             chatroom_ID = request.POST.get('chatroom_ID')
             last_sender_name_len = request.POST.get('last_sender_name_len')
-            account = request.POST.get('account')
+            # account = request.POST.get('account')
             history = core_serializers.serialize("json", Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID).order_by("time"))
 
             sender_ID = Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID)[0].sender_ID
@@ -712,8 +877,13 @@ def get_mission_chatroom_member(request):
 
 def kick_mission_chatroom_member(request):
     if request.method == 'POST':
+        if check_login_open:
+            user_ID = request.COOKIES.get("account")
+        else:
+            user_ID = request.GET.get("account")
+
         kicked_ID = request.POST.get("kicked_ID")
-        user_ID = request.POST.get('user_ID')
+        # user_ID = request.POST.get('user_ID')
         chatroom_ID = request.POST.get('chatroom_ID')
 
         ### 確認是否為該group leader
@@ -864,7 +1034,11 @@ def submission_to_finish(request):
 # 
 def get_my_mission(request):
     if request.method == 'POST':
-        account = request.POST.get("user_ID")
+        # account = request.POST.get("user_ID")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         profile = Profile.objects.filter(account=account)[0]
         mission_doing_chatroom_ID = ast.literal_eval(profile.mission_doing_chatroom_ID)
         mission_done_chatroom_ID = ast.literal_eval(profile.mission_done_chatroom_ID)
@@ -917,126 +1091,120 @@ def get_my_mission(request):
 
 def get_profile_page(request):
     if request.method == 'POST':
+        # if check_login_open:
+        #     account = request.COOKIES.get("account")
+        # else:
+        #     account = request.GET.get("account")
         account = request.POST.get("account")
-        profile = Profile.objects.filter(account=account)[0]
+        profile_filter = Profile.objects.filter(account=account)
+        print(len(profile_filter))
+        if profile_filter:
+            profile = profile_filter[0]
 
-        # friend_ID = ast.literal_eval(profile.friend_ID)
+            Max = max(int(profile.exp1), int(profile.exp2), int(profile.exp3))
+            Max_lenth = 0
+            for i in range(1, 200):
+                Max_lenth += i*10
+                if Max_lenth >= int(Max):
+                    break
+            exp1 = (int(profile.exp1)/Max_lenth) * 100
+            exp2 = (int(profile.exp2)/Max_lenth) * 100
+            exp3 = (int(profile.exp3)/Max_lenth) * 100
 
-        # exp = int(profile.exp1) + int(profile.exp2) + int(profile.exp3)
-        # level = 1
-        # exp_temp = exp
-        # for i in range(1, 200):
-        #     exp_temp -= i*10
-        #     if exp_temp >= 0:
-        #         level += 1
-        #     else:
-        #         exp_temp += i*10
-        #         break
+            exp = [int(profile.exp1), int(profile.exp2), int(profile.exp3)]
+            max_index = -1
+            max_num = -1
+            for i in range(len(exp)):
+                if exp[i] > max_num:
+                    max_index = i
+                    max_num = exp[i]
 
-        Max = max(int(profile.exp1), int(profile.exp2), int(profile.exp3))
-        print(Max)
-        Max_lenth = 0
-        for i in range(1, 200):
-            Max_lenth += i*10
-            if Max_lenth >= int(Max):
-                break
-        print(Max_lenth)
-        exp1 = (int(profile.exp1)/Max_lenth) * 100
-        exp2 = (int(profile.exp2)/Max_lenth) * 100
-        exp3 = (int(profile.exp3)/Max_lenth) * 100
+            exp = int(profile.exp1) + int(profile.exp2) + int(profile.exp3)
+            level = 1
+            exp_temp = exp
+            for i in range(1, 200):
+                exp_temp -= i*10
+                if exp_temp >= 0:
+                    level += 1
+                else:
+                    exp_temp += i*10
+                    break
 
+            if max_index==0:
+                char = "知識"
+            elif max_index==1:
+                char = "社會"
+            elif max_index==2:
+                char = "肌肉"
 
+            if level <= 2:
+                character_name = char + "0.png"
+            elif level <= 4:
+                character_name = char + "1.png"
+            elif level <= 6:
+                character_name = char + "2.png"
+            elif level <= 8:
+                character_name = char + "3.png"
+            elif level <= 10:
+                character_name = char + "4.png"
+            elif level > 10:
+                character_name = char + "5.png"
 
-        exp = [int(profile.exp1), int(profile.exp2), int(profile.exp3)]
-        max_index = -1
-        max_num = -1
-        for i in range(len(exp)):
-            if exp[i] > max_num:
-                max_index = i
-                max_num = exp[i]
-
-        exp = int(profile.exp1) + int(profile.exp2) + int(profile.exp3)
-        level = 1
-        exp_temp = exp
-        for i in range(1, 200):
-            exp_temp -= i*10
-            if exp_temp >= 0:
-                level += 1
+            mission_done_chatroom_ID = ast.literal_eval(profile.mission_done_chatroom_ID)
+            # mission_done_chatroom_ID = [1,2,3,4,5,6]
+            if len(mission_done_chatroom_ID) >= 4:
+                random_index = random.sample(range(0, len(mission_done_chatroom_ID)), 4)
+                # [random.randint(0,len(mission_done_chatroom_ID)-1) for _ in range(4)]
             else:
-                exp_temp += i*10
-                break
+                random_index = random.sample(range(0, len(mission_done_chatroom_ID)), len(mission_done_chatroom_ID))
+                # [random.randint(0,len(mission_done_chatroom_ID)-1) for _ in range(len(mission_done_chatroom_ID))]
 
-        if max_index==0:
-            char = "知識"
-        elif max_index==1:
-            char = "社會"
-        elif max_index==2:
-            char = "肌肉"
+            story_pic = []
+            for index in random_index:
+                story_pic.append('media/mission_submit_upload/' + mission_done_chatroom_ID[index] + '.jpg')
+            
+            while len(story_pic) < 4:
+                story_pic.append('media/mission_submit_upload/none.jpg')
 
-        if level <= 2:
-            character_name = char + "0.png"
-        elif level <= 4:
-            character_name = char + "1.png"
-        elif level <= 6:
-            character_name = char + "2.png"
-        elif level <= 8:
-            character_name = char + "3.png"
-        elif level <= 10:
-            character_name = char + "4.png"
-        elif level > 10:
-            character_name = char + "5.png"
-        print(character_name)
+            return JsonResponse({
+                'result' : "success",
 
-        mission_done_chatroom_ID = ast.literal_eval(profile.mission_done_chatroom_ID)
-        # mission_done_chatroom_ID = [1,2,3,4,5,6]
-        if len(mission_done_chatroom_ID) >= 4:
-            random_index = random.sample(range(0, len(mission_done_chatroom_ID)), 4)
-            # [random.randint(0,len(mission_done_chatroom_ID)-1) for _ in range(4)]
+                'name': profile.name,
+                'account': profile.account,
+                'sex': profile.sex,
+                'birth': profile.birth,
+                'intro': profile.intro,
+                'level': level,
+                'exp1': exp1,
+                'exp2': exp2,
+                'exp3': exp3,
+
+                # 'name': profile.name,
+                # 'sex': profile.sex,
+                # 'birth': profile.birth,
+                # 'intro': profile.intro,
+                # 'exp1': profile.exp1,
+                # 'exp2': profile.exp2,
+                # 'exp3': profile.exp3,
+                # 'balance': profile.balance,
+                'character_name': character_name,
+                'profile_photo': profile.profile_photo,
+                'story_pic': story_pic,
+                # 'mission_doing_chatroom_ID': ast.literal_eval(profile.mission_doing_chatroom_ID),
+                # 'mission_done_chatroom_ID': ast.literal_eval(profile.mission_done_chatroom_ID),
+                # 'friend_ID': ast.literal_eval(profile.friend_ID),
+            })
         else:
-            random_index = random.sample(range(0, len(mission_done_chatroom_ID)), len(mission_done_chatroom_ID))
-            # [random.randint(0,len(mission_done_chatroom_ID)-1) for _ in range(len(mission_done_chatroom_ID))]
-
-        story_pic = []
-        for index in random_index:
-            story_pic.append('media/mission_submit_upload/' + mission_done_chatroom_ID[index] + '.jpg')
-        
-        while len(story_pic) < 4:
-            story_pic.append('media/mission_submit_upload/none.jpg')
-
-        print(story_pic)
-
-        return JsonResponse({
-            'result' : "success",
-
-            'name': profile.name,
-            'account': profile.account,
-            'sex': profile.sex,
-            'birth': profile.birth,
-            'intro': profile.intro,
-            'level': level,
-            'exp1': exp1,
-            'exp2': exp2,
-            'exp3': exp3,
-
-            # 'name': profile.name,
-            # 'sex': profile.sex,
-            # 'birth': profile.birth,
-            # 'intro': profile.intro,
-            # 'exp1': profile.exp1,
-            # 'exp2': profile.exp2,
-            # 'exp3': profile.exp3,
-            # 'balance': profile.balance,
-            'character_name': character_name,
-            'profile_photo': profile.profile_photo,
-            'story_pic': story_pic,
-            # 'mission_doing_chatroom_ID': ast.literal_eval(profile.mission_doing_chatroom_ID),
-            # 'mission_done_chatroom_ID': ast.literal_eval(profile.mission_done_chatroom_ID),
-            # 'friend_ID': ast.literal_eval(profile.friend_ID),
-        })
+            return JsonResponse({
+                'result' : "error"
+            })
 
 def save_profile_intro(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         intro = request.POST.get("intro")
         profile = Profile.objects.filter(account=account)
         
@@ -1048,13 +1216,15 @@ def save_profile_intro(request):
 
 def upload_profile_photo(request):
     if request.method == 'POST':
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         image = request.FILES.get('image')
         x = float(request.POST.get('x'))
         y = float(request.POST.get('y'))
         width = float(request.POST.get('width'))
         height = float(request.POST.get('height'))
-        print(x,y, width, height)
-        account = request.POST.get('account')
         file_path = 'media/profile_img/' + account +'.jpg'
         with open(file_path, 'wb') as f:
             for line in image:
@@ -1090,7 +1260,11 @@ def upload_profile_photo(request):
 
 def get_main_page(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
+
         profile = Profile.objects.filter(account=account)[0]
 
         exp = [int(profile.exp1), int(profile.exp2), int(profile.exp3)]
@@ -1140,7 +1314,10 @@ def get_main_page(request):
 
 def get_all_shop(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         balance = Profile.objects.filter(account=account)[0].balance
 
         shop = Shop.objects.all()
@@ -1164,7 +1341,10 @@ def get_all_shop(request):
 
 def buy_product(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         product_ID = request.POST.get("product_ID")
 
         profile = Profile.objects.filter(account=account)
@@ -1199,7 +1379,10 @@ def buy_product(request):
 
 def get_my_shop(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         profile = Profile.objects.filter(account=account)
         owned_product_ID = profile[0].owned_product_ID
         owned_product_ID = ast.literal_eval(owned_product_ID)
@@ -1233,7 +1416,10 @@ def get_my_shop(request):
 
 def use_product(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         product_ID = request.POST.get("product_ID")
         profile = Profile.objects.filter(account=account)
         owned_product_ID = profile[0].owned_product_ID
@@ -1277,7 +1463,11 @@ def mission_filter(account, mission_ID):
 
 def get_friend_page(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
+
         search = request.POST.get("search")
         last_friend_list = request.POST.get("last_friend_list")
         last_friend_list_split = last_friend_list.split(",")
@@ -1337,7 +1527,11 @@ def get_friend_page(request):
 
 def get_friend_group(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
+
         search = request.POST.get("search")
         last_group_list = request.POST.get("last_group_list")
         last_group_list_split = last_group_list.split(",")
@@ -1395,7 +1589,10 @@ def get_friend_group(request):
 
 def get_friend_invitation(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         profile = Profile.objects.filter(account=account)[0]
         invitation_receive = ast.literal_eval(profile.invitation_receive)
 
@@ -1416,7 +1613,10 @@ def get_friend_invitation(request):
 
 def search_friend_ID(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         search = request.POST.get("search")
         profile = Profile.objects.filter(account=search)
         if profile:
@@ -1442,7 +1642,10 @@ def search_friend_ID(request):
 
 def send_invitation(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         invitation_ID = request.POST.get("others")
 
         profile_me = Profile.objects.filter(account=account)
@@ -1477,7 +1680,10 @@ def send_invitation(request):
 
 def accept_invitation(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         invitation_ID = request.POST.get("others")
 
         profile_me = Profile.objects.filter(account=account)
@@ -1534,7 +1740,10 @@ def accept_invitation(request):
 
 def reject_invitation(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         invitation_ID = request.POST.get("others")
 
         profile_me = Profile.objects.filter(account=account)
@@ -1570,7 +1779,10 @@ def reject_invitation(request):
 
 def cancel_invitation(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         invitation_ID = request.POST.get("others")
 
         profile_me = Profile.objects.filter(account=account)
@@ -1607,7 +1819,10 @@ def cancel_invitation(request):
 
 def delete_friend(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         others = request.POST.get("others")
 
         profile_me = Profile.objects.filter(account=account)
@@ -1636,8 +1851,12 @@ def delete_friend(request):
 
 def get_relationship(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         others = request.POST.get("others")
+        print(account, others)
         profile = Profile.objects.filter(account=account)[0]
         friend_ID = ast.literal_eval(profile.friend_ID)
         invitation_send = ast.literal_eval(profile.invitation_send)
@@ -1662,7 +1881,10 @@ def get_relationship(request):
 
 def is_friend(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         others = request.POST.get("others")
         profile = Profile.objects.filter(account=account)[0]
         friend_ID = ast.literal_eval(profile.friend_ID)
@@ -1679,7 +1901,10 @@ def is_friend(request):
 
 def is_invite_others(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         others = request.POST.get("others")
         profile = Profile.objects.filter(account=account)[0]
         invitation_send = ast.literal_eval(profile.invitation_send)
@@ -1696,7 +1921,10 @@ def is_invite_others(request):
 
 def is_invite_me(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         others = request.POST.get("others")
         profile = Profile.objects.filter(account=account)[0]
         invitation_receive = ast.literal_eval(profile.invitation_receive)
@@ -1714,7 +1942,10 @@ def is_invite_me(request):
 
 def get_shop_page(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         profile = Profile.objects.filter(account=account)[0]
         # own_product_ID = ast.literal_eval(profile.owned_product_ID)
 
@@ -1759,7 +1990,10 @@ def get_shop_page(request):
         
 def get_card(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         profile = Profile.objects.filter(account=account)[0]
         friend_ID = ast.literal_eval(profile.friend_ID)
         invitation_send = ast.literal_eval(profile.invitation_send)
@@ -1794,7 +2028,10 @@ def get_card(request):
 
 def get_friend_chatroom(request):
     if request.method == 'POST':
-        account = request.POST.get("account")
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
         others = request.POST.get("others")
         
         if len(Friend_Chatroom.objects.filter(sender_ID= account, receiver_ID=others)) >=1 :

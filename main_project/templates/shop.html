@@ -69,11 +69,43 @@
             data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
         }) 
 
+        function getCookie(cookieName) {
+            var name = cookieName + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0; i<ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1);
+                if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+            }
+            return "";
+        }
+
         window.onload = function(){
-            document.getElementById('back_arrow_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
-            document.getElementById('home_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
-            document.getElementById('chat_link').href = "/chatroom?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
-            get_shop_page();
+            parameter = window.location.href.split('?')
+            if(parameter.length == 1){
+                parameter[1] = "account=account"
+            }
+            if( parameter[1].toString().split("&")[0].split('=')[0] != "account" | parameter[1].toString().split("&")[0].split('=')[1] != getCookie("account") ){
+                split_q = parameter;
+                split_and = parameter[1].split('&');
+                split_and[0] = "account=" + getCookie("account");
+                loc = split_q[0] + "?"
+                for(var i=0; i < split_and.length; i++){
+                    if (i == split_and.length-1){
+                        loc = loc + split_and[i]
+                    }
+                    else{
+                        loc = loc + split_and[i] + "&"
+                    }
+                }
+                window.location.href = loc
+            }
+            else{
+                document.getElementById('back_arrow_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
+                document.getElementById('home_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
+                document.getElementById('chat_link').href = "/chatroom?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
+                get_shop_page();
+            }
         }
 
         // ADD GUIDE

@@ -34,6 +34,14 @@
                 data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
             })  
 
+
+            window.onload = function(){
+                // if window.location.href.split("?")[0].
+                if (window.location.href.split("?")[0].indexOf('login') <= -1) { //沒有main
+                    window.location.href = "login"
+                }
+            }
+
             $("#check").click( function() {
             $.ajax({
                     url: '/login_check',

@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
 import backend.views as backend
+from django.contrib.auth import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +27,8 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name="start.html")),
     path('start', backend.start_page),
     path('login', backend.login_page),
+    # path('accounts/login/', views.LoginView.as_view(template_name='login.html'), name='login'),
+
     path('register', backend.register_page),
     path('main', backend.main_page),
     path('mission', backend.mission_page),
@@ -37,12 +40,15 @@ urlpatterns = [
 
     path('register_submit', backend.register_submit),
     path('login_check', backend.login_check),
+    path('logout', backend.logout),
+
     path('get_all_mission', backend.get_all_mission),
     path('get_img', backend.get_img),
     path('get_mission_group', backend.get_mission_group),
     path('join_mission_group', backend.join_mission_group),
     path('create_mission_group', backend.create_mission_group),
     path('get_mission_chatroom_list', backend.get_mission_chatroom_list),
+    path('check_chatroom', backend.check_chatroom),
     path('mission_chatroom_update', backend.mission_chatroom_update),
     path('get_mission_chatroom_member', backend.get_mission_chatroom_member),
     path('kick_mission_chatroom_member', backend.kick_mission_chatroom_member),

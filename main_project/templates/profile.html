@@ -68,17 +68,68 @@
         data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
     }) 
 
-    window.onload = function(){
-        // console.log(document.referrer)
-        document.getElementById('back_arrow_link').href = document.referrer;
-        // document.getElementById('back_arrow_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
-
-        parameter = window.location.href.split('?')[1].split('&')
-        if(parameter.length == 1){
-            my_profile();
+    function getCookie(cookieName) {
+        var name = cookieName + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0; i<ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1);
+            if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
         }
-        else if(parameter.length == 2){
-            others_profile();
+        return "";
+    }
+
+    window.onload = function(){
+        parameter = window.location.href.split('?')
+        if(parameter.length == 1){
+            parameter[1] = "account=account"
+        }
+        var check_in = 0
+        if(parameter[1].split("&").length == 1){
+            if( parameter[1].toString().split("&")[0].split('=')[0] != "account" | parameter[1].toString().split("&")[0].split('=')[1] != getCookie("account")){
+                check_in = 1;
+            }
+        }
+        else if(parameter[1].split("&").length == 2) {
+            if( parameter[1].toString().split("&")[0].split('=')[0] != "account" | parameter[1].toString().split("&")[1].split('=')[0] != "profileID"  | parameter[1].toString().split("&")[0].split('=')[1] != getCookie("account")){
+                check_in = 1;
+            }
+        }
+
+        if( check_in ){
+            split_q = parameter;
+            split_and = parameter[1].split('&');
+            split_and[0] = "account=" + getCookie("account");
+            split_and_length = 1
+            
+            if(split_and.length >= 2){
+                split_and[1] = "profileID=" + parameter[1].split('&')[1].split('=')[1];
+                split_and_length = 2;
+            }
+            
+            loc = split_q[0] + "?"
+            for(var i=0; i < split_and_length; i++){
+                if (i == split_and_length-1){
+                    loc = loc + split_and[i]
+                }
+                else{
+                    loc = loc + split_and[i] + "&"
+                }
+            }
+            window.location.href = loc
+        }
+        else{
+            // console.log(document.referrer)
+            document.getElementById('back_arrow_link').href = document.referrer;
+            // document.getElementById('back_arrow_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
+
+            parameter = window.location.href.split('?')[1].split('&')
+            if(parameter.length == 1){
+                my_profile();
+            }
+            else if(parameter.length == 2){
+                others_profile();
+            }
         }
     }
 
@@ -192,7 +243,6 @@
             image_change = 1;
             var choose_file = $(this)[0].files[0];
             if(choose_file){
-                console.log("1")
                 var reader = new FileReader();
             
                 reader.onload = function (evt) {
@@ -202,7 +252,6 @@
                 reader.readAsDataURL(choose_file);
             }
             else{
-                console.log("2")
                 image_change = 0;
                 $(".submit-modal-btn-cancel").click();
                 setTimeout( function(){ 
@@ -349,7 +398,6 @@
                     )
                     
                     update_friend_button();
-                    
 
                     $.ajax({
                     url: '/get_img',
@@ -391,6 +439,9 @@
                         }
                     }
                 }
+                else if(data.result == "error") {
+                    window.location.href = window.location.href.split("&")[0];
+                }
             }
         });
     }
@@ -409,9 +460,11 @@
                 success: function (data) {
                     if (data.result == "success"){
                         console.log(data.result)
+                        update_friend_button();
                     }
                     else if (data.result == "error") {
                         console.log(data.result)
+                        update_friend_button();
                     }                
                 }
             });
@@ -433,6 +486,7 @@
                     }
                     else if (data.result == "error") {
                         console.log(data.result)
+                        update_friend_button();
                     }                
                 }
             });
@@ -450,9 +504,11 @@
                 success: function (data) {
                     if (data.result == "success"){
                         console.log(data.result)
+                        update_friend_button();
                     }
                     else if (data.result == "error") {
                         console.log(data.result)
+                        update_friend_button();
                     }                
                 }
             });
@@ -474,6 +530,7 @@
                     }
                     else if (data.result == "error") {
                         console.log(data.result)
+                        update_friend_button();
                     }                
                 }
             });

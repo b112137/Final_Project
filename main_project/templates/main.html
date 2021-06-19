@@ -58,7 +58,7 @@
 
             <div id="navbar">
                 <!--img src="./src/setting2.png" id="setting2" class="setting1"-->
-                <img src="./static/src/set.png" id="set">
+                <img src="./static/src/logout.png" id="logout">
                 <img src="./static/src/guided.png" id="guided" type="button">
                 <img src="./static/src/aboutus.png" id="aboutus">
                 <!--img src="./src/Ellipse 5.png" id="logout">
@@ -87,34 +87,83 @@
         data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
     })    
 
-    window.onload = function(){
-        $('#chatroom_link').attr('href', "chatroom?account="+window.location.href.split('?')[1].split('=')[1]);
-        $('#mission_link').attr('href', "mission?account="+window.location.href.split('?')[1].split('=')[1]);
-        $('#profile_link').attr('href', "profile?account="+window.location.href.split('?')[1].split('=')[1]);
-        $('#shop_link').attr('href', "shop?account="+window.location.href.split('?')[1].split('=')[1]);
-        $('#friend_link').attr('href', "friend?account="+window.location.href.split('?')[1].split('=')[1]);
-        
+    function getCookie(cookieName) {
+        var name = cookieName + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0; i<ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1);
+            if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+        }
+        return "";
+    }
+
+    $("#logout").click(function(){
         $.ajax({
-              url: '/get_main_page',
+              url: '/logout',
               method: 'POST',
               type: 'POST',
               dataType: "json",
               data: {
-                  'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                //   'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
               },
               success: function (data) {
-                if (data.result == "success"){
-                    if(data.type=="知識"){
-                        $('#character_vertical').attr('style', 'background-image: url(static/src/' + data.character_name + ')' )
-                    }
-                    else{
-                        $('#character_horizontal').attr('style', 'background-image: url(static/src/' + data.character_name + ')' )
-                    }
-                        
-
+                if (data.result == "success"){                        
+                    window.location.href = "/login"
                 }
             }
         });
+    })
+
+    window.onload = function(){
+        parameter = window.location.href.split('?')
+        if(parameter.length == 1){
+            parameter[1] = "account=account"
+        }
+        if( parameter[1].toString().split("&")[0].split('=')[0] != "account" | parameter[1].toString().split("&")[0].split('=')[1] != getCookie("account") ){
+            split_q = parameter;
+            split_and = parameter[1].split('&');
+            split_and[0] = "account=" + getCookie("account");
+            loc = split_q[0] + "?"
+            for(var i=0; i < split_and.length; i++){
+                if (i == split_and.length-1){
+                    loc = loc + split_and[i]
+                }
+                else{
+                    loc = loc + split_and[i] + "&"
+                }
+            }
+            window.location.href = loc
+        }
+        else{
+            $('#chatroom_link').attr('href', "chatroom?account="+window.location.href.split('?')[1].split('=')[1]);
+            $('#mission_link').attr('href', "mission?account="+window.location.href.split('?')[1].split('=')[1]);
+            $('#profile_link').attr('href', "profile?account="+window.location.href.split('?')[1].split('=')[1]);
+            $('#shop_link').attr('href', "shop?account="+window.location.href.split('?')[1].split('=')[1]);
+            $('#friend_link').attr('href', "friend?account="+window.location.href.split('?')[1].split('=')[1]);
+            
+            $.ajax({
+                url: '/get_main_page',
+                method: 'POST',
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    'account': window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                },
+                success: function (data) {
+                    if (data.result == "success"){
+                        if(data.type=="知識"){
+                            $('#character_vertical').attr('style', 'background-image: url(static/src/' + data.character_name + ')' )
+                        }
+                        else{
+                            $('#character_horizontal').attr('style', 'background-image: url(static/src/' + data.character_name + ')' )
+                        }
+                            
+
+                    }
+                }
+            });
+        }
     }
 
     // ADD GUIDE
