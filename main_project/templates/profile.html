@@ -120,7 +120,14 @@
         }
         else{
             // console.log(document.referrer)
-            document.getElementById('back_arrow_link').href = document.referrer;
+            if (document.referrer.split("?")[0].indexOf('friend') > -1){
+                document.getElementById("back_arrow_link").href = document.referrer
+            }
+            else{
+                document.getElementById("back_arrow_link").href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
+            }
+
+            // document.getElementById('back_arrow_link').href = document.referrer;
             // document.getElementById('back_arrow_link').href = "/main?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1];
 
             parameter = window.location.href.split('?')[1].split('&')
