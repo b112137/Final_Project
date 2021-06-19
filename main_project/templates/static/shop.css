@@ -21,8 +21,11 @@ body {
 }
 
 .swal2-close {
-    top: 8vw !important;
-    right: 8vw !important;
+    top: 5vw !important;
+    right: 5vw !important;
+    height: 10vw !important;
+    width: 10vw !important;
+    opacity: 0;
 }
 
 .btn-help {
