@@ -10,8 +10,11 @@
 }
 
 .swal2-close {
-    top: 8vw !important;
-    right: 8vw !important;
+    top: 5vw !important;
+    right: 5vw !important;
+    height: 10vw !important;
+    width: 10vw !important;
+    opacity: 0;
 }
 
 body {
@@ -209,11 +212,13 @@ body {
     top: 185vw;
 }
 #chat{
-    position: absolute;
+    position: fixed;
     width: 22.2vw;
     height: 22.2vw;
     right: 0vw;
     bottom: 0vw;
+    background-image: url('src/chat.png');
+    background-size: cover;
 }
 
 #card_icon{

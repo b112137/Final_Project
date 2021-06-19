@@ -23,8 +23,11 @@
 }
 
 .swal2-close {
-    top: 8vw !important;
-    right: 8vw !important;
+    top: 5vw !important;
+    right: 5vw !important;
+    height: 10vw !important;
+    width: 10vw !important;
+    opacity: 0;
 }
 
 .error_text {
@@ -207,7 +210,7 @@ input {
     font-size: 5.5vw;
     color: white;
     text-align: center;
-    margin-left: 10vw;
+    margin-left: 7vw;
 }
 
 [aria-expanded="true"] .select-btn {
@@ -216,7 +219,8 @@ input {
 
 .btn-group {
     position: absolute;
-    width: 70vw;
+    width: 0vw;
+    height: 9.3vw;
     background-color: #F5E0CD;
     border-top-right-radius: 2.7vw;
     border-bottom-right-radius: 2.7vw;
@@ -224,31 +228,32 @@ input {
     display: flex;
     justify-content: flex-end;
     margin-left: -3vw;
+    visibility: hidden;
 }
 
-.btn-group > button {
+.btn-group > label {
     background-color: #F5E0CD;
     color: #E26F50;
-    width: 20vw;
+    width: 18vw;
     height: 9.3vw;
     text-align: center;
     border-radius: 2.7vw;
     border: none;
-    font-family: jf_open;
+    font-family: HP_Hans;
     font-size: 5vw;
+    padding-top: 1vw;
+    font-weight: normal;
 }
 
+.btn-group > input {
+    display: none;
+}
 
-
-.btn-group > button:active {
+.btn-group > input:checked+label {
     background-color: rgba(226, 112, 80, 0.692);
     color: white;
 }
 
-.btn-group > button:hover {
-    background-color: rgba(226, 112, 80, 0.692);
-    color: white;
-}
 
 .tab-footer {
     position: fixed;
@@ -357,27 +362,55 @@ input {
 
 .mission-exp {
     position: absolute;
+    display: inline-flex;
+    justify-content: center;
     width: 42vw;
     height: 6vw;
     right: 3.5vw;
     bottom: 0px;
-    background-image: url('src/exp.png');
-    background-size: cover;
+    /* background-image: url('src/exp.png'); */
+    /* background-size: cover; */
     z-index: 5;
 }
 
 .mission-exp > .exp-val {
+    height: 6vw;
+    width: 12vw;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    font-family: HP_Hans;
+    font-size: 4vw;
+    display: block;
+    margin: 0 1vw;
+    text-align: center;
+    padding-top: 0.5vw;
+}
+
+.exp-val.red {
+    background-image: url('src/exp_red.png');
+}
+
+.exp-val.yellow {
+    background-image: url('src/exp_yellow.png');
+}
+
+.exp-val.blue {
+    background-image: url('src/exp_blue.png');
+}
+
+/* .mission-exp > .exp-val {
     display: inline-flex;
     justify-content: space-around;
     width: inherit;
-}
+} */
 
-.mission-exp > .exp-val > p {
+/* .mission-exp > .exp-val > p {
     display: block;
     font-family: jf_open;
     font-size: 4vw;
     color: white;
-}
+} */
 
 .mission-info-tab {
     position: absolute;
@@ -413,6 +446,7 @@ input {
     margin: 4vw;
     font-size: 5vw;  
     text-align: justify; 
+    font-family: HP_Hans;
 }
 
 .btn-create-group {
@@ -485,8 +519,8 @@ input {
 
 .quarter_circle {
     position: fixed;
-    width: 20vw;
-    height: 20vw;
+    width: 22.2vw;
+    height: 22.2vw;
     bottom: 0vw;
     background-size: cover;
 }

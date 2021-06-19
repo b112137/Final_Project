@@ -436,40 +436,27 @@ body {
     padding: 3vw;
 }
 
-.exit_text {
-    display: inline-block;
-    width: 55vw;
-    text-align: center;
-    /* height: 15vw; */
-    /* padding: 3vw; */
-    /* height: 15vw; */
-    /* padding: 3vw; */
-
-
-    /* width: 100vw; */
-    /* overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-family: HP_Hans;
-    font-size: 7vw;
-    color: #999595;
-    
-    top: 55vw;
-    position: absolute; */
+.exit-group {
+    display: flex;
+    width: 100vw;
+    justify-content: center;
 }
 
-.exit_text-btn {
-    display: inline-block;
+.exit-group-btn {
     width: 35vw;
     height: 10.5vw;
     background-color: #E26F50;
+    border: none;
     border-radius: 2vw;
     font-family: HP_Hans;
     font-size: 7vw;
     color: white;
     text-align: center;
-    /* padding-top: 1vw; */
-    /* margin: 5vw 32.5vw; */
+    margin: 5vw;
+}
+
+.exit-group-btn:active {
+    opacity: 0.8;
 }
 
 
