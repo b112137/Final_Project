@@ -44,15 +44,20 @@
                 <div class="select-type">
                     <div class="type-select-bar">
                         <div class="type-select-btn">
-                            <div href='#type-btn-group' data-toggle="collapse" data-parent="#type-select-bar">
-                                <div class="select-btn">類別</div>
+                            <div href='#type-btn-group'>
+                                <div class="select-btn" type="button">類別</div>
                             </div>
                         </div>
-                        <div id="type-btn-group" class="collapse">
+                        <div id="type-btn-group">
                             <div class="btn-group">
-                                <button id="entertainment">• 娛樂 </button>
-                                <button id="learning">• 學習</button>
-                                <button id="handcraft">• 手作</button>
+                                <input type="radio" name="mission-type" id="all">
+                                <label for="all" style="left: 5vw;">• 全部</label>
+                                <input type="radio" name="mission-type" id="entertainment">
+                                <label for="entertainment">• 娛樂</label>
+                                <input type="radio" name="mission-type" id="learning">
+                                <label for="learning">• 學習</label>
+                                <input type="radio" name="mission-type" id="handcraft">
+                                <label for="handcraft">• 手作</label>
                             </div>
                         </div>
                     </div>
@@ -61,7 +66,7 @@
                 <div id="mission_container">
                     <!-- JavaScript append -->
                 </div>
-            </div>
+            </div> 
             <div id="my-mission" class="tab-pane fade">
                 <div class="jf-continer" id = 'page1'>
                     <!-- JavaScript append -->
@@ -124,6 +129,20 @@
 
     $(document).on('click',"#joined_t" ,function(){
         my_mission("join");
+    })
+
+    // Add select type button group collapsing
+    $('.select-btn').click( function(){
+        if($('.btn-group').css('visibility') == 'hidden'){
+            $('.btn-group').css('visibility', 'visible');
+            $('.btn-group').animate({width:"73vw"}, 300);
+        }else {
+            $('.btn-group').animate({width:"0vw"}, 300);
+            setTimeout(function(){
+                $('.btn-group').css('visibility', 'hidden');
+            }, 300);
+            
+        }
     })
 
     // ADD GUIDE
