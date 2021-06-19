@@ -443,6 +443,7 @@ input {
     margin: 4vw;
     font-size: 5vw;  
     text-align: justify; 
+    font-family: HP_Hans;
 }
 
 .btn-create-group {
