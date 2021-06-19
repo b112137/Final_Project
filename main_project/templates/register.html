@@ -116,7 +116,24 @@
                         success: function (data) {
                             if (data.result == "success"){
                                 console.log("success")
-                                window.location.href = "/main?account="+document.getElementById("account_register").value
+                                $.ajax({
+                                    url: '/login_check',
+                                    method: 'POST',
+                                    type: 'POST',
+                                    dataType: "json",
+                                    data: {
+                                        "account": document.getElementById("account_register").value,
+                                        "password": document.getElementById("password_register").value,
+                                    },
+                                    success: function (data) {
+                                        if (data.result == "success"){
+                                            // account = document.getElementById("account").value
+                                            // window.location.href = "/main?account="+account
+                                            window.location.href = "/main?account="+document.getElementById("account_register").value
+                                        }
+                                    }
+                                });
+                                // window.location.href = "/main?account="+document.getElementById("account_register").value
                             }
                             if (data.result == "account_exist"){
                                 console.log("account_exist")
