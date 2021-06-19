@@ -1034,7 +1034,6 @@ def get_profile_page(request):
             # 'friend_ID': ast.literal_eval(profile.friend_ID),
         })
 
-
 def save_profile_intro(request):
     if request.method == 'POST':
         account = request.POST.get("account")
@@ -1046,6 +1045,48 @@ def save_profile_intro(request):
         return JsonResponse({
             'result' : "success"
         })
+
+def upload_profile_photo(request):
+    if request.method == 'POST':
+        image = request.FILES.get('image')
+        x = float(request.POST.get('x'))
+        y = float(request.POST.get('y'))
+        width = float(request.POST.get('width'))
+        height = float(request.POST.get('height'))
+        print(x,y, width, height)
+        account = request.POST.get('account')
+        file_path = 'media/profile_img/' + account +'.jpg'
+        with open(file_path, 'wb') as f:
+            for line in image:
+                f.write(line)
+
+        image = cv2.imread(file_path)
+        
+        x_min = x
+        x_max = x + width
+        y_min = y
+        y_max = y + height
+
+        if x_min < 0:
+            x_min = 0
+        if x_max >= image.shape[1]:
+            x_max = image.shape[1]
+
+        if y_min < 0:
+            y_min = 0
+        if y_max >= image.shape[0]:
+            y_max = image.shape[0]
+
+        crop_img = image[int(y_min):int(y_max), int(x_min):int(x_max)]
+        cv2.imwrite(file_path,crop_img)
+
+        profile = Profile.objects.filter(account=account)
+        profile.update(profile_photo=file_path)
+
+        return JsonResponse({
+            'result' : "success"
+        })
+
 
 def get_main_page(request):
     if request.method == 'POST':

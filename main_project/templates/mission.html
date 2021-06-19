@@ -245,7 +245,7 @@
                                     '<div class="modal fade" id="btn-submit-modal'+ i.toString() +'" tabindex="-1" aria-hidden="true" data-backdrop="static">\
                                         <div class="submit-modal-dialog">\
                                             <div class="submit-modal-content">\
-                                                <form>\
+                                                <form id="form' + i.toString() + '">\
                                                     {% csrf_token %}\
                                                     <label>\
                                                         <input id="image-input'+ i.toString() +'" type="file" name="image" style="visibility: hidden;" value="">\
@@ -254,7 +254,7 @@
                                                         <img type="button" id="img_upload_img_'+ i.toString() +'">\
                                                     </div>\
                                                 </form>\
-                                                <button onclick="submit_no()" type="button" class="submit-modal-btn-cancel" data-dismiss="modal">取消</button>\
+                                                <button id="submit-modal-btn-cancel'+ i.toString() +'" onclick="submit_no()" type="button" class="submit-modal-btn-cancel" data-dismiss="modal">取消</button>\
                                                 <button id="submit-modal-btn-confirm'+ i.toString() +'" onclick="submit_yes('+i.toString()+','+data.mission_doing_chatroom_ID[i]+')" type="button" class="submit-modal-btn-confirm" data-dismiss="modal">確認</button>\
                                             </div>\
                                         </div>\
@@ -332,25 +332,41 @@
         $(document).on('change','#image-input'+i.toString(),function () {
             image_change = 1;
             var choose_file = $(this)[0].files[0];
-            var reader = new FileReader();
-            
-            reader.onload = function (evt) {
-                let imgSrc = evt.target.result;
-                $t.cropper('replace', imgSrc, false);
-
-                // console.log(reader.result)
-                // $("#upload_img_"+i.toString()).attr("style", 'background-image: url('+reader.result+')')
+            if(choose_file){
+                var reader = new FileReader();
+                reader.onload = function (evt) {
+                    let imgSrc = evt.target.result;
+                    $t.cropper('replace', imgSrc, false);
+                }
+                reader.readAsDataURL(choose_file);
             }
-            reader.readAsDataURL(choose_file);
+            else{
+                image_change = 0;
+                $("#submit-modal-btn-cancel" + i.toString()).click();
+
+                setTimeout( function(){ 
+                    $("#form" + i.toString()).html(
+                        '{% csrf_token %}\
+                        <label>\
+                            <input id="image-input'+ i.toString() +'" type="file" name="image" style="visibility: hidden;" value="">\
+                        </label>\
+                        <div type="button" onclick="upload_img('+i.toString()+')"  id="upload_img_'+ i.toString() +'" class="upload_img_div">\
+                            <img type="button" id="img_upload_img_'+ i.toString() +'">\
+                        </div>'
+                    ); 
+                    image_change = 0;
+                }, 200);
+            }
+            
         })
         $('#image-input'+i.toString()).click();
 
         // cropper圖片裁剪
         $t.cropper({
-            aspectRatio : 1,  // 預設比例
+            aspectRatio : 1.2,  // 預設比例
             // preview : '#previewImg',  // 預覽檢視
             guides : false,   // 裁剪框的虛線(九宮格)
-            autoCropArea : 0.95, // 0-1之間的數值，定義自動剪裁區域的大小，預設0.8
+            autoCropArea : 0.9, // 0-1之間的數值，定義自動剪裁區域的大小，預設0.8
             dragMode: 'crop', // 拖曳模式 crop(Default,新增裁剪框) / move(移動裁剪框&圖片) / none(無動作)
             cropBoxResizable : true, // 是否有裁剪框調整四邊八點
             movable : true, // 是否允許移動圖片
@@ -438,6 +454,8 @@
                                 background: '#E9BBA4',
                                 showConfirmButton: false,
                                 customClass: 'swal-custom'
+                            }).then(function () {
+                                $('#tab-my-mission').click();
                             });
                         }
                         else if(data.result=="error"){
@@ -451,6 +469,8 @@
                                 background: '#E9BBA4',
                                 showConfirmButton: false,
                                 customClass: 'swal-custom'
+                            }).then(function () {
+                                $('#tab-my-mission').click();
                             });
                         }
                     }
@@ -476,7 +496,7 @@
 
 
     function submit_no() {
-        image_change = 0;
+        // image_change = 0;
     }
 
     var last_mission_list = ""

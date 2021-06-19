@@ -2,9 +2,14 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <link href="./static/profile.css" rel="stylesheet">
         <script src="static/jquery.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>     
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>        
+        <link href="static/profile.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/3.1.3/cropper.min.css">
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/3.1.3/cropper.min.js"></script> -->
     </head>
     <body>
         <div id="all">
@@ -31,9 +36,9 @@
                 <div id="photo4_text" class="photo_text"></div>
             </div>
         </div>
-        
+
         <div id = "profile_modal">
-            <div class="modal fade" id="btn-submit-modal" tabindex="-1" aria-hidden="true" data-backdrop="static">
+            <!-- <div class="modal fade" id="btn-submit-modal" tabindex="-1" aria-hidden="true" data-backdrop="static">
                 <div class="submit-modal-dialog">
                     <div class="submit-modal-content">
                         <form>
@@ -49,8 +54,7 @@
                         <button id="submit-modal-btn-confirm" onclick="submit_yes()" type="button" class="submit-modal-btn-confirm" data-dismiss="modal">確認</button>
                     </div>
                 </div>
-            </div>
-
+            </div> -->
         </div>
 
 
@@ -58,6 +62,7 @@
     </body>
 </html>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/3.1.3/cropper.min.js"></script>
 <script>
     $.ajaxSetup({
         data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
@@ -111,6 +116,25 @@
                         <textarea id="intro_text"></textarea>\
                         <p id="story">故事牆</p>'
                     )
+                    $('#profile_modal').html(
+                        '<div class="modal fade" id="btn-submit-modal" tabindex="-1" aria-hidden="true" data-backdrop="static">\
+                            <div class="submit-modal-dialog">\
+                                <div class="submit-modal-content">\
+                                    <form id="form">\
+                                        {% csrf_token %}\
+                                        <label>\
+                                            <input id="image-input" type="file" name="image" style="visibility: hidden;" value="">\
+                                        </label>\
+                                        <div type="button" onclick="upload_img()"  id="upload_img" class="upload_img_div">\
+                                            <img type="button" id="img_upload_img">\
+                                        </div>\
+                                    </form>\
+                                    <button onclick="submit_no()" type="button" class="submit-modal-btn-cancel" data-dismiss="modal">取消</button>\
+                                    <button id="submit-modal-btn-confirm" onclick="submit_yes()" type="button" class="submit-modal-btn-confirm" data-dismiss="modal">確認</button>\
+                                </div>\
+                            </div>\
+                        </div>'
+                    )
 
                     $.ajax({
                         url: '/get_img',
@@ -154,6 +178,139 @@
                 }
             }
         });
+    }
+
+    var $t;
+    var image_change = 0;
+    var imgNewWidth = 600;  // px
+    var imgNewHeight;
+    var imgNewSize = 600;  // k
+    function upload_img() {
+        $t = $("#img_upload_img");
+
+        $(document).on('change','#image-input',function () {
+            image_change = 1;
+            var choose_file = $(this)[0].files[0];
+            if(choose_file){
+                console.log("1")
+                var reader = new FileReader();
+            
+                reader.onload = function (evt) {
+                    let imgSrc = evt.target.result;
+                    $t.cropper('replace', imgSrc, false);
+                }
+                reader.readAsDataURL(choose_file);
+            }
+            else{
+                console.log("2")
+                image_change = 0;
+                $(".submit-modal-btn-cancel").click();
+                setTimeout( function(){ 
+                    $("#form").html(
+                        '{% csrf_token %}\
+                        <label>\
+                            <input id="image-input" type="file" name="image" style="visibility: hidden;" value="">\
+                        </label>\
+                        <div type="button" onclick="upload_img()"  id="upload_img" class="upload_img_div">\
+                            <img type="button" id="img_upload_img">\
+                        </div>'
+                    ); 
+                    image_change = 0;
+                }, 200);
+            }
+        })
+        $('#image-input').click();
+
+        // cropper圖片裁剪
+        $t.cropper({
+            aspectRatio : 1,  // 預設比例
+            // preview : '#previewImg',  // 預覽檢視
+            guides : false,   // 裁剪框的虛線(九宮格)
+            autoCropArea : 0.95, // 0-1之間的數值，定義自動剪裁區域的大小，預設0.8
+            dragMode: 'crop', // 拖曳模式 crop(Default,新增裁剪框) / move(移動裁剪框&圖片) / none(無動作)
+            cropBoxResizable : true, // 是否有裁剪框調整四邊八點
+            movable : true, // 是否允許移動圖片
+            zoomable : true, // 是否允許縮放圖片大小
+            rotatable : false,   // 是否允許旋轉圖片
+            zoomOnWheel : true, // 是否允許通過滑鼠滾輪來縮放圖片
+            zoomOnTouch : true, // 是否允許通過觸控移動來縮放圖片
+            ready : function(e) {  
+                console.log('ready!');
+            }
+        });
+    }
+
+    function submit_yes() {
+        var x, y, width, height;
+        if(image_change==1){
+            // if(0){
+            if (!$t.attr("src")) {
+                return false;
+            } 
+            else {
+                var cropImg = $("#img_upload_img").cropper('getData');
+                
+                console.log('cropImg', cropImg);
+                console.log('cropImg', cropImg.height, cropImg.width);
+                x = cropImg.x;
+                y = cropImg.y;
+                width = cropImg.width;
+                height = cropImg.height;
+
+                var formdata = new FormData();
+                formdata.append("image", $('#image-input')[0].files[0]);
+                formdata.append("x", x);
+                formdata.append("y", y);
+                formdata.append("width", width);
+                formdata.append("height", height);
+                formdata.append("account", window.location.href.split('?')[1].split('&')[0].split('=')[1],);
+                formdata.append("csrfmiddlewaretoken",$("[name='csrfmiddlewaretoken']").val());
+                $.ajax({
+                    processData:false,
+                    contentType:false,
+                    url:'/upload_profile_photo',
+                    type:'POST',
+                    async: false,
+                    data:formdata,
+                    dataType:"json",
+                    success: function (data) {
+                        // alert("提交完成")
+                        $('#submit-modal-btn-confirm').attr('data-dismiss', "modal");
+                        Swal.fire({
+                            title: '上傳成功!',
+                            icon: 'success',
+                            width: '70vw',
+                            heightAuto: false,
+                            background: '#E9BBA4',
+                            showConfirmButton: false,
+                            customClass: 'swal-custom'
+                        }).then(function () {
+                            my_profile();
+                        });
+                    }
+                });
+                
+
+            }
+            
+        }
+        else{
+            // alert("請上傳照片!")
+            Swal.fire({
+                title: '請上傳相片！',
+                icon: 'warning',
+                width: '70vw',
+                heightAuto: false,
+                background: '#E9BBA4',
+                showConfirmButton: false,
+                customClass: 'swal-custom'
+            });
+        }
+        image_change = 0;
+    }
+
+    function submit_no() {
+        // image_change = 0;
     }
 
     function others_profile(){
