@@ -140,8 +140,7 @@
             $('.btn-group').animate({width:"0vw"}, 300);
             setTimeout(function(){
                 $('.btn-group').css('visibility', 'hidden');
-            }, 300);
-            
+            }, 300);    
         }
     })
 
@@ -559,9 +558,9 @@
                                                 <div class="mission-title">'+ data.mission_name[i] +'</div>\
                                                 <div class="mission-joined">已有'+ data.joined[i]  +'人參加</div>\
                                                 <div class="mission-exp">\
-                                                    <div class="exp-val">\
-                                                        <p>'+ data.exp1[i] +'</p><p>' + data.exp2[i] + '</p><p>' + data.exp3[i] +'</p>\
-                                                    </div>\
+                                                    <div class="exp-val red">+'+ data.exp1[i] +'</div>\
+                                                    <div class="exp-val yellow">+'+ data.exp2[i] +'</div>\
+                                                    <div class="exp-val blue">+'+ data.exp3[i] +'</div>\
                                                 </div>\
                                             </div>\
                                         </div>\

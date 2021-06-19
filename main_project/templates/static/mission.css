@@ -359,27 +359,55 @@ input {
 
 .mission-exp {
     position: absolute;
+    display: inline-flex;
+    justify-content: center;
     width: 42vw;
     height: 6vw;
     right: 3.5vw;
     bottom: 0px;
-    background-image: url('src/exp.png');
-    background-size: cover;
+    /* background-image: url('src/exp.png'); */
+    /* background-size: cover; */
     z-index: 5;
 }
 
 .mission-exp > .exp-val {
+    height: 6vw;
+    width: 12vw;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    font-family: HP_Hans;
+    font-size: 4vw;
+    display: block;
+    margin: 0 1vw;
+    text-align: center;
+    padding-top: 0.5vw;
+}
+
+.exp-val.red {
+    background-image: url('src/exp_red.png');
+}
+
+.exp-val.yellow {
+    background-image: url('src/exp_yellow.png');
+}
+
+.exp-val.blue {
+    background-image: url('src/exp_blue.png');
+}
+
+/* .mission-exp > .exp-val {
     display: inline-flex;
     justify-content: space-around;
     width: inherit;
-}
+} */
 
-.mission-exp > .exp-val > p {
+/* .mission-exp > .exp-val > p {
     display: block;
     font-family: jf_open;
     font-size: 4vw;
     color: white;
-}
+} */
 
 .mission-info-tab {
     position: absolute;
