@@ -589,6 +589,12 @@ def submit_mission_group(request):
                                 member_ID=member_ID, submission_pic=submission_pic, check_status=check_status, check_preson=check_preson
         )
 
+        ### 群發提交審核訊息
+        sender_ID = "developers"
+        message = '任務:"'+ mission_name + '"已提交審核，請等候官方人員進行審查!'
+
+        Mission_Chatroom.objects.create(chatroom_ID=chatroom_ID, sender_ID=sender_ID,  message=message)
+
         # 取得刷新頁面資料
         # ToDo ###
 
@@ -945,16 +951,101 @@ def kick_mission_chatroom_member(request):
                 if check_mission_doing:
                     mission_doing_chatroom_ID.remove(chatroom_ID)
                     profile_search_all.update(mission_doing_chatroom_ID = mission_doing_chatroom_ID)
-                print(member_ID, joined, joined_ID, mission_doing_chatroom_ID)
             
-            return JsonResponse({
-                'result' : "success",
-            })
+                return JsonResponse({
+                    'result' : "success",
+                })
+            else:
+                return JsonResponse({
+                    'result' : "error",
+                })
 
         else:
             return JsonResponse({
                 'result' : "not_leader"
             })
+
+def exit_mission_chatroom(request):
+    if request.method == 'POST':
+        if check_login_open:
+            kicked_ID = request.COOKIES.get("account")
+        else:
+            kicked_ID = request.GET.get("account")
+
+        chatroom_ID = request.POST.get('chatroom_ID')
+
+        group_search_all = Mission_group.objects.filter(chatroom_ID=chatroom_ID)
+        group_search = group_search_all[0]
+
+        member_ID = ast.literal_eval(group_search.member_ID)
+        check_member = 0
+        for member in member_ID:
+            if kicked_ID == member:
+                check_member = 1
+                break 
+
+        if check_member:
+            ### 修改 mission group
+            member_ID.remove(kicked_ID)
+            if len(member_ID) > 0:
+                if kicked_ID == Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0].leader_ID: 
+                    group_search_all.update(member_ID = member_ID, leader_ID = member_ID[0])
+                else:
+                    group_search_all.update(member_ID = member_ID)    
+            else:
+                group_search_all.update(member_ID = member_ID)
+
+            if group_search.status == "full":
+                group_search_all.update(status = "acceptable")
+        
+            ### 修改 mission imformation
+            mission_ID = group_search.mission_ID
+            mission_search_all = Mission_imformation.objects.filter(mission_ID=mission_ID)
+            mission_search = mission_search_all[0]
+            joined = mission_search.joined
+            joined = int(joined) - 1
+            mission_search_all.update(joined = joined)
+
+            joined_ID = ast.literal_eval(mission_search.joined_ID)
+            joined_ID_reverse = joined_ID.copy()
+            joined_ID_reverse.reverse()
+            
+            check_joined_ID = 0
+            for ID in joined_ID_reverse:
+                if kicked_ID == ID:
+                    check_joined_ID = 1
+                    break 
+
+            if check_joined_ID:
+                joined_ID_reverse.remove(kicked_ID)
+                joined_ID = joined_ID_reverse
+                joined_ID.reverse()
+                mission_search_all.update(joined_ID = joined_ID)
+
+            ### 修改 Profile
+            profile_search_all = Profile.objects.filter(account=kicked_ID)
+            profile_search = profile_search_all[0]
+            mission_doing_chatroom_ID = ast.literal_eval(profile_search.mission_doing_chatroom_ID)
+
+            check_mission_doing = 0
+            for ID in mission_doing_chatroom_ID:
+                if chatroom_ID == ID:
+                    check_mission_doing = 1
+                    break 
+
+            if check_mission_doing:
+                mission_doing_chatroom_ID.remove(chatroom_ID)
+                profile_search_all.update(mission_doing_chatroom_ID = mission_doing_chatroom_ID)
+        
+            return JsonResponse({
+                'result' : "success",
+            })
+        else:
+            return JsonResponse({
+                'result' : "error",
+            })
+
+
 
 def manager_page(request):
     mission_submission = Mission_submission.objects.filter(check_status="checking")
@@ -1031,7 +1122,6 @@ def submission_to_finish(request):
             'result' : "success"
         })
 
-# 
 def get_my_mission(request):
     if request.method == 'POST':
         # account = request.POST.get("user_ID")
@@ -1043,7 +1133,7 @@ def get_my_mission(request):
         mission_doing_chatroom_ID = ast.literal_eval(profile.mission_doing_chatroom_ID)
         mission_done_chatroom_ID = ast.literal_eval(profile.mission_done_chatroom_ID)
         
-        mission_ID,mission_name,group_name,leader_ID,status,member_ID,mission_pic,member_name_list = [], [], [], [], [], [], [], []
+        mission_ID,mission_name,group_name,leader_ID,status,member_ID,mission_pic,member_name_list,chatroom_ID = [], [], [], [], [], [], [], [], []
 
         for doing_chatroom_ID in mission_doing_chatroom_ID:
             mission_ID.append(Mission_group.objects.filter(chatroom_ID=doing_chatroom_ID)[0].mission_ID)
@@ -1059,6 +1149,8 @@ def get_my_mission(request):
             for member in ast.literal_eval(Mission_group.objects.filter(chatroom_ID=doing_chatroom_ID)[0].member_ID):
                 member_name.append(Profile.objects.filter(account=member)[0].name)
             member_name_list.append(member_name)
+
+            chatroom_ID.append(doing_chatroom_ID)
         
         for done_chatroom_ID in mission_done_chatroom_ID:
             mission_ID.append(Mission_group.objects.filter(chatroom_ID=done_chatroom_ID)[0].mission_ID)
@@ -1074,7 +1166,9 @@ def get_my_mission(request):
             for member in ast.literal_eval(Mission_group.objects.filter(chatroom_ID=done_chatroom_ID)[0].member_ID):
                 member_name.append(Profile.objects.filter(account=member)[0].name)
             member_name_list.append(member_name)
-            print(status)
+
+            chatroom_ID.append(done_chatroom_ID)
+
         return JsonResponse({
             'result' : "success",
             'mission_ID': mission_ID,
@@ -1086,8 +1180,85 @@ def get_my_mission(request):
             'mission_pic': mission_pic,
             'member_name' : member_name_list,
             'mission_doing_chatroom_ID': mission_doing_chatroom_ID,
-            'mission_done_chatroom_ID': mission_done_chatroom_ID
+            'mission_done_chatroom_ID': mission_done_chatroom_ID,
+            "chatroom_ID": chatroom_ID,
         })
+
+def is_shared(request):
+    if request.method == 'POST':
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
+
+        chatroom_ID = request.POST.get("chatroom_ID")
+        shared_chatroom_ID =  ast.literal_eval(Profile.objects.filter(account = account)[0].shared_chatroom_ID)
+        
+        if chatroom_ID in shared_chatroom_ID:
+            return JsonResponse({
+                'result' : "cancel"
+            })
+        else:
+            return JsonResponse({
+                'result' : "share"
+            })
+
+def share(request):
+    if request.method == 'POST':
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
+
+        chatroom_ID = request.POST.get("chatroom_ID")
+        shared_chatroom_ID =  ast.literal_eval(Profile.objects.filter(account = account)[0].shared_chatroom_ID)
+
+        if len(shared_chatroom_ID) < 4:
+            if chatroom_ID not in shared_chatroom_ID:
+                shared_chatroom_ID.append(chatroom_ID)
+                print(shared_chatroom_ID)
+                Profile.objects.filter(account = account).update(shared_chatroom_ID=shared_chatroom_ID)
+                return JsonResponse({
+                    'result' : "success"
+                })
+            else:
+                return JsonResponse({
+                    'result' : "error"
+                })
+        else:
+            return JsonResponse({
+                'result' : "full"
+            })
+
+
+        
+
+def share_cancel(request):
+    if request.method == 'POST':
+        if check_login_open:
+            account = request.COOKIES.get("account")
+        else:
+            account = request.GET.get("account")
+
+        chatroom_ID = request.POST.get("chatroom_ID")
+        shared_chatroom_ID =  ast.literal_eval(Profile.objects.filter(account = account)[0].shared_chatroom_ID)
+
+        if len(shared_chatroom_ID) > 0:
+            if chatroom_ID in shared_chatroom_ID:
+                shared_chatroom_ID.remove(chatroom_ID)
+                print(shared_chatroom_ID)
+                Profile.objects.filter(account = account).update(shared_chatroom_ID=shared_chatroom_ID)
+                return JsonResponse({
+                    'result' : "success"
+                })
+            else:
+                return JsonResponse({
+                    'result' : "error"
+                })
+        else:
+            return JsonResponse({
+                'result' : "none"
+            })
 
 def get_profile_page(request):
     if request.method == 'POST':
@@ -1097,7 +1268,7 @@ def get_profile_page(request):
         #     account = request.GET.get("account")
         account = request.POST.get("account")
         profile_filter = Profile.objects.filter(account=account)
-        print(len(profile_filter))
+
         if profile_filter:
             profile = profile_filter[0]
 
@@ -1150,6 +1321,7 @@ def get_profile_page(request):
             elif level > 10:
                 character_name = char + "5.png"
 
+            '''
             mission_done_chatroom_ID = ast.literal_eval(profile.mission_done_chatroom_ID)
             # mission_done_chatroom_ID = [1,2,3,4,5,6]
             if len(mission_done_chatroom_ID) >= 4:
@@ -1158,11 +1330,18 @@ def get_profile_page(request):
             else:
                 random_index = random.sample(range(0, len(mission_done_chatroom_ID)), len(mission_done_chatroom_ID))
                 # [random.randint(0,len(mission_done_chatroom_ID)-1) for _ in range(len(mission_done_chatroom_ID))]
-
+            
             story_pic = []
             for index in random_index:
                 story_pic.append('media/mission_submit_upload/' + mission_done_chatroom_ID[index] + '.jpg')
+            '''
+
+            shared_chatroom_ID = ast.literal_eval(Profile.objects.filter(account = account)[0].shared_chatroom_ID)
+            story_pic = []
+            for chatroom_ID in shared_chatroom_ID:
+                story_pic.append('media/mission_submit_upload/' + chatroom_ID + '.jpg')
             
+
             while len(story_pic) < 4:
                 story_pic.append('media/mission_submit_upload/none.jpg')
 
@@ -1668,8 +1847,6 @@ def send_invitation(request):
             else:
                 invitation_send_me.append(invitation_ID)
                 invitation_receive_others.append(account)
-
-                print(invitation_send_me, invitation_receive_others)
 
                 profile_me.update(invitation_send = invitation_send_me)
                 profile_others.update(invitation_receive = invitation_receive_others)

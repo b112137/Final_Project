@@ -983,21 +983,21 @@ input {
 .btn-finished {
     position: absolute;
     width: 18vw;
-    height: 12vw;
+    height: 10vw;
     font-family: jf_open;
     font-size: 5vw;
     color: white;
-    background-color: #E26F50;
+    background-color: #F59E56;
     border-radius: 2vw;
     border-width: 0px;
-    left: 73vw;
-    top: 9vw;
+    left: 77vw;
+    top: 10vw;
     z-index: 70;
 }
 
-.btn-finished:active {
+/* .btn-finished:active {
     background-color: rgba(226, 112, 80, 0.692);
-}
+} */
 
 
 .submit-modal-dialog {

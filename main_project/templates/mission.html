@@ -90,6 +90,8 @@
 </html>
 
 <script>
+    var mission_type = "all";
+
     $.ajaxSetup({
         data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
     })    
@@ -133,12 +135,31 @@
         }
     }
 
+    $('#all').click( function() {
+        mission_type = "all"
+        all_mission();
+    })
+
+    $('#entertainment').click( function() {
+        mission_type = "play"
+        all_mission();
+    })
+
+    $('#learning').click( function() {
+        mission_type = "learning"
+        all_mission();
+    })
+
+    $('#handcraft').click( function() {
+        mission_type = "hand"
+        all_mission();
+    })
+
+
     $(document).on('click', "#mission_search",function(){
         mission_search_timer = window.setInterval( all_mission , 500)
         // all_mission();
     })
-
-
 
     $('#mission_search_delete').click(function(){
         window.clearInterval(mission_search_timer);
@@ -266,80 +287,135 @@
               success: function (data) {
                 if (data.result == "success"){
                     var pic_list = data.mission_pic
-                    console.log(pic_list)
                     for(var i = 0; i < pic_list.length; i++){
                         $.ajax({
-                        url: '/get_img',
-                        method: 'POST',
-                        type: 'POST',
-                        async: false, //改成同步執行(等待上一個回傳)
-                        data: {
-                            "img_path": pic_list[i],
-                        },
-                        success: function (img) {
-                            console.log(data.status[i])
-                            if(type=="join" && (data.status[i]=="acceptable" || data.status[i]=="full")){
-                                $('#page1').append(
-                                    '<div class="test_block">\
-                                        <div class="joined_mission"></div>\
-                                        <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
-                                        <button class="btn-submit" type="button" data-toggle="modal" data-target="#btn-submit-modal'+i.toString()+'">提交</button>\
-                                        <div class = "mission_name">'+ data.mission_name[i] +'</div>\
-                                        <div class = "mission_chat">'+ data.group_name[i] +'</div>\
-                                    </div>'
-                                )
-                                $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                            url: '/get_img',
+                            method: 'POST',
+                            type: 'POST',
+                            async: false, //改成同步執行(等待上一個回傳)
+                            data: {
+                                "img_path": pic_list[i],
+                            },
+                            success: function (img) {
+                                
 
-                                $('#submit_modal').append(
-                                    '<div class="modal fade" id="btn-submit-modal'+ i.toString() +'" tabindex="-1" aria-hidden="true" data-backdrop="static">\
-                                        <div class="submit-modal-dialog">\
-                                            <div class="submit-modal-content">\
-                                                <form id="form' + i.toString() + '">\
-                                                    {% csrf_token %}\
-                                                    <label>\
-                                                        <input id="image-input'+ i.toString() +'" type="file" name="image" style="visibility: hidden;" value="">\
-                                                    </label>\
-                                                    <div type="button" onclick="upload_img('+i.toString()+')"  id="upload_img_'+ i.toString() +'" class="upload_img_div">\
-                                                        <img type="button" id="img_upload_img_'+ i.toString() +'">\
-                                                    </div>\
-                                                </form>\
-                                                <button id="submit-modal-btn-cancel'+ i.toString() +'" onclick="submit_no()" type="button" class="submit-modal-btn-cancel" data-dismiss="modal">取消</button>\
-                                                <button id="submit-modal-btn-confirm'+ i.toString() +'" onclick="submit_yes('+i.toString()+','+data.mission_doing_chatroom_ID[i]+')" type="button" class="submit-modal-btn-confirm" data-dismiss="modal">確認</button>\
-                                            </div>\
-                                        </div>\
-                                    </div>'
-                                )
-                            }
-                            else if(type=="finished"){
-                                console.log("in")
-                                if(data.status[i]=="checking"){
-                                    $('#page1').append(
-                                        '<div class="test_block">\
-                                            <div class="joined_mission"></div>\
-                                            <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
-                                            <button class="btn-finished" type="button" data-toggle="modal" data-target="#btn-submit-modal">審核中</button>\
-                                            <div class = "mission_name">'+ data.mission_name[i] +'</div>\
-                                            <div class = "mission_chat">'+ data.group_name[i] +'</div>\
-                                        </div>'
-                                    )
-                                    $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+
+                                if(type=="join" && (data.status[i]=="acceptable" || data.status[i]=="full")){
+                                    $.ajax({
+                                        url: '/submit_mission_group_check',
+                                        method: 'POST',
+                                        type: 'POST',
+                                        dataType: "json",
+                                        async: false,
+                                        data: {
+                                            "chatroom_ID": data.chatroom_ID[i],
+                                        },
+                                        success: function (enough) {
+                                            if (enough.result == "success"){
+                                                $('#page1').append(
+                                                    '<div class="test_block">\
+                                                        <div class="joined_mission"></div>\
+                                                        <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
+                                                        <button class="btn-submit" type="button" data-toggle="modal" data-target="#btn-submit-modal'+i.toString()+'">提交</button>\
+                                                        <div class = "mission_name">'+ data.mission_name[i] +'</div>\
+                                                        <div class = "mission_chat">'+ data.group_name[i] +'</div>\
+                                                    </div>'
+                                                )
+                                                $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+
+                                                $('#submit_modal').append(
+                                                    '<div class="modal fade" id="btn-submit-modal'+ i.toString() +'" tabindex="-1" aria-hidden="true" data-backdrop="static">\
+                                                        <div class="submit-modal-dialog">\
+                                                            <div class="submit-modal-content">\
+                                                                <form id="form' + i.toString() + '">\
+                                                                    {% csrf_token %}\
+                                                                    <label>\
+                                                                        <input id="image-input'+ i.toString() +'" type="file" name="image" style="visibility: hidden;" value="">\
+                                                                    </label>\
+                                                                    <div type="button" onclick="upload_img('+i.toString()+')"  id="upload_img_'+ i.toString() +'" class="upload_img_div">\
+                                                                        <img type="button" id="img_upload_img_'+ i.toString() +'">\
+                                                                    </div>\
+                                                                </form>\
+                                                                <button id="submit-modal-btn-cancel'+ i.toString() +'" onclick="submit_no()" type="button" class="submit-modal-btn-cancel" data-dismiss="modal">取消</button>\
+                                                                <button id="submit-modal-btn-confirm'+ i.toString() +'" onclick="submit_yes('+i.toString()+','+data.chatroom_ID[i]+')" type="button" class="submit-modal-btn-confirm" data-dismiss="modal">確認</button>\
+                                                            </div>\
+                                                        </div>\
+                                                    </div>'
+                                                )
+                                            }
+                                            else if(enough.result == "not_enough"){
+                                                $('#page1').append(
+                                                    '<div class="test_block">\
+                                                        <div class="joined_mission"></div>\
+                                                        <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
+                                                        <div class = "mission_name">'+ data.mission_name[i] +'</div>\
+                                                        <div class = "mission_chat">'+ data.group_name[i] +'</div>\
+                                                    </div>'
+                                                )
+                                                $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                                            }
+                                        }
+                                    });
+
+                                    
                                 }
-                                else if(data.status[i]=="finished"){
-                                    $('#page1').append(
-                                        '<div class="test_block">\
-                                            <div class="joined_mission"></div>\
-                                            <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
-                                            <button class="btn-finished" type="button" data-toggle="modal" data-target="#btn-submit-modal">已完成</button>\
-                                            <div class = "mission_name">'+ data.mission_name[i] +'</div>\
-                                            <div class = "mission_chat">'+ data.group_name[i] +'</div>\
-                                        </div>'
-                                    )
-                                    $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                                else if(type=="finished"){
+                                    if(data.status[i]=="checking"){
+                                        $('#page1').append(
+                                            '<div class="test_block">\
+                                                <div class="joined_mission" style="background-image: url(static/new_element/complete.png);"></div>\
+                                                <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
+                                                <button class="btn-finished" type="button" data-toggle="modal" data-target="#btn-submit-modal">審核中</button>\
+                                                <div class = "mission_name">'+ data.mission_name[i] +'</div>\
+                                                <div class = "mission_chat">'+ data.group_name[i] +'</div>\
+                                            </div>'
+                                        )
+                                        $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                                    }
+                                    else if(data.status[i]=="finished"){
+                                        $.ajax({
+                                            url: '/is_shared',
+                                            method: 'POST',
+                                            type: 'POST',
+                                            dataType: "json",
+                                            async: false,
+                                            data: {
+                                                'chatroom_ID': data.chatroom_ID[i],
+                                            },
+                                            success: function (shared) {
+                                                if (shared.result == "share"){
+                                                    $('#page1').append(
+                                                        '<div class="test_block">\
+                                                            <div class="joined_mission" style="background-image: url(static/new_element/complete.png);"></div>\
+                                                            <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
+                                                            <button onclick=share('+ data.chatroom_ID[i] +') class="btn-finished" type="button" data-toggle="modal" data-target="#btn-submit-modal">分享</button>\
+                                                            <div class = "mission_name">'+ data.mission_name[i] +'</div>\
+                                                            <div class = "mission_chat">'+ data.group_name[i] +'</div>\
+                                                        </div>'
+                                                    )
+                                                    $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                                                }
+                                                else if (shared.result == "cancel") {
+                                                    $('#page1').append(
+                                                        '<div class="test_block">\
+                                                            <div class="joined_mission" style="background-image: url(static/new_element/complete.png);"></div>\
+                                                            <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
+                                                            <button onclick=share_cancel('+ data.chatroom_ID[i] +') class="btn-finished" style="font-size:4vw;" type="button" data-toggle="modal" data-target="#btn-submit-modal">取消分享</button>\
+                                                            <div class = "mission_name">'+ data.mission_name[i] +'</div>\
+                                                            <div class = "mission_chat">'+ data.group_name[i] +'</div>\
+                                                        </div>'
+                                                    )
+                                                    $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                                                }                
+                                            }
+                                        });
+
+                                        
+                                    }
+                                    
                                 }
                                 
                             }
-                            
-                        }
                         });
                     }
                     $('#page1').append(
@@ -348,6 +424,56 @@
                     )
                 }
               }
+        });
+    }
+
+    function share(chartroom_ID) {
+        $.ajax({
+            url: '/share',
+            method: 'POST',
+            type: 'POST',
+            dataType: "json",
+            async: false,
+            data: {
+                'chatroom_ID': chartroom_ID,
+            },
+            success: function (data) {
+                console.log(data.result)
+                if (data.result == "success"){
+                    my_mission("finished");
+                }
+                else if (data.result == "full") {
+                    my_mission("finished");
+                }  
+                else if (data.result == "error") {
+                    my_mission("finished");
+                }                
+            }
+        });
+    }
+
+    function share_cancel(chartroom_ID) {
+        $.ajax({
+            url: '/share_cancel',
+            method: 'POST',
+            type: 'POST',
+            dataType: "json",
+            async: false,
+            data: {
+                'chatroom_ID': chartroom_ID,
+            },
+            success: function (data) {
+                console.log(data.result)
+                if (data.result == "success"){
+                    my_mission("finished");
+                }
+                else if (data.result == "none") {
+                    my_mission("finished");
+                }  
+                else if (data.result == "error") {
+                    my_mission("finished");
+                }                
+            }
         });
     }
 
@@ -557,7 +683,7 @@
               dataType: "json",
               data: {
                   "search": document.getElementById("mission_search").value,
-                  "mission_type": "all",
+                  "mission_type": mission_type,
                   "last_mission_list": last_mission_list.toString(),
               },
               success: function (data) {

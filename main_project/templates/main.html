@@ -302,6 +302,15 @@
             success: function (data) {
                 if (data.result == "success"){
                     console.log(data.result)
+                    Swal.fire({
+                        title: '已送出好友邀請!',
+                        icon: 'success',
+                        width: '70vw',
+                        heightAuto: false,
+                        background: '#E9BBA4',
+                        showConfirmButton: false,
+                        customClass: 'swal-custom'
+                    })
                 }
                 else if (data.result == "error") {
                     console.log(data.result)

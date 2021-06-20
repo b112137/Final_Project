@@ -52,6 +52,8 @@ urlpatterns = [
     path('mission_chatroom_update', backend.mission_chatroom_update),
     path('get_mission_chatroom_member', backend.get_mission_chatroom_member),
     path('kick_mission_chatroom_member', backend.kick_mission_chatroom_member),
+    path('exit_mission_chatroom', backend.exit_mission_chatroom),
+    
     path('submit_mission_group_check', backend.submit_mission_group_check),
     path('submit_mission_group', backend.submit_mission_group),
     path('upload_profile_photo', backend.upload_profile_photo),
@@ -82,6 +84,9 @@ urlpatterns = [
     
     # 
     path('get_my_mission' , backend.get_my_mission),
+    path('is_shared' , backend.is_shared),
+    path('share' , backend.share),
+    path('share_cancel' , backend.share_cancel),
     path('get_profile_page' , backend.get_profile_page),
     path('get_main_page' , backend.get_main_page),
     path('get_friend_page', backend.get_friend_page),

@@ -29,6 +29,7 @@ class Profile(models.Model):
     owned_product_ID = models.TextField() #List
     invitation_send = models.TextField() #List
     invitation_receive = models.TextField() #List
+    shared_chatroom_ID = models.TextField() #List
 
     time = models.DateTimeField(auto_now_add=True)
 

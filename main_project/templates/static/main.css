@@ -3,6 +3,14 @@
     src: url(src/font/jf-openhuninn-1.1.ttf);
 }
 
+.swal-custom {
+    height: 50vw;
+    font-size: 3vw !important;
+    font-family: HP_Hans !important;
+    color: #4D4D4D;
+    border-radius: 5vw !important;
+}
+
 .swal-custom-guide {
     height: 100vh;
     background-size: cover !important;
@@ -246,9 +254,9 @@ body {
 }
 #logout{
     position: absolute;
-    width: 19vw;
-    height: 6.85vw;
-    top: 37vw; 
+    width: 18vw;
+    height: auto;
+    top: 83vw; 
     left: 5.55vw;
 }
 
@@ -256,7 +264,7 @@ body {
     position: absolute;
     width: 19vw;
     height: 6.85vw;
-    top: 61vw; 
+    top: 37vw; 
     left: 5.55vw;
 }
 
@@ -264,7 +272,7 @@ body {
     position: absolute;
     width: 25.8vw;
     height: 11.1vw;
-    top: 83.25vw; 
+    top: 60vw; 
     left: 5.55vw;
 }
 /*

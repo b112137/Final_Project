@@ -245,12 +245,6 @@
                     console.log(data.status)
                     if( (data.member_ID.length > 1) && (window.location.href.split('?')[1].split('&')[0].split('=')[1] == data.leader_ID) && (data.status == "acceptable" || data.status == "full") ){
                         $(".chatroom-member-header").append('<img class="edit-member" src="static/src/edit.png" type="button" data-toggle="collapse" data-target=".delete-member">');
-                        // $("#member").append('<button id="edit">編輯成員</button>')
-                        // $("#edit").click( function() {
-                        //     for(var i = 0; i < member_ID.length; i++){
-                        //         $('#'+member_ID[i]).show();
-                        //     }
-                        // })
                     }
                     
                     var pic_list = data.profile_photo;
@@ -281,11 +275,14 @@
                                             <div class="chatroom-member-name">'+ data.member_name[i] +'</div>\
                                         </div>'
                                     )
-                                    $(".chatroom-member-list").append(
-                                        '<div class="exit-group">\
-                                            <button class="exit-group-btn">退出群組</button>\
-                                        </div>'
-                                    )
+                                    if( (data.status == "acceptable" || data.status == "full") ){
+                                        $(".chatroom-member-list").append(
+                                            '<div class="exit-group">\
+                                                <button onclick=exit_mission_chatroom() class="exit-group-btn">退出群組</button>\
+                                            </div>'
+                                        )
+                                    }
+                                    
                                 }
                             }
                         });
@@ -327,6 +324,25 @@
                     // $("#"+this_id+"_div").hide()
                     window.location.href = window.location.href
                     console.log("success")
+                }
+            }
+        });
+    }
+
+    function exit_mission_chatroom(){
+        $.ajax({
+            url: '/exit_mission_chatroom',
+            method: 'POST',
+            type: 'POST',
+            dataType: "json",
+            data: {
+                "chatroom_ID": window.location.href.split('?')[1].split('&')[1].split('=')[1],
+            },
+            success: function (data) {
+                if (data.result == "success"){
+                    console.log("success")
+                    window.location.href = "/chatroom?account="+window.location.href.split('?')[1].split('=')[1];
+
                 }
             }
         });
