@@ -69,6 +69,7 @@
             </div> 
             <div id="my-mission" class="tab-pane fade">
                 <div class="jf-continer" id = 'page1'>
+                    <div id="page1_container"></div>
                     <!-- JavaScript append -->
                 </div>
             </div>
@@ -249,18 +250,24 @@
         
     })
 
+    var last_my_mission_list = "1"
+    var last_page1_container_join = ""
+    var last_page1_container_finish = ""
     function my_mission(type) {
-        
+        console.log(last_my_mission_list.toString())
         $.ajax({
-              url: '/get_my_mission',
-              method: 'POST',
-              type: 'POST',
-              dataType: "json",
-              data: {
-                "user_ID": window.location.href.split('?')[1].split('&')[0].split('=')[1],
-              },
-              success: function (data) {
+            url: '/get_my_mission',
+            method: 'POST',
+            type: 'POST',
+            dataType: "json",
+            data: {
+            "user_ID": window.location.href.split('?')[1].split('&')[0].split('=')[1],
+            "last_my_mission_list": last_my_mission_list.toString(),
+            },
+            success: function (data) {
                 if (data.result == "success"){
+                    last_my_mission_list = data.this_my_mission_list
+                    
                     $('#page1').html("");
                     $('#submit_modal').html("");
                     if(type=="join"){
@@ -284,6 +291,7 @@
                         $('#joined_t').attr('style', "background-image: url(static/new_element/asset320.png); color:rgba(245, 158, 86, 0.8);")
                         $('#finished_t').attr('style', "background-image: url(static/new_element/asset319.png); color:white;")
                     }
+                    $('#page1').append('<div id="page1_container"></div><div id="page2_container"></div>')
                     var pic_list = data.mission_pic
                     for(var i = 0; i < pic_list.length; i++){
                         $.ajax({
@@ -295,7 +303,8 @@
                                 "img_path": pic_list[i],
                             },
                             success: function (img) {
-                                if(type=="join" && (data.status[i]=="acceptable" || data.status[i]=="full")){
+                                // if(type=="join" && (data.status[i]=="acceptable" || data.status[i]=="full")){
+                                if((data.status[i]=="acceptable" || data.status[i]=="full")){
                                     // $.ajax({
                                     //     url: '/submit_mission_group_check',
                                     //     method: 'POST',
@@ -308,7 +317,7 @@
                                     //     success: function (enough) {
                                             // if (enough.result == "success"){
                                             if ( data.group_num[i] >= data.group_required[i]){
-                                                $('#page1').append(
+                                                $('#page1_container').append(
                                                     '<div class="test_block">\
                                                         <div class="joined_mission"></div>\
                                                         <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
@@ -341,7 +350,7 @@
                                             }
                                             // else if(enough.result == "not_enough"){
                                             else{
-                                                $('#page1').append(
+                                                $('#page1_container').append(
                                                     '<div class="test_block">\
                                                         <div class="joined_mission"></div>\
                                                         <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
@@ -355,9 +364,9 @@
                                         // }
                                     // });
                                 }
-                                else if(type=="finished"){
+                                // else if(type=="finished"){
                                     if(data.status[i]=="checking"){
-                                        $('#page1').append(
+                                        $('#page2_container').append(
                                             '<div class="test_block">\
                                                 <div class="joined_mission" style="background-image: url(static/new_element/complete.png);"></div>\
                                                 <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
@@ -381,7 +390,7 @@
                                         //     success: function (shared) {
                                                 // if (shared.result == "share"){
                                                 if(data.is_shared[i] == "share") {
-                                                    $('#page1').append(
+                                                    $('#page2_container').append(
                                                         '<div class="test_block">\
                                                             <div class="joined_mission" style="background-image: url(static/new_element/complete.png);"></div>\
                                                             <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
@@ -394,7 +403,7 @@
                                                 }
                                                 // else if (shared.result == "cancel") {
                                                 else if(data.is_shared[i] == "cancel") {
-                                                    $('#page1').append(
+                                                    $('#page2_container').append(
                                                         '<div class="test_block">\
                                                             <div class="joined_mission" style="background-image: url(static/new_element/complete.png);"></div>\
                                                             <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
@@ -411,21 +420,84 @@
                                         
                                     }
                                     
-                                }
+                                // }
                                 
                             }
                         });
                     }
-                    if (pic_list.length == 0){
-                        $('#page1').append( '<div class="error_text" style="top:34vh">尚無參加任務，快去揪團吧!</div>')
-                    }
+                    // if (pic_list.length == 0){
+                    //     $('#page1_container').append( '<div class="error_text" style="top:34vh">尚無參加任務，快去揪團吧!</div>')
+                    //     $('#page2_container').append( '<div class="error_text" style="top:34vh">尚無參加任務，快去揪團吧!</div>')
+                    // }
 
-                    $('#page1').append(
+                    // $('#page1_container').append(
+                    //     '<div class="test_block" style="height: 15vw">\
+                    //     </div>'
+                    // )
+                    // $('#page2_container').append(
+                    //     '<div class="test_block" style="height: 15vw">\
+                    //     </div>'
+                    // )    
+                    if (pic_list.length == 0){
+                        $('#page1_container').append( '<div class="error_text" style="top:34vh">尚無參加任務，快去揪團吧!</div>')
+                        $('#page2_container').append( '<div class="error_text" style="top:34vh">尚無參加任務，快去揪團吧!</div>')
+                    }
+                    $('#page1_container').append(
                         '<div class="test_block" style="height: 15vw">\
                         </div>'
                     )
+                    $('#page2_container').append(
+                        '<div class="test_block" style="height: 15vw">\
+                        </div>'
+                    )
+
+                    last_page1_container_join = $("#page1_container").html()
+                    last_page1_container_finish = $("#page2_container").html()
+
+                    if(type=="join"){
+                        $("#page1_container").show();
+                        $("#page2_container").hide();
+                    }
+                    else if(type=="finished"){                        
+                        $("#page1_container").hide();
+                        $("#page2_container").show();
+                    }
+                    // console.log($("#page1_container").html())
                 }
-              }
+                else if(data.result=="same"){
+                    $('#page1').html("");
+                    $('#submit_modal').html("");
+                    if(type=="join"){
+                        $('#page1').append(
+                            "<div class='top_block'>\
+                                <div class='joined_text' id = 'joined_t'>待完成</div>\
+                                <div class='finished_text' id ='finished_t'>已完成</div>\
+                                <img src = 'static/new_element/asset 321.png' class = 'design_line'>\
+                            </div>"
+                        )
+
+                    }
+                    else if(type=="finished"){
+                        $('#page1').append(
+                            "<div class='top_block'>\
+                                <div class='joined_text' id = 'joined_t' >待完成</div>\
+                                <div class='finished_text' id ='finished_t' >已完成</div>\
+                                <img src = 'static/new_element/asset 321.png' class = 'design_line'>\
+                            </div>"
+                        )
+                        $('#joined_t').attr('style', "background-image: url(static/new_element/asset320.png); color:rgba(245, 158, 86, 0.8);")
+                        $('#finished_t').attr('style', "background-image: url(static/new_element/asset319.png); color:white;")
+                    }
+                    $('#page1').append('<div id="page1_container"></div><div id="page2_container"></div>')
+
+                    if(type=="join"){
+                        $('#page1_container').html(last_page1_container_join)
+                    }
+                    else if(type=="finished"){
+                        $('#page2_container').html(last_page1_container_finish)
+                    }
+                }
+            }
         });
     }
 

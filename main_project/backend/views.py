@@ -1153,13 +1153,21 @@ def get_my_mission(request):
             account = request.COOKIES.get("account")
         else:
             account = request.GET.get("account")
+
+        last_my_mission_list = request.POST.get("last_my_mission_list")
+        # last_my_mission_list = ast.literal_eval( '[' + last_my_mission_list + ']') 
+
+        last_my_mission_list_split = last_my_mission_list.split(",")
+        last_my_mission_list = []
+        for split in last_my_mission_list_split:
+            last_my_mission_list.append(str(split))
+        
         profile = Profile.objects.filter(account=account)[0]
         mission_doing_chatroom_ID = ast.literal_eval(profile.mission_doing_chatroom_ID)
         mission_done_chatroom_ID = ast.literal_eval(profile.mission_done_chatroom_ID)
         
         mission_ID,mission_name,group_name,leader_ID,status,member_ID,mission_pic,member_name_list,chatroom_ID = [], [], [], [], [], [], [], [], []
         group_num, group_required, is_shared = [],[],[]
-
 
         for doing_chatroom_ID in mission_doing_chatroom_ID:
             mission_ID.append(Mission_group.objects.filter(chatroom_ID=doing_chatroom_ID)[0].mission_ID)
@@ -1214,25 +1222,34 @@ def get_my_mission(request):
                 is_shared.append("cancel")
             else:
                 is_shared.append("share")
-        print(group_num)
-        print(group_required)
-        return JsonResponse({
-            'result' : "success",
-            'mission_ID': mission_ID,
-            'mission_name': mission_name,
-            'group_name': group_name,
-            'leader_ID' : leader_ID,
-            'status': status,
-            'member_ID' : member_ID,
-            'mission_pic': mission_pic,
-            'member_name' : member_name_list,
-            'mission_doing_chatroom_ID': mission_doing_chatroom_ID,
-            'mission_done_chatroom_ID': mission_done_chatroom_ID,
-            "chatroom_ID": chatroom_ID,
-            "group_num": group_num, 
-            "group_required": group_required, 
-            "is_shared": is_shared,
-        })
+
+        last_my_mission_list = [str(x) for x in last_my_mission_list]
+        this_my_mission_list = [str(x) for x in (chatroom_ID+group_num+is_shared)]
+
+        if last_my_mission_list == this_my_mission_list:
+            return JsonResponse({
+                'result' : "same",
+            })
+        
+        else:
+            return JsonResponse({
+                'result' : "success",
+                'mission_ID': mission_ID,
+                'mission_name': mission_name,
+                'group_name': group_name,
+                'leader_ID' : leader_ID,
+                'status': status,
+                'member_ID' : member_ID,
+                'mission_pic': mission_pic,
+                'member_name' : member_name_list,
+                'mission_doing_chatroom_ID': mission_doing_chatroom_ID,
+                'mission_done_chatroom_ID': mission_done_chatroom_ID,
+                "chatroom_ID": chatroom_ID,
+                "group_num": group_num, 
+                "group_required": group_required, 
+                "is_shared": is_shared,
+                "this_my_mission_list": this_my_mission_list,
+            })
 
 def is_shared(request):
     if request.method == 'POST':
