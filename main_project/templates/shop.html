@@ -283,6 +283,9 @@
                         }
                         });
                     }
+                    if (pic_list.length == 0){
+                        $('#owned_container').append('<div class="error_text">尚無購買商品<br>解任務可獲得$$並購買商品唷!</div>')
+                    }
                     // $('#newpic').append('<button onclick=use('+ data.product_ID[i] +')>使用</button>')
                 }
             }

@@ -39,7 +39,7 @@
     font-size: 7vw;
     color: #999595;
     text-align: center;
-    top: 110vw;
+    top: 52vh;
     position: absolute;
 }
 
@@ -712,7 +712,7 @@ input {
 }
 
 .joined_mission{
-    background-image: url(new_element/12.png);
+    background-image: url(new_element/complete.png);
     /* background-position: ; */
     background-repeat: no-repeat;
     background-size: auto 30vw;
@@ -961,7 +961,7 @@ input {
 
 /*/////////Create Modal////////////*/
 
-.btn-submit {
+/* .btn-submit {
     position: absolute;
     width: 18vw;
     height: 12vw;
@@ -974,11 +974,26 @@ input {
     left: 73vw;
     top: 9vw;
     z-index: 70;
+} */
+
+.btn-submit {
+    position: absolute;
+    width: 18vw;
+    height: 10vw;
+    font-family: jf_open;
+    font-size: 5vw;
+    color: white;
+    background-color: #F59E56;
+    border-radius: 2vw;
+    border-width: 0px;
+    left: 77vw;
+    top: 10vw;
+    z-index: 70;
 }
 
-.btn-submit:active {
+/* .btn-submit:active {
     background-color: rgba(226, 112, 80, 0.692);
-}
+} */
 
 .btn-finished {
     position: absolute;

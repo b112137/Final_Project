@@ -248,34 +248,9 @@
         }
         
     })
-    
-
 
     function my_mission(type) {
-        $('#page1').html("");
-        $('#submit_modal').html("");
-        if(type=="join"){
-            $('#page1').append(
-                "<div class='top_block'>\
-                    <div class='joined_text' id = 'joined_t'>待完成</div>\
-                    <div class='finished_text' id ='finished_t'>已完成</div>\
-                    <img src = 'static/new_element/asset 321.png' class = 'design_line'>\
-                </div>"
-            )
-
-        }
-        else if(type=="finished"){
-            $('#page1').append(
-                "<div class='top_block'>\
-                    <div class='joined_text' id = 'joined_t' >待完成</div>\
-                    <div class='finished_text' id ='finished_t' >已完成</div>\
-                    <img src = 'static/new_element/asset 321.png' class = 'design_line'>\
-                </div>"
-            )
-            $('#joined_t').attr('style', "background-image: url(static/new_element/asset320.png); color:rgba(245, 158, 86, 0.8);")
-            $('#finished_t').attr('style', "background-image: url(static/new_element/asset319.png); color:white;")
-
-        }
+        
         $.ajax({
               url: '/get_my_mission',
               method: 'POST',
@@ -286,6 +261,29 @@
               },
               success: function (data) {
                 if (data.result == "success"){
+                    $('#page1').html("");
+                    $('#submit_modal').html("");
+                    if(type=="join"){
+                        $('#page1').append(
+                            "<div class='top_block'>\
+                                <div class='joined_text' id = 'joined_t'>待完成</div>\
+                                <div class='finished_text' id ='finished_t'>已完成</div>\
+                                <img src = 'static/new_element/asset 321.png' class = 'design_line'>\
+                            </div>"
+                        )
+
+                    }
+                    else if(type=="finished"){
+                        $('#page1').append(
+                            "<div class='top_block'>\
+                                <div class='joined_text' id = 'joined_t' >待完成</div>\
+                                <div class='finished_text' id ='finished_t' >已完成</div>\
+                                <img src = 'static/new_element/asset 321.png' class = 'design_line'>\
+                            </div>"
+                        )
+                        $('#joined_t').attr('style', "background-image: url(static/new_element/asset320.png); color:rgba(245, 158, 86, 0.8);")
+                        $('#finished_t').attr('style', "background-image: url(static/new_element/asset319.png); color:white;")
+                    }
                     var pic_list = data.mission_pic
                     for(var i = 0; i < pic_list.length; i++){
                         $.ajax({
@@ -297,21 +295,19 @@
                                 "img_path": pic_list[i],
                             },
                             success: function (img) {
-                                
-
-
                                 if(type=="join" && (data.status[i]=="acceptable" || data.status[i]=="full")){
-                                    $.ajax({
-                                        url: '/submit_mission_group_check',
-                                        method: 'POST',
-                                        type: 'POST',
-                                        dataType: "json",
-                                        async: false,
-                                        data: {
-                                            "chatroom_ID": data.chatroom_ID[i],
-                                        },
-                                        success: function (enough) {
-                                            if (enough.result == "success"){
+                                    // $.ajax({
+                                    //     url: '/submit_mission_group_check',
+                                    //     method: 'POST',
+                                    //     type: 'POST',
+                                    //     dataType: "json",
+                                    //     async: false,
+                                    //     data: {
+                                    //         "chatroom_ID": data.chatroom_ID[i],
+                                    //     },
+                                    //     success: function (enough) {
+                                            // if (enough.result == "success"){
+                                            if ( data.group_num[i] >= data.group_required[i]){
                                                 $('#page1').append(
                                                     '<div class="test_block">\
                                                         <div class="joined_mission"></div>\
@@ -343,21 +339,21 @@
                                                     </div>'
                                                 )
                                             }
-                                            else if(enough.result == "not_enough"){
+                                            // else if(enough.result == "not_enough"){
+                                            else{
                                                 $('#page1').append(
                                                     '<div class="test_block">\
                                                         <div class="joined_mission"></div>\
                                                         <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
+                                                        <button onclick=not_enough_alert('+ data.group_num[i] +','+ data.group_required[i] +') class="btn-submit" style="font-size:4vw;" type="button">人數不足</button>\
                                                         <div class = "mission_name">'+ data.mission_name[i] +'</div>\
                                                         <div class = "mission_chat">'+ data.group_name[i] +'</div>\
                                                     </div>'
                                                 )
                                                 $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
                                             }
-                                        }
-                                    });
-
-                                    
+                                        // }
+                                    // });
                                 }
                                 else if(type=="finished"){
                                     if(data.status[i]=="checking"){
@@ -373,17 +369,18 @@
                                         $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
                                     }
                                     else if(data.status[i]=="finished"){
-                                        $.ajax({
-                                            url: '/is_shared',
-                                            method: 'POST',
-                                            type: 'POST',
-                                            dataType: "json",
-                                            async: false,
-                                            data: {
-                                                'chatroom_ID': data.chatroom_ID[i],
-                                            },
-                                            success: function (shared) {
-                                                if (shared.result == "share"){
+                                        // $.ajax({
+                                        //     url: '/is_shared',
+                                        //     method: 'POST',
+                                        //     type: 'POST',
+                                        //     dataType: "json",
+                                        //     async: false,
+                                        //     data: {
+                                        //         'chatroom_ID': data.chatroom_ID[i],
+                                        //     },
+                                        //     success: function (shared) {
+                                                // if (shared.result == "share"){
+                                                if(data.is_shared[i] == "share") {
                                                     $('#page1').append(
                                                         '<div class="test_block">\
                                                             <div class="joined_mission" style="background-image: url(static/new_element/complete.png);"></div>\
@@ -395,7 +392,8 @@
                                                     )
                                                     $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
                                                 }
-                                                else if (shared.result == "cancel") {
+                                                // else if (shared.result == "cancel") {
+                                                else if(data.is_shared[i] == "cancel") {
                                                     $('#page1').append(
                                                         '<div class="test_block">\
                                                             <div class="joined_mission" style="background-image: url(static/new_element/complete.png);"></div>\
@@ -407,8 +405,8 @@
                                                     )
                                                     $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
                                                 }                
-                                            }
-                                        });
+                                            // }
+                                        // });
 
                                         
                                     }
@@ -418,6 +416,10 @@
                             }
                         });
                     }
+                    if (pic_list.length == 0){
+                        $('#page1').append( '<div class="error_text" style="top:34vh">尚無參加任務，快去揪團吧!</div>')
+                    }
+
                     $('#page1').append(
                         '<div class="test_block" style="height: 15vw">\
                         </div>'
@@ -425,6 +427,18 @@
                 }
               }
         });
+    }
+
+    function not_enough_alert(group_num, group_required){
+        Swal.fire({
+            title: '人數不足以提交任務<br>目前'+ group_num +'人,至少'+ group_required +'人!',
+            icon: 'error',
+            width: '70vw',
+            heightAuto: false,
+            background: '#E9BBA4',
+            showConfirmButton: false,
+            customClass: 'swal-custom'
+        })
     }
 
     function share(chartroom_ID) {
@@ -440,13 +454,47 @@
             success: function (data) {
                 console.log(data.result)
                 if (data.result == "success"){
+                    Swal.fire({
+                        title: '已成功分享至<br>個人資訊故事牆!',
+                        icon: 'success',
+                        width: '70vw',
+                        heightAuto: false,
+                        background: '#E9BBA4',
+                        showConfirmButton: false,
+                        customClass: 'swal-custom'
+                    })
+                    // .then(function () {
+                    //     my_mission("finished");
+                    // });
                     my_mission("finished");
                 }
                 else if (data.result == "full") {
+                    Swal.fire({
+                        title: '分享數量已達上限!',
+                        icon: 'error',
+                        width: '70vw',
+                        heightAuto: false,
+                        background: '#E9BBA4',
+                        showConfirmButton: false,
+                        customClass: 'swal-custom'
+                    })
+                    // .then(function () {
+                    //     my_mission("finished");
+                    // });
                     my_mission("finished");
                 }  
                 else if (data.result == "error") {
-                    my_mission("finished");
+                    Swal.fire({
+                        title: '錯誤!',
+                        icon: 'error',
+                        width: '70vw',
+                        heightAuto: false,
+                        background: '#E9BBA4',
+                        showConfirmButton: false,
+                        customClass: 'swal-custom'
+                    }).then(function () {
+                        my_mission("finished");
+                    });
                 }                
             }
         });
@@ -465,13 +513,45 @@
             success: function (data) {
                 console.log(data.result)
                 if (data.result == "success"){
+                    Swal.fire({
+                        title: '已從個人資訊<br>故事牆取消分享!',
+                        icon: 'success',
+                        width: '70vw',
+                        heightAuto: false,
+                        background: '#E9BBA4',
+                        showConfirmButton: false,
+                        customClass: 'swal-custom'
+                    })
+                    // .then(function () {
+                    //     my_mission("finished");
+                    // });
                     my_mission("finished");
                 }
                 else if (data.result == "none") {
-                    my_mission("finished");
+                    Swal.fire({
+                        title: '錯誤!',
+                        icon: 'error',
+                        width: '70vw',
+                        heightAuto: false,
+                        background: '#E9BBA4',
+                        showConfirmButton: false,
+                        customClass: 'swal-custom'
+                    }).then(function () {
+                        my_mission("finished");
+                    });
                 }  
                 else if (data.result == "error") {
-                    my_mission("finished");
+                    Swal.fire({
+                        title: '錯誤!',
+                        icon: 'error',
+                        width: '70vw',
+                        heightAuto: false,
+                        background: '#E9BBA4',
+                        showConfirmButton: false,
+                        customClass: 'swal-custom'
+                    }).then(function () {
+                        my_mission("finished");
+                    });
                 }                
             }
         });

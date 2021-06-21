@@ -9,7 +9,12 @@
     </head>
     <body>
         <div id="all">
-                <div id="container"></div>
+                <div id="container">
+                    
+                </div>
+                <div class="gif_container">
+                    <img src="./static/src/LOGO橘背景modify.gif" id="gif">
+                </div>
                 <div id="logo"></div>
                 <a href="/login">
                     <div id="login">
@@ -26,3 +31,17 @@
         <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script> 
     </body>
 </html>
+
+<script>
+    window.onload = function(){
+                // if window.location.href.split("?")[0].
+        if (window.location.href.split("?")[0].indexOf('start') <= -1) { //沒有start
+            window.location.href = "start"
+        }
+        window.setTimeout(( () => $(".gif_container").fadeOut() ), 4200);
+        // if(document.readyState=="complete"){
+        //     $(".gif_container").fadeOut();
+        // }
+    }
+
+</script>

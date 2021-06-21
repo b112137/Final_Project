@@ -3,7 +3,8 @@
     <head>
         <meta charset="utf-8">
         <link href="./static/register.css" rel="stylesheet">
-        <script src="static/jquery.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     </head>
     <body>
         <div id="all">
@@ -93,11 +94,18 @@
                 birth=$("#year").val();
                 birth+="/"+$("#month").val();
                 birth+="/"+$("#date").val();
-                console.log( birth);
 
                 if(document.getElementById("name").value=="" | document.getElementById("account_register").value=="" | 
                     document.getElementById("password_register").value =="" | document.getElementById("mail").value==""){
-                    alert("欄位不得為空!")
+                    Swal.fire({
+                        title: '欄位不得為空!',
+                        icon: 'error',
+                        width: '70vw',
+                        heightAuto: false,
+                        background: '#E9BBA4',
+                        showConfirmButton: false,
+                        customClass: 'swal-custom'
+                    })
                 }
                 else{
                     $.ajax({
@@ -129,14 +137,32 @@
                                         if (data.result == "success"){
                                             // account = document.getElementById("account").value
                                             // window.location.href = "/main?account="+account
-                                            window.location.href = "/main?account="+document.getElementById("account_register").value
+                                            Swal.fire({
+                                                title: '註冊成功!',
+                                                icon: 'success',
+                                                width: '70vw',
+                                                heightAuto: false,
+                                                background: '#E9BBA4',
+                                                showConfirmButton: false,
+                                                customClass: 'swal-custom'
+                                            }).then(function(){
+                                                window.location.href = "/main?account="+document.getElementById("account_register").value;
+                                            })
                                         }
                                     }
                                 });
                                 // window.location.href = "/main?account="+document.getElementById("account_register").value
                             }
-                            if (data.result == "account_exist"){
-                                console.log("account_exist")
+                            else if (data.result == "account_exist"){
+                                Swal.fire({
+                                    title: '此帳號已被註冊!',
+                                    icon: 'error',
+                                    width: '70vw',
+                                    heightAuto: false,
+                                    background: '#E9BBA4',
+                                    showConfirmButton: false,
+                                    customClass: 'swal-custom'
+                                })
                             }
                             
                         }

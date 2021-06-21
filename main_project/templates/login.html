@@ -3,7 +3,8 @@
     <head>
         <meta charset="utf-8">
         <link href="./static/login.css" rel="stylesheet">
-        <script src="static/jquery.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     </head>
     <body>
         <div id="all">
@@ -34,7 +35,6 @@
                 data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
             })  
 
-
             window.onload = function(){
                 // if window.location.href.split("?")[0].
                 if (window.location.href.split("?")[0].indexOf('login') <= -1) { //沒有login
@@ -53,11 +53,34 @@
                         "password": document.getElementById("password").value,
                     },
                     success: function (data) {
-                    if (data.result == "success"){
-                        account = document.getElementById("account").value
-                        window.location.href = "/main?account="+account
-                    }
-                    console.log("success")
+                        if (data.result == "success"){
+                            console.log("success")
+                            account = document.getElementById("account").value
+                            window.location.href = "/main?account="+account
+                        }
+                        else if(data.result == "password_error"){
+                            Swal.fire({
+                                title: '密碼錯誤!',
+                                icon: 'error',
+                                width: '70vw',
+                                heightAuto: false,
+                                background: '#E9BBA4',
+                                showConfirmButton: false,
+                                customClass: 'swal-custom'
+                            })
+                        }
+                        else if(data.result == "not_found"){
+                            Swal.fire({
+                                title: '無此帳號!',
+                                icon: 'error',
+                                width: '70vw',
+                                heightAuto: false,
+                                background: '#E9BBA4',
+                                showConfirmButton: false,
+                                customClass: 'swal-custom'
+                            })
+                        }
+                    
                     }
                 });
             });

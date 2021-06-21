@@ -37,6 +37,7 @@ urlpatterns = [
     path('profile', backend.profile_page),
     path('friend', backend.friend_page),
     path('shop',backend.shop_page),
+    path('aboutus', backend.aboutus_page),
 
     path('register_submit', backend.register_submit),
     path('login_check', backend.login_check),

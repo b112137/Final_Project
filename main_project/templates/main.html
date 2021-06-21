@@ -63,7 +63,10 @@
                 <!--img src="./src/setting2.png" id="setting2" class="setting1"-->
                 <img src="./static/src/logout.png" id="logout">
                 <img src="./static/src/guided.png" id="guided" type="button">
-                <img src="./static/src/aboutus.png" id="aboutus">
+                <a id="aboutus_link">
+                    <img src="./static/src/aboutus.png" id="aboutus">
+                </a>
+                
                 <!--img src="./src/Ellipse 5.png" id="logout">
                 <img src="./src/logout_text.png" id="logout_text"-->
             </div>
@@ -144,6 +147,7 @@
             $('#profile_link').attr('href', "profile?account="+window.location.href.split('?')[1].split('=')[1]);
             $('#shop_link').attr('href', "shop?account="+window.location.href.split('?')[1].split('=')[1]);
             $('#friend_link').attr('href', "friend?account="+window.location.href.split('?')[1].split('=')[1]);
+            $('#aboutus_link').attr('href', "aboutus?account="+window.location.href.split('?')[1].split('=')[1]);
             
             $.ajax({
                 url: '/get_main_page',

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+        <meta charset="utf-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link href="static/AboutUs.css" rel="stylesheet" type="text/css">
+    </head>
+    
+    <body>
+        <div class = "back">
+			<img src="static/src/inner_page.png" style="display: none;">
+			<img src="static/src/back.png" style="display: none;">
+			<div class="white"></div>
+            <div id="cover">
+                <div class="top_div">
+                    <img id="first" src="static/src/first.png" type = "button" onclick="first()">
+                    <img id="table" src="static/src/table.png" type = "button" onclick="table()">
+                    <img id="last" src="static/src/last.png" type = "button" onclick="last()">                    
+                </div>
+
+                <div id="page_01" style="display: none;">
+                    <div id="page_title_word">逆養成遊戲的初衷</div>
+                    <img id="circle_1" src="static/src/circle1.png" type = "button" onclick="goal()">
+                    <img id="circle_2" src="static/src/circle2.png" type = "button" onclick="why()">
+                    <img id="circle_3" src="static/src/circle3.png" type = "button" onclick="how()">
+                </div>
+
+                <div id="page_01_goal" style="display: none;">
+                    <img id="circle_4" src="static/src/circle1.png">
+                    <img id="box" src="static/src/box1.png">
+                    <div id="intro">讓銀髮族多出外走走，預防慢性疾病，擁有健康的身心靈。</div>
+                </div>
+
+                <div id="page_01_why" style="display: none;">
+                    <img id="circle_4" src="static/src/circle2.png">
+                    <img id="box" src="static/src/box2.png">
+                    <div id="intro">我們想給銀髮族們最健康快樂的老年生活，越活越年輕!</div>
+                </div>
+
+                <div id="page_01_how" style="display: none;">
+                    <img id="circle_4" src="static/src/circle3.png">
+                    <img id="box" src="static/src/box3.png">
+                    <div id="intro">以任務的方式，誘導銀髮族出外互動，任務達成後，給予獎勵</div>
+                </div>
+
+                <div id="page_02" style="display: none;">
+                    <div id="page_title_word">成員介紹</div>
+                    <img id="photo_1" src="static/src/photo/方藝璇.jpg" type = "button" onclick="photo1()">
+                    <div id="page_title_word" style="left: 25vh; top: 46.5vh; font-size: 3vh;">/ 方藝璇</div>
+                    <img id="photo_2" src="static/src/photo/范瑀文.jpg" type = "button" onclick="photo2()">
+                    <div id="page_title_word" style="left: 25vh; top: 70.5vh; font-size: 3vh;">/ 范瑀文</div>
+                </div>
+
+                <div id="page_02_01" style="display: none;">
+                    <img id="photo_big" src="static/src/photo/方藝璇.jpg">
+                    <div id="name_big">/ 方藝璇</div>
+                    <img id="intro_box" src="static/src/intro_box.png">
+                    <div id="intro_big">
+                        職位 | 設計師<br>
+                        興趣 | 登山 探險 攀岩<br>
+                        &emsp;&emsp;&nbsp;&thinsp;&thinsp;&thinsp;看書<br>
+                        專長 | 插畫 平面設計<br>
+                        負責 | 訪談 美術設計
+                    </div>
+                </div>
+
+                <div id="page_02_02" style="display: none;">
+                    <img id="photo_big" src="static/src/photo/范瑀文.jpg">
+                    <div id="name_big">/ 范瑀文</div>
+                    <img id="intro_box" src="static/src/intro_box.png">
+                    <div id="intro_big">
+                        職位 | 設計師<br>
+                        興趣 | 看電影.攝影<br>
+                        專長 | 剪片.平面製作<br>
+                        負責 | 介面美術設計
+                    </div>
+                </div>
+
+                <div id="page_03" style="display: none;">
+                    <div id="page_title_word">成員介紹</div>
+                    <img id="photo_1" src="static/src/photo/張禾姈.jpg" type = "button" onclick="photo3()">
+                    <div id="page_title_word" style="left: 25vh; top: 46.5vh; font-size: 3vh;">/ 張禾姈</div>
+                    <img id="photo_2" src="static/src/photo/黃冠淳.jpg" type = "button" onclick="photo4()">
+                    <div id="page_title_word" style="left: 25vh; top: 70.5vh; font-size: 3vh;">/ 黃冠淳</div>
+                </div>
+
+                <div id="page_03_01" style="display: none;">
+                    <img id="photo_big" src="static/src/photo/張禾姈.jpg">
+                    <div id="name_big">/ 張禾姈</div>
+                    <img id="intro_box" src="static/src/intro_box.png">
+                    <div id="intro_big">
+                        職位 | 工程師<br>
+                        興趣 | 密室逃脫<br>
+                        &emsp;&emsp;&nbsp;&thinsp;&thinsp;&thinsp;解謎遊戲<br>
+                        專長 | 物件導向設計<br>
+                        負責 | 前端介面製作
+                    </div>
+                </div>
+
+                <div id="page_03_02" style="display: none;">
+                    <img id="photo_big" src="static/src/photo/黃冠淳.jpg">
+                    <div id="name_big">/ 黃冠淳</div>
+                    <img id="intro_box" src="static/src/intro_box.png">
+                    <div id="intro_big">
+                        職位 | 工程師<br>
+                        興趣 | 籃球 popping<br>
+                        專長 | 最佳化設計<br>
+                        負責 | 前端介面製作
+                    </div>
+                </div>
+
+                <div id="page_04" style="display: none;">
+                    <div id="page_title_word">成員介紹</div>
+                    <img id="photo_1" src="static/src/photo/王鴻縉.jpg" type = "button" onclick="photo5()">
+                    <div id="page_title_word" style="left: 25vh; top: 46.5vh; font-size: 3vh;">/ 王鴻縉</div>
+                    <img id="photo_2" src="static/src/photo/邱明叡.jpg" type = "button" onclick="photo6()">
+                    <div id="page_title_word" style="left: 25vh; top: 70.5vh; font-size: 3vh;">/ 邱明叡</div>
+                </div>
+
+                <div id="page_04_01" style="display: none;">
+                    <img id="photo_big" src="static/src/photo/王鴻縉.jpg">
+                    <div id="name_big">/ 王鴻縉</div>
+                    <img id="intro_box" src="static/src/intro_box.png">
+                    <div id="intro_big" style="width: 31vh; left: 7.5vh;">
+                        職位 | 工程師<br>
+                        興趣 | 游泳 排球<br>
+                        專長 | Android App設計<br>
+                        負責 | 前端介面製作
+                    </div>
+                </div>
+
+                <div id="page_04_02" style="display: none;">
+                    <img id="photo_big" src="static/src/photo/邱明叡.jpg">
+                    <div id="name_big">/ 邱明叡</div>
+                    <img id="intro_box" src="static/src/intro_box.png">
+                    <div id="intro_big">
+                        職位 | 工程師<br>
+                        興趣 | 看電影 羽球<br>
+                        &emsp;&emsp;&nbsp;&thinsp;&thinsp;&thinsp;逛市集<br>
+                        專長 | 爬蟲 深度模型<br>
+                        負責 | 後端撰寫
+                    </div>
+                </div>
+
+                <div id="page_05" style="display: none;">
+                    <div id="page_title_word">成員介紹</div>
+                    <img id="photo_1" src="static/src/photo/郭庭嘉.jpg" type = "button" onclick="photo7()">
+                    <div id="page_title_word" style="left: 25vh; top: 46.5vh; font-size: 3vh;">/ 郭庭嘉</div>
+                    <!-- <img id="photo_2" src="src/photo/邱明叡.jpg">
+                    <div id="page_title_word" style="left: 25vh; top: 70.5vh; font-size: 3vh;">/ 邱明叡</div> -->
+                </div>
+
+                <div id="page_05_01" style="display: none;">
+                    <img id="photo_big" src="static/src/photo/郭庭嘉.jpg">
+                    <div id="name_big">/ 郭庭嘉</div>
+                    <img id="intro_box" src="static/src/intro_box.png">
+                    <div id="intro_big" style="width: 31vh; left: 7.5vh;">
+                        職位 | 工程師<br>
+                        興趣 | 追劇 KPOP<br>
+                        專長 | Deep Learning<br>
+                        負責 | 後端撰寫
+                    </div>
+                </div>
+
+                <div id="page_06" style="display: none;">
+                    <div id="page_title_word" style="top: 25vh;">最後...</div>
+                    <div id="page_title_word" style="left: 6vh; top: 35.5vh; font-size: 3vh;">感謝您下載本遊戲，<br>祝您有美好的遊戲體驗!</div>
+                    <img id="group" src="static/src/photo/group.jpg">
+                </div>
+
+                <div id="page_07" style="display: none;">
+                    <div id="page_title_word" style="left: 8vh; top: 42vh; font-size: 7vh;">介紹完畢</div>
+                    <div id="page_title_word" style="left: 24vh; top: 50vh; font-size: 3vh;">The End</div>
+                </div>
+
+                <div class="botton_div">
+                    <img id="previous" src="static/src/previous.png" type = "button" onclick="previous()">
+                    <div id="page_number">00</div>
+                    <img id="next" src="static/src/next.png" type = "button" onclick="next()">                    
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src='static/AboutUs.js'></script>
+</html>

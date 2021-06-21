@@ -77,8 +77,6 @@ def main_page(request):
             exp2 = (int(profile.exp2)/exp)*100
             exp3 = 100 - exp1 - exp2
 
-        print(exp1, exp2, exp3)
-
         return render(request, 'main.html', {
             # 'character_name': character_name,
             'name': profile.name,
@@ -88,7 +86,7 @@ def main_page(request):
             'exp3': exp3,
         })
     else:
-        return render(request, 'login.html', {
+        return render(request, 'start.html', {
         })
 
 def mission_page(request):
@@ -107,7 +105,7 @@ def mission_page(request):
         return render(request, 'mission.html', {
         })
     else:
-        return render(request, 'login.html', {
+        return render(request, 'start.html', {
         })
 
 def chatroom_page(request):
@@ -126,7 +124,7 @@ def chatroom_page(request):
         return render(request, 'chatroom.html', {
         })
     else:
-        return render(request, 'login.html', {
+        return render(request, 'start.html', {
         })
 
 def profile_page(request):
@@ -183,7 +181,7 @@ def profile_page(request):
             # 'friend_ID': ast.literal_eval(profile.friend_ID),
         })
     else:
-        return render(request, 'login.html', {
+        return render(request, 'start.html', {
         })
 
 
@@ -191,7 +189,6 @@ def friend_page(request):
     global check_login
     if check_login_open == 1:
         account = request.COOKIES.get("account")
-        print(account)
         token = hashlib.sha256(str(account).encode("utf-8")).hexdigest()
         if request.COOKIES.get('is_login') == "True" and request.COOKIES.get('token') == token:
             check_login = 1
@@ -204,7 +201,7 @@ def friend_page(request):
         return render(request, 'friend.html', {
         })
     else:
-        return render(request, 'login.html', {
+        return render(request, 'start.html', {
         })
 
 def shop_page(request):
@@ -223,8 +220,28 @@ def shop_page(request):
         return render(request, 'shop.html',{
         })
     else:
-        return render(request, 'login.html', {
+        return render(request, 'start.html', {
         })
+
+def aboutus_page(request):
+    global check_login
+    if check_login_open == 1:
+        account = request.COOKIES.get("account")
+        token = hashlib.sha256(str(account).encode("utf-8")).hexdigest()
+        if request.COOKIES.get('is_login') == "True" and request.COOKIES.get('token') == token:
+            check_login = 1
+        else: 
+            check_login = 0
+    else:
+        account = request.GET.get("account")
+
+    if check_login:
+        return render(request, 'AboutUs.html', {
+        })
+    else:
+        return render(request, 'start.html', {
+        })
+
 
 def register_submit(request):
     if request.method == 'POST':
@@ -235,12 +252,11 @@ def register_submit(request):
         birth = request.POST.get('birth')
         email = request.POST.get('email')
         
-        print(len(Profile.objects.filter(account=account)))
         if len(Profile.objects.filter(account=account)) == 0:
             Profile.objects.create(name=name, account=account, password=password, sex=sex, birth=birth, email=email,\
                                     exp1=5, exp2=5, exp3=5, balance=0, character_name="test.jpg", profile_photo="media/profile_img/none.jpg",\
                                     mission_doing_chatroom_ID=[], mission_done_chatroom_ID=[], friend_ID=[], friend_chatroom_ID=[],\
-                                    owned_product_ID=[], invitation_send=[], invitation_receive=[]
+                                    owned_product_ID=[], invitation_send=[], invitation_receive=[], shared_chatroom_ID=[]
             )
             print(name, account, password, sex, birth, email)
             return JsonResponse({
@@ -515,6 +531,8 @@ def submit_mission_group_check(request):
             else:
                 return JsonResponse({
                     'result' : "not_enough",
+                    "group_num": len(member_ID),
+                    "group_required": int(group_required),
                 })
         else:
             return JsonResponse({
@@ -635,10 +653,16 @@ def get_mission_chatroom_list(request):
                 chatroom_ID_all.append(chatroom_ID)
                 mission_ID.append(group_search.mission_ID)
                 mission_name.append(group_search.mission_name)
-                chat_img.append( Mission_imformation.objects.filter(mission_ID=group_search.mission_ID)[0].mission_pic )
+
                 group_name.append(group_search.group_name)
                 group_number.append( len(ast.literal_eval(group_search.member_ID)) )
                 status.append(group_search.status)
+
+                if group_search.status == "acceptable" or group_search.status == "full":
+                    chat_img.append( Mission_imformation.objects.filter(mission_ID=group_search.mission_ID)[0].mission_pic )
+                else:
+                    chat_img.append( Mission_submission.objects.filter(chatroom_ID=chatroom_ID)[0].submission_pic )
+
 
                 lastest_message = Mission_Chatroom.objects.filter(chatroom_ID=chatroom_ID).order_by('pk').last()
 
@@ -1134,6 +1158,8 @@ def get_my_mission(request):
         mission_done_chatroom_ID = ast.literal_eval(profile.mission_done_chatroom_ID)
         
         mission_ID,mission_name,group_name,leader_ID,status,member_ID,mission_pic,member_name_list,chatroom_ID = [], [], [], [], [], [], [], [], []
+        group_num, group_required, is_shared = [],[],[]
+
 
         for doing_chatroom_ID in mission_doing_chatroom_ID:
             mission_ID.append(Mission_group.objects.filter(chatroom_ID=doing_chatroom_ID)[0].mission_ID)
@@ -1151,6 +1177,15 @@ def get_my_mission(request):
             member_name_list.append(member_name)
 
             chatroom_ID.append(doing_chatroom_ID)
+
+            group_num.append(len(ast.literal_eval(Mission_group.objects.filter(chatroom_ID=doing_chatroom_ID)[0].member_ID)))
+            group_required.append(int(Mission_imformation.objects.filter(mission_ID=Mission_group.objects.filter(chatroom_ID=doing_chatroom_ID)[0].mission_ID)[0].group_required))
+
+            shared_chatroom_ID =  ast.literal_eval(Profile.objects.filter(account = account)[0].shared_chatroom_ID)
+            if doing_chatroom_ID in shared_chatroom_ID:
+                is_shared.append("cancel")
+            else:
+                is_shared.append("share")
         
         for done_chatroom_ID in mission_done_chatroom_ID:
             mission_ID.append(Mission_group.objects.filter(chatroom_ID=done_chatroom_ID)[0].mission_ID)
@@ -1161,7 +1196,9 @@ def get_my_mission(request):
             # 
             member_ID.append(ast.literal_eval(Mission_group.objects.filter(chatroom_ID=done_chatroom_ID)[0].member_ID))
             # 
-            mission_pic.append(Mission_imformation.objects.filter(mission_ID=Mission_group.objects.filter(chatroom_ID=done_chatroom_ID)[0].mission_ID)[0].mission_pic)
+            #mission_pic.append(Mission_imformation.objects.filter(mission_ID=Mission_group.objects.filter(chatroom_ID=done_chatroom_ID)[0].mission_ID)[0].mission_pic)
+            mission_pic.append(Mission_submission.objects.filter(chatroom_ID=done_chatroom_ID)[0].submission_pic)
+
             member_name = []
             for member in ast.literal_eval(Mission_group.objects.filter(chatroom_ID=done_chatroom_ID)[0].member_ID):
                 member_name.append(Profile.objects.filter(account=member)[0].name)
@@ -1169,6 +1206,16 @@ def get_my_mission(request):
 
             chatroom_ID.append(done_chatroom_ID)
 
+            group_num.append(len(ast.literal_eval(Mission_group.objects.filter(chatroom_ID=done_chatroom_ID)[0].member_ID)))
+            group_required.append(int(Mission_imformation.objects.filter(mission_ID=Mission_group.objects.filter(chatroom_ID=done_chatroom_ID)[0].mission_ID)[0].group_required))
+
+            shared_chatroom_ID =  ast.literal_eval(Profile.objects.filter(account = account)[0].shared_chatroom_ID)
+            if done_chatroom_ID in shared_chatroom_ID:
+                is_shared.append("cancel")
+            else:
+                is_shared.append("share")
+        print(group_num)
+        print(group_required)
         return JsonResponse({
             'result' : "success",
             'mission_ID': mission_ID,
@@ -1182,6 +1229,9 @@ def get_my_mission(request):
             'mission_doing_chatroom_ID': mission_doing_chatroom_ID,
             'mission_done_chatroom_ID': mission_done_chatroom_ID,
             "chatroom_ID": chatroom_ID,
+            "group_num": group_num, 
+            "group_required": group_required, 
+            "is_shared": is_shared,
         })
 
 def is_shared(request):

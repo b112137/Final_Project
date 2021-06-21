@@ -7,6 +7,15 @@ body {
     margin: 0;
     padding: 0;
 }
+
+.swal-custom {
+    height: 50vw;
+    font-size: 3vw !important;
+    font-family: HP_Hans !important;
+    color: #4D4D4D;
+    border-radius: 5vw !important;
+}
+
 #all {
     position: relative;
     height: 216vw;

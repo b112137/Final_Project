@@ -14,6 +14,19 @@ body {
     background-color: white;
 }
 
+.error_text {
+    width: 100vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: HP_Hans;
+    font-size: 7vw;
+    color: #999595;
+    text-align: center;
+    top: 46vh;
+    position: absolute;
+}
+
 .swal-custom-guide {
     height: 100vh;
     background-size: cover !important;

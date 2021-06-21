@@ -8,6 +8,19 @@ body {
     padding: 0px;
 }
 
+.error_text {
+    width: 100vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: HP_Hans;
+    font-size: 7vw;
+    color: #FFFFFF;
+    text-align: center;
+    top: 28vh;
+    position: absolute;
+}
+
 .chatroom-list-page {
     margin: 0px;
     padding: 0px;
