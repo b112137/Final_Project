@@ -319,7 +319,7 @@
                                             if ( data.group_num[i] >= data.group_required[i]){
                                                 $('#page1_container').append(
                                                     '<div class="test_block">\
-                                                        <div class="joined_mission"></div>\
+                                                        <div class="joined_mission" style="background-image: url(static/new_element/12.png);"></div>\
                                                         <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
                                                         <button class="btn-submit" type="button" data-toggle="modal" data-target="#btn-submit-modal'+i.toString()+'">提交</button>\
                                                         <div class = "mission_name">'+ data.mission_name[i] +'</div>\
@@ -354,7 +354,7 @@
                                                     '<div class="test_block">\
                                                         <div class="joined_mission"></div>\
                                                         <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
-                                                        <button onclick=not_enough_alert('+ data.group_num[i] +','+ data.group_required[i] +') class="btn-submit" style="font-size:4vw;" type="button">人數不足</button>\
+                                                        <button onclick=not_enough_alert('+ data.group_num[i] +','+ data.group_required[i] +') class="btn-oops" style="font-size:4vw;" type="button">人數不足</button>\
                                                         <div class = "mission_name">'+ data.mission_name[i] +'</div>\
                                                         <div class = "mission_chat">'+ data.group_name[i] +'</div>\
                                                     </div>'
@@ -392,7 +392,7 @@
                                                 if(data.is_shared[i] == "share") {
                                                     $('#page2_container').append(
                                                         '<div class="test_block">\
-                                                            <div class="joined_mission" style="background-image: url(static/new_element/complete.png);"></div>\
+                                                            <div class="joined_mission" style="background-image: url(static/new_element/12.png);"></div>\
                                                             <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
                                                             <button onclick=share('+ data.chatroom_ID[i] +') class="btn-finished" type="button" data-toggle="modal" data-target="#btn-submit-modal">分享</button>\
                                                             <div class = "mission_name">'+ data.mission_name[i] +'</div>\
@@ -407,7 +407,7 @@
                                                         '<div class="test_block">\
                                                             <div class="joined_mission" style="background-image: url(static/new_element/complete.png);"></div>\
                                                             <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
-                                                            <button onclick=share_cancel('+ data.chatroom_ID[i] +') class="btn-finished" style="font-size:4vw;" type="button" data-toggle="modal" data-target="#btn-submit-modal">取消分享</button>\
+                                                            <button onclick=share_cancel('+ data.chatroom_ID[i] +') class="btn-oops" style="font-size:4vw;" type="button" data-toggle="modal" data-target="#btn-submit-modal">取消分享</button>\
                                                             <div class = "mission_name">'+ data.mission_name[i] +'</div>\
                                                             <div class = "mission_chat">'+ data.group_name[i] +'</div>\
                                                         </div>'

@@ -276,19 +276,17 @@
                                         </div>'
                                     )
                                 }
-                                if( (data.status == "acceptable" || data.status == "full") ){
-                                    $(".chatroom-member-list").append(
-                                        '<div class="exit-group">\
-                                            <button onclick=exit_mission_chatroom() class="exit-group-btn">退出群組</button>\
-                                        </div>'
-                                    )
-                                }
+                                
                             }
                         });
-
-                        
                     }
-
+                    if( (data.status == "acceptable" || data.status == "full") ){
+                        $(".chatroom-member-list").append(
+                            '<div class="exit-group">\
+                                <button onclick=exit_mission_chatroom() class="exit-group-btn">退出群組</button>\
+                            </div>'
+                        )
+                    }
                 }
             }
         });

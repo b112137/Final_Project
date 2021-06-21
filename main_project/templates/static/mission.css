@@ -961,7 +961,7 @@ input {
 
 /*/////////Create Modal////////////*/
 
-/* .btn-submit {
+.btn-submit {
     position: absolute;
     width: 18vw;
     height: 12vw;
@@ -974,9 +974,9 @@ input {
     left: 73vw;
     top: 9vw;
     z-index: 70;
-} */
+}
 
-.btn-submit {
+.btn-oops {
     position: absolute;
     width: 18vw;
     height: 10vw;
@@ -991,29 +991,32 @@ input {
     z-index: 70;
 }
 
-/* .btn-submit:active {
+.btn-oops:active {
+    background-color: rgba(245, 158, 86, 0.692);
+}
+
+.btn-submit:active {
     background-color: rgba(226, 112, 80, 0.692);
-} */
+}
 
 .btn-finished {
     position: absolute;
     width: 18vw;
-    height: 10vw;
+    height: 12vw;
     font-family: jf_open;
-    font-size: 5vw;
+    font-size: 6vw;
     color: white;
-    background-color: #F59E56;
+    background-color: #E26F50;
     border-radius: 2vw;
     border-width: 0px;
-    left: 77vw;
-    top: 10vw;
+    left: 73vw;
+    top: 9vw;
     z-index: 70;
 }
 
-/* .btn-finished:active {
+.btn-finished:active {
     background-color: rgba(226, 112, 80, 0.692);
-} */
-
+}
 
 .submit-modal-dialog {
   display: inline-block;
