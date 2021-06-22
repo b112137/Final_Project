@@ -256,6 +256,7 @@
     var last_my_mission_list = "1"
     var last_page1_container_join = ""
     var last_page1_container_finish = ""
+    var last_submit_modal = ""
     function my_mission(type) {
         console.log(last_my_mission_list.toString())
         $.ajax({
@@ -456,6 +457,7 @@
 
                     last_page1_container_join = $("#page1_container").html()
                     last_page1_container_finish = $("#page2_container").html()
+                    last_submit_modal = $("#submit_modal").html()
 
                     if(type=="join"){
                         $("#page1_container").show();
@@ -499,6 +501,7 @@
                     else if(type=="finished"){
                         $('#page2_container').html(last_page1_container_finish)
                     }
+                    $('#submit_modal').html(last_submit_modal)
                 }
             }
         });
