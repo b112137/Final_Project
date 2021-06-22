@@ -146,7 +146,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'templates/static').replace('\\', '/'
 
 PWA_APP_NAME = '揪久久'
 PWA_APP_DESCRIPTION = "揪久久"
-PWA_APP_THEME_COLOR = '#F59E56'
+PWA_APP_THEME_COLOR = '#FFFFFF'
 PWA_APP_BACKGROUND_COLOR = '#ffffff'
 PWA_APP_DISPLAY = 'standalone'
 PWA_APP_SCOPE = '/'
