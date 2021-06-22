@@ -16,7 +16,7 @@ Including another URLconf
 # from clone.Final_Project.main_project.backend.views import friend_page
 # from Final_Project.main_project.backend.views import friend_page
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.views.generic import TemplateView
 import backend.views as backend
 from django.contrib.auth import views
@@ -91,10 +91,11 @@ urlpatterns = [
     path('get_profile_page' , backend.get_profile_page),
     path('get_main_page' , backend.get_main_page),
     path('get_friend_page', backend.get_friend_page),
-    path('get_shop_page', backend.get_shop_page)
+    path('get_shop_page', backend.get_shop_page),
     # 
     # path('chat_update', backend.chat_update),
 
+    path('', include('pwa.urls')),
 
 
 ]

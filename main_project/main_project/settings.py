@@ -14,7 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'templates/static', 'serviceworker.js')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'backend',
+    'pwa',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,32 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'templates/static').replace('\\', '/'
 # # main_project為routing所在的目錄，這段它會自動轉換成到main_project的routing找application這個個體。也就是剛剛我們在routing.py中設定的。
 
 
+PWA_APP_NAME = 'geeksforgeeks'
+PWA_APP_DESCRIPTION = "GeeksForGeeks PWA"
+PWA_APP_THEME_COLOR = '#000000'
+PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_SCOPE = '/'
+PWA_APP_ORIENTATION = 'any'
+PWA_APP_START_URL = '/'
+PWA_APP_STATUS_BAR_COLOR = 'default'
+PWA_APP_ICONS = [
+    {
+        'src': 'static/src/developers.jpg',
+        'sizes': '200x200'
+    }
+]
+PWA_APP_ICONS_APPLE = [
+    {
+        'src': 'static/src/developers.jpg',
+        'sizes': '200x200'
+    }
+]
+PWA_APP_SPLASH_SCREEN = [
+    {
+        'src': 'static/src/developers.jpg',
+        'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+    }
+]
+PWA_APP_DIR = 'ltr'
+PWA_APP_LANG = 'en-US'
