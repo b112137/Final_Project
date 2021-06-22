@@ -152,7 +152,8 @@ PWA_APP_DISPLAY = 'standalone'
 PWA_APP_SCOPE = '/'
 PWA_APP_ORIENTATION = 'any'
 PWA_APP_START_URL = '/start'
-PWA_APP_STATUS_BAR_COLOR = '#F59E56'
+PWA_APP_STATUS_BAR_COLOR = '#FFFFFF'
+# F59E56
 PWA_APP_ICONS = [
     {
         'src': 'static/src/developers.png',
