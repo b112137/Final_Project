@@ -24,6 +24,7 @@ from django.contrib.auth import views
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    path('', include('pwa.urls')),
     path('', TemplateView.as_view(template_name="start.html")),
     path('start', backend.start_page),
     path('login', backend.login_page),
@@ -95,7 +96,7 @@ urlpatterns = [
     # 
     # path('chat_update', backend.chat_update),
 
-    path('', include('pwa.urls')),
+    
 
 
 ]
