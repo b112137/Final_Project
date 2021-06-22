@@ -14,7 +14,7 @@ body {
 
 .gif_container{
     position: absolute;
-    height: 100vh;
+    height: 200vh;
     width: 100vw;
     justify-content: center;
     display: flex;
@@ -45,7 +45,7 @@ body {
 }
 #container {
     position: absolute;
-    height: 100vh;
+    height: 200vh;
     width: 100vw;
     margin: auto;
     background-color: #F59E56;
