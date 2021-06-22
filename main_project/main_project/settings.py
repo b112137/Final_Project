@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['luffy.ee.ncku.edu.tw', '*']
 
 
-#  SECURITY安全设置 - 支持http时建议开启
+ SECURITY安全设置 - 支持http时建议开启
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO","https")
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True

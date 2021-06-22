@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html>
+    {% load pwa %}
+    {% progressive_web_app_meta %}
     <head>
         <meta charset="utf-8">
         <link href="./static/register.css" rel="stylesheet">
@@ -43,7 +45,7 @@
             </div>
         </div>
  
-        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <!-- <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script> -->
         <script>
             $.ajaxSetup({
                 data:{csrfmiddlewaretoken:'{{ csrf_token }}'}
