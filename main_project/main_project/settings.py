@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['luffy.ee.ncku.edu.tw', '*']
 
 
-# SECURITY安全设置 - 支持http时建议开启
+#  SECURITY安全设置 - 支持http时建议开启
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO","https")
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
@@ -150,7 +150,7 @@ PWA_APP_BACKGROUND_COLOR = '#ffffff'
 PWA_APP_DISPLAY = 'standalone'
 PWA_APP_SCOPE = '/'
 PWA_APP_ORIENTATION = 'any'
-PWA_APP_START_URL = '/'
+PWA_APP_START_URL = '/start'
 PWA_APP_STATUS_BAR_COLOR = 'default'
 PWA_APP_ICONS = [
     {

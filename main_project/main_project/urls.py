@@ -24,8 +24,15 @@ from django.contrib.auth import views
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('', include('pwa.urls')),
+    
+    # path(
+    #     'serviceworker.js',
+    #     TemplateView.as_view(template_name='serviceworker.js', content_type='application/javascript'),
+    #     name='serviceworker.js',
+    # ),
+
     path('', TemplateView.as_view(template_name="start.html")),
+    path('', include('pwa.urls')),
     path('start', backend.start_page),
     path('login', backend.login_page),
     # path('accounts/login/', views.LoginView.as_view(template_name='login.html'), name='login'),
