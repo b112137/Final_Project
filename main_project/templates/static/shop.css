@@ -236,6 +236,9 @@ body {
     color:white;    
     background-color:#E26F50;
     padding:-1vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 .btn_buy:active {
     background-color: rgba(226, 112, 80, 0.692);
@@ -327,6 +330,9 @@ body {
     background-color:#E26F50;
     margin-top: 5vw;
     margin-left: 7vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 .btn_use:active {
     background-color: rgba(226, 112, 80, 0.692);

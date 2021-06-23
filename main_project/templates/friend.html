@@ -402,8 +402,8 @@
                                             <div class="modal-body-photo" style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
                                             <div class="modal-body-text" style="font-size: 7vw;">'+ data.friend_name +'</div>\
                                         </div>\
-                                        <button onclick=goto_chatroom('+ data.chatroom_ID +') type="button" class="modal-btn-cancel" style="height: auto;">開始<br>聊天</button>\
-                                        <button onclick=goto_profile("'+ friend_ID +'") type="button" class="modal-btn-confirm" style="height: auto;">個人<br>資訊</button>'
+                                        <div onclick=goto_chatroom('+ data.chatroom_ID +') type="button" class="modal-btn-cancel" style="height: auto;">開始<br>聊天</div>\
+                                        <div onclick=goto_profile("'+ friend_ID +'") type="button" class="modal-btn-confirm" style="height: auto;">個人<br>資訊</div>'
                                 )
                             }
                         });
@@ -718,8 +718,8 @@
                                                         確定刪除好友 ' + data.name + ' 嗎？\
                                                     </div>\
                                                 </div>\
-                                                <button type="button" class="modal-btn-cancel" data-dismiss="modal">取消</button>\
-                                                <button type="button" class="modal-btn-confirm" data-dismiss="modal" onclick=delete_friend("'+ others +'")>確認</button>'
+                                                <div type="button" class="modal-btn-cancel" data-dismiss="modal">取消</div>\
+                                                <div type="button" class="modal-btn-confirm" data-dismiss="modal" onclick=delete_friend("'+ others +'")>確認</div>'
                                             )
                                         }
                                         else if(relation.result=="invitation_send"){
@@ -735,8 +735,8 @@
                                                         確定取消對 ' + data.name + '<br>的好友邀請嗎？\
                                                     </div>\
                                                 </div>\
-                                                <button type="button" class="modal-btn-cancel" data-dismiss="modal">取消</button>\
-                                                <button type="button" class="modal-btn-confirm" data-dismiss="modal" onclick=cancel_invitation("'+ others +'")>確認</button>'
+                                                <div type="button" class="modal-btn-cancel" data-dismiss="modal">取消</div>\
+                                                <div type="button" class="modal-btn-confirm" data-dismiss="modal" onclick=cancel_invitation("'+ others +'")>確認</div>'
                                             )
                                         }
                                         else if(relation.result=="invitation_receive"){
@@ -752,8 +752,8 @@
                                                         確定接受 ' + data.name + '<br>的好友邀請嗎？\
                                                     </div>\
                                                 </div>\
-                                                <button type="button" class="modal-btn-cancel" data-dismiss="modal">取消</button>\
-                                                <button type="button" class="modal-btn-confirm" data-dismiss="modal" onclick=accept_invitation("'+ others +'", 1)>確認</button>'
+                                                <div type="button" class="modal-btn-cancel" data-dismiss="modal">取消</div>\
+                                                <div type="button" class="modal-btn-confirm" data-dismiss="modal" onclick=accept_invitation("'+ others +'", 1)>確認</div>'
                                             )                                            
                                         }
                                         else{
@@ -769,8 +769,8 @@
                                                         確定發送好友邀請給<br>' + data.name + ' 嗎？\
                                                     </div>\
                                                 </div>\
-                                                <button type="button" class="modal-btn-cancel" data-dismiss="modal">取消</button>\
-                                                <button type="button" class="modal-btn-confirm" data-dismiss="modal" onclick=send_invitation("'+ others +'")>確認</button>'
+                                                <div type="button" class="modal-btn-cancel" data-dismiss="modal">取消</div>\
+                                                <div type="button" class="modal-btn-confirm" data-dismiss="modal" onclick=send_invitation("'+ others +'")>確認</div>'
                                             )                                            
                                         }
                                     }

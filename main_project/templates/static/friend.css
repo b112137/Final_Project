@@ -375,9 +375,37 @@ body {
 }
 
 .modal-btn-cancel {
+    position: absolute;
+    bottom: 5vw;
+    width: 22vw;
+    height: 9vw;
+    background-color: #E26F50;
+    border-width: 0px;
+    border-radius: 2vw;
+    color: white;
+    font-size: 5.5vw;
     left: 10vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .modal-btn-confirm {
+    position: absolute;
+    bottom: 5vw;
+    width: 22vw;
+    height: 9vw;
+    background-color: #E26F50;
+    border-width: 0px;
+    border-radius: 2vw;
+    color: white;
+    font-size: 5.5vw;
     right: 10vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.modal-btn-cancel:active, .modal-btn-confirm:active {
+    opacity: 0.8;
 }

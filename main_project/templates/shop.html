@@ -180,7 +180,7 @@
                                             </div>\
                                             <div class="right">\
                                                 <p class="price" id="price1">$'+ data.product_price[i] +'</p>\
-                                                <button type="button" class="btn_buy" id="Buy1" onclick=buy_product('+ data.product_ID[i] +','+ data.product_price[i] +') >Buy</button>\
+                                                <div type="button" class="btn_buy" id="Buy1" onclick=buy_product('+ data.product_ID[i] +','+ data.product_price[i] +') >Buy</div>\
                                             </div>\
                                         </div>\
                                         <div>\
@@ -265,8 +265,6 @@
                             "img_path": pic_list[i],
                         },
                         success: function (img) {
-                            console.log('123')
-                            
                             $('#owned_container').append(
                                 // "<img src=" + '"data:image/jpg;base64,'+img+'"> <br>' +
                                 // data.product_name[i] + '<br>'+
@@ -279,7 +277,7 @@
                                         <p class="product_name" id="owned_product2">'+ data.product_name[i] +'</p>\
                                         <p class="product_date" id="owned_date2">剩餘數量:'+ data.product_num[i] +'</p>\
                                     </div>\
-                                    <button onclick=use('+ data.product_ID[i] +') type="button" class="btn_use" id="Use2"  >使用</button>\
+                                    <div onclick=use('+ data.product_ID[i] +') type="button" class="btn_use" id="Use2"  >使用</div>\
                                 </div>'
                             )
                         }
