@@ -174,7 +174,7 @@ body {
     position: absolute;
     width: 18.5vw;
     height: 7.95vw;
-    left: 22.2vw;
+    left: 22.5vw;
     top: 150.77vw;
 }
 #mission{
@@ -187,7 +187,7 @@ body {
 #mission_text{
     position: absolute;
     width: 16.65vw;
-    height: 7.4vw;
+    /* height: 7.4vw; */
     left: 60.31vw;
     top: 150.77vw;
 }
@@ -200,10 +200,10 @@ body {
 }
 #profile_text{
     position: absolute;
-    width: 14.8vw;
-    height: 7.4vw;
-    left: 24.45vw;
-    top: 185vw;
+    width: 16.65vw;
+    /* height: 7.4vw; */
+    left: 24vw;
+    top: 186vw;
 }
 #friends{
     position: absolute;
@@ -214,10 +214,10 @@ body {
 }
 #friends_text{
     position: absolute;
-    width: 14.85vw;
+    width: 16.65vw;
     height: 7.4vw;
-    left: 60.31vw;
-    top: 185vw;
+    left: 60.8vw;
+    top: 186vw;
 }
 #chat{
     position: fixed;

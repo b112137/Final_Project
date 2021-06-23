@@ -155,6 +155,9 @@ input {
     font-size: 3.5vw;
     color: white;
     background-color: #B5B2B2;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .top-tab {
@@ -484,6 +487,9 @@ input {
     border-width: 0px;
     left: 18vw;
     top: 4vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .btn-create-group:active {
@@ -625,11 +631,35 @@ input {
 }
 
 .modal-btn-cancel {
+    position: absolute;
+    bottom: 5vw;
+    width: 22vw;
+    height: 9vw;
+    background-color: #E26F50;
+    border-width: 0px;
+    border-radius: 2vw;
+    color: white;
+    font-size: 5.5vw;
     left: 10vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .modal-btn-confirm {
+    position: absolute;
+    bottom: 5vw;
+    width: 22vw;
+    height: 9vw;
+    background-color: #E26F50;
+    border-width: 0px;
+    border-radius: 2vw;
+    color: white;
+    font-size: 5.5vw;
     right: 10vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 
