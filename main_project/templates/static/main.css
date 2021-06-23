@@ -387,6 +387,9 @@ body {
     border-radius: 2vw;
     color: white;
     font-size: 7vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .card-confirm {
@@ -400,6 +403,9 @@ body {
     border-radius: 2vw;
     color: white;
     font-size: 7vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .card-cancel:active, .card-confirm:active {

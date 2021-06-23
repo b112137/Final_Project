@@ -997,6 +997,9 @@ input {
     left: 73vw;
     top: 9vw;
     z-index: 70;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .btn-oops {
@@ -1012,6 +1015,9 @@ input {
     left: 77vw;
     top: 10vw;
     z-index: 70;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .btn-oops:active {
@@ -1035,6 +1041,9 @@ input {
     left: 73vw;
     top: 9vw;
     z-index: 70;
+        display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .btn-finished:active {
@@ -1087,6 +1096,9 @@ input {
     border-radius: 2vw;
     color: white;
     font-size: 5.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .submit-modal-btn-confirm {
@@ -1100,6 +1112,9 @@ input {
     border-radius: 2vw;
     color: white;
     font-size: 5.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .submit-modal-btn-cancel:active, submit-modal-btn-confirm:active {
