@@ -4,7 +4,7 @@
     {% progressive_web_app_meta %}
     <head> 
         <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="viewport" content="width=device-width; initial-scale=1; viewport-fit=cover">
+        <meta name="viewport" content="width=device-width; viewport-fit=cover">
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <meta charset="utf-8">
         <!-- <script src="static/jquery.js"></script> -->
@@ -301,15 +301,15 @@
                     $('#page1').append('<div id="page1_container"></div><div id="page2_container"></div>')
                     var pic_list = data.mission_pic
                     for(var i = 0; i < pic_list.length; i++){
-                        $.ajax({
-                            url: '/get_img',
-                            method: 'POST',
-                            type: 'POST',
-                            async: false, //改成同步執行(等待上一個回傳)
-                            data: {
-                                "img_path": pic_list[i],
-                            },
-                            success: function (img) {
+                        // $.ajax({
+                        //     url: '/get_img',
+                        //     method: 'POST',
+                        //     type: 'POST',
+                        //     async: false, //改成同步執行(等待上一個回傳)
+                        //     data: {
+                        //         "img_path": pic_list[i],
+                        //     },
+                        //     success: function (img) {
                                 // if(type=="join" && (data.status[i]=="acceptable" || data.status[i]=="full")){
                                 if((data.status[i]=="acceptable" || data.status[i]=="full")){
                                     // $.ajax({
@@ -333,7 +333,7 @@
                                                         <div class = "mission_chat">'+ data.group_name[i] +'</div>\
                                                     </div>'
                                                 )
-                                                $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                                                // $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
 
                                                 $('#submit_modal').append(
                                                     '<div class="modal fade" id="btn-submit-modal'+ i.toString() +'" tabindex="-1" aria-hidden="true" data-backdrop="static">\
@@ -366,7 +366,7 @@
                                                         <div class = "mission_chat">'+ data.group_name[i] +'</div>\
                                                     </div>'
                                                 )
-                                                $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                                                // $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
                                             }
                                         // }
                                     // });
@@ -382,7 +382,7 @@
                                                 <div class = "mission_chat">'+ data.group_name[i] +'</div>\
                                             </div>'
                                         )
-                                        $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                                        // $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
                                     }
                                     else if(data.status[i]=="finished"){
                                         // $.ajax({
@@ -406,7 +406,7 @@
                                                             <div class = "mission_chat">'+ data.group_name[i] +'</div>\
                                                         </div>'
                                                     )
-                                                    $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                                                    // $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
                                                 }
                                                 // else if (shared.result == "cancel") {
                                                 else if(data.is_shared[i] == "cancel") {
@@ -419,7 +419,7 @@
                                                             <div class = "mission_chat">'+ data.group_name[i] +'</div>\
                                                         </div>'
                                                     )
-                                                    $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                                                    // $('#joined_pic_'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
                                                 }                
                                             // }
                                         // });
@@ -429,9 +429,27 @@
                                     
                                 // }
                                 
+                        //     }
+                        // });
+                    }
+
+                    for(var i = 0; i < pic_list.length; i++){
+                        $.ajax({
+                            url: '/get_img_count',
+                            method: 'POST',
+                            type: 'POST',
+                            // async: false, //改成同步執行(等待上一個回傳)
+                            data: {
+                                "img_path": pic_list[i],
+                                "count": i.toString(),
+                            },
+                            success: function (img) {
+                                image = img.split("'")
+                                $('#joined_pic_'+ image[2].toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + image[1] + ')' )
                             }
                         });
                     }
+
                     // if (pic_list.length == 0){
                     //     $('#page1_container').append( '<div class="error_text" style="top:34vh">尚無參加任務，快去揪團吧!</div>')
                     //     $('#page2_container').append( '<div class="error_text" style="top:34vh">尚無參加任務，快去揪團吧!</div>')
@@ -857,79 +875,95 @@
                     }
                     else{
                         for(var i = 0; i < pic_list.length; i++){
-                            $.ajax({
-                            url: '/get_img',
-                            method: 'POST',
-                            type: 'POST',
-                            async: false, //改成同步執行(等待上一個回傳)
-                            data: {
-                                "img_path": pic_list[i],
-                            },
-                            success: function (img) {
-                                console.log("success")
-                                $('#mission_container').append(                             
-                                    '<div class="mission-card">\
-                                        <div class="card-header">\
-                                            <div href="#collapse'+ i.toString() +'" data-toggle="collapse" data-parent="#explore-mission">\
-                                                <div class="card-img" style="background-size: cover; background-image: url(data:image/jpg;base64,' + img + ') ">\
-                                                    <div class="card-people">'+data.group_required[i]+'人</div>\
-                                                </div>\
-                                                <div class="mission-title">'+ data.mission_name[i] +'</div>\
-                                                <div class="mission-joined">已有'+ data.joined[i]  +'人參加</div>\
-                                                <div class="mission-exp">\
-                                                    <div class="exp-val red">+'+ data.exp1[i] +'</div>\
-                                                    <div class="exp-val yellow">+'+ data.exp2[i] +'</div>\
-                                                    <div class="exp-val blue">+'+ data.exp3[i] +'</div>\
+                            // $.ajax({
+                            //     url: '/get_img',
+                            //     method: 'POST',
+                            //     type: 'POST',
+                            //     async: false, //改成同步執行(等待上一個回傳)
+                            //     data: {
+                            //         "img_path": pic_list[i],
+                            //     },
+                            //     success: function (img) {
+                                    $('#mission_container').append(                             
+                                        '<div class="mission-card">\
+                                            <div class="card-header">\
+                                                <div href="#collapse'+ i.toString() +'" data-toggle="collapse" data-parent="#explore-mission">\
+                                                    <div class="card-img" id="all_mission_photo_'+ i.toString() +'">\
+                                                        <div class="card-people">'+data.group_required[i]+'人</div>\
+                                                    </div>\
+                                                    <div class="mission-title">'+ data.mission_name[i] +'</div>\
+                                                    <div class="mission-joined">已有'+ data.joined[i]  +'人參加</div>\
+                                                    <div class="mission-exp">\
+                                                        <div class="exp-val red">+'+ data.exp1[i] +'</div>\
+                                                        <div class="exp-val yellow">+'+ data.exp2[i] +'</div>\
+                                                        <div class="exp-val blue">+'+ data.exp3[i] +'</div>\
+                                                    </div>\
                                                 </div>\
                                             </div>\
-                                        </div>\
-                                        <div id="collapse' + i.toString() + '"class="collapse">\
-                                            <div class="card-body">\
-                                                <ul class="nav nav-tabs nav-justified mission-info-tab">\
-                                                    <li id="left-tab" class="active">\
-                                                        <a data-toggle="tab" href="#mission-intro'+ i.toString() +'">任務介紹</a>\
-                                                    </li>\
-                                                    <li id="right-tab">\
-                                                        <a data-toggle="tab" onclick="mission_signup(' + data.mission_ID[i] + "," + data.group_required[i] + ')" href="#mission-signup_'+ data.mission_ID[i] +'">揪團報名</a>\
-                                                    </li>\
-                                                </ul>\
-                                                <div class="tab-content card-tab-content">\
-                                                    <div id="mission-intro'+ i.toString() +'" class="tab-pane fade in active">\
-                                                        <div class="mission-intro-content">\
-                                                            ' +data.mission_intro[i]+ '\
+                                            <div id="collapse' + i.toString() + '"class="collapse">\
+                                                <div class="card-body">\
+                                                    <ul class="nav nav-tabs nav-justified mission-info-tab">\
+                                                        <li id="left-tab" class="active">\
+                                                            <a data-toggle="tab" href="#mission-intro'+ i.toString() +'">任務介紹</a>\
+                                                        </li>\
+                                                        <li id="right-tab">\
+                                                            <a data-toggle="tab" onclick="mission_signup(' + data.mission_ID[i] + "," + data.group_required[i] + ')" href="#mission-signup_'+ data.mission_ID[i] +'">揪團報名</a>\
+                                                        </li>\
+                                                    </ul>\
+                                                    <div class="tab-content card-tab-content">\
+                                                        <div id="mission-intro'+ i.toString() +'" class="tab-pane fade in active">\
+                                                            <div class="mission-intro-content">\
+                                                                ' +data.mission_intro[i]+ '\
+                                                            </div>\
+                                                        </div>\
+                                                        <div id="mission-signup_'+ data.mission_ID[i] +'" class="tab-pane fade">\
+                                                            <div class="btn-create-group" type="button" data-toggle="modal" data-target="#create-group-modal">我要開團</div>\
+                                                            <div id="mission_group_box_'+ data.mission_ID[i] +'" class="group-item-box">'+
+                                                                // <div class="group-item">\
+                                                                //     <div class="group-name">團名團名</div>\
+                                                                //     <div class="group-need">缺5人</div>\
+                                                                //     <button></button>\
+                                                                // </div>\
+                                                                // <div class="group-item">\
+                                                                //     <div class="group-name">團名團名</div>\
+                                                                //     <div class="group-need">缺5人</div>\
+                                                                //     <button></button>\
+                                                                // </div>\
+                                                                // <div class="group-item">\
+                                                                //     <div class="group-name">團名團名</div>\
+                                                                //     <div class="group-need">缺5人</div>\
+                                                                //     <button></button>\
+                                                                // </div>\
+                                                                // <div class="group-item">\
+                                                                //     <div class="group-name">團名團名</div>\
+                                                                //     <div class="group-need">缺5人</div>\
+                                                                //     <button></button>\
+                                                                // </div>\
+                                                            '</div>\
                                                         </div>\
                                                     </div>\
-                                                    <div id="mission-signup_'+ data.mission_ID[i] +'" class="tab-pane fade">\
-                                                        <div class="btn-create-group" type="button" data-toggle="modal" data-target="#create-group-modal">我要開團</div>\
-                                                        <div id="mission_group_box_'+ data.mission_ID[i] +'" class="group-item-box">'+
-                                                            // <div class="group-item">\
-                                                            //     <div class="group-name">團名團名</div>\
-                                                            //     <div class="group-need">缺5人</div>\
-                                                            //     <button></button>\
-                                                            // </div>\
-                                                            // <div class="group-item">\
-                                                            //     <div class="group-name">團名團名</div>\
-                                                            //     <div class="group-need">缺5人</div>\
-                                                            //     <button></button>\
-                                                            // </div>\
-                                                            // <div class="group-item">\
-                                                            //     <div class="group-name">團名團名</div>\
-                                                            //     <div class="group-need">缺5人</div>\
-                                                            //     <button></button>\
-                                                            // </div>\
-                                                            // <div class="group-item">\
-                                                            //     <div class="group-name">團名團名</div>\
-                                                            //     <div class="group-need">缺5人</div>\
-                                                            //     <button></button>\
-                                                            // </div>\
-                                                        '</div>\
-                                                    </div>\
                                                 </div>\
                                             </div>\
-                                        </div>\
-                                    </div>'
-                                )
-                            }
+                                        </div>'
+                                    )
+                                // }
+                            // });
+                        }
+
+                        for(var i = 0; i < pic_list.length; i++){
+                            $.ajax({
+                                url: '/get_img_count',
+                                method: 'POST',
+                                type: 'POST',
+                                // async: false, //改成同步執行(等待上一個回傳)
+                                data: {
+                                    "img_path": pic_list[i],
+                                    "count": i.toString(),
+                                },
+                                success: function (img) {
+                                    image = img.split("'")
+                                    $('#all_mission_photo_'+ image[2].toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + image[1] + ')' )
+                                }
                             });
                         }
 

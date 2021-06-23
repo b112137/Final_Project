@@ -4,7 +4,7 @@
     {% progressive_web_app_meta %}
     <head> 
         <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="viewport" content="width=device-width; initial-scale=1; viewport-fit=cover">
+        <meta name="viewport" content="width=device-width; viewport-fit=cover">
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <meta charset="utf-8">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -313,7 +313,6 @@
 
         var last_friend_list = ""
         function get_friend_page() {
-            console.log(document.getElementById("friend_search").value)
             $.ajax({
                 url: '/get_friend_page',
                 method: 'POST',
@@ -328,7 +327,6 @@
                     if(data.result == 'success'){
                         last_friend_list = data.friend_ID;
                         $('#friend_container').html("");
-                        console.log("load success")
                         if(data.friend_ID.length==0){
                             // $('#friend_container').append("哈哈哈你沒朋友" + '<br>')
                             if(document.getElementById("friend_search").value==""){
@@ -347,28 +345,45 @@
                         {
                             var pic_list = data.friend_photo
                             for(var i = 0; i < pic_list.length;i++){
-                                $.ajax({
-                                    url: '/get_img',
-                                    method: 'POST',
-                                    type: 'POST',
-                                    async: false, //改成同步執行(等待上一個回傳)
-                                    data: {
-                                        "img_path": pic_list[i],
-                                    },
-                                    success: function (img) {
+                                // $.ajax({
+                                //     url: '/get_img',
+                                //     method: 'POST',
+                                //     type: 'POST',
+                                //     async: false, //改成同步執行(等待上一個回傳)
+                                //     data: {
+                                //         "img_path": pic_list[i],
+                                //     },
+                                //     success: function (img) {
                                         $('#friend_container').append(
                                             '<div onclick=create_profile_modal("'+ data.friend_ID[i]+'") class="friend-item" data-toggle="modal" data-target="#check-friend-modal">\
-                                                <div class="friend-photo" style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
+                                                <div class="friend-photo" id="friend_photo_'+ i.toString() +'"></div>\
                                                 <div class="friend-name">'+ data.friend_name[i] +'</div>\
                                             </div>'
                                         )
-                                    }
-                                });
+                                //     }
+                                // });
                             }
                             $('#friend_container').append(
                                 '<div class="friend-item">\
                                 </div>'
                             )
+
+                            for(var i = 0; i < pic_list.length; i++){
+                                $.ajax({
+                                    url: '/get_img_count',
+                                    method: 'POST',
+                                    type: 'POST',
+                                    // async: false, //改成同步執行(等待上一個回傳)
+                                    data: {
+                                        "img_path": pic_list[i],
+                                        "count": i.toString(),
+                                    },
+                                    success: function (img) {
+                                        image = img.split("'")
+                                        $('#friend_photo_'+ image[2].toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + image[1] + ')' )
+                                    }
+                                });
+                            }
                         }
                     }
                     else if(data.result == 'same'){
@@ -452,28 +467,45 @@
                         {
                             var pic_list = data.chat_img
                             for(var i = 0; i < pic_list.length;i++){
-                                $.ajax({
-                                    url: '/get_img',
-                                    method: 'POST',
-                                    type: 'POST',
-                                    async: false, //改成同步執行(等待上一個回傳)
-                                    data: {
-                                        "img_path": pic_list[i],
-                                    },
-                                    success: function (img) {
+                                // $.ajax({
+                                //     url: '/get_img',
+                                //     method: 'POST',
+                                //     type: 'POST',
+                                //     async: false, //改成同步執行(等待上一個回傳)
+                                //     data: {
+                                //         "img_path": pic_list[i],
+                                //     },
+                                //     success: function (img) {
                                         $('#group_container').append(
                                             '<div onclick=goto_chatroom('+ data.chatroom_ID[i] +') class="friend-group-item">\
-                                                <div class="friend-group-photo" style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
+                                                <div class="friend-group-photo" id="group_photo_'+ i.toString() +'"></div>\
                                                 <div class="friend-group-name">'+　data.group_name[i]+'('+ data.group_number[i] +')</div>\
                                             </div>'
                                         )
-                                    }
-                                });
+                                //     }
+                                // });
                             }
                             $('#group_container').append(
                                 '<div class="friend-group-item">\
                                 </div>'
                             )
+
+                            for(var i = 0; i < pic_list.length; i++){
+                                $.ajax({
+                                    url: '/get_img_count',
+                                    method: 'POST',
+                                    type: 'POST',
+                                    // async: false, //改成同步執行(等待上一個回傳)
+                                    data: {
+                                        "img_path": pic_list[i],
+                                        "count": i.toString(),
+                                    },
+                                    success: function (img) {
+                                        image = img.split("'")
+                                        $('#group_photo_'+ image[2].toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + image[1] + ')' )
+                                    }
+                                });
+                            }
                         }
                     
                     }
@@ -497,7 +529,7 @@
                 success: function (data) {
                     if(data.result == 'success'){
                         $('#friend_invitation_container').html("");
-                        console.log("load success")
+                        console.log(data.friend_ID.length)
                         if(data.friend_ID.length==0){
                             $('#friend_invitation_container').append(
                                 '<div class="error_text">尚無好友邀請!</div>'    
@@ -507,30 +539,47 @@
                         {
                             var pic_list = data.friend_photo
                             for(var i = 0; i < pic_list.length;i++){
-                                $.ajax({
-                                    url: '/get_img',
-                                    method: 'POST',
-                                    type: 'POST',
-                                    async: false, //改成同步執行(等待上一個回傳)
-                                    data: {
-                                        "img_path": pic_list[i],
-                                    },
-                                    success: function (img) {
+                                // $.ajax({
+                                //     url: '/get_img',
+                                //     method: 'POST',
+                                //     type: 'POST',
+                                //     async: false, //改成同步執行(等待上一個回傳)
+                                //     data: {
+                                //         "img_path": pic_list[i],
+                                //     },
+                                //     success: function (img) {
                                         $('#friend_invitation_container').append(
                                             '<div class="add-friend-item">\
-                                                <div onclick=goto_profile("'+ data.friend_ID[i] +'") class="add-friend-photo" style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
+                                                <div onclick=goto_profile("'+ data.friend_ID[i] +'") id="invite_photo_'+ i.toString() +'" class="add-friend-photo"></div>\
                                                 <div onclick=goto_profile("'+ data.friend_ID[i] +'") class="add-friend-name">'+ data.friend_name[i] +'</div>\
                                                 <div class="add-friend-btn" onclick=accept_invitation("' + data.friend_ID[i] + '")>確認</div>\
                                                 <div class="cancel-friend-btn" onclick=reject_invitation("' + data.friend_ID[i] + '")>取消</div>\
                                             </div>'
                                         )
-                                    }
-                                });
+                                //     }
+                                // });
                             }
                             $('#friend_invitation_container').append(
                                 '<div class="add-friend-item">\
                                 </div>'
                             )
+
+                            for(var i = 0; i < pic_list.length; i++){
+                                $.ajax({
+                                    url: '/get_img_count',
+                                    method: 'POST',
+                                    type: 'POST',
+                                    // async: false, //改成同步執行(等待上一個回傳)
+                                    data: {
+                                        "img_path": pic_list[i],
+                                        "count": i.toString(),
+                                    },
+                                    success: function (img) {
+                                        image = img.split("'")
+                                        $('#invite_photo_'+ image[2].toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + image[1] + ')' )
+                                    }
+                                });
+                            }
                         }
                     
                     }

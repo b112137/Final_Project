@@ -212,31 +212,62 @@
                         },
                         success: function (img) {
                             console.log("success")
-                            $('#photo').attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                            if(data.profile_photo.indexOf('none') > -1){
+                                $('#photo').attr('style', 'background-image: url("static/src/none_click.jpg")')
+                            }
+                            else{
+                                $('#photo').attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                            }
+                            
                         }
                     });
                 
                     $('#role').attr('style', 'background-image: url(static/src/' + data.character_name + ')' )
 
+                    // var pic_list = data.story_pic
+                    // console.log(pic_list)
+                    // for(var i = 0; i < pic_list.length; i++){
+                    //     if(pic_list[i] == "media/mission_submit_upload/none.jpg"){
+                    //         console.log(i)
+                    //         $('#photo'+(i+1).toString()).attr('style', 'background:#C4C4C4; ')
+                    //         $('#photo'+(i+1).toString()+'_text').html('完成更多任務吧!')
+                    //     }
+                    //     else{
+                    //         $.ajax({
+                    //             url: '/get_img',
+                    //             method: 'POST',
+                    //             type: 'POST',
+                    //             async: false, //改成同步執行(等待上一個回傳)
+                    //             data: {
+                    //                 "img_path": pic_list[i],
+                    //             },
+                    //             success: function (img) {
+                    //                 $('#photo'+(i+1).toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                    //             }
+                    //         });
+                    //     }
+                    // }
+
                     var pic_list = data.story_pic
-                    console.log(pic_list)
                     for(var i = 0; i < pic_list.length; i++){
-                        if(pic_list[i] == "media/mission_submit_upload/none.jpg"){
-                            console.log(i)
+                        if(pic_list[i].indexOf('none') > -1){
                             $('#photo'+(i+1).toString()).attr('style', 'background:#C4C4C4; ')
                             $('#photo'+(i+1).toString()+'_text').html('完成更多任務吧!')
                         }
                         else{
                             $.ajax({
-                                url: '/get_img',
+                                url: '/get_img_count',
                                 method: 'POST',
                                 type: 'POST',
-                                async: false, //改成同步執行(等待上一個回傳)
+                                // async: false, //改成同步執行(等待上一個回傳)
                                 data: {
                                     "img_path": pic_list[i],
+                                    "count": (i+1).toString(),
                                 },
                                 success: function (img) {
-                                    $('#photo'+(i+1).toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                                    image = img.split("'")
+                                    $('#photo'+ image[2].toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + image[1] + ')' )
+                                    // $('#photo'+(i+1).toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
                                 }
                             });
                         }
