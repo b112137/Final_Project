@@ -144,8 +144,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'templates/static').replace('\\', '/'
 # # main_project為routing所在的目錄，這段它會自動轉換成到main_project的routing找application這個個體。也就是剛剛我們在routing.py中設定的。
 
 
-PWA_APP_NAME = '揪久久'
-PWA_APP_DESCRIPTION = "揪久久"
+PWA_APP_NAME = '揪久'
+PWA_APP_DESCRIPTION = "揪久"
 PWA_APP_THEME_COLOR = '#F59E56'
 PWA_APP_BACKGROUND_COLOR = '#F59E56'
 PWA_APP_DISPLAY = 'fullscreen'
