@@ -19,7 +19,7 @@
                 
                 <img class="icon-chatroom" src="static/src/icon_chatroom.png" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls1" data-bs-slide="prev">
                 <input id="chatroom_search" type="text" placeholder="搜尋" class="search-bar">
-                <button class="btn-cancel">取消</button>
+                <div class="btn-cancel">取消</div>
             </div>
             <div class="chatroom-list" id="chatroom_list_div">
                 <!-- JavaScript append -->
@@ -284,7 +284,7 @@
                     if( (data.status == "acceptable" || data.status == "full") ){
                         $(".chatroom-member-list").append(
                             '<div class="exit-group">\
-                                <button onclick=exit_mission_chatroom() class="exit-group-btn">退出群組</button>\
+                                <div onclick=exit_mission_chatroom() class="exit-group-btn">退出群組</div>\
                             </div>'
                         )
                     }
@@ -301,8 +301,8 @@
                     確定將成員<br>'+ others_name +'<br>從此群組中刪除嗎？\
                 </div>\
             </div>\
-            <button type="button" class="modal-btn-cancel" data-dismiss="modal">取消</button>\
-            <button onclick=kick_mission_chatroom_member("'+ others +'") type="button" class="modal-btn-confirm">確認</button>'
+            <div type="button" class="modal-btn-cancel" data-dismiss="modal">取消</div>\
+            <div onclick=kick_mission_chatroom_member("'+ others +'") type="button" class="modal-btn-confirm">確認</div>'
         );
     }
 
