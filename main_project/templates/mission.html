@@ -40,7 +40,7 @@
                     <form class="search">
                         <!-- <img src="src/search.png" class="mission-search-icon"> -->
                         <input id="mission_search" type="search" placeholder=" 輸入任務名稱" class="search-input">
-                        <button id="mission_search_delete" type="reset" class="btn_cancel">取消</button>
+                        <div id="mission_search_delete" type="reset" class="btn_cancel">取消</div>
                     </form>    
                 </div> 
 
@@ -325,7 +325,7 @@
                                                     '<div class="test_block">\
                                                         <div class="joined_mission" style="background-image: url(static/new_element/12.png);"></div>\
                                                         <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
-                                                        <button class="btn-submit" type="button" data-toggle="modal" data-target="#btn-submit-modal'+i.toString()+'">提交</button>\
+                                                        <div class="btn-submit" type="button" data-toggle="modal" data-target="#btn-submit-modal'+i.toString()+'">提交</div>\
                                                         <div class = "mission_name">'+ data.mission_name[i] +'</div>\
                                                         <div class = "mission_chat">'+ data.group_name[i] +'</div>\
                                                     </div>'
@@ -345,8 +345,8 @@
                                                                         <img type="button" id="img_upload_img_'+ i.toString() +'">\
                                                                     </div>\
                                                                 </form>\
-                                                                <button id="submit-modal-btn-cancel'+ i.toString() +'" onclick="submit_no()" type="button" class="submit-modal-btn-cancel" data-dismiss="modal">取消</button>\
-                                                                <button id="submit-modal-btn-confirm'+ i.toString() +'" onclick="submit_yes('+i.toString()+','+data.chatroom_ID[i]+')" type="button" class="submit-modal-btn-confirm" data-dismiss="modal">確認</button>\
+                                                                <div id="submit-modal-btn-cancel'+ i.toString() +'" onclick="submit_no()" type="button" class="submit-modal-btn-cancel" data-dismiss="modal">取消</div>\
+                                                                <div id="submit-modal-btn-confirm'+ i.toString() +'" onclick="submit_yes('+i.toString()+','+data.chatroom_ID[i]+')" type="button" class="submit-modal-btn-confirm" data-dismiss="modal">確認</div>\
                                                             </div>\
                                                         </div>\
                                                     </div>'
@@ -358,7 +358,7 @@
                                                     '<div class="test_block">\
                                                         <div class="joined_mission"></div>\
                                                         <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
-                                                        <button onclick=not_enough_alert('+ data.group_num[i] +','+ data.group_required[i] +') class="btn-oops" style="font-size:4vw;" type="button">人數不足</button>\
+                                                        <div onclick=not_enough_alert('+ data.group_num[i] +','+ data.group_required[i] +') class="btn-oops" style="font-size:4vw;" type="button">人數不足</div>\
                                                         <div class = "mission_name">'+ data.mission_name[i] +'</div>\
                                                         <div class = "mission_chat">'+ data.group_name[i] +'</div>\
                                                     </div>'
@@ -374,7 +374,7 @@
                                             '<div class="test_block">\
                                                 <div class="joined_mission" style="background-image: url(static/new_element/complete.png);"></div>\
                                                 <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
-                                                <button class="btn-finished" type="button" data-toggle="modal" data-target="#btn-submit-modal">審核中</button>\
+                                                <div class="btn-finished" type="button" data-toggle="modal" data-target="#btn-submit-modal">審核中</div>\
                                                 <div class = "mission_name">'+ data.mission_name[i] +'</div>\
                                                 <div class = "mission_chat">'+ data.group_name[i] +'</div>\
                                             </div>'
@@ -398,7 +398,7 @@
                                                         '<div class="test_block">\
                                                             <div class="joined_mission" style="background-image: url(static/new_element/12.png);"></div>\
                                                             <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
-                                                            <button onclick=share('+ data.chatroom_ID[i] +') class="btn-finished" type="button" data-toggle="modal" data-target="#btn-submit-modal">分享</button>\
+                                                            <div onclick=share('+ data.chatroom_ID[i] +') class="btn-finished" type="button" data-toggle="modal" data-target="#btn-submit-modal">分享</div>\
                                                             <div class = "mission_name">'+ data.mission_name[i] +'</div>\
                                                             <div class = "mission_chat">'+ data.group_name[i] +'</div>\
                                                         </div>'
@@ -411,7 +411,7 @@
                                                         '<div class="test_block">\
                                                             <div class="joined_mission" style="background-image: url(static/new_element/complete.png);"></div>\
                                                             <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
-                                                            <button onclick=share_cancel('+ data.chatroom_ID[i] +') class="btn-oops" style="font-size:4vw;" type="button" data-toggle="modal" data-target="#btn-submit-modal">取消分享</button>\
+                                                            <div onclick=share_cancel('+ data.chatroom_ID[i] +') class="btn-oops" style="font-size:4vw;" type="button" data-toggle="modal" data-target="#btn-submit-modal">取消分享</div>\
                                                             <div class = "mission_name">'+ data.mission_name[i] +'</div>\
                                                             <div class = "mission_chat">'+ data.group_name[i] +'</div>\
                                                         </div>'
@@ -897,7 +897,7 @@
                                                         </div>\
                                                     </div>\
                                                     <div id="mission-signup_'+ data.mission_ID[i] +'" class="tab-pane fade">\
-                                                        <button class="btn-create-group" type="button" data-toggle="modal" data-target="#create-group-modal">我要開團</button>\
+                                                        <div class="btn-create-group" type="button" data-toggle="modal" data-target="#create-group-modal">我要開團</div>\
                                                         <div id="mission_group_box_'+ data.mission_ID[i] +'" class="group-item-box">'+
                                                             // <div class="group-item">\
                                                             //     <div class="group-name">團名團名</div>\
@@ -985,8 +985,8 @@
                                                 '<br>並報名此活動？\
                                             </div>\
                                         </div>\
-                                        <button type="button" class="modal-btn-cancel" data-dismiss="modal">取消</button>\
-                                        <button type="button" id="modal-btn-confirm-id_' + data.chatroom_ID[i] + '" class="modal-btn-confirm" onclick="join_group('+ mission_ID + ',' + data.chatroom_ID[i] +')">確認</button>\
+                                        <div type="button" class="modal-btn-cancel" data-dismiss="modal">取消</div>\
+                                        <div type="button" id="modal-btn-confirm-id_' + data.chatroom_ID[i] + '" class="modal-btn-confirm" onclick="join_group('+ mission_ID + ',' + data.chatroom_ID[i] +')">確認</div>\
                                     </div>\
                                 </div>\
                             </div>'
@@ -1005,8 +1005,8 @@
                                             且建立聊天群組\
                                         </div>\
                                     </div>\
-                                    <button type="button" class="modal-btn-cancel" data-dismiss="modal">取消</button>\
-                                    <button type="button" id="modal-btn-confirm-id" class="modal-btn-confirm" onclick="create_group('+ mission_ID + ',' + group_required +')">確認</button>\
+                                    <div type="button" class="modal-btn-cancel" data-dismiss="modal">取消</div>\
+                                    <div type="button" id="modal-btn-confirm-id" class="modal-btn-confirm" onclick="create_group('+ mission_ID + ',' + group_required +')">確認</div>\
                                 </div>\
                             </div>\
                         </div>'

@@ -271,6 +271,7 @@ progress{
     visibility: hidden;
     border-radius:2vw;
     padding: 1vw 1vw;
+    background-color: #d3d3d3;
 }
 #intro_text{
     position: absolute;
@@ -434,10 +435,32 @@ progress{
 
 .submit-modal-btn-cancel {
     left: 10vw;
+    position: absolute;
+    bottom: 5vw;
+    width: 22vw;
+    height: 9vw;
+    background-color: #E26F50;
+    border-width: 0px;
+    border-radius: 2vw;
+    color: white;
+    font-size: 5.5vw;
 }
 
 .submit-modal-btn-confirm {
     right: 10vw;
+    position: absolute;
+    bottom: 5vw;
+    width: 22vw;
+    height: 9vw;
+    background-color: #E26F50;
+    border-width: 0px;
+    border-radius: 2vw;
+    color: white;
+    font-size: 5.5vw;
+}
+
+.submit-modal-btn-cancel:active, .submit-modal-btn-confirm:active {
+    opacity: 0.8;
 }
 
 .swal-custom {
