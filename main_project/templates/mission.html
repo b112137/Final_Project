@@ -3,6 +3,9 @@
     {% load pwa %}
     {% progressive_web_app_meta %}
     <head> 
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="viewport" content="width=device-width; initial-scale=1; viewport-fit=cover">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <meta charset="utf-8">
         <!-- <script src="static/jquery.js"></script> -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -374,7 +377,7 @@
                                             '<div class="test_block">\
                                                 <div class="joined_mission" style="background-image: url(static/new_element/complete.png);"></div>\
                                                 <div id="joined_pic_'+ i.toString() +'" class="joined_pic"></div>\
-                                                <div class="btn-finished" type="button" data-toggle="modal" data-target="#btn-submit-modal">審核中</div>\
+                                                <div class="btn-oops" type="button" data-toggle="modal" data-target="#btn-submit-modal">審核中</div>\
                                                 <div class = "mission_name">'+ data.mission_name[i] +'</div>\
                                                 <div class = "mission_chat">'+ data.group_name[i] +'</div>\
                                             </div>'

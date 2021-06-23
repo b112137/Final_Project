@@ -3,6 +3,9 @@
     {% load pwa %}
     {% progressive_web_app_meta %}
     <head> 
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="viewport" content="width=device-width; initial-scale=1; viewport-fit=cover">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <meta charset="utf-8">
         <!-- <script src="static/jquery.js"></script> -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -452,19 +455,19 @@
                             document.getElementById("list_msg_"+ i.toString() ).innerHTML += '(' + data.group_number[i] + ')'
                         }
 
-                        $.ajax({
-                            url: '/get_img',
-                            method: 'POST',
-                            type: 'POST',
-                            async: false, //改成同步執行(等待上一個回傳)
-                            data: {
-                                "img_path": data.chat_img[i],
-                            },
-                            success: function (img) {
-                                $('#list_photo_'+ i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                        // $.ajax({
+                        //     url: '/get_img',
+                        //     method: 'POST',
+                        //     type: 'POST',
+                        //     async: false, //改成同步執行(等待上一個回傳)
+                        //     data: {
+                        //         "img_path": data.chat_img[i],
+                        //     },
+                        //     success: function (img) {
+                        //         $('#list_photo_'+ i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
                                 
-                            }
-                        });
+                        //     }
+                        // });
                     }
                     console.log(data.chatroom_ID.length)
                     if(data.chatroom_ID.length == 0){
@@ -486,6 +489,25 @@
                             </div>'
                         )
                     }
+
+                    for(var i = 0; i < data.chatroom_ID.length; i++){
+                        console.log(i)
+                        $.ajax({
+                            url: '/get_img_count',
+                            method: 'POST',
+                            type: 'POST',
+                            // async: false, //改成同步執行(等待上一個回傳)
+                            data: {
+                                "img_path": data.chat_img[i],
+                                "count": i.toString(),
+                            },
+                            success: function (img) {
+                                image = img.split("'")
+                                $('#list_photo_'+ image[2].toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + image[1] + ')' )
+                            }
+                        });
+                    }
+
                     
                 }
                 else if (data.result=="same"){
@@ -494,6 +516,17 @@
               }
         });
     }
+
+    function unpack(str) {
+        var bytes = [];
+        for(var i = 0; i < str.length; i++) {
+            var char = str.charCodeAt(i);
+            bytes.push(char >>> 8);
+            bytes.push(char & 0xFF);
+        }
+        return bytes;
+    }
+
 
     function goto_chatroom(chatroom_ID){
         window.clearInterval(timeout_update_chat_list);                            
@@ -650,21 +683,40 @@
                                     </div>'
                                 )
 
-                                $.ajax({
-                                    url: '/get_img',
-                                    method: 'POST',
-                                    type: 'POST',
-                                    async: false, //改成同步執行(等待上一個回傳)
-                                    data: {
-                                        "img_path": data.sender_photo[i],
-                                    },
-                                    success: function (img) {
-                                        $('#msg_photo_'+ i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                                // $.ajax({
+                                //     url: '/get_img',
+                                //     method: 'POST',
+                                //     type: 'POST',
+                                //     async: false, //改成同步執行(等待上一個回傳)
+                                //     data: {
+                                //         "img_path": data.sender_photo[i],
+                                //     },
+                                //     success: function (img) {
+                                //         $('#msg_photo_'+ i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
                                         
-                                    }
-                                });
+                                //     }
+                                // });
                             }
                         }
+
+                        for(var i = 0; i < chatroom_history.length; i++){
+                            $.ajax({
+                                url: '/get_img_count',
+                                method: 'POST',
+                                type: 'POST',
+                                // async: false, //改成同步執行(等待上一個回傳)
+                                data: {
+                                    "img_path": data.sender_photo[i],
+                                    "count": i.toString(),
+                                },
+                                success: function (img) {
+                                    image = img.split("'")
+                                    $('#msg_photo_'+ image[2].toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + image[1] + ')' )
+                                    
+                                }
+                            });
+                        }
+
                         var chat_record = document.getElementById('chatroom-record-content-ID');
                         chat_record.scrollTop = chat_record.scrollHeight;
                     }
@@ -819,22 +871,40 @@
                                         </div>'
                                     )
 
-                                    $.ajax({
-                                        url: '/get_img',
-                                        method: 'POST',
-                                        type: 'POST',
-                                        async: false, //改成同步執行(等待上一個回傳)
-                                        data: {
-                                            "img_path": data.sender_photo[i],
-                                        },
-                                        success: function (img) {
-                                            $('#msg_photo_'+ i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                                    // $.ajax({
+                                    //     url: '/get_img',
+                                    //     method: 'POST',
+                                    //     type: 'POST',
+                                    //     async: false, //改成同步執行(等待上一個回傳)
+                                    //     data: {
+                                    //         "img_path": data.sender_photo[i],
+                                    //     },
+                                    //     success: function (img) {
+                                    //         $('#msg_photo_'+ i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
                                             
-                                        }
-                                    });
+                                    //     }
+                                    // });
                                 }
                             }
                         }
+                        for(var i = 0; i < chatroom_history.length; i++){
+                            $.ajax({
+                                url: '/get_img_count',
+                                method: 'POST',
+                                type: 'POST',
+                                // async: false, //改成同步執行(等待上一個回傳)
+                                data: {
+                                    "img_path": data.sender_photo[i],
+                                    "count": i.toString(),
+                                },
+                                success: function (img) {
+                                    image = img.split("'")
+                                    $('#msg_photo_'+ image[2].toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + image[1] + ')' )
+                                    
+                                }
+                            });
+                        }
+
                         var chat_record = document.getElementById('chatroom-record-content-ID');
                         chat_record.scrollTop = chat_record.scrollHeight;
                         last_sender_name_len = data.sender_name.length

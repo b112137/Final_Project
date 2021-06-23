@@ -53,6 +53,7 @@ urlpatterns = [
 
     path('get_all_mission', backend.get_all_mission),
     path('get_img', backend.get_img),
+    path('get_img_count', backend.get_img_count),
     path('get_mission_group', backend.get_mission_group),
     path('join_mission_group', backend.join_mission_group),
     path('create_mission_group', backend.create_mission_group),

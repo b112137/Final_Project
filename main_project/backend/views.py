@@ -363,8 +363,19 @@ def get_all_mission(request):
                 "exp1":exp1, "exp2":exp2, "exp3":exp3, "reward":reward
             })
 
+def get_img_count(request):
+    if request.method == 'POST':
+        count = request.POST.get('count')
+        img_path = request.POST.get('img_path')
+        image = cv2.imread(img_path)
+        image = cv2.imencode('.jpg',image)[1]
+        back_2 = base64.b64encode(image)
+        # print(str(back_2)+count)
+        return HttpResponse(str(back_2)+count)
+
 def get_img(request):
     if request.method == 'POST':
+        # count = request.POST.get('count')
         img_path = request.POST.get('img_path')
         image = cv2.imread(img_path)
         image = cv2.imencode('.jpg',image)[1]
