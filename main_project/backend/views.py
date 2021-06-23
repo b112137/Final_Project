@@ -1237,30 +1237,31 @@ def get_my_mission(request):
         last_my_mission_list = [str(x) for x in last_my_mission_list]
         this_my_mission_list = [str(x) for x in (chatroom_ID+group_num+is_shared)]
 
-        # if last_my_mission_list == this_my_mission_list:
-        #     return JsonResponse({
-        #         'result' : "same",
-        #     })
+        if last_my_mission_list == this_my_mission_list:
+            return JsonResponse({
+                'result' : "same",
+                'mission_pic': mission_pic,
+            })
         
-        # else:
-        return JsonResponse({
-            'result' : "success",
-            'mission_ID': mission_ID,
-            'mission_name': mission_name,
-            'group_name': group_name,
-            'leader_ID' : leader_ID,
-            'status': status,
-            'member_ID' : member_ID,
-            'mission_pic': mission_pic,
-            'member_name' : member_name_list,
-            'mission_doing_chatroom_ID': mission_doing_chatroom_ID,
-            'mission_done_chatroom_ID': mission_done_chatroom_ID,
-            "chatroom_ID": chatroom_ID,
-            "group_num": group_num, 
-            "group_required": group_required, 
-            "is_shared": is_shared,
-            "this_my_mission_list": this_my_mission_list,
-        })
+        else:
+            return JsonResponse({
+                'result' : "success",
+                'mission_ID': mission_ID,
+                'mission_name': mission_name,
+                'group_name': group_name,
+                'leader_ID' : leader_ID,
+                'status': status,
+                'member_ID' : member_ID,
+                'mission_pic': mission_pic,
+                'member_name' : member_name_list,
+                'mission_doing_chatroom_ID': mission_doing_chatroom_ID,
+                'mission_done_chatroom_ID': mission_done_chatroom_ID,
+                "chatroom_ID": chatroom_ID,
+                "group_num": group_num, 
+                "group_required": group_required, 
+                "is_shared": is_shared,
+                "this_my_mission_list": this_my_mission_list,
+            })
 
 def is_shared(request):
     if request.method == 'POST':

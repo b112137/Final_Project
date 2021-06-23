@@ -433,23 +433,6 @@
                         // });
                     }
 
-                    for(var i = 0; i < pic_list.length; i++){
-                        $.ajax({
-                            url: '/get_img_count',
-                            method: 'POST',
-                            type: 'POST',
-                            // async: false, //改成同步執行(等待上一個回傳)
-                            data: {
-                                "img_path": pic_list[i],
-                                "count": i.toString(),
-                            },
-                            success: function (img) {
-                                image = img.split("'")
-                                $('#joined_pic_'+ image[2].toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + image[1] + ')' )
-                            }
-                        });
-                    }
-
                     // if (pic_list.length == 0){
                     //     $('#page1_container').append( '<div class="error_text" style="top:34vh">尚無參加任務，快去揪團吧!</div>')
                     //     $('#page2_container').append( '<div class="error_text" style="top:34vh">尚無參加任務，快去揪團吧!</div>')
@@ -489,6 +472,31 @@
                         $("#page2_container").show();
                     }
                     // console.log($("#page1_container").html())
+
+                    for(var i = 0; i < pic_list.length; i++){
+                        console.log(123)
+                        $.ajax({
+                            url: '/get_img_count',
+                            method: 'POST',
+                            type: 'POST',
+                            // async: false, //改成同步執行(等待上一個回傳)
+                            data: {
+                                "img_path": pic_list[i],
+                                "count": i.toString(),
+                            },
+                            success: function (img) {
+                                image = img.split("'")
+                                $('#joined_pic_'+ image[2].toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + image[1] + ')' )
+                                last_page1_container_join = $("#page1_container").html()
+                                last_page1_container_finish = $("#page2_container").html()
+                                last_submit_modal = $("#submit_modal").html()
+                            }
+                        });
+                        if(i.toString() == (pic_list.length-1).toString()){
+                            console.log(i)
+                            
+                        }
+                    }
                 }
                 else if(data.result=="same"){
                     $('#page1').html("");
@@ -523,6 +531,24 @@
                         $('#page2_container').html(last_page1_container_finish)
                     }
                     $('#submit_modal').html(last_submit_modal)
+
+                    // var pic_list = data.mission_pic
+                    // for(var i = 0; i < pic_list.length; i++){
+                    //     $.ajax({
+                    //         url: '/get_img_count',
+                    //         method: 'POST',
+                    //         type: 'POST',
+                    //         // async: false, //改成同步執行(等待上一個回傳)
+                    //         data: {
+                    //             "img_path": pic_list[i],
+                    //             "count": i.toString(),
+                    //         },
+                    //         success: function (img) {
+                    //             image = img.split("'")
+                    //             $('#joined_pic_'+ image[2].toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + image[1] + ')' )
+                    //         }
+                    //     });
+                    // }
                 }
             }
         });
