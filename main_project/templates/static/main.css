@@ -360,7 +360,7 @@ body {
 
 
 
-.card-content > div {
+.card-content > button {
     position: absolute;
     bottom: 5vw;
     width: 27vw;
@@ -372,17 +372,40 @@ body {
     font-size: 7vw;
 }
 
-.card-content >div:active {
+.card-content >button:active {
     opacity: 0.8;
 }
 
 .card-cancel {
     left: 20vw;
+    position: absolute;
+    bottom: 5vw;
+    width: 27vw;
+    height: 12vw;
+    background-color: #E26F50;
+    border-width: 0px;
+    border-radius: 2vw;
+    color: white;
+    font-size: 7vw;
 }
 
 .card-confirm {
     right: 20vw;
+    position: absolute;
+    bottom: 5vw;
+    width: 27vw;
+    height: 12vw;
+    background-color: #E26F50;
+    border-width: 0px;
+    border-radius: 2vw;
+    color: white;
+    font-size: 7vw;
 }
+
+.card-cancel:active, .card-confirm:active {
+    opacity: 0.8;
+}
+
 
 /*///modal*/
 
