@@ -360,7 +360,7 @@ body {
 
 
 
-.card-content > button {
+.card-content > div {
     position: absolute;
     bottom: 5vw;
     width: 27vw;
@@ -372,7 +372,7 @@ body {
     font-size: 7vw;
 }
 
-.card-content >button:active {
+.card-content >div:active {
     opacity: 0.8;
 }
 
