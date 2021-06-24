@@ -68,21 +68,25 @@ input {
     color: #B5B2B2;
 }
 
+/* HERE */
 .header {
     position: fixed;
     width: 100vw;
-    height: 22vw;
+    /* height: 22vw; */
+    height: 27vw;
     left: 0vw;
     top: 0vw;
     background: #F59E56;
     z-index: 10;
 }
 
+/* HERE */
 .back_arrow {
     position: absolute;
     width: 12vw;
     height: 12vw;
-    top: 6.1vw;
+    /* top: 6.1vw; */
+    top: 11.1vw;
     left: 5vw;
     background-image: url('src/back_arrow.png');
     background-size: cover;
@@ -90,11 +94,13 @@ input {
     z-index: 30;
 }
 
+/* HERE */
 .title_text {
     position: absolute;
     width: 100vw;
     height: 12vw;
-    top: 1vw;
+    /* top: 1vw; */
+    top: 6vw;
     font-size: 15vw;
     font-family: jf_open;
     text-align: right;
@@ -176,7 +182,6 @@ input {
     align-items: center;
     height: 14vw;
     width: 100vw;
-    top: 25vw;
 }
 
 .search-input {
@@ -263,22 +268,24 @@ input {
     color: white;
 }
 
-
+/* HERE */
 .tab-footer {
     position: fixed;
-    top: 35vw;
+    /* top: 35vw; */
+    top: 40vw;
     width: 100vw;
     height: 5vw;
     background-color: white;
     z-index: 5;
 }
 
-
+/* HERE and mission.html .top-tab style="top: 27vw;" */
 .body-tab-content {
     position: fixed;
     width: 100vw;
     height: 100vh;
-    padding-top: 39vw;
+    /* padding-top: 39vw; */
+    padding-top: 44vw;
     overflow-y: scroll !important;
 }
 
@@ -869,14 +876,6 @@ input {
     z-index: 100;
     color: white;
     font-weight: bold;
-}
-
-.quarter_circle {
-    position: fixed;
-    width: 22.2vw;
-    height: 22.2vw;
-    bottom: 0vw;
-    background-size: cover;
 }
 
 .mission-info-tab {
