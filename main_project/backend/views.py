@@ -111,8 +111,12 @@ def mission_page(request):
         return render(request, 'mission.html', {
         })
     else:
-        return render(request, 'start.html', {
+        rep = render(request, 'start.html', {
         })
+        rep.delete_cookie("account")
+        rep.delete_cookie("is_login")
+        rep.delete_cookie("token")
+        return rep
 
 def chatroom_page(request):
     global check_login
@@ -130,8 +134,12 @@ def chatroom_page(request):
         return render(request, 'chatroom.html', {
         })
     else:
-        return render(request, 'start.html', {
+        rep = render(request, 'start.html', {
         })
+        rep.delete_cookie("account")
+        rep.delete_cookie("is_login")
+        rep.delete_cookie("token")
+        return rep
 
 def profile_page(request):
     global check_login
@@ -187,8 +195,12 @@ def profile_page(request):
             # 'friend_ID': ast.literal_eval(profile.friend_ID),
         })
     else:
-        return render(request, 'start.html', {
+        rep = render(request, 'start.html', {
         })
+        rep.delete_cookie("account")
+        rep.delete_cookie("is_login")
+        rep.delete_cookie("token")
+        return rep
 
 
 def friend_page(request):
@@ -207,8 +219,12 @@ def friend_page(request):
         return render(request, 'friend.html', {
         })
     else:
-        return render(request, 'start.html', {
+        rep = render(request, 'start.html', {
         })
+        rep.delete_cookie("account")
+        rep.delete_cookie("is_login")
+        rep.delete_cookie("token")
+        return rep
 
 def shop_page(request):
     global check_login
@@ -226,8 +242,12 @@ def shop_page(request):
         return render(request, 'shop.html',{
         })
     else:
-        return render(request, 'start.html', {
+        rep = render(request, 'start.html', {
         })
+        rep.delete_cookie("account")
+        rep.delete_cookie("is_login")
+        rep.delete_cookie("token")
+        return rep
 
 def aboutus_page(request):
     global check_login
@@ -245,8 +265,12 @@ def aboutus_page(request):
         return render(request, 'AboutUs.html', {
         })
     else:
-        return render(request, 'start.html', {
+        rep = render(request, 'start.html', {
         })
+        rep.delete_cookie("account")
+        rep.delete_cookie("is_login")
+        rep.delete_cookie("token")
+        return rep
 
 
 def register_submit(request):
