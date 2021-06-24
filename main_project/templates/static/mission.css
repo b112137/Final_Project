@@ -53,7 +53,7 @@ input, button {
 body {
     margin: 0px;
     padding: 0px;
-    background-color: white;
+    background-color: rgb(0, 0, 0);
 }
 
 input {
