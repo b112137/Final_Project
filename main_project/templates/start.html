@@ -38,15 +38,40 @@
 </html>
 
 <script>
-    window.onload = function(){
-                // if window.location.href.split("?")[0].
-        if (window.location.href.split("?")[0].indexOf('start') <= -1) { //沒有start
-            window.location.href = "start"
+    function getCookie(cookieName) {
+        var name = cookieName + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0; i<ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1);
+            if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
         }
-        window.setTimeout(( () => $(".gif_container").fadeOut() ), 4200);
-        // if(document.readyState=="complete"){
-        //     $(".gif_container").fadeOut();
+        return "";
+    }
+
+    window.onload = function(){
+        console.log(getCookie("account"))
+        if(getCookie("account") == ""){
+            if (window.location.href.split("?")[0].indexOf('start') <= -1) { //沒有start
+                window.location.href = "start"
+            }
+            window.setTimeout(( () => $(".gif_container").fadeOut() ), 4200);
+            // if(document.readyState=="complete"){
+            //     $(".gif_container").fadeOut();
+            // }
+        }
+        else{
+            window.location.href = "/main"
+        }
+
+                // if window.location.href.split("?")[0].
+        // if (window.location.href.split("?")[0].indexOf('start') <= -1) { //沒有start
+        //     window.location.href = "start"
         // }
+        // window.setTimeout(( () => $(".gif_container").fadeOut() ), 4200);
+        // // if(document.readyState=="complete"){
+        // //     $(".gif_container").fadeOut();
+        // // }
     }
 
 </script>
