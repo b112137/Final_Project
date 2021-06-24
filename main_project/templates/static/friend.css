@@ -54,8 +54,8 @@ body {
     position: fixed;
     width: 100vw;
     height: 22vw;
-    left: 0px;
-    top: 0px;
+    left: 0vw;
+    top: 0vw;
     background-color: #F59E56;
     z-index: 10;
 }
