@@ -554,12 +554,12 @@ input {
 
 
 .quarter_circle {
-    position: fixed !important; 
-    width: 22.2vw !important;
-    height: 22.2vw !important;
-    bottom: 0vw !important;
-    background-size: cover !important;
-    z-index: 50 !important;
+    position: fixed; 
+    width: 22.2vw;
+    height: 22.2vw;
+    bottom: -5vw;
+    background-size: cover;
+    z-index: 50;
 }
 
 .modal-dialog {

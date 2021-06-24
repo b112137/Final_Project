@@ -199,8 +199,7 @@ body {
     /*visibility: hidden;*/
 }
 .product{
-    /* display: inline-flex; */
-    width:auto;
+    display: inline-flex;
 }
 .product_name{
     letter-spacing:0.7vw;
