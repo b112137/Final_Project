@@ -53,7 +53,7 @@ input, button {
 body {
     margin: 0px;
     padding: 0px;
-    background-color: rgb(255, 255, 255);
+    background-color: white;
 }
 
 input {
@@ -96,26 +96,15 @@ input {
 
 /* HERE */
 .title_text {
-    /* position: absolute;
+    position: absolute;
     width: 100vw;
-    height: 12vw; */
+    height: 12vw;
     /* top: 1vw; */
-    /* top: 6vw;
+    top: 6vw;
     font-size: 15vw;
     font-family: jf_open;
     text-align: right;
     right: 15vw;
-    color: white; */
-
-
-    position: absolute;
-    width: 100vw;
-    height: auto;
-    padding-top: 6vw;
-    padding-right: 15vw;
-    font-size: 15vw;
-    font-family: jf_open;
-    text-align: right;
     color: white;
 }
 
