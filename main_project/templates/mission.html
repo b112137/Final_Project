@@ -474,7 +474,6 @@
                     // console.log($("#page1_container").html())
 
                     for(var i = 0; i < pic_list.length; i++){
-                        console.log(123)
                         $.ajax({
                             url: '/get_img_count',
                             method: 'POST',
@@ -492,10 +491,6 @@
                                 last_submit_modal = $("#submit_modal").html()
                             }
                         });
-                        if(i.toString() == (pic_list.length-1).toString()){
-                            console.log(i)
-                            
-                        }
                     }
                 }
                 else if(data.result=="same"){
