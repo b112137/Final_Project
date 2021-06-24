@@ -8,6 +8,11 @@
     src: url(src/font/hp.ttf);
 }
 
+html {
+    min-height: calc(100% + env(safe-area-inset-top));
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);  
+}
+
 input, button {
     -webkit-appearance: none;  /* Safari 和 Chrome，常用於iOS下移除內建樣式 */
     -moz-appearance: none;     /* FireFox */
@@ -557,7 +562,7 @@ input {
     position: fixed; 
     width: 22.2vw;
     height: 22.2vw;
-    bottom: -5vw;
+    bottom: 0vw;
     background-size: cover;
     z-index: 50;
 }

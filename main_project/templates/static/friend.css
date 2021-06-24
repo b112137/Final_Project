@@ -308,7 +308,7 @@ body {
     position: fixed;
     width: 22.2vw;
     height: 22.2vw;
-    bottom: -5vw;
+    bottom: 0vw;
     background-size: cover;
     z-index: 50;
 }
