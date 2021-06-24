@@ -52,6 +52,7 @@
     window.onload = function(){
         console.log(getCookie("account"))
         if(getCookie("account") == ""){
+            console.log("no")
             if (window.location.href.split("?")[0].indexOf('start') <= -1) { //沒有start
                 window.location.href = "start"
             }
@@ -61,7 +62,9 @@
             // }
         }
         else{
-            window.location.href = "/main"
+            console.log(getCookie("account"))
+            window.setTimeout(( () => $(".gif_container").fadeOut() ), 4200);
+            window.location.href = "/main";
         }
 
                 // if window.location.href.split("?")[0].
