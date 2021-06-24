@@ -86,8 +86,14 @@ def main_page(request):
             'exp3': exp3,
         })
     else:
-        return render(request, 'start.html', {
+        rep = render(request, 'start.html', {
         })
+        rep.delete_cookie("account")
+        rep.delete_cookie("is_login")
+        rep.delete_cookie("token")
+        return rep
+        # return render(request, 'start.html', {
+        # })
 
 def mission_page(request):
     global check_login
