@@ -353,5 +353,5 @@ body {
     height: 22.2vw;
     bottom: 0vw;
     background-size: cover;
-    z-index: 50;
+    /* z-index: 50; */
 }
