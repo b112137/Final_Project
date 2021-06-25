@@ -264,7 +264,7 @@
                             success: function (img) {
                                 if (data.member_ID[i] == data.leader_ID){
                                     $(".chatroom-member-list").append(
-                                        '<div class="chatroom-member-item">\
+                                        '<div class="chatroom-member-item" onclick=goto_profile("'+ data.member_ID[i] +'")>\
                                             <img style="opacity:0" class="collapse width delete-member" type="button" src="static/src/delete.png" data-toggle="modal" data-target="#delete-member-modal">\
                                             <div class="chatroom-member-photo" style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
                                             <div class="chatroom-member-name">'+ data.member_name[i] +'(組長)</div>\
@@ -273,7 +273,7 @@
                                 }
                                 else{
                                     $(".chatroom-member-list").append(
-                                        '<div class="chatroom-member-item">\
+                                        '<div class="chatroom-member-item" onclick=goto_profile("'+ data.member_ID[i] +'")>\
                                             <img onclick=create_delete_modal("'+ data.member_ID[i] +'","'+ data.member_name[i] +'") class="collapse width delete-member" type="button" src="static/src/delete.png" data-toggle="modal" data-target="#delete-member-modal">\
                                             <div class="chatroom-member-photo" style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
                                             <div class="chatroom-member-name">'+ data.member_name[i] +'</div>\
@@ -668,7 +668,7 @@
 
                                 $("#chatroom-record-content-ID").append(
                                     '<div class="msg from-others">\
-                                        <div class="msg-photo" id="msg_photo_' + i.toString() + '"></div>\
+                                        <div class="msg-photo" onclick=goto_profile("' + chatroom_history[i].fields.sender_ID + '") id="msg_photo_' + i.toString() + '"></div>\
                                         <div style="display: block">\
                                             <div class="msg-name">' + data.sender_name[i] + '</div>\
                                             <div class="msg-content from-others">'
@@ -856,7 +856,7 @@
 
                                     $("#chatroom-record-content-ID").append(
                                         '<div class="msg from-others">\
-                                            <div class="msg-photo" id="msg_photo_' + i.toString() + '"></div>\
+                                            <div class="msg-photo"  onclick=goto_profile("' + chatroom_history[i].fields.sender_ID + '") id="msg_photo_' + i.toString() + '"></div>\
                                             <div style="display: block">\
                                                 <div class="msg-name">' + data.sender_name[i] + '</div>\
                                                 <div class="msg-content from-others">'
@@ -900,7 +900,6 @@
                                 success: function (img) {
                                     image = img.split("'")
                                     $('#msg_photo_'+ image[2].toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + image[1] + ')' )
-                                    
                                 }
                             });
                         }
@@ -917,50 +916,61 @@
         }
     };
 
+    function goto_profile(others){
+        window.location.href = "/profile?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1] +'&profileID='+ others;
+    }
 
     function send_mission_msg(chatroom_ID){
-        console.log(document.getElementById("chat-message-input").value)
-        if(chatroom_ID[0]=="2"){
-            $.ajax({
-                url: '/mission_chatroom_update',
-                method: 'POST',
-                type: 'POST',
-                dataType: "json",
-                async: false, //改成同步執行(等待上一個回傳)
-                data: {
-                    "post_type": "Send",
-                    "chatroom_ID": chatroom_ID,
-                    "sender_ID": window.location.href.split('?')[1].split('&')[0].split('=')[1],
-                    "message": document.getElementById("chat-message-input").value
-                },
-                success: function (data) {
-                    if (data.result == "success"){
-                        // console.log("success")
-                    }
-                }
-            });
+        var space = document.getElementById("chat-message-input").value;
+        var space_check = 0;
+        for(var i = 0; i < space.length; i++){
+            if(space[i]!=" "){
+                space_check = 1;
+                break;
+            }
         }
-        else if(chatroom_ID[0]=="3"){
-            $.ajax({
-                url: '/friend_chatroom_update',
-                method: 'POST',
-                type: 'POST',
-                dataType: "json",
-                async: false, //改成同步執行(等待上一個回傳)
-                data: {
-                    "post_type": "Send",
-                    "chatroom_ID": chatroom_ID,
-                    "sender_ID": window.location.href.split('?')[1].split('&')[0].split('=')[1],
-                    "message": document.getElementById("chat-message-input").value
-                },
-                success: function (data) {
-                    if (data.result == "success"){
-                        // console.log("success")
+        if (space_check){
+            if(chatroom_ID[0]=="2"){
+                $.ajax({
+                    url: '/mission_chatroom_update',
+                    method: 'POST',
+                    type: 'POST',
+                    dataType: "json",
+                    async: false, //改成同步執行(等待上一個回傳)
+                    data: {
+                        "post_type": "Send",
+                        "chatroom_ID": chatroom_ID,
+                        "sender_ID": window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                        "message": document.getElementById("chat-message-input").value
+                    },
+                    success: function (data) {
+                        if (data.result == "success"){
+                            // console.log("success")
+                        }
                     }
-                }
-            });
+                });
+            }
+            else if(chatroom_ID[0]=="3"){
+                $.ajax({
+                    url: '/friend_chatroom_update',
+                    method: 'POST',
+                    type: 'POST',
+                    dataType: "json",
+                    async: false, //改成同步執行(等待上一個回傳)
+                    data: {
+                        "post_type": "Send",
+                        "chatroom_ID": chatroom_ID,
+                        "sender_ID": window.location.href.split('?')[1].split('&')[0].split('=')[1],
+                        "message": document.getElementById("chat-message-input").value
+                    },
+                    success: function (data) {
+                        if (data.result == "success"){
+                            // console.log("success")
+                        }
+                    }
+                });
+            }
         }
-        
     };
 
     
@@ -984,7 +994,6 @@
         update_chat_list();
         window.clearInterval(timeout_update_chat_list);
         timeout_update_chat_list = window.setInterval( update_chat_list , 1000)
-        
     })
 
     function test(){

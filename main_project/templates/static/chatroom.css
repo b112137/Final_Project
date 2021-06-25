@@ -52,9 +52,9 @@ body {
     background-repeat: no-repeat; */
 
     position: absolute;
-    width: 6vh;
-    height: 6vh;
-    top: 3.3vh;
+    width: 5.5vh;
+    height: 5.5vh;
+    top: 3.8vh;
     left: 5vw;
     background-image: url(src/back_arrow.png);
     background-size: cover;
@@ -210,14 +210,14 @@ body {
     font-size: 5.5vw; */
 
     position: absolute;
-    top: 4vh;
+    top: 5vh;
     left: 20vw;
     width: 60vw;
     height: auto;
     text-align: center;
     color: white;
     font-family: HP_Hans;
-    font-size: 5.5vw;
+    font-size: 5.2vw;
 }
 
 .check-member, .edit-member {
@@ -228,25 +228,30 @@ body {
     height: auto; */
 
     position: absolute;
-    top: 3.7vh;
+    top: 3.9vh;
     right: 5vw;
-    width: 7vh;
-    height: auto;
+    width: 6.7vh;
 }
 
 .edit-member {
-    opacity: 0.8;
-    width: 8vw;
+    /* opacity: 0.8; */
+    /* width: 8vw;
     right: 6vw;
-    top: 7vw;
+    top: 7vw; */
+
+    width: 4vh;
+    right: 6vw;
+    top: 3.3vh;
 }
 
 .chatroom-record-content {
     position: fixed;
     overflow-y: scroll;
     width: 100vw;
-    height: 90vh;
-    bottom: 18vw;
+    /* height: 90vh;
+    bottom: 18vw; */
+    height: 92vh;
+    bottom: 14vw;
     z-index: 0;
     padding-top: 22vw;
 
@@ -347,7 +352,7 @@ body {
     position: fixed;
     bottom: 0px;
     width: 100vw;
-    height: 20vw;
+    height: 14vw;
     background-color: white;
 }
 
@@ -377,7 +382,7 @@ body {
 
 .input-msg {
     position: fixed;
-    bottom: 5vw;
+    bottom: 3vw;
     left: 10vw;
     width: 70vw;
     height: 8vw;
@@ -391,9 +396,11 @@ body {
     outline: none;
     padding-left: 3vw;
     padding-right: 3vw;
+    padding-top: 1vw;
 }
 
 .input-msg:focus {
+    padding-top: 0vw;
     border-width: 1vw;
     border-color: #B5B2B2;
 }
@@ -408,7 +415,7 @@ body {
 
 .btn-send {
     position: fixed;
-    bottom: 6vw;
+    bottom: 3.5vw;
     right: 7vw;
     width: 8vw;
     height: auto;

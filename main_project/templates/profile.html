@@ -126,9 +126,13 @@
             }
             window.location.href = loc
         }
+        // else if (parameter[1].toString().split("&")[1].split('=')[1] == parameter[1].toString().split("&")[0].split('=')[1]){
+        //     console.log(123)
+        //     window.location.href = window.location.href.split("&")[0]
+        // }
         else{
             // console.log(document.referrer)
-            if (document.referrer.split("?")[0].indexOf('friend') > -1){
+            if (document.referrer.split("?")[0].indexOf('friend') > -1 | (document.referrer.split("?")[0].indexOf('chatroom') > -1)){
                 document.getElementById("back_arrow_link").href = document.referrer
             }
             else{
@@ -143,7 +147,12 @@
                 my_profile();
             }
             else if(parameter.length == 2){
-                others_profile();
+                if (window.location.href.split('?')[1].split("&")[1].split('=')[1] == window.location.href.split('?')[1].split("&")[0].split('=')[1]){
+                    my_profile();
+                }
+                else{
+                    others_profile();
+                }
             }
         }
     }

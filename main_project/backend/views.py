@@ -835,14 +835,16 @@ def mission_chatroom_update(request):
             group_name = Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0].group_name
             group_number = len(ast.literal_eval(Mission_group.objects.filter(chatroom_ID=chatroom_ID)[0].member_ID))
 
-            sender_photo, sender_name=[], []
+            sender_photo, sender_name, sender_ID=[], [], []
             for mission_chatroom in Mission_Chatroom.objects.filter(chatroom_ID=chatroom_ID).order_by("time"):
                 if mission_chatroom.sender_ID != "developers":
                     sender_photo.append(Profile.objects.filter(account=mission_chatroom.sender_ID)[0].profile_photo)
                     sender_name.append(Profile.objects.filter(account=mission_chatroom.sender_ID)[0].name)
+                    sender_ID.append(mission_chatroom.sender_ID)
                 else:
                     sender_photo.append("media/profile_img/developers.jpg")
                     sender_name.append("官方訊息")
+                    sender_ID.append("developers")
             
             if last_sender_name_len == str(len(sender_name)+group_number):
                 return JsonResponse({
@@ -856,6 +858,7 @@ def mission_chatroom_update(request):
                     'group_number': group_number,
                     'sender_photo': sender_photo,
                     'sender_name': sender_name,
+                    'sender_ID': sender_ID,
                 })
 
 def friend_chatroom_update(request):
@@ -901,13 +904,14 @@ def friend_chatroom_update(request):
 
             group_name = Profile.objects.filter(account=group_name_ID)[0].name
 
-            sender_photo, sender_name=[], []
+            sender_photo, sender_name, sender_ID=[], [], []
             for friend_chatroom in Friend_Chatroom.objects.filter(chatroom_ID=chatroom_ID).order_by("time"):
                 # if friend_chatroom.sender_ID != "developers":
                 sender_photo.append(Profile.objects.filter(account=friend_chatroom.sender_ID)[0].profile_photo)
                 # else:
                     # sender_photo.append("media/profile_img/developers.jpg")
                 sender_name.append( Profile.objects.filter(account=friend_chatroom.sender_ID)[0].name )
+                sender_ID.append(friend_chatroom.sender_ID)
 
             if last_sender_name_len == str(len(sender_name)):
                 return JsonResponse({
