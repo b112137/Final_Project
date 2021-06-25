@@ -821,6 +821,7 @@ def mission_chatroom_update(request):
             chatroom_ID = request.POST.get('chatroom_ID')
             message = request.POST.get('message')
 
+
             Mission_Chatroom.objects.create(chatroom_ID=chatroom_ID, sender_ID=sender_ID,  message=message)
             return JsonResponse({
                 'result' : "success"
@@ -843,7 +844,7 @@ def mission_chatroom_update(request):
                     sender_photo.append("media/profile_img/developers.jpg")
                     sender_name.append("官方訊息")
             
-            if last_sender_name_len == str(len(sender_name)):
+            if last_sender_name_len == str(len(sender_name)+group_number):
                 return JsonResponse({
                     'result' : "same",
                 })

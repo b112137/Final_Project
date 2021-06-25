@@ -551,7 +551,7 @@
                 },
                 success: function (data) {
                     if (data.result == "success"){
-                        last_sender_name_len = data.sender_name.length
+                        last_sender_name_len = parseInt(data.sender_name.length) + parseInt(data.group_number)
                         chatroom_history = JSON.parse(data.history);
 
                         if (first=="first"){
