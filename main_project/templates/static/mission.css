@@ -80,7 +80,7 @@ input {
     position: fixed;
     width: 100vw;
     /* height: 22vw; */
-    height: 27vw;
+    height: 25vw;
     left: 0vw;
     top: 0vw;
     background: #F59E56;
@@ -93,7 +93,7 @@ input {
     width: 12vw;
     height: 12vw;
     /* top: 6.1vw; */
-    top: 11.1vw;
+    top: 9.1vw;
     left: 5vw;
     background-image: url('src/back_arrow.png');
     background-size: cover;
@@ -107,7 +107,7 @@ input {
     width: 100vw;
     height: 12vw;
     /* top: 1vw; */
-    top: 6vw;
+    top: 4vw;
     font-size: 15vw;
     font-family: jf_open;
     text-align: right;
@@ -279,7 +279,7 @@ input {
 .tab-footer {
     position: fixed;
     /* top: 35vw; */
-    top: 40vw;
+    top: 38vw;
     width: 100vw;
     height: 5vw;
     background-color: white;
@@ -292,7 +292,7 @@ input {
     width: 100vw;
     height: 100vh;
     /* padding-top: 39vw; */
-    padding-top: 44vw;
+    padding-top: 42vw;
     overflow-y: scroll !important;
 }
 

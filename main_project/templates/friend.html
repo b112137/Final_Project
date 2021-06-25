@@ -22,7 +22,7 @@
             <div class="btn-help" type="button"></div>
         </div>
 
-        <ul class="nav nav-tabs nav-justified friend-top-tab" style="position: fixed; top: 22vw;">
+        <ul class="nav nav-tabs nav-justified friend-top-tab" style="position: fixed; top: 11vh;">
             <li id="tab_friend" class="">
                 <div id="tab-friend" data-toggle="tab" href="#friend-list">好 友</div>
             </li>
@@ -178,6 +178,9 @@
                 window.location.href = loc
             }
             else{
+                console.log(window.innerHeight, window.innerWidth)
+                var padding = (11.8 * window.innerHeight + 15 * window.innerWidth) / 100
+                $(".friend-tab-content").attr("style", "padding-top:" + padding + "px;" )
 
                 parameter = window.location.href.split('?')[1].split('&')
                 if(parameter.length == 1){

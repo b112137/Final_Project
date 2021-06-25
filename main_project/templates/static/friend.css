@@ -27,12 +27,21 @@ html {
 }
 
 .btn-help {
-    position: absolute;
+    /* position: absolute;
     top: 10vw;
     right: 5vw;
     width: 8vw;
     height: 8vw;
     background-image: url('help/icon_help.png');
+    background-repeat: no-repeat;
+    background-size: cover; */
+
+    position: absolute;
+    top: 5vh;
+    right: 4.5vw;
+    width: 4.2vh;
+    height: 4vh;
+    background-image: url(help/icon_help.png);
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -44,7 +53,7 @@ body {
 }
 
 .back-arrow {
-    position: absolute;
+    /* position: absolute;
     width: 12vw;
     height: 12vw;
     top: 6.1vw;
@@ -52,13 +61,23 @@ body {
     background-image: url('src/back_arrow.png');
     background-size: cover;
     background-repeat: no-repeat;
-    z-index: 20;
+    z-index: 20; */
+
+    position: absolute;
+    width: 5.5vh;
+    height: 5.5vh;
+    top: 3.8vh;
+    left: 5vw;
+    background-image: url(src/back_arrow.png);
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .friend-header {
     position: fixed;
     width: 100vw;
-    height: 22vw;
+    /* height: 22vw; */
+    height: 11vh;
     left: 0vw;
     top: 0vw;
     background-color: #F59E56;
@@ -66,7 +85,7 @@ body {
 }
 
 .friend-title {
-    position: absolute;
+    /* position: absolute;
     width: 100vw;
     height: auto;
     padding-top: 1vw;
@@ -74,12 +93,23 @@ body {
     font-size: 15vw;
     font-family: jf_open;
     text-align: right;
+    color: white; */
+
+    position: absolute;
+    width: 100vw;
+    height: auto;
+    padding-top: 1.3vh;
+    padding-right: 16vw;
+    font-size: 7vh;
+    font-family: jf_open;
+    text-align: right;
     color: white;
 }
 
 .friend-top-tab {
     position: fixed;
-    padding-top: 2vw;
+    /* padding-top: 2vw; */
+    padding-top: 0.8vh;
     background-color: white;
 }
 
@@ -112,7 +142,8 @@ body {
     position: fixed;
     width: 100vw;
     height: 100vh;
-    padding-top: 40vw;
+    /* padding-top: 40vw; */
+    /* padding-top: 19.5vh; */
     overflow-y: scroll;
     z-index: -1;
 }
