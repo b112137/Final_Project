@@ -245,7 +245,7 @@
                 if (data.result == "success"){
                     console.log("success")
                     console.log(data.member_ID)
-                    $(".chatroom-member-header").append('<div class="member-title">'+ data.group_name +'</div>');
+                    $(".chatroom-member-header").append('<div class="member-title">'+ data.group_name + '(' +  data.member_ID.length + ')' +'</div>');
                     // console.log(data.status)
                     if( (data.member_ID.length > 1) && (window.location.href.split('?')[1].split('&')[0].split('=')[1] == data.leader_ID) && (data.status == "acceptable" || data.status == "full") ){
                         $(".chatroom-member-header").append('<img class="edit-member" src="static/src/edit.png" type="button" data-toggle="collapse" data-target=".delete-member">');

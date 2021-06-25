@@ -42,12 +42,21 @@ body {
 }
 
 .back_arrow {
-    position: absolute;
+    /* position: absolute;
     width: 12vw;
     height: 12vw;
     top: 7vw;
     left: 5vw;
     background-image: url('src/back_arrow.png');
+    background-size: cover;
+    background-repeat: no-repeat; */
+
+    position: absolute;
+    width: 6vh;
+    height: 6vh;
+    top: 3.3vh;
+    left: 5vw;
+    background-image: url(src/back_arrow.png);
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -181,8 +190,8 @@ body {
 .chatroom-record-header, .chatroom-member-header {
     position: fixed;
     width: 100vw;
-    height: 22vw;
-    /* height: 12vh; */
+    /* height: 22vw; */
+    height: 11vh;
     left: 0px;
     top: 0px;
     background-color: #F59E56;
@@ -190,9 +199,19 @@ body {
 }
 
 .chatroom-title, .member-title {
-    position: absolute;
+    /* position: absolute;
     top: 7vw;
     left: 19vw;
+    width: 60vw;
+    height: auto;
+    text-align: center;
+    color: white;
+    font-family: HP_Hans;
+    font-size: 5.5vw; */
+
+    position: absolute;
+    top: 4vh;
+    left: 20vw;
     width: 60vw;
     height: auto;
     text-align: center;
@@ -202,10 +221,16 @@ body {
 }
 
 .check-member, .edit-member {
-    position: absolute;
+    /* position: absolute;
     top: 6.1vw;
     right: 5vw;
     width: 15vw;
+    height: auto; */
+
+    position: absolute;
+    top: 3.7vh;
+    right: 5vw;
+    width: 7vh;
     height: auto;
 }
 
