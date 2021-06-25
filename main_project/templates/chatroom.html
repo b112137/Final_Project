@@ -297,6 +297,19 @@
         
     }
 
+    var edit_state = 0
+    $(".edit-member").click(function(){
+        if(edit_state==0){
+            $(".edit-member").attr("src", "static/src/complete.png")
+            edit_state = 1
+        }
+        else{
+            $(".edit-member").attr("src", "static/src/edit_new.png")
+            edit_state = 0
+        }
+
+    })
+
     function create_delete_modal(others, others_name){
         $("#delete_modal").html(
             '<div class="modal-body">\
