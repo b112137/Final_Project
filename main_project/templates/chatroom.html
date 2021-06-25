@@ -298,7 +298,7 @@
     }
 
     var edit_state = 0
-    $(".edit-member").click(function(){
+    $(document).on('click', ".edit-member",function(){
         if(edit_state==0){
             $(".edit-member").attr("src", "static/src/complete.png")
             edit_state = 1
@@ -307,7 +307,6 @@
             $(".edit-member").attr("src", "static/src/edit_new.png")
             edit_state = 0
         }
-
     })
 
     function create_delete_modal(others, others_name){
