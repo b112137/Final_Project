@@ -554,7 +554,7 @@
                         last_sender_name_len = parseInt(data.sender_name.length) + parseInt(data.group_number)
                         chatroom_history = JSON.parse(data.history);
 
-                        if (first=="first"){
+                        // if (first=="first"){
                             $('.chatroom-record-header').html(
                                 // '<a href="/chatroom?account=' + account + '">\
                                 '<a id="chatroom_back">\
@@ -572,7 +572,7 @@
                             else{
                                 document.getElementById("chatroom_back").href = '/chatroom?account=' + account + ''
                             }
-                        }
+                        // }
 
                         // html_code = ""
                         $('#chatroom-record-content-ID').html("")
