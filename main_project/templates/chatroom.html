@@ -264,19 +264,19 @@
                             success: function (img) {
                                 if (data.member_ID[i] == data.leader_ID){
                                     $(".chatroom-member-list").append(
-                                        '<div class="chatroom-member-item" onclick=goto_profile("'+ data.member_ID[i] +'")>\
+                                        '<div class="chatroom-member-item">\
                                             <img style="opacity:0" class="collapse width delete-member" type="button" src="static/src/delete.png" data-toggle="modal" data-target="#delete-member-modal">\
-                                            <div class="chatroom-member-photo" style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
-                                            <div class="chatroom-member-name">'+ data.member_name[i] +'(組長)</div>\
+                                            <div class="chatroom-member-photo" onclick=goto_profile("'+ data.member_ID[i] +'") style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
+                                            <div class="chatroom-member-name" onclick=goto_profile("'+ data.member_ID[i] +'")>'+ data.member_name[i] +'(組長)</div>\
                                         </div>'
                                     )
                                 }
                                 else{
                                     $(".chatroom-member-list").append(
-                                        '<div class="chatroom-member-item" onclick=goto_profile("'+ data.member_ID[i] +'")>\
+                                        '<div class="chatroom-member-item">\
                                             <img onclick=create_delete_modal("'+ data.member_ID[i] +'","'+ data.member_name[i] +'") class="collapse width delete-member" type="button" src="static/src/delete.png" data-toggle="modal" data-target="#delete-member-modal">\
-                                            <div class="chatroom-member-photo" style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
-                                            <div class="chatroom-member-name">'+ data.member_name[i] +'</div>\
+                                            <div class="chatroom-member-photo" onclick=goto_profile("'+ data.member_ID[i] +'") style=" background-image: url(data:image/jpg;base64,' + img + ')"></div>\
+                                            <div class="chatroom-member-name" onclick=goto_profile("'+ data.member_ID[i] +'")>'+ data.member_name[i] +'</div>\
                                         </div>'
                                     )
                                 }
