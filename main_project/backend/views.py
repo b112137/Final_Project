@@ -856,7 +856,7 @@ def mission_chatroom_update(request):
                     sender_name.append("官方訊息")
                     sender_ID.append("developers")
             
-            if last_sender_name_len == str(len(sender_name)+group_number):
+            if last_sender_name_len == str(len(sender_name)+ 2*group_number):
                 return JsonResponse({
                     'result' : "same",
                 })

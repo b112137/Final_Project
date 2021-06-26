@@ -51,9 +51,7 @@
     }
 
     window.onload = function(){
-        console.log(getCookie("account"))
         if(getCookie("account") == ""){
-            console.log("no")
             if (window.location.href.split("?")[0].indexOf('start') <= -1) { //沒有start
                 window.location.href = "start"
             }

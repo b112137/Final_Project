@@ -545,8 +545,7 @@
         window.location.href = window.location.href + "&chatroom_ID=" + chatroom_ID
     };
 
-    
-
+    var last_group_number = 0;
     function update_mission_msg(chatroom_ID, first=""){
         account = window.location.href.split('?')[1].split('&')[0].split('=')[1];
         if(chatroom_ID[0]=="2"){
@@ -563,7 +562,7 @@
                 },
                 success: function (data) {
                     if (data.result == "success"){
-                        last_sender_name_len = parseInt(data.sender_name.length) + parseInt(data.group_number)
+                        // last_sender_name_len = parseInt(data.sender_name.length) + parseInt(data.group_number)
                         chatroom_history = JSON.parse(data.history);
 
                         // if (first=="first"){
@@ -587,12 +586,13 @@
                         // }
 
                         // html_code = ""
-                        $('#chatroom-record-content-ID').html("")
+                        // $('#chatroom-record-content-ID').html("")
                         var last_time = new Date("1911/01/01")
                         var today = new Date();
                         var yesterday = new Date(new Date().setTime(today.getTime()-24*60*60*1000))
                         var weekDay = ["日", "一", "二", "三", "四", "五", "六"];
                         for(var i = 0; i < chatroom_history.length; i++){
+                            
                             var time_first = 0;
                             var time = new Date(chatroom_history[i].fields.time)
                             var title = ""
@@ -641,6 +641,10 @@
                                         date_time_text = time.getFullYear() + '年' + (time.getMonth()+1) + '月' + time.getDate() + '日(' + weekDay[time.getDay()] + ')';
                                     }
                                 }
+                            }
+
+                            if(i < last_sender_name_len - last_group_number ){
+                                continue;
                             }
 
                             if (chatroom_history[i].fields.sender_ID==account){
@@ -710,8 +714,13 @@
                                 // });
                             }
                         }
-
+                        
+                        console.log(chatroom_history.length)
                         for(var i = 0; i < chatroom_history.length; i++){
+                            if(i < last_sender_name_len - last_group_number ){
+                                console.log(i)
+                                continue;
+                            }
                             $.ajax({
                                 url: '/get_img_count',
                                 method: 'POST',
@@ -728,7 +737,8 @@
                                 }
                             });
                         }
-
+                        last_group_number = 2*parseInt(data.group_number)
+                        last_sender_name_len = parseInt(data.sender_name.length) + 2*parseInt(data.group_number)
                         var chat_record = document.getElementById('chatroom-record-content-ID');
                         chat_record.scrollTop = chat_record.scrollHeight;
                     }
