@@ -165,6 +165,10 @@
             $('#friend_link').attr('href', "friend?account="+window.location.href.split('?')[1].split('=')[1]);
             $('#aboutus_link').attr('href', "aboutus?account="+window.location.href.split('?')[1].split('=')[1]);
             
+            var margin_left = (window.innerWidth - $('#card_content').width())/2
+            var margin_top = (window.innerHeight - $('#card_content').height())/2
+            $('.card-dialog').attr('style', 'margin-left:' + margin_left + "px; margin-top:" + margin_top + 'px;')
+
             $.ajax({
                 url: '/get_main_page',
                 method: 'POST',
@@ -238,6 +242,7 @@
     });
 
     $("#card_icon").click( function(){
+        $('#card_content').html("");
         $.ajax({
               url: '/get_card',
               method: 'POST',
@@ -278,12 +283,7 @@
                                     <div type="button" class="card-confirm" onclick=friend_button("'+ data.account +'") data-dismiss="modal">有興趣</div>'
 
                                 )
-
-                                // $('.card-dialog').attr("style", "margin-left:" + window)
-                                var margin_left = (window.innerWidth - $('#card_content').width())/2
-                                var margin_top = (window.innerHeight - $('#card_content').height())/2
-                                console.log(margin_left,margin_top)
-                                $('.card-dialog').attr('style', 'margin-left:' + margin_left + "px; margin-top:" + margin_top + 'px;')
+                                
 
                                 $.ajax({
                                 url: '/get_img',
