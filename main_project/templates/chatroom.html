@@ -715,10 +715,8 @@
                             }
                         }
                         
-                        console.log(chatroom_history.length)
                         for(var i = 0; i < chatroom_history.length; i++){
                             if(i < last_sender_name_len - last_group_number ){
-                                console.log(i)
                                 continue;
                             }
                             $.ajax({
@@ -762,9 +760,7 @@
                     "last_sender_name_len": last_sender_name_len,
                 },
                 success: function (data) {
-                    if (data.result == "success"){
-                        console.log(last_sender_name_len)
-                        
+                    if (data.result == "success"){                        
                         chatroom_history = JSON.parse(data.history);
 
                         if (first=="first"){
@@ -786,7 +782,7 @@
                         }
 
 
-                        $('#chatroom-record-content-ID').html("")
+                        // $('#chatroom-record-content-ID').html("")
                         var last_time = new Date("1911/01/01")
                         var today = new Date();
                         var yesterday = new Date(new Date().setTime(today.getTime()-24*60*60*1000))
@@ -839,6 +835,10 @@
                                             date_time_text = time.getFullYear() + '年' + (time.getMonth()+1) + '月' + time.getDate() + '日(' + weekDay[time.getDay()] + ')';
                                         }
                                     }
+                                }
+
+                                if(i < last_sender_name_len){
+                                    continue;
                                 }
 
                                 if (chatroom_history[i].fields.sender_ID==account){
@@ -910,6 +910,9 @@
                             }
                         }
                         for(var i = 0; i < chatroom_history.length; i++){
+                            if(i < last_sender_name_len){
+                                continue;
+                            }
                             $.ajax({
                                 url: '/get_img_count',
                                 method: 'POST',
@@ -926,9 +929,10 @@
                             });
                         }
 
+                        last_sender_name_len = parseInt(data.sender_name.length)
+
                         var chat_record = document.getElementById('chatroom-record-content-ID');
                         chat_record.scrollTop = chat_record.scrollHeight;
-                        last_sender_name_len = data.sender_name.length
                     }
                     else if(data.result=="same"){
                         // console.log("same")
