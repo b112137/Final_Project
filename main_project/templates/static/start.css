@@ -25,16 +25,25 @@ body {
 }
 
 #logo {
-    background-image: url("src/LOGO.png");
+    /* background-image: url("src/LOGO.png");
     background-repeat: no-repeat;
     background-size: 60vw auto;
     background-position: center;
-
     position: absolute;
     width: 60vw;
     height: 40vw;
     left: 19.5vw;
-    top: 13vw;
+    top: 13vw; */
+
+    background-image: url(src/LOGO.png);
+    background-repeat: no-repeat;
+    background-size: 28vh auto;
+    background-position: center;
+    position: absolute;
+    width: 28vh;
+    height: 18vh;
+    left: 1vh;
+    top: 11vh;
 }
 
 #all {
@@ -42,14 +51,19 @@ body {
     height: 100vh;
     width: 100vw;
     margin: auto;
+    background-color: #F59E56;
+    display: flex;
+    justify-content: center;
 }
+
 #container {
     position: absolute;
     height: 100vh;
-    width: 100vw;
+    width: 30vh;
     margin: auto;
-    background-color: #F59E56;
+    
 }
+
 #hello{
     font-family: Roboto;
     font-style: normal;
@@ -59,28 +73,44 @@ body {
     position: absolute;
     left: 35.15vw;
     top: 22.2vw;
-    }
+}
+
 #login_image{
-    position: absolute;
+    /* position: relative;
     width: 46.25vw;
     height: 46.25vw;
     left: 25.9vw;
-    top: 61vw;
+    top: 61vw; */
+
+    position: relative;
+    width: 21vh;
+    height: 21vh;
+    left: 4.3vh;
+    top: 34vh;
 }
+
 #login_text{
-    position: absolute;
+    position: relative;
     width: 18.5vw;
     height: 9.25vw;
     left: 40.14vw;
     top: 80.1vw;
 }
+
 #register_image{
-    position: absolute;
+    /* position: absolute;
     width: 46.25vw;
     height: 46.25vw;
     left: 25.9vw;
-    top: 121.73vw;
+    top: 121.73vw; */
+
+    position: absolute;
+    width: 21vh;
+    height: 21vh;
+    left: 4.3vh;
+    top: 62vh;
 }
+
 #register_text{
     position: absolute;
     width: 18.5vw;

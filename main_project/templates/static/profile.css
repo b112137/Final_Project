@@ -37,7 +37,7 @@ body {
 }
 
 .title_text {
-    position: absolute;
+    /* position: absolute;
     width: 100vw;
     height: 12vw;
     top: 3vw;
@@ -45,8 +45,17 @@ body {
     font-family: jf_open;
     text-align: right;
     right: 6vw;
-    color: white;
+    color: white; */
     
+    position: absolute;
+    width: 100vw;
+    height: auto;
+    padding-top: 2.5vh;
+    padding-right: 6vw;
+    font-size: 6vh;
+    font-family: jf_open;
+    text-align: right;
+    color: white;
 }
 
 #all {
@@ -56,17 +65,20 @@ body {
     margin: auto;
     
 }
+
 .navbar{
     position: fixed;
     width: 100vw;
-    height: 22vw;
+    /* height: 22vw; */
+    height: 11vh;
     left: 0px;
     top: 0px;
     background-color: #F59E56;
     z-index: 10;
 }
+
 .prev{
-    position: absolute;
+    /* position: absolute;
     width: 12vw;
     height: 12vw;
     top: 6.1vw;
@@ -74,8 +86,19 @@ body {
     background-image: url(src/back_arrow.png);
     background-size: cover;
     background-repeat: no-repeat;
+    z-index: 20; */
+
+    position: absolute;
+    width: 5.5vh;
+    height: 5.5vh;
+    top: 3.8vh;
+    left: 5vw;
+    background-image: url(src/back_arrow.png);
+    background-size: cover;
+    background-repeat: no-repeat;
     z-index: 20;
 }
+
 #photo{
     position: absolute;
     background-repeat: no-repeat;

@@ -19,40 +19,51 @@
         <div id="all">
             <div id="container">
                 <img src="./static/src/setting.png" id="setting" >
-                <img src="./static/src/circle.png" id="circle">
-                <img src="./static/src/LOGO.png" id="logo">
-                <div id="character_vertical"></div>
-                <div id="character_horizontal"></div>
-                <img src="./static/src/exp_back.png" id="exp_back">
-                <img src="./static/src/exp_circle.png" id="exp_circle">
-                <p id="level">{{level}}</p>
-                <p id="char_name">{{name}}</p>
-                <div id="bar">
-                    <div id="knowledge" style="width: {{exp1}}%"></div>
-                    <div id="social" style="width: {{exp2}}%"></div>
-                    <div id="physical" style="width: {{exp3}}%"></div>
+                <div class="top_container">
+                    <img src="./static/src/circle.png" id="circle">
+                    <img src="./static/src/LOGO.png" id="logo">
+                    <div id="character_vertical"></div>
+                    <!-- <div id="character_horizontal"></div> -->
+
+                    <div class="bar_container" >
+                        <img src="./static/src/exp_back.png" id="exp_back">
+                        <img src="./static/src/exp_circle.png" id="exp_circle">
+                        <p id="level">{{level}}</p>
+                        <p id="char_name">{{name}}</p>
+                        <div id="bar">
+                            <div id="knowledge" style="width: {{exp1}}%"></div>
+                            <div id="social" style="width: {{exp2}}%"></div>
+                            <div id="physical" style="width: {{exp3}}%"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-               
-            <a id="shop_link">
-                <img src="./static/src/shop.png" id="shop">
-                <img src="./static/src/shop_text.png" id="shop_text">
-            </a>
             
-            <a id="mission_link">
-                <img src="./static/src/mission.png" id="mission">
-                <img src="./static/src/mission_text.png" id="mission_text">
-            </a>
-
-            <a id="profile_link">
-                <img src="./static/src/profile.png" id="profile">
-                <img src="./static/src/profile_text.png" id="profile_text">
-            </a>
+            <div class="container_white">
+                <div class="bottom_container">
+                    <a id="shop_link">
+                        <img src="./static/src/shop.png" id="shop">
+                        <img src="./static/src/shop_text.png" id="shop_text">
+                    </a>
+                    
+                    <a id="mission_link">
+                        <img src="./static/src/mission.png" id="mission">
+                        <img src="./static/src/mission_text.png" id="mission_text">
+                    </a>
+        
+                    <a id="profile_link">
+                        <img src="./static/src/profile.png" id="profile">
+                        <img src="./static/src/profile_text.png" id="profile_text">
+                    </a>
+                    
+                    <a id="friend_link">
+                        <img src="./static/src/friends.png" id="friends">
+                        <img src="./static/src/friends_text.png" id="friends_text">
+                    </a>
+                </div>
+            </div>
             
-            <a id="friend_link">
-                <img src="./static/src/friends.png" id="friends">
-                <img src="./static/src/friends_text.png" id="friends_text">
-            </a>
+           
 
             <!-- <a id="chatroom_link">
                 <img src="./static/src/chat.png" id="chat">
@@ -253,11 +264,11 @@
                                     <div id ="card_name">'+ data.name +'</div>\
                                     <div id ="card_ID">'+ data.account +'</div>\
                                     <div id = "card_age">'+ data.birth +'</div>\
-                                    <p style="position: absolute; left:5vw;top: 75vw;font-size: 9vw;">等級:</p>\
+                                    <p style="position: absolute;left: 2vh;top: 34.5vh;font-size: 4.3vh;">等級:</p>\
                                     <div id = "card_lv">'+ data.level +'</div>\
-                                    <p style="position: absolute; left:16.5vw;top: 90vw;font-size: 6vw;">知識</p>\
-                                    <p style="position: absolute; left:5vw;top: 100vw;font-size: 6vw;">社會參與</p>\
-                                    <p style="position: absolute; left:16.5vw;top: 110vw;font-size: 6vw;">體能</p>\
+                                    <p style="position: absolute;left: 7.8vh;top: 41.7vh;font-size: 2.8vh;">知識</p>\
+                                    <p style="position: absolute;left: 2.3vh;top: 46.3vh;font-size: 2.8vh;">社會參與</p>\
+                                    <p style="position: absolute;left: 7.8vh;top: 51vh;font-size: 2.8vh;">體能</p>\
                                     <div id="exp_bar">\
                                         <progress id="exp_1" value='+ data.exp1 +' max="100" > 70% </progress>\
                                         <progress id="exp_2" value='+ data.exp2 +' max="100" > 70% </progress>\
@@ -267,6 +278,12 @@
                                     <div type="button" class="card-confirm" onclick=friend_button("'+ data.account +'") data-dismiss="modal">有興趣</div>'
 
                                 )
+
+                                // $('.card-dialog').attr("style", "margin-left:" + window)
+                                var margin_left = (window.innerWidth - $('#card_content').width())/2
+                                var margin_top = (window.innerHeight - $('#card_content').height())/2
+                                console.log(margin_left,margin_top)
+                                $('.card-dialog').attr('style', 'margin-left:' + margin_left + "px; margin-top:" + margin_top + 'px;')
 
                                 $.ajax({
                                 url: '/get_img',

@@ -148,9 +148,9 @@ input {
 
 .btn-help {
     position: absolute;
-    top: 10vw;
+    top: 13vw;
     right: 5vw;
-    width: 8vw;
+    width: 8.3vw;
     height: 8vw;
     background-image: url('help/icon_help.png');
     background-repeat: no-repeat;

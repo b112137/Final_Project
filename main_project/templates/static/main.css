@@ -32,19 +32,42 @@ body {
 
 #all {
     position: relative;
-    height: 216vw;
+    height: 100vh;
     width: 100vw;
     margin: auto;
 }
 #container {
-    position: relative;
+    /* position: relative;
     height: 125.8vw;
     width: 100vw;
     margin: auto;
     background: #EAC5A9;
-}
-#setting {
+    display: flex; 
+    justify-content: center */
+
     position: relative;
+    height: 58vh;
+    width: 100vw;
+    margin: auto;
+    background: #EAC5A9;
+    display: flex;
+    justify-content: center;
+}
+
+.top_container{
+    /* position:relative; 
+    width:91vw;  */
+
+    /* height: 20vw; */
+    /* top: 93vw; */
+    /* left: 4.5vw; */
+
+    position: relative;
+    width: 42vh;
+}
+
+#setting {
+    position: absolute;
     top: 7.4vw;
     left: 83.25vw;
     width: 11.1vw;
@@ -52,29 +75,46 @@ body {
     z-index: 1;
 }
 #circle{
-    position: absolute; 
+    /* position: absolute; 
     height: 91vw;
-    width: 91vw;
-    left: 4.5vw;
-    top: 19vw;
+    width: 91vw; */
+    /* left: 4.5vw; */
+    /* top: 19vw; */
+
+    position: absolute;
+    width: 42vh;
+    top: 8vh;
 }
 #logo{
-    position: absolute; 
+    /* position: absolute; 
     width: 50vw;
-    left: 4vw;
-    top: 9vw;
+    top: 9vw; */
+
+    position: absolute;
+    width: 23vh;
+    /* left: 4vw; */
+    top: 4vh;
 }
 #character_vertical{
     /* background-image: url("src/知識5.PNG"); */
-    background-repeat: no-repeat;
+    /* background-repeat: no-repeat;
     background-size: auto 57vw;
     background-position: center;
 
     position: absolute; 
     width: 57vw;
     height: 57vw;
-    left: 17vw;
-    top: 40vw;
+    left: 12.5vw;
+    top: 40vw; */
+
+    background-repeat: no-repeat;
+    background-size: auto 27vh;
+    background-position: center;
+    position: absolute;
+    width: 27vh;
+    height: 27vh;
+    left: 5.5vh;
+    top: 18.5vh;
 }
 
 #character_horizontal{
@@ -90,23 +130,47 @@ body {
     top: 28vw;
 }
 
+.bar_container{
+    /* position:relative; 
+    width:91vw; 
+    height: 20vw;
+    top: 96vw; */
+    /* left: 4.5vw; */
+
+    position: relative;
+    width: 42vh;
+    height: 10vh;
+    top: 45vh;
+}
+
 #exp_back{
-    position: absolute; 
-    width: 91vw;
-    left: 4.5vw;
-    top: 96.3vw;
+    /* position: absolute; 
+    width: 91vw; */
+    /* left: 4.5vw; */
+    /* top: 96.3vw; */
+
+    position: absolute;
+    width: 42vh;
 }
 #exp_circle{
-    position: absolute;
+    /* position: absolute;
     width: 17.5vw;
-    left: 6.7vw;
-    top: 98.4vw;
+    left: 2.2vw;
+    top: 2.1vw;
+    z-index: 1; */
+
+    position: absolute;
+    width: 8.1vh;
+    /* left: 6.7vw; */
+    /* top: 98.4vw; */
+    left: 1vh;
+    top: 0.9vh;
     z-index: 1;
 }
 #level{
-    position: absolute;
-    top: 98vw;
-    left: 8vw;
+    /* position: absolute;
+    top: 1.7vw;
+    left: 3.5vw;
     width: 15vw;
     text-align: center;
     font-style: normal;
@@ -115,28 +179,69 @@ body {
     font-weight:bold;
     font-size: 12vw;
     color:#DB6C4E;
+    z-index: 2; */
+
+    position: absolute;
+    /* top: 98vw; */
+    /* left: 8vw; */
+    top: 1vh;
+    left: 1.5vh;
+    width: 7vh;
+    text-align: center;
+    font-style: normal;
+    font-weight: normal;
+    font-family: jf;
+    font-weight: bold;
+    font-size: 5.5vh;
+    color: #DB6C4E;
     z-index: 2;
 }
 #char_name{
-    position: absolute;
-    top: 97vw;
+    /* position: absolute;
+    top: 0.7vw;
+    left: 20.5vw;
     width: 50vw;
-    left: 25vw;
     text-align: center;
     font-style: normal;
     font-weight: normal;
     font-family: jf;
     font-weight:bold;
     font-size: 10vw;
-    color:#DB6C4E;
+    color:#DB6C4E; */
+
+    position: absolute;
+    /* top: 97vw; */
+    /* left: 25vw; */
+    top: 0.3vh;
+    left: 9.5vh;
+    width: 23vh;
+    text-align: center;
+    font-style: normal;
+    font-weight: normal;
+    font-family: jf;
+    font-weight: bold;
+    font-size: 4.5vh;
+    color: #DB6C4E;
 }
 #bar {
-    position: absolute;
-    top: 109.8vw;
-    left: 14vw;
+    /* position: absolute;
+    top: 13.5vw;
+    left: 9.5vw;
     width: 100%;
     height: 6vw;
     width:  70vw;
+    border-radius: 5vw;
+    background-color: #b3b3b3;
+    color: white; */
+
+    position: absolute;
+    /* top: 109.8vw; */
+    /* left: 14vw; */
+    top: 6.2vh;
+    left: 4.5vh;
+    width: 100%;
+    height: 2.7vh;
+    width: 32.7vh;
     border-radius: 5vw;
     background-color: #b3b3b3;
     color: white;
@@ -148,7 +253,6 @@ body {
     float: left;
     border-top-left-radius: 5vw;
     border-bottom-left-radius: 5vw;
-
 }
 
 #social {
@@ -163,61 +267,123 @@ body {
     border-radius: 0 5vw 5vw 0; 
     float: left;
 }
+
+.container_white{
+    position: relative;
+    /* top: 58vh; */
+    height: 42vh;
+    width: 100vw;
+    margin: auto;
+    background: #FFFFFF;
+    display: flex;
+    justify-content: center;
+}
+
+.bottom_container{
+    position: relative;
+    /* width: 62.9vw; */
+    width: 29vh;
+}
+
 #shop{
-    position: absolute;
+    /* position: absolute;
     width: 25.9vw;
-    height: 18.5vw;
-    left: 18.5vw;
-    top: 131.35vw;
+    top: 131.35vw; */
+
+    position: absolute;
+    width: 12vh;
+    /* height: 18.5vw; */
+    /* left: 18.5vw; */
+    top: 2.5vh;
 }
 #shop_text{
-    position: absolute;
+    /* position: absolute;
     width: 18.5vw;
-    height: 7.95vw;
-    left: 22.5vw;
-    top: 150.77vw;
+    left: 4vw;
+    top: 150.77vw; */
+
+    position: absolute;
+    width: 8.8vh;
+    /* height: 7.95vw; */
+    /* left: 22.5vw; */
+    left: 1.8vh;
+    top: 11.5vh;
 }
 #mission{
-    position: absolute;
+    /* position: absolute;
     width: 25.9vw;
-    height: 18.5vw;
-    left: 55.5vw;
-    top: 131.35vw;
+    left: 36.5vw;
+    top: 131.35vw; */
+
+    position: absolute;
+    width: 12vh;
+    /* height: 18.5vw; */
+    /* left: 55.5vw; */
+    left: 17vh;
+    top: 2.5vh;
 }
 #mission_text{
-    position: absolute;
+    /* position: absolute;
     width: 16.65vw;
+    left: 41.8vw;
+    top: 150.77vw; */
+
+    position: absolute;
+    width: 7.9vh;
     /* height: 7.4vw; */
-    left: 60.31vw;
-    top: 150.77vw;
+    /* left: 60.31vw; */
+    left: 19.5vh;
+    top: 11.5vh;
 }
 #profile{
-    position: absolute;
+    /* position: absolute;
     width: 25.9vw;
-    height: 18.5vw;
-    left: 18.5vw;
-    top: 166.5vw;
+    top: 166.5vw; */
+
+    position: absolute;
+    width: 12vh;
+    /* height: 18.5vw; */
+    /* left: 18.5vw; */
+    top: 19vh;
 }
 #profile_text{
-    position: absolute;
+    /* position: absolute;
     width: 16.65vw;
+    left: 5.5vw;
+    top: 186vw; */
+
+    position: absolute;
+    width: 7.9vh;
     /* height: 7.4vw; */
-    left: 24vw;
-    top: 186vw;
+    /* left: 24vw; */
+    left: 2.4vh;
+    top: 28vh;
 }
 #friends{
-    position: absolute;
+    /* position: absolute;
     width: 25.9vw;
-    height: 18.5vw;
-    left: 55.5vw;
-    top: 166.5vw;
+    left: 36.5vw;
+    top: 166.5vw; */
+
+    position: absolute;
+    width: 12vh;
+    /* height: 18.5vw; */
+    /* left: 55.5vw; */
+    left: 17vh;
+    top: 19vh;
 }
 #friends_text{
-    position: absolute;
+    /* position: absolute;
     width: 16.65vw;
-    height: 7.4vw;
-    left: 60.8vw;
-    top: 186vw;
+    left: 41.8vw;
+    top: 186vw; */
+
+    position: absolute;
+    width: 7.9vh;
+    /* height: 7.4vw; */
+    /* left: 60.8vw; */
+    left: 19.5vh;
+    top: 28vh;
 }
 #chat{
     position: fixed;
@@ -230,16 +396,16 @@ body {
 }
 
 #card_icon{
-    position: absolute;
+    position: fixed;
     width: 45vw;
     height: 22.2vw;
     left: 2vw;
-    bottom: 0vw;
+    bottom: 1vw;
 } 
 #navbar{
     position: absolute;
     width: 34.23vw;
-    height: 216vw;
+    height: 100vh;
     right: 0vw;
     top: 0vw;
     background: #F7F5F5;
@@ -300,22 +466,34 @@ body {
 }
 
 .card-content {
-    position: relative;
+    /* position: relative;
     font-family: jf;
     background-color: #ffffff;
     border-radius: 5vw;
     border-width: 0px;
     width: 100vw;
-    height: 150vw;
+    height: 150vw; */
+
+    position: relative;
+    font-family: jf;
+    background-color: #ffffff;
+    border-radius: 5vw;
+    border-width: 0px;
+    width: 43vh;
+    height: 70vh;
 }
 
 #card-title{
-    position: relative;
+    /* position: relative;
     font-size:8vw;
-    top: 15vw;
+    top: 15vw; */
+
+    position: relative;
+    font-size: 3.5vh;
+    top: 7vh;
 }
 #select_pic{
-    position: absolute;
+    /* position: absolute;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -323,39 +501,68 @@ body {
     height: 35vw;
     left: 6vw;
     top: 33vw;
-    border-radius: 50%;
+    border-radius: 50%; */
 
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 16vh;
+    height: 16vh;
+    left: 2.5vh;
+    top: 15.5vh;
+    border-radius: 50%;
 }
 
 #card_name{
-    position: absolute;
-    /* right: 22vw; */
+    /* position: absolute;
     left:45vw;
     top: 36vw;
-    font-size: 7vw;
+    font-size: 7vw; */
+
+    position: absolute;
+    /* right: 22vw; */
+    left: 20.5vh;
+    top: 16.5vh;
+    font-size: 3.2vh;
 }
 
 #card_ID{
-    position: absolute;
-    /* right: 1vw; */
+    /* position: absolute;
     left:45vw;
     top: 46vw;
-    font-size: 7vw;
+    font-size: 7vw; */
+
+    position: absolute;
+    /* right: 1vw; */
+    left: 20.5vh;
+    top: 21.5vh;
+    font-size: 3.2vh;
 }
 
 #card_age{
-    position: absolute;
-    /* right: 17vw; */
+    /* position: absolute;
     left:45vw;
     top: 57vw;
-    font-size: 7vw;
+    font-size: 7vw; */
+
+    position: absolute;
+    /* right: 17vw; */
+    left: 20.3vh;
+    top: 27vh;
+    font-size: 3.2vh;
 }
 
 #card_lv{
-    position: absolute; 
+    /* position: absolute; 
     left:27vw;
     top: 76vw;
-    font-size: 8vw;
+    font-size: 8vw; */
+
+    position: absolute;
+    left: 12.5vh;
+    top: 35vh;
+    font-size: 4vh;
 }
 
 
@@ -377,7 +584,7 @@ body {
 }
 
 .card-cancel {
-    left: 20vw;
+    /* left: 20vw;
     position: absolute;
     bottom: 5vw;
     width: 27vw;
@@ -387,13 +594,27 @@ body {
     border-radius: 2vw;
     color: white;
     font-size: 7vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly; */
+
+    left: 8vh;
+    position: absolute;
+    bottom: 2.5vh;
+    width: 12.5vh;
+    height: 5.5vh;
+    background-color: #E26F50;
+    border-width: 0px;
+    border-radius: 2vw;
+    color: white;
+    font-size: 3.2vh;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
 }
 
 .card-confirm {
-    right: 20vw;
+    /* right: 20vw;
     position: absolute;
     bottom: 5vw;
     width: 27vw;
@@ -405,7 +626,22 @@ body {
     font-size: 7vw;
     display: flex;
     align-items: center;
+    justify-content: space-evenly; */
+
+    right: 8vh;
+    position: absolute;
+    bottom: 2.5vh;
+    width: 12.5vh;
+    height: 5.5vh;
+    background-color: #E26F50;
+    border-width: 0px;
+    border-radius: 2vw;
+    color: white;
+    font-size: 3.2vh;
+    display: flex;
+    align-items: center;
     justify-content: space-evenly;
+}
 }
 
 .card-cancel:active, .card-confirm:active {
@@ -418,8 +654,8 @@ body {
 /*///exp*/
 #exp_1::-webkit-progress-bar {
     background-color:#F5E0CD; 
-    width: 60vw;
-    height:4vw;
+    width: 26vh;
+    height:1.9vh;
     border-radius: 5.32vw;
 }
 #exp_1::-webkit-progress-value {
@@ -428,19 +664,27 @@ body {
     opacity:0.5;
 }
 #exp_1 {
-    position:absolute;
+    /* position:absolute;
     color: #E83000;
     border-radius:5.32vw;
     opacity:0.5;
     top:93vw;
     left:30vw;
+    background-color: #F5E0CD; */
+
+    position: absolute;
+    color: #E83000;
+    border-radius: 5.32vw;
+    opacity: 0.5;
+    top: 43vh;
+    left: 13.8vh;
     background-color: #F5E0CD;
 }
 
 #exp_2::-webkit-progress-bar {
     background-color:#F5E0CD; 
-    width: 60vw;
-    height:4vw;
+    width: 26vh;
+    height:1.9vh;
     border-radius: 5.32vw;
 }
 #exp_2::-webkit-progress-value {
@@ -449,19 +693,27 @@ body {
     opacity:0.5;
 }
 #exp_2 {
-    position:absolute;
+    /* position:absolute;
     color: #F7931E;
     border-radius:5.32vw;
     opacity:0.5;
     top:103vw;
     left:30vw;
+    background-color: #F5E0CD; */
+
+    position: absolute;
+    color: #F7931E;
+    border-radius: 5.32vw;
+    opacity: 0.5;
+    top: 47.6vh;
+    left: 13.8vh;
     background-color: #F5E0CD;
 }
 
 #exp_3::-webkit-progress-bar {
     background-color:#F5E0CD; 
-    width: 60vw;
-    height:4vw;
+    width: 26vh;
+    height:1.9vh;
     border-radius: 5.32vw;
 }
 #exp_3::-webkit-progress-value {
@@ -470,13 +722,22 @@ body {
     opacity:0.5;
 }
 #exp_3 {
-    position:absolute;
+    /* position:absolute;
     color: #2992A3;
     border-radius:5.32vw;
     opacity:0.5;
     top:113vw;
     left:30vw;
+    background-color: #F5E0CD; */
+
+    position: absolute;
+    color: #2992A3;
+    border-radius: 5.32vw;
+    opacity: 0.5;
+    top: 52.2vh;
+    left: 13.8vh;
     background-color: #F5E0CD;
+}
 }
 
 /*///exp*/

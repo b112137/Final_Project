@@ -18,10 +18,12 @@ body {
 
 #all {
     position: relative;
-    height: 216vw;
+    height: 100vh;
     width: 100vw;
     margin: auto;
     background:#F59E56;
+    display: flex;
+    justify-content: center;
 }
 .navbar{
     position: absolute;
@@ -38,23 +40,44 @@ body {
     top: 9.8vw;
 }
 .prev{
-    position: absolute;
+    /* position: absolute;
     width: 12.95vw;
     height: 12.95vw;
     left: 5.55vw;
-    top: 8.325vw;
-}
-#login_text{
+    top: 8.325vw; */
+
     position: absolute;
+    width: 6vh;
+    height: 6vh;
+    left: 5.55vw;
+    top: 4vh;
+}
+
+#container {
+    position: relative;
+    width: 36vh;
+    height: 97vh;
+    top: 3vh;
+}
+
+#login_text{
+    /* position: absolute;
     left: 35.15vw;
     top: 24.05vw;
     font-family: jf_open;
     font-size: 14.8vw;
-    color:white;
+    color:white; */
+
+    position: absolute;
+    left: 10.5vh;
+    top: 13vh;
+    font-family: jf_open;
+    font-size: 7vh;
+    color: white;
 }
 
 .input{
-    position: absolute;
+    /* position: absolute;
     width: 61.75vw;
     height: 11.1vw;
     background-size: 66.6vw 16.65vw;
@@ -65,26 +88,46 @@ body {
     border: 0; 
     outline: none;
     font-family: jf_open;
-    padding-left: 3vw; 
+    padding-left: 3vw;  */
+
+    position: absolute;
+    width: 28.5vh;
+    height: 5.2vh;
+    /* background-size: 66.6vw 16.65vw; */
+    font-size: 2.5vh;
+    background: #F5F1F0;
+    box-shadow: inset 0.7955vw 0.7955vw 1.105vw rgb(0 0 0 / 20%);
+    border-radius: 1.85vw;
+    border: 0;
+    outline: none;
+    font-family: jf_open;
+    padding-left: 1.5vh;
 }
 
 input::placeholder {
     color:#B5B2B2;
-    font-size: 6.29vw;
+    font-size: 2.8vh;
     font-family:jf_open;
   }
   
 #account{
-    left: 18.5vw;
-    top: 77.7vw;
+    /* left: 18.5vw;
+    top: 77.7vw; */
+
+    left: 4vh;
+    top: 36vh;
 }
 
 #password{
-    left: 18.5vw;
-    top: 99.9vw;
+    /* left: 18.5vw;
+    top: 99.9vw; */
+
+    left: 4vh;
+    top: 46vh;
 }
+
 .submit{
-    position: absolute;
+    /* position: absolute;
     width: 27.75vw;
     height: 11.655vw;
     font-size: 6.475vw;
@@ -92,9 +135,22 @@ input::placeholder {
     color:white;
     font-family:jf_open;
     border-radius: 2.775vw;
-    border: 0; 
+    border: 0;  */
+
+    position: absolute;
+    width: 12.8vh;
+    height: 5.5vh;
+    font-size: 3vh;
+    background: #E26F50;
+    color: white;
+    font-family: jf_open;
+    border-radius: 2.775vw;
+    border: 0;
 }
 #check{
-    left: 37vw;
-    top: 120.25vw;
+    /* left: 37vw;
+    top: 120.25vw; */
+ 
+    left: 12vh;
+    top: 55.5vh;
 }

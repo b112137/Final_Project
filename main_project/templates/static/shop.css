@@ -43,9 +43,10 @@ body {
 
 .btn-help {
     position: absolute;
-    top: 10vw;
+    /* top: 10vw; */
+    top: 13vw;
     right: 10vw; /* why QQ */
-    width: 8vw;
+    width: 8.3vw;
     height: 8vw;
     background-image: url('help/icon_help.png');
     background-repeat: no-repeat;
@@ -55,7 +56,8 @@ body {
 .shop_header {
     position: fixed;
     width: 105vw;
-    height: 22vw;
+    /* height: 22vw; */
+    height: 25vw;
     left: 0vw;
     top: 0vw;
     background: #F59E56;
@@ -66,7 +68,8 @@ body {
     position: absolute;
     width: 12vw;
     height: 12vw;
-    top: 6.1vw;
+    /* top: 6.1vw; */
+    top: 9.1vw;
     left: 5vw;
     background-image: url('src/back_arrow.png');
     background-size: cover;
@@ -78,7 +81,8 @@ body {
     position: absolute;
     width: 100vw;
     height: auto;
-    padding-top: 1vw;
+    /* padding-top: 1vw; */
+    padding-top: 4vw;
     padding-right: 15vw;
     font-size: 15vw;
     font-family: jf_open;

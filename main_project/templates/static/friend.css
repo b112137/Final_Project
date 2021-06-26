@@ -37,7 +37,7 @@ html {
     background-size: cover; */
 
     position: absolute;
-    top: 5vh;
+    top: 5.5vh;
     right: 4.5vw;
     width: 4.2vh;
     height: 4vh;
@@ -71,6 +71,7 @@ body {
     background-image: url(src/back_arrow.png);
     background-size: cover;
     background-repeat: no-repeat;
+    z-index: 20;
 }
 
 .friend-header {
@@ -98,9 +99,9 @@ body {
     position: absolute;
     width: 100vw;
     height: auto;
-    padding-top: 1.3vh;
-    padding-right: 16vw;
-    font-size: 7vh;
+    padding-top: 2vh;
+    padding-right: 17vw;
+    font-size: 6.5vh;
     font-family: jf_open;
     text-align: right;
     color: white;
