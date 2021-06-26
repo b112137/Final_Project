@@ -477,6 +477,11 @@ def join_mission_group(request):
                 ### 修改 Profile
                 mission_doing_chatroom_ID.append(chatroom_ID)
                 profile_search_all.update(mission_doing_chatroom_ID = mission_doing_chatroom_ID)
+
+                ### 群發訊息
+                sender_ID = "developers"
+                message = Profile.objects.filter(account=account)[0].name + ' 已加入群組！'
+                Mission_Chatroom.objects.create(chatroom_ID=chatroom_ID, sender_ID=sender_ID,  message=message)
                 
                 result = "success"
             elif group_search.status == "full":
@@ -520,6 +525,11 @@ def create_mission_group(request):
         Mission_group.objects.create(chatroom_ID=lastest_chatroom_ID, mission_ID=mission_ID, mission_name=mission_name,
             group_name=group_name, group_most=group_most, leader_ID=leader_ID, status=status, member_ID=member_ID
         )
+
+        ### 群發訊息
+        sender_ID = "developers"
+        message = Profile.objects.filter(account=leader_ID)[0].name + ' 已創立此群組！'
+        Mission_Chatroom.objects.create(chatroom_ID=lastest_chatroom_ID, sender_ID=sender_ID,  message=message)
 
         ### 修改 mission imformation
         mission_search_all = Mission_imformation.objects.filter(mission_ID=mission_ID)
@@ -1022,6 +1032,11 @@ def kick_mission_chatroom_member(request):
                     mission_doing_chatroom_ID.remove(chatroom_ID)
                     profile_search_all.update(mission_doing_chatroom_ID = mission_doing_chatroom_ID)
             
+                ### 群發訊息
+                sender_ID = "developers"
+                message = Profile.objects.filter(account=kicked_ID)[0].name + ' 已被踢出群組！'
+                Mission_Chatroom.objects.create(chatroom_ID=chatroom_ID, sender_ID=sender_ID,  message=message)
+
                 return JsonResponse({
                     'result' : "success",
                 })
@@ -1107,6 +1122,11 @@ def exit_mission_chatroom(request):
                 mission_doing_chatroom_ID.remove(chatroom_ID)
                 profile_search_all.update(mission_doing_chatroom_ID = mission_doing_chatroom_ID)
         
+            ### 群發訊息
+            sender_ID = "developers"
+            message = Profile.objects.filter(account=kicked_ID)[0].name + ' 已退出群組！'
+            Mission_Chatroom.objects.create(chatroom_ID=chatroom_ID, sender_ID=sender_ID,  message=message)
+
             return JsonResponse({
                 'result' : "success",
             })

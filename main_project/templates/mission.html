@@ -1079,11 +1079,9 @@
 
 
     function create_group(mission_ID, group_required){
-        console.log(mission_ID)
 
-        group_name = document.getElementById("group_name").value
-        group_most = document.getElementById("group_most").value
-        console.log(group_name.length)
+        var group_name = document.getElementById("group_name").value
+        var group_most = document.getElementById("group_most").value
 
         if( group_name=="" || group_most==""){
             // alert("團名或人數不得為空");
@@ -1136,15 +1134,15 @@
                           data: {
                             "group_name": group_name,
                             "mission_ID": mission_ID,
-                            "leader_ID": window.location.href.split('?')[1].split('=')[1],
+                            "leader_ID": window.location.href.split('?')[1].split('&')[0].split('=')[1],
                             "group_most": group_most,
                           },
                           success: function (data) {
                             if (data.result == "success"){
                                 // 前往對應創出來的 chatroom 
-                                window.location.href = "/chatroom?account=" + window.location.href.split('?')[1].split('=')[1] + "&chatroom_ID=" + data.chatroom_ID
+                                window.location.href = "/chatroom?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1] + "&chatroom_ID=" + data.chatroom_ID
                             }
-                            console.log("success")
+                            
                           }
                         });
                     }
@@ -1167,22 +1165,21 @@
 
 
     function join_group(mission_ID, chatroom_ID){
-        console.log(mission_ID, chatroom_ID)
         $.ajax({
               url: '/join_mission_group',
               method: 'POST',
               type: 'POST',
               dataType: "json",
               data: {
-                "user_ID": window.location.href.split('?')[1].split('=')[1],
+                "user_ID": window.location.href.split('?')[1].split('&')[0].split('=')[1],
                 "mission_ID": mission_ID,
                 "chatroom_ID": chatroom_ID,
               },
               success: function (data) {
                 if (data.result == "success"){
                     $('#modal-btn-confirm-id_' + chatroom_ID).attr('data-dismiss', "modal");
-                    // 前往對應創出來的 chatroom 
-                    window.location.href = "/chatroom?account=" + window.location.href.split('?')[1].split('=')[1] + "&chatroom_ID=" + chatroom_ID
+                    // 前往對應的 chatroom 
+                    window.location.href = "/chatroom?account=" + window.location.href.split('?')[1].split('&')[0].split('=')[1] + "&chatroom_ID=" + chatroom_ID
                 }
                 else if (data.result == "group_full"){
                     $('#modal-btn-confirm-id_' + chatroom_ID).attr('data-dismiss', "modal");

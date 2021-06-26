@@ -354,7 +354,7 @@
             success: function (data) {
                 if (data.result == "success"){
                     console.log("success")
-                    window.location.href = "/chatroom?account="+window.location.href.split('?')[1].split('=')[1];
+                    window.location.href = "/chatroom?account="+window.location.href.split('?')[1].split('&')[0].split('=')[1];;
 
                 }
             }
