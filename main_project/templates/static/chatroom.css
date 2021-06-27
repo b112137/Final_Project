@@ -329,6 +329,7 @@ body {
     display: block;
     max-width: 52vw; /*add*/
     word-wrap: break-word;
+    word-break: break-all;
     font-family: HP_Hans;
     font-size: 5vw;
     text-align: left;
