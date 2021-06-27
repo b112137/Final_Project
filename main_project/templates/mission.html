@@ -526,12 +526,22 @@
                     }
                     $('#page1').append('<div id="page1_container"></div><div id="page2_container"></div>')
 
-                    if(type=="join"){
+                    // if(type=="join"){
                         $('#page1_container').html(last_page1_container_join)
-                    }
-                    else if(type=="finished"){
+                    // }
+                    // else if(type=="finished"){
                         $('#page2_container').html(last_page1_container_finish)
+                    // }
+
+                    if(type=="join"){
+                        $("#page1_container").show();
+                        $("#page2_container").hide();
                     }
+                    else if(type=="finished"){                        
+                        $("#page1_container").hide();
+                        $("#page2_container").show();
+                    }
+
                     $('#submit_modal').html(last_submit_modal)
 
                     // var pic_list = data.mission_pic
