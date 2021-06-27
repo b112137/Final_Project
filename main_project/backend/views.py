@@ -493,7 +493,7 @@ def join_mission_group(request):
         chatroom_ID, group_name, group_now, group_most, leader_ID = mission_filter(account, mission_ID)
 
         return JsonResponse({
-            'result' : "success",
+            'result' : result,
             "chatroom_ID": chatroom_ID, "group_name": group_name, "group_now": group_now,
             "group_most": group_most, "leader_ID": leader_ID
         })
