@@ -327,7 +327,7 @@ body {
 
 .msg-content {
     display: block;
-    max-width: 60vw; /*add*/
+    max-width: 52vw; /*add*/
     word-wrap: break-word;
     font-family: HP_Hans;
     font-size: 5vw;
