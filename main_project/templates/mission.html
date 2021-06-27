@@ -463,7 +463,6 @@
                     last_page1_container_join = $("#page1_container").html()
                     last_page1_container_finish = $("#page2_container").html()
                     last_submit_modal = $("#submit_modal").html()
-                    console.log("check-1")
 
                     if(type=="join"){
                         $("#page1_container").show();
@@ -491,7 +490,6 @@
                                 last_page1_container_join = $("#page1_container").html()
                                 last_page1_container_finish = $("#page2_container").html()
                                 last_submit_modal = $("#submit_modal").html()
-                                console.log("check"+image[2].toString())
                             }
                         });
                     }
@@ -500,8 +498,6 @@
                     $('#page1').html("");
                     $('#submit_modal').html("");
                     if(type=="join"){
-                        console.log(last_page1_container_join)
-                        console.log(last_page1_container_finish)
                         $('#page1').append(
                             "<div class='top_block'>\
                                 <div class='joined_text' id = 'joined_t'>待完成</div>\
@@ -512,8 +508,6 @@
 
                     }
                     else if(type=="finished"){
-                        console.log(last_page1_container_join)
-                        console.log(last_page1_container_finish)
                         $('#page1').append(
                             "<div class='top_block'>\
                                 <div class='joined_text' id = 'joined_t' >待完成</div>\
