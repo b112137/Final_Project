@@ -438,7 +438,7 @@
 
     // })
 
-        
+    var img_ajax = new Array(0);
     function update_chat_list(){
         $.ajax({
               url: '/get_mission_chatroom_list',
@@ -451,8 +451,11 @@
                   "last_chatroom_list" : last_chatroom_list.toString(),
               },
               success: function (data) {
-                console.log(data.result)
                 if (data.result == "success"){
+                    for(var i = 0; i < img_ajax.length; i++){
+                        img_ajax[i].abort()
+                    }
+
                     last_chatroom_list = data.chatroom_ID
                     
                     $('#chatroom_list_div').html("")
@@ -502,10 +505,11 @@
                             </div>'
                         )
                     }
-
+                    
+                    img_ajax = new Array(data.chatroom_ID.length)
                     for(var i = 0; i < data.chatroom_ID.length; i++){
                         console.log(i)
-                        $.ajax({
+                        img_ajax[i] = $.ajax({
                             url: '/get_img_count',
                             method: 'POST',
                             type: 'POST',
@@ -520,6 +524,7 @@
                             }
                         });
                     }
+                    
 
                     
                 }
