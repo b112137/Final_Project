@@ -1021,6 +1021,10 @@
     $(document).on('click', "#chatroom_search",function(){
         window.clearInterval(timeout_update_chat_list);
         timeout_update_chat_list = window.setInterval( update_chat_list , 500)
+        for(var i = 0; i < img_ajax.length; i++){
+            console.log("abort",i)
+            img_ajax[i].abort()
+        }
         // friend_search_timer = window.setInterval( get_friend_page , 500)
     })
 
