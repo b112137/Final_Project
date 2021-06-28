@@ -1891,7 +1891,6 @@ def get_friend_group(request):
                     status.append(g.status)
         
         last_group_list = [str(x) for x in last_group_list]
-        print(last_group_list, ID)
         if last_group_list == ID:
             return JsonResponse({
                 'result' : "same",
