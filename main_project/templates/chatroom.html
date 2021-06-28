@@ -538,6 +538,16 @@
         });
     }
 
+    var search = document.getElementById("chatroom_search").value;
+    function look_at_search(){
+        if(search != document.getElementById("chatroom_search").value){
+            for(var i = 0; i < img_ajax.length; i++){
+                console.log("abort",i)
+                img_ajax[i].abort()
+            }
+        }
+    }
+
     function unpack(str) {
         var bytes = [];
         for(var i = 0; i < str.length; i++) {
@@ -1021,10 +1031,7 @@
     $(document).on('click', "#chatroom_search",function(){
         window.clearInterval(timeout_update_chat_list);
         timeout_update_chat_list = window.setInterval( update_chat_list , 500)
-        for(var i = 0; i < img_ajax.length; i++){
-            console.log("abort",i)
-            img_ajax[i].abort()
-        }
+        look_at_search_timer = window.setInterval( look_at_search , 500)
         // friend_search_timer = window.setInterval( get_friend_page , 500)
     })
 
@@ -1032,6 +1039,7 @@
         document.getElementById("chatroom_search").value = ""
         update_chat_list();
         window.clearInterval(timeout_update_chat_list);
+        window.clearInterval(look_at_search_timer);
         timeout_update_chat_list = window.setInterval( update_chat_list , 1000)
     })
 
