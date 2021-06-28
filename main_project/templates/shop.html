@@ -157,62 +157,78 @@
                     if (data.result == "success"){
                         $('#shop_container').html("");
                         var pic_list = data.product_pic
-                        console.log(data.balance)
                         $('#shop_container').append( '<p id="balance">用戶餘額:$'+data.balance+'</p>')
                         for(var i = 0; i < pic_list.length; i++){
-                            $.ajax({
-                            url: '/get_img',
-                            method: 'POST',
-                            type: 'POST',
-                            async: false, //改成同步執行(等待上一個回傳)
-                            data: {
-                                "img_path": pic_list[i],
-                            },
-                            success: function (img) {
-                                $('#shop_container').append(
-                                    '<div id="item1">\
-                                        <div class="product" >\
-                                            <div class="shop_card-header">\
-                                                <div href="#collapse'+ i.toString() +'" data-toggle="collapse" data-parent="#shopping">\
-                                                        <div class="product_information" >\
-                                                            <div class="product_pic" id="product_pic'+ i.toString()+'"></div>\
-                                                            <p class="product_name" id="product1">'+ data.product_name[i] +'</p>\
-                                                            <p class="product_discount" id="discount1"></p>\
-                                                            <p class="product_date" id="date1">期限:2021/12/31</p>\
-                                                        </div>\
+                            // $.ajax({
+                            //     url: '/get_img',
+                            //     method: 'POST',
+                            //     type: 'POST',
+                            //     async: false, //改成同步執行(等待上一個回傳)
+                            //     data: {
+                            //         "img_path": pic_list[i],
+                            //     },
+                            //     success: function (img) {
+                                    $('#shop_container').append(
+                                        '<div id="item1">\
+                                            <div class="product" >\
+                                                <div class="shop_card-header">\
+                                                    <div href="#collapse'+ i.toString() +'" data-toggle="collapse" data-parent="#shopping">\
+                                                            <div class="product_information" >\
+                                                                <div class="product_pic" id="product_pic'+ i.toString()+'"></div>\
+                                                                <p class="product_name" id="product1">'+ data.product_name[i] +'</p>\
+                                                                <p class="product_discount" id="discount1"></p>\
+                                                                <p class="product_date" id="date1">期限:2021/12/31</p>\
+                                                            </div>\
+                                                    </div>\
+                                                </div>\
+                                                <div class="right">\
+                                                    <p class="price" id="price1">$'+ data.product_price[i] +'</p>\
+                                                    <div type="button" class="btn_buy" id="Buy1" onclick=buy_product('+ data.product_ID[i] +','+ data.product_price[i] +') >Buy</div>\
                                                 </div>\
                                             </div>\
-                                            <div class="right">\
-                                                <p class="price" id="price1">$'+ data.product_price[i] +'</p>\
-                                                <div type="button" class="btn_buy" id="Buy1" onclick=buy_product('+ data.product_ID[i] +','+ data.product_price[i] +') >Buy</div>\
+                                            <div>\
+                                            <div id="collapse'+ i.toString() +'" class="collapse" aria-expanded="false" style="height: 0px;">\
+                                                <div class="shop_card-body">\
+                                                    <p class="product_detail">'+ data.product_detail[i] +'</p>\
+                                                </div>\
                                             </div>\
-                                        </div>\
-                                        <div>\
-                                        <div id="collapse'+ i.toString() +'" class="collapse" aria-expanded="false" style="height: 0px;">\
-                                            <div class="shop_card-body">\
-                                                <p class="product_detail">'+ data.product_detail[i] +'</p>\
                                             </div>\
-                                        </div>\
-                                        </div>\
-                                    </div>'
-                                )
-                                $('#product_pic'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
-                            }
-                            });
+                                        </div>'
+                                    )
+                                    // $('#product_pic'+i.toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
+                            //     }
+                            // });
                         }
                         
                         $('#shop_container').append(
-                                '<div id="item1">\
-                                    <div class="product" >\
-                                        <div class="shop_card-header" style="height: 20vw">\
-                                        </div>\
-                                        <div class="right">\
-                                        </div>\
+                            '<div id="item1">\
+                                <div class="product" >\
+                                    <div class="shop_card-header" style="height: 20vw">\
                                     </div>\
-                                    <div id="collapse'+ (i+1).toString() +'" class="collapse" aria-expanded="false" style="height: 0px;">\
+                                    <div class="right">\
                                     </div>\
-                                </div>'
+                                </div>\
+                                <div id="collapse'+ (i+1).toString() +'" class="collapse" aria-expanded="false" style="height: 0px;">\
+                                </div>\
+                            </div>'
                         )
+
+                        for(var i = 0; i < pic_list.length; i++){
+                            $.ajax({
+                                url: '/get_img_count',
+                                method: 'POST',
+                                type: 'POST',
+                                // async: false, //改成同步執行(等待上一個回傳)
+                                data: {
+                                    "img_path": pic_list[i],
+                                    "count": i.toString(),
+                                },
+                                success: function (img) {
+                                    image = img.split("'")
+                                    $('#product_pic' + image[2].toString()).attr('style', 'background-image: url(data:image/jpg;base64,' + image[1] + ')' )
+                                }
+                            });
+                        }
                     }
                 }
             });
