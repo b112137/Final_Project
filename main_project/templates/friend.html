@@ -452,8 +452,8 @@
                     
         }
 
+        var last_group_list = ""
         function get_friend_group(){
-            var last_group_list = ""
             $.ajax({
                 url: '/get_friend_group',
                 method: 'POST',
@@ -465,11 +465,9 @@
                     "last_group_list": last_group_list.toString(),
                 },
                 success: function (data) {
-                    console.log(data.result)
                     if(data.result == 'success'){
                         last_group_list = data.chatroom_ID;
                         $('#group_container').html("");
-                        console.log("load success")
                         if(data.group_name.length==0){
                             if(document.getElementById("group_search").value==""){
                                 $('#group_container').append(
