@@ -294,26 +294,31 @@
 
         $(document).on('click', "#friend_search",function(){
             friend_search_timer = window.setInterval( get_friend_page , 500)
+            look_at_search_timer = window.setInterval( look_at_search_friend , 500)
             // get_friend_page();
         })
 
         $('#friend_search_delete').click(function(){
             window.clearInterval(friend_search_timer);
+            window.clearInterval(look_at_search_friend);
             document.getElementById("friend_search").value = ""
             get_friend_page();
         })
 
         $(document).on('click', "#group_search",function(){
             group_search_timer = window.setInterval( get_friend_group , 500)
+            look_at_search_timer = window.setInterval( look_at_search_group , 500)
             // get_friend_group();
         })
 
         $('#group_search_delete').click(function(){
             window.clearInterval(group_search_timer);
+            window.clearInterval(look_at_search_group);
             document.getElementById("group_search").value = ""
             get_friend_group();
         })
 
+        var img_ajax = new Array(0);
         var last_friend_list = ""
         function get_friend_page() {
             $.ajax({
@@ -370,9 +375,10 @@
                                 '<div class="friend-item">\
                                 </div>'
                             )
-
+                            
+                            img_ajax = new Array(pic_list.length)
                             for(var i = 0; i < pic_list.length; i++){
-                                $.ajax({
+                                img_ajax[i] = $.ajax({
                                     url: '/get_img_count',
                                     method: 'POST',
                                     type: 'POST',
@@ -396,8 +402,18 @@
             })
         }
 
+        var search = "";
+        function look_at_search_friend(){
+            if(search != document.getElementById("friend_search").value){
+                for(var i = 0; i < img_ajax.length; i++){
+                    console.log("abort",i)
+                    img_ajax[i].abort()
+                }
+            }
+            search = document.getElementById("friend_search").value;
+        }
+
         function create_profile_modal(friend_ID){
-            console.log(friend_ID)
             $.ajax({
                 url: '/get_friend_chatroom',
                 method: 'POST',
@@ -492,9 +508,10 @@
                                 '<div class="friend-group-item">\
                                 </div>'
                             )
-
+                            
+                            img_ajax = new Array(pic_list.length)
                             for(var i = 0; i < pic_list.length; i++){
-                                $.ajax({
+                                img_ajax[i] = $.ajax({
                                     url: '/get_img_count',
                                     method: 'POST',
                                     type: 'POST',
@@ -519,8 +536,17 @@
             })
         }
 
+        function look_at_search_group(){
+            if(search != document.getElementById("group_search").value){
+                for(var i = 0; i < img_ajax.length; i++){
+                    console.log("abort",i)
+                    img_ajax[i].abort()
+                }
+            }
+            search = document.getElementById("group_search").value;
+        }
+
         function get_friend_invitation(){
-            console.log("?")
             $.ajax({
                 url: '/get_friend_invitation',
                 method: 'POST',
@@ -592,7 +618,6 @@
 
 
         function accept_invitation(invitation_ID, type=0){
-            console.log(invitation_ID)
             $.ajax({
                 url: '/accept_invitation',
                 method: 'POST',
@@ -620,7 +645,6 @@
         }
 
         function reject_invitation(invitation_ID, type=0){
-            console.log(invitation_ID)
             $.ajax({
                 url: '/reject_invitation',
                 method: 'POST',
@@ -648,7 +672,6 @@
         }
 
         function send_invitation(invitation_ID){
-            console.log(invitation_ID)
             $.ajax({
                 url: '/send_invitation',
                 method: 'POST',
@@ -671,7 +694,6 @@
         }
 
         function cancel_invitation(invitation_ID){
-            console.log(invitation_ID)
             $.ajax({
                 url: '/cancel_invitation',
                 method: 'POST',

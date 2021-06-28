@@ -400,7 +400,6 @@ def get_img_count(request):
         image = cv2.imread(img_path)
         while image.shape[1] > 1000:
             image = cv2.resize(image, (int(image.shape[1]/2) , int(image.shape[0]/2)) )
-        print(image.shape)
         image = cv2.imencode('.jpg',image)[1]
         back_2 = base64.b64encode(image)
         # print(str(back_2)+count)
@@ -413,7 +412,6 @@ def get_img(request):
         image = cv2.imread(img_path)
         while image.shape[1] > 1000:
             image = cv2.resize(image, (int(image.shape[1]/2) , int(image.shape[0]/2)) )
-        print(image.shape)
         image = cv2.imencode('.jpg',image)[1]
         back_2 = base64.b64encode(image)
 
