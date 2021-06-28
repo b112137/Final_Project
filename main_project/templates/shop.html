@@ -308,15 +308,15 @@
                     $('#owned_container').html("");
                     var pic_list = data.product_pic
                     for(var i = 0; i < pic_list.length; i++){
-                        $.ajax({
-                        url: '/get_img',
-                        method: 'POST',
-                        type: 'POST',
-                        async: false, //改成同步執行(等待上一個回傳)
-                        data: {
-                            "img_path": pic_list[i],
-                        },
-                        success: function (img) {
+                        // $.ajax({
+                        // url: '/get_img',
+                        // method: 'POST',
+                        // type: 'POST',
+                        // async: false, //改成同步執行(等待上一個回傳)
+                        // data: {
+                        //     "img_path": pic_list[i],
+                        // },
+                        // success: function (img) {
                             $('#owned_container').append(
                                 // "<img src=" + '"data:image/jpg;base64,'+img+'"> <br>' +
                                 // data.product_name[i] + '<br>'+
@@ -332,8 +332,8 @@
                                     <div onclick=use('+ data.product_ID[i] +') type="button" class="btn_use" id="Use2"  >使用</div>\
                                 </div>'
                             )
-                        }
-                        });
+                        // }
+                        // });
                     }
                     if (pic_list.length == 0){
                         $('#owned_container').append('<div class="error_text">尚無購買商品<br>解任務可獲得$$並購買商品唷!</div>')
