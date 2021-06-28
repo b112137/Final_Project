@@ -165,12 +165,16 @@
 
 
     $(document).on('click', "#mission_search",function(){
-        mission_search_timer = window.setInterval( all_mission , 500)
+        window.clearInterval(mission_search_timer);
+        window.clearInterval(look_at_search_timer);
+        mission_search_timer = window.setInterval( all_mission , 500);
+        look_at_search_timer = window.setInterval( look_at_search , 500);
         // all_mission();
     })
 
     $('#mission_search_delete').click(function(){
         window.clearInterval(mission_search_timer);
+        window.clearInterval(look_at_search_timer);
         document.getElementById("mission_search").value = ""
         all_mission();
     })
@@ -886,6 +890,7 @@
     }
 
     var last_mission_list = ""
+    var img_ajax = new Array(0);
     function all_mission() {
         $.ajax({
               url: '/get_all_mission',
@@ -982,8 +987,9 @@
                             // });
                         }
 
+                        img_ajax = new Array(pic_list.length)
                         for(var i = 0; i < pic_list.length; i++){
-                            $.ajax({
+                            img_ajax[i] = $.ajax({
                                 url: '/get_img_count',
                                 method: 'POST',
                                 type: 'POST',
@@ -1014,7 +1020,16 @@
         });
     }
 
-    
+    var search = document.getElementById("mission_search").value;
+    function look_at_search(){
+        if(search != document.getElementById("mission_search").value){
+            for(var i = 0; i < img_ajax.length; i++){
+                console.log("abort",i)
+                img_ajax[i].abort()
+            }
+        }
+        search = document.getElementById("mission_search").value;
+    }
 
 
     function mission_signup(mission_ID,group_required){

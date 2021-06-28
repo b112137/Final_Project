@@ -488,7 +488,6 @@
                         //     }
                         // });
                     }
-                    console.log("len",data.chatroom_ID.length)
                     if(data.chatroom_ID.length == 0){
                         
                         if(document.getElementById("chatroom_search").value==""){
@@ -532,7 +531,7 @@
                     
                 }
                 else if (data.result=="same"){
-                    console.log("same")
+                    // console.log("same")
                 }
               }
         });
@@ -1029,8 +1028,8 @@
         document.getElementById("chat-message-input").value = "";
     });
 
-    // var timeout_update_chat_list;
-    // var look_at_search_timer;
+    var timeout_update_chat_list;
+    var look_at_search_timer;
     $(document).on('click', "#chatroom_search",function(){
         window.clearInterval(timeout_update_chat_list);
         window.clearInterval(look_at_search_timer);
