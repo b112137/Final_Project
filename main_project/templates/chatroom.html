@@ -440,6 +440,7 @@
 
     var img_ajax = new Array(0);
     function update_chat_list(){
+        console.log("window.setInterval")
         $.ajax({
               url: '/get_mission_chatroom_list',
               method: 'POST',
