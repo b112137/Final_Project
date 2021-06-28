@@ -163,7 +163,8 @@
         all_mission();
     })
 
-
+    var mission_search_timer;
+    var look_at_search_timer;
     $(document).on('click', "#mission_search",function(){
         window.clearInterval(mission_search_timer);
         window.clearInterval(look_at_search_timer);
