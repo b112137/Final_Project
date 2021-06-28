@@ -293,6 +293,8 @@
         })
 
         $(document).on('click', "#friend_search",function(){
+            window.clearInterval(friend_search_timer);
+            window.clearInterval(look_at_search_timer);
             friend_search_timer = window.setInterval( get_friend_page , 500)
             look_at_search_timer = window.setInterval( look_at_search_friend , 500)
             // get_friend_page();
@@ -300,12 +302,14 @@
 
         $('#friend_search_delete').click(function(){
             window.clearInterval(friend_search_timer);
-            window.clearInterval(look_at_search_friend);
+            window.clearInterval(look_at_search_timer);
             document.getElementById("friend_search").value = ""
             get_friend_page();
         })
 
         $(document).on('click', "#group_search",function(){
+            window.clearInterval(group_search_timer);
+            window.clearInterval(look_at_search_timer);
             group_search_timer = window.setInterval( get_friend_group , 500)
             look_at_search_timer = window.setInterval( look_at_search_group , 500)
             // get_friend_group();
@@ -313,7 +317,7 @@
 
         $('#group_search_delete').click(function(){
             window.clearInterval(group_search_timer);
-            window.clearInterval(look_at_search_group);
+            window.clearInterval(look_at_search_timer);
             document.getElementById("group_search").value = ""
             get_friend_group();
         })

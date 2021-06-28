@@ -1031,6 +1031,7 @@
 
     $(document).on('click', "#chatroom_search",function(){
         window.clearInterval(timeout_update_chat_list);
+        window.clearInterval(look_at_search_timer);
         timeout_update_chat_list = window.setInterval( update_chat_list , 500)
         look_at_search_timer = window.setInterval( look_at_search , 500)
         // friend_search_timer = window.setInterval( get_friend_page , 500)
