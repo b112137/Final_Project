@@ -453,6 +453,7 @@
               success: function (data) {
                 if (data.result == "success"){
                     for(var i = 0; i < img_ajax.length; i++){
+                        console.log("abort",i)
                         img_ajax[i].abort()
                     }
 
