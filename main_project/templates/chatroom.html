@@ -441,6 +441,10 @@
     var img_ajax = new Array(0);
     function update_chat_list(){
         console.log("window.setInterval")
+        for(var i = 0; i < img_ajax.length; i++){
+            console.log("abort",i)
+            img_ajax[i].abort()
+        }
         $.ajax({
               url: '/get_mission_chatroom_list',
               method: 'POST',
@@ -453,10 +457,7 @@
               },
               success: function (data) {
                 if (data.result == "success"){
-                    for(var i = 0; i < img_ajax.length; i++){
-                        console.log("abort",i)
-                        img_ajax[i].abort()
-                    }
+                    
 
                     last_chatroom_list = data.chatroom_ID
                     
