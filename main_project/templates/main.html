@@ -294,7 +294,6 @@
                                         "img_path": data.profile_photo,
                                     },
                                     success: function (img) {
-                                        console.log("success")
                                         $('#select_pic').attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
                                     }
                                 });
@@ -315,7 +314,6 @@
     })
 
     function friend_button(others) {
-        console.log(others)
         $.ajax({
             url: '/send_invitation',
             method: 'POST',
@@ -327,7 +325,6 @@
             },
             success: function (data) {
                 if (data.result == "success"){
-                    console.log(data.result)
                     Swal.fire({
                         title: '已送出好友邀請!',
                         icon: 'success',
@@ -339,7 +336,15 @@
                     })
                 }
                 else if (data.result == "error") {
-                    console.log(data.result)
+                    Swal.fire({
+                        title: '發生不明錯誤!',
+                        icon: 'error',
+                        width: '70vw',
+                        heightAuto: false,
+                        background: '#E9BBA4',
+                        showConfirmButton: false,
+                        customClass: 'swal-custom'
+                    })
                 }                
             }
         });

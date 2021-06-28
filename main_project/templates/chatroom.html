@@ -243,8 +243,6 @@
             },
             success: function (data) {
                 if (data.result == "success"){
-                    console.log("success")
-                    console.log(data.member_ID)
                     $(".chatroom-member-header").append('<div class="member-title">'+ data.group_name + '(' +  data.member_ID.length + ')' +'</div>');
                     // console.log(data.status)
                     if( (data.member_ID.length > 1) && (window.location.href.split('?')[1].split('&')[0].split('=')[1] == data.leader_ID) && (data.status == "acceptable" || data.status == "full") ){
@@ -336,7 +334,6 @@
                 if (data.result == "success"){
                     // $("#"+this_id+"_div").hide()
                     window.location.href = window.location.href
-                    console.log("success")
                 }
             }
         });
@@ -353,7 +350,6 @@
             },
             success: function (data) {
                 if (data.result == "success"){
-                    console.log("success")
                     window.location.href = "/chatroom?account="+window.location.href.split('?')[1].split('&')[0].split('=')[1];;
 
                 }
@@ -457,8 +453,6 @@
               },
               success: function (data) {
                 if (data.result == "success"){
-                    console.log("window.setInterval")
-
                     last_chatroom_list = data.chatroom_ID
                     
                     $('#chatroom_list_div').html("")
@@ -510,7 +504,6 @@
                     
                     img_ajax = new Array(data.chatroom_ID.length)
                     for(var i = 0; i < data.chatroom_ID.length; i++){
-                        console.log(i)
                         img_ajax[i] = $.ajax({
                             url: '/get_img_count',
                             method: 'POST',
@@ -541,7 +534,6 @@
     function look_at_search(){
         if(search != document.getElementById("chatroom_search").value){
             for(var i = 0; i < img_ajax.length; i++){
-                console.log("abort",i)
                 img_ajax[i].abort()
             }
         }
@@ -595,7 +587,6 @@
                                     <img class="check-member" src="static/src/check_member.png">\
                                 </a>'       
                             );
-                            console.log(document.referrer.split("?")[0].indexOf('friend'))
                             if (document.referrer.split("?")[0].indexOf('friend') > -1){
                                 document.getElementById("chatroom_back").href = document.referrer
                             }
@@ -791,7 +782,6 @@
                                 <div class="chatroom-title">' + data.group_name + '</div>'
                             );
 
-                            console.log(document.referrer.split("?")[0].indexOf('friend'))
                             if (document.referrer.split("?")[0].indexOf('friend') > -1){
                                 document.getElementById("chatroom_back").href = document.referrer
                             }

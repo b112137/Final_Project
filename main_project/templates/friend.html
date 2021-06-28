@@ -150,7 +150,6 @@
                 split_and_length = 1
                 
                 if(split_and.length == 2){
-                    console.log( parameter[1].split('&')[1].split('=')[1] )
                     if( (parameter[1].split('&')[1].split('=')[1] == "group") | (parameter[1].split('&')[1].split('=')[1] == "invite")){
                         split_and[1] = "pg=" + parameter[1].split('&')[1].split('=')[1];
                     }
@@ -178,7 +177,6 @@
                 window.location.href = loc
             }
             else{
-                console.log(window.innerHeight, window.innerWidth)
                 var padding = (11.8 * window.innerHeight + 15 * window.innerWidth) / 100
                 $(".friend-tab-content").attr("style", "padding-top:" + padding + "px;" )
 
@@ -414,7 +412,6 @@
         function look_at_search_friend(){
             if(search != document.getElementById("friend_search").value){
                 for(var i = 0; i < img_ajax.length; i++){
-                    console.log("abort",i)
                     img_ajax[i].abort()
                 }
             }
@@ -546,7 +543,6 @@
         function look_at_search_group(){
             if(search != document.getElementById("group_search").value){
                 for(var i = 0; i < img_ajax.length; i++){
-                    console.log("abort",i)
                     img_ajax[i].abort()
                 }
             }
@@ -565,7 +561,6 @@
                 success: function (data) {
                     if(data.result == 'success'){
                         $('#friend_invitation_container').html("");
-                        console.log(data.friend_ID.length)
                         if(data.friend_ID.length==0){
                             $('#friend_invitation_container').append(
                                 '<div class="error_text">尚無好友邀請!</div>'    
@@ -644,7 +639,6 @@
                         }
                     }
                     else if (data.result == "error") {
-                        console.log(data.result)
                         get_friend_invitation();
                     }                
                 }
@@ -671,7 +665,6 @@
                         }
                     }
                     else if (data.result == "error") {
-                        console.log(data.result)
                         get_friend_invitation();
                     }
                 }
@@ -693,7 +686,6 @@
                         $('.confirm-add-id-btn').click();
                     }
                     else if (data.result == "error") {
-                        console.log(data.result)
                         get_friend_invitation();
                     }                
                 }
@@ -715,7 +707,6 @@
                         $('.confirm-add-id-btn').click();
                     }
                     else if (data.result == "error") {
-                        console.log(data.result)
                         get_friend_invitation();
                     }                
                 }
@@ -737,7 +728,6 @@
                         $('.confirm-add-id-btn').click();
                     }
                     else if (data.result == "error") {
-                        console.log(data.result)
                         get_friend_invitation();
                     }                
                 }

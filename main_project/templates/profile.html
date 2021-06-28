@@ -220,7 +220,6 @@
                             "img_path": data.profile_photo,
                         },
                         success: function (img) {
-                            console.log("success")
                             if(data.profile_photo.indexOf('none') > -1){
                                 $('#photo').attr('style', 'background-image: url("static/src/none_click.jpg")')
                             }
@@ -354,8 +353,6 @@
             else {
                 var cropImg = $("#img_upload_img").cropper('getData');
                 
-                console.log('cropImg', cropImg);
-                console.log('cropImg', cropImg.height, cropImg.width);
                 x = cropImg.x;
                 y = cropImg.y;
                 width = cropImg.width;
@@ -463,7 +460,6 @@
                         "img_path": data.profile_photo,
                     },
                     success: function (img) {
-                        console.log("success")
                         $('#photo').attr('style', 'background-image: url(data:image/jpg;base64,' + img + ')' )
                     }
                     });
@@ -538,11 +534,9 @@
                 },
                 success: function (data) {
                     if (data.result == "success"){
-                        console.log(data.result)
                         update_friend_button();
                     }
                     else if (data.result == "error") {
-                        console.log(data.result)
                         update_friend_button();
                     }                
                 }
@@ -560,11 +554,9 @@
                 },
                 success: function (data) {
                     if (data.result == "success"){
-                        console.log(data.result)
                         update_friend_button();
                     }
                     else if (data.result == "error") {
-                        console.log(data.result)
                         update_friend_button();
                     }                
                 }
@@ -582,11 +574,9 @@
                 },
                 success: function (data) {
                     if (data.result == "success"){
-                        console.log(data.result)
                         update_friend_button();
                     }
                     else if (data.result == "error") {
-                        console.log(data.result)
                         update_friend_button();
                     }                
                 }
@@ -604,11 +594,9 @@
                 },
                 success: function (data) {
                     if (data.result == "success"){
-                        console.log(data.result)
                         update_friend_button();
                     }
                     else if (data.result == "error") {
-                        console.log(data.result)
                         update_friend_button();
                     }                
                 }
@@ -627,7 +615,6 @@
                 'others': window.location.href.split('?')[1].split('&')[1].split('=')[1],
             },
             success: function (data) {
-                console.log(data.result)
                 others = window.location.href.split('?')[1].split('&')[1].split('=')[1]
                 $('#friend_button').html('<div class="friend_button"></div>')
                 if(data.result=="friend"){

@@ -267,7 +267,6 @@
     var last_page1_container_finish = ""
     var last_submit_modal = ""
     function my_mission(type) {
-        console.log(last_my_mission_list.toString())
         $.ajax({
             url: '/get_my_mission',
             method: 'POST',
@@ -588,7 +587,6 @@
                 'chatroom_ID': chartroom_ID,
             },
             success: function (data) {
-                console.log(data.result)
                 if (data.result == "success"){
                     Swal.fire({
                         title: '已成功分享至<br>個人資訊故事牆!',
@@ -647,7 +645,6 @@
                 'chatroom_ID': chartroom_ID,
             },
             success: function (data) {
-                console.log(data.result)
                 if (data.result == "success"){
                     Swal.fire({
                         title: '已從個人資訊<br>故事牆取消分享!',
@@ -717,7 +714,6 @@
     var imgNewHeight;
     var imgNewSize = 600;  // k
     function upload_img(i) {
-        console.log("in")
         $t = $("#img_upload_img_"+i.toString());
 
         $(document).on('change','#image-input'+i.toString(),function () {
@@ -782,8 +778,6 @@
             else {
                 var cropImg = $("#img_upload_img_"+i.toString()).cropper('getData');
                 
-                console.log('cropImg', cropImg);
-                console.log('cropImg', cropImg.height, cropImg.width);
                 x = cropImg.x;
                 y = cropImg.y;
                 width = cropImg.width;
@@ -800,7 +794,6 @@
                     success: function (data) {
                         if (data.result == "success"){
                             var formdata = new FormData();
-                            console.log($('#image-input'+i.toString())[0].files[0])
                             formdata.append("image", $('#image-input'+i.toString())[0].files[0]);
                             formdata.append("x", x);
                             formdata.append("y", y);
@@ -1025,7 +1018,6 @@
     function look_at_search(){
         if(search != document.getElementById("mission_search").value){
             for(var i = 0; i < img_ajax.length; i++){
-                console.log("abort",i)
                 img_ajax[i].abort()
             }
         }
@@ -1034,7 +1026,6 @@
 
 
     function mission_signup(mission_ID,group_required){
-        console.log(mission_ID)
         $('#mission_group_box_'+mission_ID).html("")
         $.ajax({
               url: '/get_mission_group',
@@ -1098,7 +1089,6 @@
                     )
 
                 }
-                console.log("success")
               }
         });
     }

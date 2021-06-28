@@ -76,13 +76,11 @@
                 $('#boy').css("visibility", "visible");
                 $('#girl').css("visibility", "hidden");
                 sex="男";
-                console.log(sex);
             })
             $('#boy').click((event) => {
                 $('#girl').css("visibility", "visible");
                 $('#boy').css("visibility", "hidden");
                 sex="女";
-                console.log(sex);
             })
 
             $('#register_cancel').click((event) => {
@@ -128,7 +126,6 @@
                         },
                         success: function (data) {
                             if (data.result == "success"){
-                                console.log("success")
                                 $.ajax({
                                     url: '/login_check',
                                     method: 'POST',

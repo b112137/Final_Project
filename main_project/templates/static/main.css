@@ -1,6 +1,7 @@
 @font-face {
     font-family: jf;
     src: url(src/font/jf-openhuninn-1.1.ttf);
+    font-display: swap;
 }
 
 .swal-custom {
