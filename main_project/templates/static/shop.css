@@ -27,6 +27,14 @@ body {
     position: absolute;
 }
 
+.swal-custom {
+    height: 50vw;
+    font-size: 3vw !important;
+    font-family: HP_Hans !important;
+    color: #4D4D4D;
+    border-radius: 5vw !important;
+}
+
 .swal-custom-guide {
     height: 100vh;
     background-size: cover !important;

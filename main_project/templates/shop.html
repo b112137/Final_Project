@@ -11,7 +11,7 @@
         <!-- <script src="static/jquery.js"></script> -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <link href="static/shop.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     </head>
@@ -230,20 +230,51 @@
                 },
                 success: function (data) {
                     if (data.result == "success"){
-                        $('#Deduct').text("-$"+price.toString())
-                        $('#modal_page1').css("visibility", "visible");
-                        $('.shop_header').css("opacity","0.5");
-                        $('.nav').css("opacity","0.5");	
+                        // $('#Deduct').text("-$"+price.toString())
+                        // $('#modal_page1').css("visibility", "visible");
+                        // $('.shop_header').css("opacity","0.5");
+                        // $('.nav').css("opacity","0.5");	
+                        Swal.fire({
+                            title: '已成功購買商品<br>扣除餘額$'+ price.toString() +'!',
+                            icon: 'success',
+                            width: '70vw',
+                            heightAuto: false,
+                            background: '#E9BBA4',
+                            showConfirmButton: false,
+                            customClass: 'swal-custom'
+                        })
                         get_shop_page();
                     }
-                    console.log(data.result)
+                    else if(data.result == "no_money"){
+                        Swal.fire({
+                            title: '餘額不足!',
+                            icon: 'error',
+                            width: '70vw',
+                            heightAuto: false,
+                            background: '#E9BBA4',
+                            showConfirmButton: false,
+                            customClass: 'swal-custom'
+                        })
+                        // get_shop_page();
+                    }
+                    else if(data.result == "no_product"){
+                        Swal.fire({
+                            title: '商品存量不足!',
+                            icon: 'error',
+                            width: '70vw',
+                            heightAuto: false,
+                            background: '#E9BBA4',
+                            showConfirmButton: false,
+                            customClass: 'swal-custom'
+                        })
+                        get_shop_page();
+                    }
                 }
             });
             
         }
 
         function get_my_shop(){
-            console.log('123')
             $.ajax({
               url: '/get_my_shop',
               method: 'POST',

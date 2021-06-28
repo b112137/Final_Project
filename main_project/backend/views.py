@@ -1675,11 +1675,13 @@ def buy_product(request):
                 owned_product_ID.append(product_ID)
                 product_left -= 1
 
-                print(balance, owned_product_ID, product_left)
                 profile.update(balance = balance, owned_product_ID=owned_product_ID)
                 product.update(product_left = product_left)
+
+                product_name = Shop.objects.filter(product_ID=product_ID)[0].product_name
                 return JsonResponse({
                     'result' : "success",
+                    'product_name': product_name,
                 })
             else:
                 return JsonResponse({
