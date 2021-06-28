@@ -398,6 +398,7 @@ def get_img_count(request):
         count = request.POST.get('count')
         img_path = request.POST.get('img_path')
         image = cv2.imread(img_path)
+        print(image.shape)
         image = cv2.imencode('.jpg',image)[1]
         back_2 = base64.b64encode(image)
         # print(str(back_2)+count)
@@ -408,6 +409,7 @@ def get_img(request):
         # count = request.POST.get('count')
         img_path = request.POST.get('img_path')
         image = cv2.imread(img_path)
+        print(image.shape)
         image = cv2.imencode('.jpg',image)[1]
         back_2 = base64.b64encode(image)
 
