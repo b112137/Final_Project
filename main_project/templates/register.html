@@ -110,6 +110,17 @@
                         customClass: 'swal-custom'
                     })
                 }
+                else if( document.getElementById("account_register").value.toString().length > 12 ){
+                    Swal.fire({
+                        title: '帳號至多12個字!',
+                        icon: 'error',
+                        width: '70vw',
+                        heightAuto: false,
+                        background: '#E9BBA4',
+                        showConfirmButton: false,
+                        customClass: 'swal-custom'
+                    })
+                }
                 else{
                     $.ajax({
                         url: '/register_submit',
