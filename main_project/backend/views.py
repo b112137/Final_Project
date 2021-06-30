@@ -453,7 +453,7 @@ def join_mission_group(request):
         
         mission_group_check = 1
         for ID in mission_doing_chatroom_ID:
-            if mission_ID == ID:
+            if chatroom_ID == ID:
                 mission_group_check = 0
                 break
 
